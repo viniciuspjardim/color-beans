@@ -1,0 +1,36 @@
+    public static void main(String[] arg) {
+
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+
+        config.setWindowedMode(1080, 860);
+        config.setTitle("Tree View");
+
+        TVNode<UctNode> root = new TVNode<>(0, 0, null);
+
+        root.children.add(new TVNode(root));
+        root.children.add(new TVNode(root));
+        root.children.add(new TVNode(root));
+        root.children.add(new TVNode(root));
+        root.children.add(new TVNode(root));
+
+        root.children.get(0).children.add(new TVNode(root.children.get(0)));
+        root.children.get(0).children.add(new TVNode(root.children.get(0)));
+        root.children.get(0).children.add(new TVNode(root.children.get(0)));
+
+
+        root.children.get(1).children.add(new TVNode(root.children.get(1)));
+        root.children.get(1).children.add(new TVNode(root.children.get(1)));
+        root.children.get(1).children.add(new TVNode(root.children.get(1)));
+        root.children.get(1).children.add(new TVNode(root.children.get(1)));
+
+        root.children.get(3).children.add(new TVNode(root.children.get(3)));
+        root.children.get(3).children.add(new TVNode(root.children.get(3)));
+        root.children.get(3).children.add(new TVNode(root.children.get(3)));
+        root.children.get(3).children.add(new TVNode(root.children.get(3)));
+        root.children.get(3).children.add(new TVNode(root.children.get(3)));
+        root.children.get(3).children.add(new TVNode(root.children.get(3)));
+        root.children.get(3).children.add(new TVNode(root.children.get(3)));
+        root.children.get(3).children.add(new TVNode(root.children.get(3)));
+
+        new Lwjgl3Application(new TreeView<>(root), config);
+    }

@@ -1,0 +1,20 @@
+/**
+ * @author Vinícius Jardim
+ * 22/08/2016
+ */
+
+==== REMEMBER ====
+
+Before a release commit
+ - Increment versions on /build.gradle and /android/AndroidManifest.xml (versionCode, versionName)
+ - Choose the release build variant
+ - Review MapScreen and choose the best AI
+ - See dependencies versions to use the newer ones
+ - In GameClass set LOG_NONE, DELTA_REAL, fpsDebug = false, lagWarn = false
+ - Inspect project (folders, libs, todos, files headers, gradle files, package organization)
+ - See git differences
+ - Inspect git .gitignore files
+ - Clean the project
+ - Test compilation and execution on desktop, android and test modules
+ - Pack the game in .jar and .apk and copy the packed files to history folder
+ - Keep proguard file Todo find which file has the translation of obfuscated to real methods name

@@ -1,0 +1,13 @@
+apply plugin: 'java'
+
+dependencies {
+
+    print "hey"
+
+    compile project(":core")
+    compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+    compile group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
+}
