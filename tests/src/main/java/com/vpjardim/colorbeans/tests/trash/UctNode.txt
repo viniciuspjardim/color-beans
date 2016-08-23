@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 Vinícius Petrocione Jardim
+ */
+
 package com.vpjardim.colorbeans.ai;
 
 import com.badlogic.gdx.math.MathUtils;
@@ -7,7 +11,8 @@ import com.badlogic.gdx.utils.Pool;
 import com.vpjardim.colorbeans.Map;
 
 /**
- * Created by viniciuspj on 29/07/2016.
+ * @author Vinícius Jardim
+ * 29/07/2016
  */
 public class UctNode implements Pool.Poolable {
 

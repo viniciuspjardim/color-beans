@@ -1,5 +1,8 @@
-package com.vpjardim.colorbeans.tools;
+/*
+ * Copyright 2015 Vinícius Petrocione Jardim
+ */
 
+package com.vpjardim.colorbeans.tools;
 
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
@@ -11,7 +14,8 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 /**
- * Created by viniciuspj on 13/06/2016.
+ * @author Vinícius Jardim
+ * 13/06/2016
  */
 public class PackIcons {
 

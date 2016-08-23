@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 Vinícius Petrocione Jardim
+ */
+
 package com.vpjardim.colorbeans.tests.treeview;
 
 import com.badlogic.gdx.Gdx;

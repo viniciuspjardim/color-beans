@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 Vinícius Petrocione Jardim
+ */
+
 package com.vpjardim.colorbeans.tests;
 
 import com.badlogic.gdx.utils.IntArray;
@@ -6,7 +10,8 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 /**
- * Created by viniciuspj on 02/05/2016.
+ * @author Vinícius Jardim
+ * 02/05/2016
  */
 public class MovesOld implements Iterator<MovesOld>, Iterable<MovesOld> {
 
