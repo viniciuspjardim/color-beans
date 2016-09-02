@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.Ai3;
+import com.vpjardim.colorbeans.net.GameServer;
 
 /**
  * @author Vinícius Jardim
@@ -24,6 +25,9 @@ public class MapScreen extends ScreenBase {
 
     public Array<Map> maps;
     public int nMaps;
+
+    // #debugCode Todo it's not running on android, maybe updating Kryonet jar would fix
+    GameServer server;
 
     public boolean autoRestart = true;
 
@@ -197,6 +201,11 @@ public class MapScreen extends ScreenBase {
 
         sr = new ShapeRenderer();
         sr.setColor(Color.WHITE);
+
+        // #debugCode
+        server = new GameServer();
+        server.mapScreen = this;
+        server.init();
     }
 
     @Override

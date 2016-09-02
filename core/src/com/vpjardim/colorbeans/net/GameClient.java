@@ -8,7 +8,6 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import com.vpjardim.colorbeans.net.data.NetData;
 
 /**
  * @author Vinícius Jardim
@@ -17,6 +16,8 @@ import com.vpjardim.colorbeans.net.data.NetData;
 public class GameClient {
 
     private Client client;
+
+    public byte[][] b;
 
     public static void main(String[] args) {
 
@@ -41,14 +42,16 @@ public class GameClient {
 
                         NetData data = (NetData) object;
                         System.out.println("C[" + data.clientID + "] rec: " + data.num);
+                        data.num++;
+                        b = data.b;
 
+                        // Wait before new request
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(100);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
 
-                        data.num++;
                         connection.sendUDP(data);
                     }
                 }
@@ -66,7 +69,7 @@ public class GameClient {
             });
 
             new Thread(client, "Client").start();
-            client.connect(5000, "192.168.1.110", Net.tcpPort, Net.udpPort);
+            client.connect(5000, "localhost", Net.tcpPort, Net.udpPort);
 
             NetData data = new NetData();
             data.num = 0;

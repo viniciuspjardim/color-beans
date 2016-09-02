@@ -2,7 +2,7 @@
  * Copyright 2015 Vinícius Petrocione Jardim
  */
 
-package com.vpjardim.colorbeans.net.data;
+package com.vpjardim.colorbeans.net;
 
 /**
  * @author Vinícius Jardim
@@ -11,5 +11,5 @@ package com.vpjardim.colorbeans.net.data;
 public class NetData {
     public int clientID = -1;
     public int num;
-    public byte[] b = {1};
+    public byte[][] b;
 }

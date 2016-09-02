@@ -6,7 +6,6 @@ package com.vpjardim.colorbeans.net;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
-import com.vpjardim.colorbeans.net.data.ConfigData;
 
 /**
  * @author Vinícius Jardim
@@ -23,7 +22,7 @@ public class Net {
         Kryo kryo = endPoint.getKryo();
 
         kryo.register(byte[].class);
-        kryo.register(ConfigData.class);
-        kryo.register(com.vpjardim.colorbeans.net.data.NetData.class);
+        kryo.register(byte[][].class);
+        kryo.register(NetData.class);
     }
 }

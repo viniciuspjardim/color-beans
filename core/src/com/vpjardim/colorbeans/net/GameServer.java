@@ -8,13 +8,16 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import com.vpjardim.colorbeans.net.data.NetData;
+import com.vpjardim.colorbeans.ai.AiMap;
+import com.vpjardim.colorbeans.screen.MapScreen;
 
 /**
  * @author Vinícius Jardim
  * 11/11/2015
  */
 public class GameServer extends Server {
+
+    public MapScreen mapScreen;
 
     public static void main(String[] args) {
 
@@ -40,6 +43,9 @@ public class GameServer extends Server {
                         System.out.println("S rec from[" + data.clientID + "]: " + data.num);
 
                         data.num++;
+
+                        data.b = AiMap.getByteBlocks(null, mapScreen.maps.get(1).b);
+
                         connection.sendUDP(data);
                     }
                 }
