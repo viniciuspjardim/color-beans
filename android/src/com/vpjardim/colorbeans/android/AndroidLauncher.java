@@ -16,16 +16,16 @@ import com.vpjardim.colorbeans.G;
  */
 public class AndroidLauncher extends AndroidApplication {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
         // #debugCode
-		// Log.d("Test1", "android.util.Log d");
+        // Log.d("Test1", "android.util.Log d");
         // Log.e("Test1", "android.util.Log e");
 
-		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new G(), config);
-	}
+        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+        initialize(new G(), config);
+    }
 }

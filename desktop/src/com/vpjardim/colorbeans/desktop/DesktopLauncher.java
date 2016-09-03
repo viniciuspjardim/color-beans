@@ -15,7 +15,7 @@ import com.vpjardim.colorbeans.G;
  */
 public class DesktopLauncher {
 
-	public static void main(String[] arg) {
+    public static void main(String[] arg) {
 
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
@@ -27,5 +27,5 @@ public class DesktopLauncher {
         config.setTitle("Color Beans");
 
         new Lwjgl3Application(new G(), config);
-	}
+    }
 }

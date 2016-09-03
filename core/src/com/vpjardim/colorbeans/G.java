@@ -30,7 +30,7 @@ public class G extends Game {
     public static float delta;
     public static G game;
 
-	public ScreenManager screens;
+    public ScreenManager screens;
     public InputManager input;
     public AssetManager assets;
     public TextureAtlas atlas;
@@ -39,53 +39,53 @@ public class G extends Game {
 
     public int deltaCfg;
     public boolean fpsDebug;
-	public boolean lagWarn;
+    public boolean lagWarn;
 
-	@Override
-	public void create() {
+    @Override
+    public void create() {
 
-		game = (G)Gdx.app.getApplicationListener();
+        game = (G)Gdx.app.getApplicationListener();
 
         // Most things are loaded in the LoadingScreen class. See explanation there.
 
-		// LOG_NONE  = <nothing>
+        // LOG_NONE  = <nothing>
         // LOG_ERROR = error
         // LOG_INFO  = error, log
         // LOG_DEBUG = error, log, debug
-		Gdx.app.setLogLevel(Application.LOG_NONE);
+        Gdx.app.setLogLevel(Application.LOG_NONE);
 
         deltaCfg = DELTA_REAL;
         fpsDebug = false;
         lagWarn  = false;
 
-		screens = new ScreenManager();
+        screens = new ScreenManager();
         screens.create();
-	}
+    }
 
-	@Override
-	public void resize(int width, int height) {
-		super.resize(width, height);
-	}
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+    }
 
-	@Override
-	public void render() { screens.render(); }
+    @Override
+    public void render() { screens.render(); }
 
-	@Override
-	public void pause() {
-		super.pause();
-	}
+    @Override
+    public void pause() {
+        super.pause();
+    }
 
-	@Override
-	public void resume() {
-		super.resume();
+    @Override
+    public void resume() {
+        super.resume();
         game = (G)Gdx.app.getApplicationListener();
-	}
+    }
 
-	@Override
-	public void dispose() {
-		super.dispose();
+    @Override
+    public void dispose() {
+        super.dispose();
         if(assets != null) assets.dispose();
         if(batch != null) batch.dispose();
         if(sr != null) sr.dispose();
-	}
+    }
 }
