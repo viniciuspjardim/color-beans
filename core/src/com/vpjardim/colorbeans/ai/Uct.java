@@ -42,7 +42,7 @@ public class Uct {
 
         moves = new Moves();
         moves.init(nCol);
-        visited = new Array<UctNode>(false, 30);
+        visited = new Array<>(false, 30);
 
         startTime = 0;
         limitTime = 8;

@@ -58,8 +58,8 @@ public class AiMap implements Pool.Poolable {
 
     public AiMap() {
         objCount++;
-        le = new Array<IntSet>();
-        lc = new IntMap<Integer>();
+        le = new Array<>();
+        lc = new IntMap<>();
     }
 
     private void init(int deleteSize, int outRow) {

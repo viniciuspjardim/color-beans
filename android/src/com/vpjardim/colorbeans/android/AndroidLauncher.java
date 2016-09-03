@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.vpjardim.colorbeans.GameClass;
+import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
@@ -26,6 +26,6 @@ public class AndroidLauncher extends AndroidApplication {
         // Log.e("Test1", "android.util.Log e");
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new GameClass(), config);
+		initialize(new G(), config);
 	}
 }

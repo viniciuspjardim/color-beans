@@ -9,18 +9,15 @@ import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
-import com.badlogic.gdx.utils.ObjectIntMap;
 import com.vpjardim.colorbeans.ai.AiBase;
 import com.vpjardim.colorbeans.animation.Animations;
+import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
-import com.vpjardim.colorbeans.screen.MapScreen;
 
 /**
  * Represents a field/map where one player can do it`s actions.
@@ -152,7 +149,7 @@ public class Map implements TargetBase {
 
                 if(freeFallAnim) return;
 
-                map.prop.afterFreeFallTime -= map.screen.deltaTime;
+                map.prop.afterFreeFallTime -= G.delta;
 
                 // Wait some time before change state
                 if(map.prop.afterFreeFallTime > 0f) return;
@@ -356,16 +353,6 @@ public class Map implements TargetBase {
         /** Last update of timeMetrics */
         public float timeMetricsUpdate = matchTime;
 
-        /**
-         * Size in pixels of each block (equals the diameter).
-         * Do not use this to influence other blocks, play blocks or map
-         * fields. This variable can be updated at any time during the game,
-         * so if others value was based on it they're value will be out of
-         * date. This variable should only be used by the render method and
-         * for methods that manage the map size on the screen.
-         */
-        public float side = 50f;
-
         /** True if game is paused */
         public boolean pause = false;
 
@@ -451,18 +438,6 @@ public class Map implements TargetBase {
          * 4 default.
          */
         public int deleteSize = 4;
-
-        /**
-         * Map top-left corner position in X axis: useful to position
-         * multiple maps in one screen
-         */
-        public float px = 0f;
-
-        /**
-         * Map top-left corner position in Y axis: useful to position
-         * multiple maps in one screen
-         */
-        public float py = 0f;
     }
 
     /** Map width [number of block columns]: 7 default */
@@ -525,7 +500,9 @@ public class Map implements TargetBase {
 
 
     /** Reference holding the screen object */
-    public transient MapScreen screen;
+    public transient MapManager manager;
+
+    public int index;
 
     /** Blocks in the map */
     public Block[][] b;
@@ -608,34 +585,19 @@ public class Map implements TargetBase {
     /** Name of this map instance */
     public String name = "";
 
-    // #debugCode
-    public transient ObjectIntMap<String> dbgFuncCalls;
-
     public float colAcceleration[];
 
-    public Map(MapScreen screen) {
+    public Map(MapManager manager) {
 
-        // #debugCode
-        dbgFuncCalls = new ObjectIntMap<String>();
-        dbgFuncCalls.put("freeFallCalc", 0);
-        dbgFuncCalls.put("freeFallAnim", 0);
-        dbgFuncCalls.put("labelCalc", 0);
-        dbgFuncCalls.put("labelAnim", 0);
-        dbgFuncCalls.put("playFallCalc", 0);
-        dbgFuncCalls.put("playFallAnim", 0);
-        dbgFuncCalls.put("gameOverCalc", 0);
-        dbgFuncCalls.put("gameOverAnim", 0);
-        dbgFuncCalls.put("inputUpdate", 0);
-
-        this.screen = screen;
+        this.manager = manager;
 
         prop = new GameProperties();
         pb   = new PlayBlocks(this);
         anim = new Animations(this);
-        le   = new Array<IntSet>();
-        lc   = new IntMap<Integer>();
+        le   = new Array<>();
+        lc   = new IntMap<>();
 
-        state = new DefaultStateMachine<Map, MState>(this, MState.FREE_FALL);
+        state = new DefaultStateMachine<>(this, MState.FREE_FALL);
 
         colorBonusArr = new boolean[Block.CLR_N];
         scoreStr = "0";
@@ -704,9 +666,6 @@ public class Map implements TargetBase {
 
     private void freeFallCalc() {
 
-        // #debugCode
-        dbgFuncCalls.getAndIncrement("freeFallCalc", 0, 1);
-
         // Loop through the columns 0(left) to 6(right)
         for(int col = 0; col < b.length; col++) {
 
@@ -748,9 +707,6 @@ public class Map implements TargetBase {
      * processing algorithm to detect objects
      */
     private void labelCalc() {
-
-        // #debugCode
-        dbgFuncCalls.getAndIncrement("labelCalc", 0, 1);
 
         recycleLabelEquivalence();
 
@@ -989,7 +945,7 @@ public class Map implements TargetBase {
 
         if(blocksDeleted <= 0) return;
 
-        Map opp = screen.getOpponent(this);
+        Map opp = manager.getOpponent(index);
 
         if(opp != null) {
             float trashBlocks = ((blocksDeleted * 10f) * (blocksDeleted - 3f)) / 70f;
@@ -1039,9 +995,6 @@ public class Map implements TargetBase {
 
     private void gameOver() {
 
-        // #debugCode
-        dbgFuncCalls.getAndIncrement("gameOver", 0, 1);
-
         if(!b[N_COL/2][OUT_ROW].isEmpty()) {
             prop.gameOver = true;
         }
@@ -1049,7 +1002,7 @@ public class Map implements TargetBase {
 
     private void timeMetrics() {
 
-        prop.matchTime += screen.deltaTime;
+        prop.matchTime += G.delta;
         float delta = prop.matchTime - prop.timeMetricsUpdate;
 
         // Updates vertical fall velocity each 30s, limited to 10 times
@@ -1083,6 +1036,7 @@ public class Map implements TargetBase {
             }
         }
         // Todo fix trash blocks still been added on a new match
+        // Todo fix blocks starts falling first in a map then in the other
         trashBlocksToAdd = 0;
         prop.gameOver = false;
         prop.gameWin = false;
@@ -1092,83 +1046,9 @@ public class Map implements TargetBase {
         // Todo when recycle time metrics does not return to the start point
     }
 
-    public void renderShapes() {
-
+    public void update() {
         state.update();
         if(ai != null) ai.update();
-
-        // #debugCode
-        if(Gdx.graphics.getFrameId() % 120 == 0) {
-
-            Gdx.app.debug(
-                    this.getClass().getSimpleName() + "#" + this.toString(),
-                    "==="
-            );
-
-            for(ObjectIntMap.Entry<String> entry : dbgFuncCalls.entries()) {
-
-                Gdx.app.debug(
-                        this.getClass().getSimpleName() + "#" + this.toString(),
-                        entry.key + " = " + entry.value
-                );
-            }
-
-            Gdx.app.debug(
-                    this.getClass().getSimpleName() + "#" + this.toString(),
-                    "==="
-            );
-        }
-
-        if(!prop.pause) timeMetrics();
-
-        screen.sr.setColor(0.1f, 0.2f, 0.25f, 1f);
-        screen.sr.rect(prop.px, prop.py, prop.side * N_COL, -prop.side * N_ROW);
-    }
-
-    public void renderBatch() {
-
-        TextureAtlas.AtlasRegion tile;
-        BitmapFont font = GameClass.get().assets.get("roboto_24.ttf", BitmapFont.class);
-
-        font.draw(GameClass.get().batch, scoreStr, prop.px + prop.side * 0.1f, prop.py - prop.side * 0.1f);
-
-        // Draw map blocks
-        for(int i = 0; i < b.length; i++) {
-
-            for(int j = OUT_ROW; j < b[0].length; j++) {
-
-                if(!b[i][j].visible) continue;
-
-                tile = GameClass.get().atlas.findRegion(b[i][j].strColor, b[i][j].tile + 1);
-
-                GameClass.get().batch.draw(
-                        tile,
-                        prop.px + (prop.side * i),
-                        prop.py - prop.side - (prop.side * (j -OUT_ROW)) + (b[i][j].py * prop.side),
-                        prop.side,
-                        prop.side
-                );
-            }
-        }
-
-        // Draw play blocks
-        for(int i = 0; i < pb.b.length; i++) {
-
-            for(int j = 0; j < pb.b[0].length; j++) {
-
-                if(pb.b[i][j].intColor == Block.EMPTY) continue;
-
-                tile = GameClass.get().atlas.findRegion(pb.b[i][j].strColor, pb.b[i][j].tile +1);
-
-                GameClass.get().batch.draw(
-                        tile,
-                        prop.px + (prop.side * (i + pb.mCol -1)) + (pb.b[i][j].px * prop.side),
-                        prop.py - prop.side - (prop.side * (j + pb.mRow -1 -OUT_ROW)) + (pb.b[i][j].py * prop.side),
-                        prop.side,
-                        prop.side
-                );
-            }
-        }
     }
 
     /**
@@ -1176,30 +1056,18 @@ public class Map implements TargetBase {
      * a serialized source. This because some references and objects
      * are not serialized and it needs to be setup
      */
-    public void deserialize(MapScreen screen) {
+    public void deserialize(MapManager manager) {
 
-        // #debugCode
-        dbgFuncCalls = new ObjectIntMap<String>();
-        dbgFuncCalls.put("freeFallCalc", 0);
-        dbgFuncCalls.put("freeFallAnim", 0);
-        dbgFuncCalls.put("labelCalc", 0);
-        dbgFuncCalls.put("labelAnim", 0);
-        dbgFuncCalls.put("playFallCalc", 0);
-        dbgFuncCalls.put("playFallAnim", 0);
-        dbgFuncCalls.put("gameOverCalc", 0);
-        dbgFuncCalls.put("gameOverAnim", 0);
-        dbgFuncCalls.put("inputUpdate", 0);
-
-        this.screen = screen;
+        this.manager = manager;
         pb.deserialize(this);
         anim.deserialize(this);
-        le = new Array<IntSet>();
-        lc = new IntMap<Integer>();
+        le = new Array<>();
+        lc = new IntMap<>();
 
         if(pb.mCol != N_COL / 2 || pb.mRow != OUT_ROW -1 || pb.rotation != 0)
-            state = new DefaultStateMachine<Map, MState>(this, MState.PLAY_FALL);
+            state = new DefaultStateMachine<>(this, MState.PLAY_FALL);
         else
-            state = new DefaultStateMachine<Map, MState>(this, MState.FREE_FALL);
+            state = new DefaultStateMachine<>(this, MState.FREE_FALL);
 
         for(int i = 0; i < b.length; i++) {
             for(int j = 0; j < b[i].length; j++) {
@@ -1213,9 +1081,6 @@ public class Map implements TargetBase {
      */
     private void inputUpdate() {
 
-        // #debugCode
-        dbgFuncCalls.getAndIncrement("inputUpdate", 0, 1);
-
         if(input != null) {
 
             input.update();
@@ -1226,12 +1091,12 @@ public class Map implements TargetBase {
 
             // ==== Rotation move timing control ====
             if(prop.rPlayMoveWait > 0f) {
-                prop.rPlayMoveWait -= screen.deltaTime;
+                prop.rPlayMoveWait -= G.delta;
             }
 
             // ==== Horizontal move timing control ====
             if(prop.hPlayMoveWait > 0f) {
-                prop.hPlayMoveWait -= screen.deltaTime;
+                prop.hPlayMoveWait -= G.delta;
             }
             if(horizontal != 0 && prop.hPlayMoveWait <= 0f) {
                 pb.moveHorizontal(horizontal);

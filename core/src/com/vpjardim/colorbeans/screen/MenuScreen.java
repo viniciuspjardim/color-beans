@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
@@ -37,13 +38,13 @@ public class MenuScreen extends ScreenBase {
         super.show();
 
         stage = new Stage(viewport);
-        game.input.addProcessor(stage);
+        G.game.input.addProcessor(stage);
 
-        skin = new Skin(game.atlas);
+        skin = new Skin(G.game.atlas);
         table = new Table(skin);
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        font = game.assets.get("roboto_24.ttf", BitmapFont.class);
+        font = G.game.assets.get("roboto_24.ttf", BitmapFont.class);
 
         TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.up = skin.getDrawable("game/b_yellow");
@@ -105,7 +106,7 @@ public class MenuScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
-        game.input.removeProcessor(stage);
+        G.game.input.removeProcessor(stage);
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }

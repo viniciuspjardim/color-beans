@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.vpjardim.colorbeans.GameClass;
+import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
@@ -20,7 +20,6 @@ import com.vpjardim.colorbeans.input.TargetBase;
  */
 public class ScreenBase implements Screen, TargetBase {
 
-    protected GameClass game;
     protected int status;
     protected boolean isFinished;
     protected OrthographicCamera cam;
@@ -28,10 +27,8 @@ public class ScreenBase implements Screen, TargetBase {
     protected boolean manageInput = true;
 
     public float time;
-    public float deltaTime;
 
     public ScreenBase() {
-        this.game = GameClass.get();
         isFinished = false;
         time = 0f;
     }
@@ -47,9 +44,9 @@ public class ScreenBase implements Screen, TargetBase {
         viewport.apply(false);
 
         if(manageInput) {
-            game.input.targetsClear();
-            game.input.addTarget(this);
-            game.input.linkAll();
+            G.game.input.targetsClear();
+            G.game.input.addTarget(this);
+            G.game.input.linkAll();
         }
     }
 
@@ -60,7 +57,6 @@ public class ScreenBase implements Screen, TargetBase {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         time += delta;
-        deltaTime = delta;
     }
 
     @Override
@@ -79,7 +75,7 @@ public class ScreenBase implements Screen, TargetBase {
 
     @Override
     public void dispose() {
-        game.input.targetsClear();
+        G.game.input.targetsClear();
     }
 
     @Override

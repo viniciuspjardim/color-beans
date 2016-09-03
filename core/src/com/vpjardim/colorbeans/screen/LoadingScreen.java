@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.input.InputManager;
 
 /**
@@ -33,28 +35,29 @@ public class LoadingScreen extends ScreenBase {
 
     public void loadStuff() {
 
-        game.input = new InputManager();
-        game.input.loadInputs();
-        game.batch = new SpriteBatch();
+        G.game.input = new InputManager();
+        G.game.input.loadInputs();
+        G.game.batch = new SpriteBatch();
+        G.game.sr = new ShapeRenderer();
 
-        game.assets = new AssetManager();
-        game.assets.load("img/pack.atlas", TextureAtlas.class);
-        game.assets.load("audio/studio.ogg", Music.class);
+        G.game.assets = new AssetManager();
+        G.game.assets.load("img/pack.atlas", TextureAtlas.class);
+        G.game.assets.load("audio/studio.ogg", Music.class);
 
         FileHandleResolver resolver = new InternalFileHandleResolver();
-        game.assets.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
-        game.assets.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+        G.game.assets.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+        G.game.assets.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
 
         FreetypeFontLoader.FreeTypeFontLoaderParameter param =
                 new FreetypeFontLoader.FreeTypeFontLoaderParameter();
 
         param.fontFileName = "font/roboto.ttf";
         param.fontParameters.size = 24;
-        game.assets.load("roboto_24.ttf", BitmapFont.class, param);
+        G.game.assets.load("roboto_24.ttf", BitmapFont.class, param);
 
         param.fontFileName = "font/roboto_i.ttf";
         param.fontParameters.size = 24;
-        game.assets.load("roboto_i_24.ttf", BitmapFont.class, param);
+        G.game.assets.load("roboto_i_24.ttf", BitmapFont.class, param);
     }
 
     @Override
@@ -68,8 +71,8 @@ public class LoadingScreen extends ScreenBase {
         if(frameCount == 1) loadStuff();
 
         // If stuff has done loading, init some vars and go to the next screen
-        if(frameCount > 1 && game.assets.update()) {
-            game.atlas = game.assets.get("img/pack.atlas", TextureAtlas.class);
+        if(frameCount > 1 && G.game.assets.update()) {
+            G.game.atlas = G.game.assets.get("img/pack.atlas", TextureAtlas.class);
             isFinished = true;
         }
 

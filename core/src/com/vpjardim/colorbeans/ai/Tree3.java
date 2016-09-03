@@ -36,8 +36,8 @@ public class Tree3 {
         moves = new Moves();
         moves.init(nCol);
         limitTime = 8;
-        cacheA = new Array<Tree3Node>(false, 1000);
-        cacheB = new Array<Tree3Node>(false, 1000);
+        cacheA = new Array<>(false, 1000);
+        cacheB = new Array<>(false, 1000);
 
         reset();
     }

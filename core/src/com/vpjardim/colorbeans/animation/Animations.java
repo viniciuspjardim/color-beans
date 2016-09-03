@@ -5,6 +5,7 @@
 package com.vpjardim.colorbeans.animation;
 
 import com.vpjardim.colorbeans.Block;
+import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 
 /**
@@ -39,7 +40,7 @@ public class Animations {
 
         boolean animating = true;
 
-        b.moveTime += m.screen.deltaTime;
+        b.moveTime += G.delta;
 
         // position = 1/2 * a * t^2
         float shift = 0.5f * (m.prop.freeFallAcceleration + m.colAcceleration[col]) * b.moveTime * b.moveTime;
@@ -80,7 +81,7 @@ public class Animations {
 
         float deformTime = m.prop.afterFreeFallWait;
 
-        b.deformTime -= m.screen.deltaTime;
+        b.deformTime -= G.delta;
 
         // 3, 0, 2, 0, 3, 0, 2, 0 (tile index)
 
@@ -134,9 +135,9 @@ public class Animations {
 
         boolean animating = true;
 
-        b.moveTime += m.screen.deltaTime;
+        b.moveTime += G.delta;
 
-        float shift =  m.screen.deltaTime / m.prop.vPlayMoveTime * 2f;
+        float shift =  G.delta / m.prop.vPlayMoveTime * 2f;
 
         b.py -= shift * 2;
 
@@ -199,7 +200,7 @@ public class Animations {
 
         boolean animating = true;
 
-        float blockTime = b.toDelete - m.screen.deltaTime;
+        float blockTime = b.toDelete - G.delta;
 
         if(blockTime <= 0f) {
 
@@ -245,7 +246,7 @@ public class Animations {
 
         boolean animating = true;
 
-        b.moveTime += m.screen.deltaTime;
+        b.moveTime += G.delta;
 
         // position = 1/2 * a * t^2
         float shift = 0.5f * ((m.prop.freeFallAcceleration + m.colAcceleration[col]) / 4f) * b.moveTime * b.moveTime;

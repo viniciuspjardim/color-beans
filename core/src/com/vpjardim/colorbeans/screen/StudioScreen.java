@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.animation.SpriteAccessor;
 
 import aurelienribon.tweenengine.Tween;
@@ -37,10 +38,10 @@ public class StudioScreen extends ScreenBase {
 
         super.show();
 
-        studioLogo = game.atlas.createSprite("studio/studio_logo");
-        studioText = game.atlas.createSprite("studio/studio_text");
+        studioLogo = G.game.atlas.createSprite("studio/studio_logo");
+        studioText = G.game.atlas.createSprite("studio/studio_text");
 
-        game.assets.get("audio/studio.ogg", Music.class).play();
+        G.game.assets.get("audio/studio.ogg", Music.class).play();
 
         Tween.setCombinedAttributesLimit(4);
 
@@ -109,13 +110,13 @@ public class StudioScreen extends ScreenBase {
 
         transition.update(delta);
 
-        game.batch.setProjectionMatrix(cam.combined);
-        game.batch.begin();
+        G.game.batch.setProjectionMatrix(cam.combined);
+        G.game.batch.begin();
 
-        studioLogo.draw(game.batch);
-        studioText.draw(game.batch);
+        studioLogo.draw(G.game.batch);
+        studioText.draw(G.game.batch);
 
-        game.batch.end();
+        G.game.batch.end();
 
         if(time >= 10.9f) isFinished = true;
     }
@@ -148,7 +149,7 @@ public class StudioScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
-        game.assets.get("audio/studio.ogg", Music.class).stop();
+        G.game.assets.get("audio/studio.ogg", Music.class).stop();
     }
 
     @Override

@@ -62,7 +62,7 @@ public class UctNode implements Pool.Poolable, DebugNode {
 
     public UctNode() {
         objCount++;
-        children = new Array<UctNode>(false, 325);
+        children = new Array<>(false, 325);
         childMovesLeft = new IntArray(false, 325);
         clear();
     }

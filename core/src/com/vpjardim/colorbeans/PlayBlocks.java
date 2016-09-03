@@ -234,7 +234,7 @@ public class PlayBlocks {
 
     public void playFallCalc() {
 
-        m.prop.vPlayMoveWait -= m.screen.deltaTime;
+        m.prop.vPlayMoveWait -= G.delta;
         boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
 
         if(m.prop.vPlayMoveWait <= 0f) {

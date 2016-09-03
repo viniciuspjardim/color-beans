@@ -26,8 +26,8 @@ public class InputManager {
 
     public InputManager() {
 
-        inputs = new Array<InputBase>();
-        targets = new Array<TargetBase>();
+        inputs = new Array<>();
+        targets = new Array<>();
         ctrlConn = new ControllerConnection();
         // Manage controller connections and disconnections
         Controllers.addListener(ctrlConn);

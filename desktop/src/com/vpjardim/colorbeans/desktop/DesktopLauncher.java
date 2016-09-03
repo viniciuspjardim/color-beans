@@ -7,7 +7,7 @@ package com.vpjardim.colorbeans.desktop;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.vpjardim.colorbeans.GameClass;
+import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
@@ -26,6 +26,6 @@ public class DesktopLauncher {
         config.setWindowedMode(1080, 860);
         config.setTitle("Color Beans");
 
-        new Lwjgl3Application(new GameClass(), config);
+        new Lwjgl3Application(new G(), config);
 	}
 }

@@ -44,7 +44,7 @@ public class Tree3Node implements Pool.Poolable {
     public int rotation;
 
     public Tree3Node() {
-        children = new Array<Tree3Node>(false, 325);
+        children = new Array<>(false, 325);
         init();
     }
 
