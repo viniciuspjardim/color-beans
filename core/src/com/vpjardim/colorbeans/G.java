@@ -11,8 +11,12 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.input.InputManager;
 import com.vpjardim.colorbeans.screen.ScreenManager;
+
+import java.text.NumberFormat;
 
 /**
  * Game class
@@ -33,10 +37,14 @@ public class G extends Game {
     public ScreenManager screens;
     public InputManager input;
     public AssetManager assets;
-    public TextureAtlas atlas;
     public SpriteBatch batch;
     public ShapeRenderer sr;
+    public TextureAtlas atlas;
+    public Skin skin;
+    public ScoreTable score;
+    public NumberFormat intFmt;
 
+    // #debugCode
     public int deltaCfg;
     public boolean fpsDebug;
     public boolean lagWarn;
@@ -44,9 +52,9 @@ public class G extends Game {
     @Override
     public void create() {
 
-        game = (G)Gdx.app.getApplicationListener();
-
         // Most things are loaded in the LoadingScreen class. See explanation there.
+
+        game = (G)Gdx.app.getApplicationListener();
 
         // LOG_NONE  = <nothing>
         // LOG_ERROR = error
@@ -62,18 +70,9 @@ public class G extends Game {
         screens.create();
     }
 
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-    }
 
     @Override
     public void render() { screens.render(); }
-
-    @Override
-    public void pause() {
-        super.pause();
-    }
 
     @Override
     public void resume() {
@@ -84,8 +83,10 @@ public class G extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        if(assets != null) assets.dispose();
-        if(batch != null) batch.dispose();
-        if(sr != null) sr.dispose();
+        assets.dispose();
+        batch.dispose();
+        sr.dispose();
+        atlas.dispose();
+        // Do not dispose skin
     }
 }

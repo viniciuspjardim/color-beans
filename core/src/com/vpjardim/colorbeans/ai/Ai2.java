@@ -39,11 +39,11 @@ public class Ai2 implements AiBase {
     @Override
     public void update() {
 
-        if(m.state.getCurrentState().equals(Map.MState.PLAY_FALL)) {
+        if(m.isState(Map.MState.PLAY_FALL)) {
 
             input.update();
 
-            if(m.state.getCurrentState() != prevState) {
+            if(m.getState() != prevState) {
 
                 if(root != null) Tree3Node.pool.free(root);
 
@@ -77,7 +77,7 @@ public class Ai2 implements AiBase {
                 //        bestNode.rotation + "; score = " + bestNode.score);
             }
         }
-        prevState = m.state.getCurrentState();
+        prevState = m.getState();
     }
 
     public static float scoreCalc(AiMap move) {

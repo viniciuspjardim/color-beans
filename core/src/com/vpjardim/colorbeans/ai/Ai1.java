@@ -35,9 +35,9 @@ public class Ai1 implements AiBase {
     @Override
     public void update() {
 
-        if(m.state.getCurrentState().equals(Map.MState.PLAY_FALL)) {
+        if(m.isState(Map.MState.PLAY_FALL)) {
 
-            if(m.state.getCurrentState() != prevState) {
+            if(m.getState() != prevState) {
 
                 int color1 = m.pb.b[1][0].intColor; // upper block
                 int color2 = m.pb.b[1][1].intColor; // lower block
@@ -53,7 +53,7 @@ public class Ai1 implements AiBase {
                     move.process(color1, color2, i, 0);
                     float score = scoreCalc();
 
-                    System.out.println("score = " + score);
+                    // System.out.println("score = " + score);
 
                     if(score > bestMoveScore) {
                         bestMoveScore = score;
@@ -69,7 +69,7 @@ public class Ai1 implements AiBase {
                     move.process(color1, color2, i, 1);
                     float score = scoreCalc();
 
-                    System.out.println("score = " + score);
+                    // System.out.println("score = " + score);
 
                     if(score > bestMoveScore) {
                         bestMoveScore = score;
@@ -89,7 +89,7 @@ public class Ai1 implements AiBase {
                         move.process(color1, color2, i, 2);
                         float score = scoreCalc();
 
-                        System.out.println("score = " + score);
+                        // System.out.println("score = " + score);
 
                         if(score > bestMoveScore) {
                             bestMoveScore = score;
@@ -105,7 +105,7 @@ public class Ai1 implements AiBase {
                         move.process(color1, color2, i, 3);
                         float score = scoreCalc();
 
-                        System.out.println("score = " + score);
+                        // System.out.println("score = " + score);
 
                         if(score > bestMoveScore) {
                             bestMoveScore = score;
@@ -117,15 +117,15 @@ public class Ai1 implements AiBase {
 
                 input.setMove(bestMovePosition, bestMoveRotation, true);
 
-                System.out.println("===================");
-                System.out.println("BestMove: pos = " + bestMovePosition + "; rot = " +
-                        bestMoveRotation + "; score = " + bestMoveScore);
-                System.out.println("\n\n");
+                // System.out.println("===================");
+                // System.out.println("BestMove: pos = " + bestMovePosition + "; rot = " +
+                //         bestMoveRotation + "; score = " + bestMoveScore);
+                // System.out.println("\n\n");
             }
 
             input.update();
         }
-        prevState = m.state.getCurrentState();
+        prevState = m.getState();
     }
 
     private float scoreCalc() {

@@ -19,7 +19,6 @@ public class MapScreen extends ScreenBase {
     public MapManager manager;
 
     public MapScreen() {
-        super();
         manageInput = false;
     }
 
@@ -35,7 +34,7 @@ public class MapScreen extends ScreenBase {
 
         super.render(delta);
 
-        manager.update();
+        manager.winLost();
 
         G.game.sr.setProjectionMatrix(cam.combined);
         G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -57,10 +56,5 @@ public class MapScreen extends ScreenBase {
     public void resize(int width, int height) {
         super.resize(width, height);
         manager.resize();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 }

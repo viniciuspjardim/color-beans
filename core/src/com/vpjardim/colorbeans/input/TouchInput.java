@@ -17,8 +17,9 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     // so when the finger stops moving the play blocks stops moving to
     // following a shape like this
     // finger on the center:     ||.|..|...|..|.||
-    // finger more to the left:  |..|...|..|.||
-    // finger more to the right: ||.|..|...|..|
+    // finger more to the left:  |..|...|..|.|.|||
+    // finger more to the right: |||.|.|..|...|..|
+    // Todo slide up to pause and menu options
 
     private TargetBase target;
 

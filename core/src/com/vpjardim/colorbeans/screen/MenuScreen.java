@@ -5,15 +5,13 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.defaults.Db;
 
 /**
  * @author Vinícius Jardim
@@ -21,14 +19,14 @@ import com.vpjardim.colorbeans.G;
  */
 public class MenuScreen extends ScreenBase {
 
+    public static final int ACT_PLAY = 1;
+    public static final int ACT_SCORE = 2;
+
     private Stage stage;
-    private Skin skin;
     private Table table;
-    private TextButton playButt, optionsButt, exitButt;
-    private BitmapFont font;
+    private TextButton playButt, scoreButt, optionsButt, exitButt;
 
     public MenuScreen() {
-        super();
         manageInput = false;
     }
 
@@ -37,58 +35,60 @@ public class MenuScreen extends ScreenBase {
 
         super.show();
 
+        bgColor = Db.bgColor();
+
         stage = new Stage(viewport);
         G.game.input.addProcessor(stage);
 
-        skin = new Skin(G.game.atlas);
-        table = new Table(skin);
+        table = new Table(G.game.skin);
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        font = G.game.assets.get("roboto_24.ttf", BitmapFont.class);
-
-        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-        buttonStyle.up = skin.getDrawable("game/b_yellow");
-        buttonStyle.down = skin.getDrawable("game/b_yellow");
-        buttonStyle.font = font;
-        buttonStyle.fontColor = Color.BLACK;
-
-        playButt = new TextButton("PLAY", buttonStyle);
+        playButt = new TextButton("Play!",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
         playButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 isFinished = true;
-                // Todo bad idea, need to tell for what screen should change
-
-                // #debugCode
-                Gdx.app.log(MenuScreen.class.getSimpleName(), "Play button touch");
+                action = ACT_PLAY;
             }
         });
 
-        optionsButt = new TextButton("OPTIONS", buttonStyle);
+        scoreButt = new TextButton("Score Board",
+                G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
+        scoreButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                isFinished = true;
+                action = ACT_SCORE;
+            }
+        });
+
+        optionsButt = new TextButton("Options...",
+                G.game.skin.get("bttBlue", TextButton.TextButtonStyle.class));
         optionsButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {}
         });
 
-        exitButt = new TextButton("EXIT", buttonStyle);
+        exitButt = new TextButton("Exit",
+                G.game.skin.get("bttGray", TextButton.TextButtonStyle.class));
         exitButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
-
-                // #debugCode
-                Gdx.app.debug(this.getClass().getSimpleName(), "Exit button touch");
             }
         });
 
         table.add(playButt).width(250).pad(20);
+        table.row();
+        table.add(scoreButt).width(250).pad(20);
         table.row();
         table.add(optionsButt).width(250).pad(20);
         table.row();
         table.add(exitButt).width(250).pad(60, 20, 20, 20);
 
         stage.addActor(table);
-        table.debug(); // #debugCode
+        // table.debug(); // #debugCode
     }
 
     @Override
@@ -96,11 +96,6 @@ public class MenuScreen extends ScreenBase {
         super.render(delta);
         stage.act(delta);
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
     }
 
     @Override

@@ -912,13 +912,8 @@ public class Map implements TargetBase {
 
         score += ab;
 
-        // #debugCode
-        if(ab > 0) {
-            scoreStr = a + " x " + b;
-
-            Gdx.app.log(this.getClass().getSimpleName() + "#" + this.toString(),
-                    a + " x " + b + " = " + ab + " => score = " + score);
-        }
+        if(a > 0 && b > 1) scoreStr = "+ " + a + " x " + b;
+        else if(ab > 0)    scoreStr = "+ " + a;
     }
 
     private void groupBonusCalc() {
@@ -991,6 +986,16 @@ public class Map implements TargetBase {
         }
 
         return nTrashBlocks;
+    }
+
+    /** Returns true if the map.state is equals the argument state */
+    public boolean isState(Map.MState state) {
+        return this.state.getCurrentState().equals(state);
+    }
+
+    /** Returns map current state */
+    public Map.MState getState() {
+        return this.state.getCurrentState();
     }
 
     private void gameOver() {

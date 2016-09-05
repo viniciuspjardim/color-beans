@@ -20,10 +20,6 @@ public abstract class MapManager {
 
     public abstract void init();
 
-    public abstract void mapWin(int mapIndex);
-
-    public abstract void mapLost(int mapIndex);
-
     public void resize() {
 
         // Calculating side size
@@ -83,46 +79,34 @@ public abstract class MapManager {
         return opp;
     }
 
-    public void update() {
+    public void winLost() {
 
-        if(maps.size > 1) {
+        int mapsAnimating = 0;
+        int mapsPlaying = 0;
+        Map mapPlaying = null;
 
-            int mapsNotDone = 0;
-            int mapsNotOverDone = 0;
-            Map mapNotDone = null;
+        for(Map m : maps) {
 
-            for(Map m : maps) {
-
-                if(!m.state.getCurrentState().equals(Map.MState.OVER) &&
-                        !m.state.getCurrentState().equals(Map.MState.DONE)) {
-                    mapsNotOverDone++;
-                    mapNotDone = m;
-                }
-
-                if(!m.state.getCurrentState().equals(Map.MState.DONE)) {
-                    mapsNotDone++;
-                }
+            // Maps not in (OVER or DONE) state: maps playing
+            if(!(m.isState(Map.MState.OVER) || m.isState(Map.MState.DONE))) {
+                mapsPlaying++;
+                mapPlaying = m;
             }
 
-            // All maps except one are in OVER or DONE state
-            if(mapsNotOverDone == 1) {
-                mapNotDone.prop.gameWin = true;
-            }
-
-            // If all maps are in DONE state and autoRestart is on
-            // restart the game
-            if(gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART && mapsNotDone == 0) {
-                for(Map m : maps) {
-                    m.recycle();
-                    m.state.changeState(Map.MState.FREE_FALL);
-                }
+            // Maps not in DONE state: playing or animating (win or lost animations)
+            if(!m.isState(Map.MState.DONE)) {
+                mapsAnimating++;
             }
         }
-        else if(gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART) {
 
-            Map m = maps.first();
+        // All maps except one are in OVER or DONE state, so one map win
+        if(mapsPlaying == 1 && maps.size > 1) {
+            mapPlaying.prop.gameWin = true;
+        }
 
-            if(m.state.getCurrentState().equals(Map.MState.DONE)) {
+        // If auto restart is on and animations finished: restart the game
+        if(gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART && mapsAnimating == 0) {
+            for(Map m : maps) {
                 m.recycle();
                 m.state.changeState(Map.MState.FREE_FALL);
             }

@@ -229,13 +229,12 @@ public class MapScreen extends ScreenBase {
 
             for(Map m : maps) {
 
-                if(!m.state.getCurrentState().equals(Map.MState.OVER) &&
-                        !m.state.getCurrentState().equals(Map.MState.DONE)) {
+                if(!m.isState(Map.MState.OVER) && !m.isState(Map.MState.DONE)) {
                     mapsNotOverDone++;
                     mapNotDone = m;
                 }
 
-                if(!m.state.getCurrentState().equals(Map.MState.DONE)) {
+                if(!m.isState(Map.MState.DONE)) {
                     mapsNotDone++;
                 }
             }
@@ -258,7 +257,7 @@ public class MapScreen extends ScreenBase {
 
             Map m = maps.first();
 
-            if(m.state.getCurrentState().equals(Map.MState.DONE)) {
+            if(m.isState(Map.MState.DONE)) {
                 m.recycle();
                 m.state.changeState(Map.MState.FREE_FALL);
             }

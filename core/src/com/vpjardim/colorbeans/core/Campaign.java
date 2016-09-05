@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.Ai1;
-import com.vpjardim.colorbeans.defaults.Defaults;
+import com.vpjardim.colorbeans.defaults.Db;
 
 /**
  * @author Vinícius Jardim
@@ -19,7 +19,7 @@ public class Campaign extends MapManager {
     @Override
     public void init() {
 
-        gameCfg = Defaults.loopGame;
+        gameCfg = Db.loopGame;
 
         maps    = new Array<>();
         render  = new Array<>();
@@ -52,15 +52,5 @@ public class Campaign extends MapManager {
 
         maps.get(1).ai = new Ai1();
         maps.get(1).ai.init(maps.get(1));
-    }
-
-    @Override
-    public void mapWin(int mapIndex) {
-
-    }
-
-    @Override
-    public void mapLost(int mapIndex) {
-
     }
 }

@@ -1,0 +1,35 @@
+{
+    com.badlogic.gdx.graphics.Color: {
+        white: { hex: ffffffff }
+    },
+
+    com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+        bttYellow: {
+            up: "game/b_yellow_up",
+            down: "game/b_yellow_down",
+            font: dimbo
+        },
+        bttGreen: {
+            up: "game/b_green_up",
+            down: "game/b_green_down",
+            font: dimbo
+        },
+        bttBlue: {
+            up: "game/b_blue_up",
+            down: "game/b_blue_down",
+            font: dimbo
+        },
+        bttGray: {
+            up: "game/b_gray_up",
+            down: "game/b_gray_down",
+            font: dimbo
+        }
+    },
+
+    com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+        defLabel: {
+            font: roboto,
+            fontColor: white
+        }
+    }
+}

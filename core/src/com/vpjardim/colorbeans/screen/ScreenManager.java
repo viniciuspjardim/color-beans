@@ -54,23 +54,29 @@ public class ScreenManager {
         transition.update(G.delta);
 
         // When the screen is done we change to the
-        // next screen. Ideally the screen transitions are handled
-        // in the screen itself or in a proper state machine
+        // next screen
         if(currScreen.isFinished()) {
 
             // dispose the resources of the current screen
             currScreen.dispose();
 
             // Switch to the next screen based on the current screen
-            // and the screen status
+            // and the screen action
             if(currScreen instanceof LoadingScreen)
                 G.game.setScreen(new StudioScreen());
 
             else if(currScreen instanceof StudioScreen)
                 G.game.setScreen(new MenuScreen());
 
-            else if(currScreen instanceof MenuScreen)
-                G.game.setScreen(new MapScreen());
+            else if(currScreen instanceof MenuScreen) {
+
+                if(currScreen.action == MenuScreen.ACT_PLAY)
+                    G.game.setScreen(new MapScreen());
+                else
+                    G.game.setScreen(new ScoreScreen());
+            }
+            else if(currScreen instanceof ScoreScreen)
+                G.game.setScreen(new MenuScreen());
         }
 
         // #debugCode

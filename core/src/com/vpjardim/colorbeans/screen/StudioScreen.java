@@ -31,8 +31,6 @@ public class StudioScreen extends ScreenBase {
 
     private TweenManager transition;
 
-    public StudioScreen() { super(); }
-
     @Override
     public void show() {
 

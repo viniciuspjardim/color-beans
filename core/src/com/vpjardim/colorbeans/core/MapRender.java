@@ -44,7 +44,7 @@ public class MapRender {
     public void renderBatch() {
 
         TextureAtlas.AtlasRegion tile;
-        BitmapFont font = G.game.assets.get("roboto_24.ttf", BitmapFont.class);
+        BitmapFont font = G.game.assets.get("dimbo.ttf", BitmapFont.class);
 
         font.draw(G.game.batch, m.scoreStr, px + size * 0.1f, py - size * 0.1f);
 
