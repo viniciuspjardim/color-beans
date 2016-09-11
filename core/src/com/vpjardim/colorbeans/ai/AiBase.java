@@ -5,6 +5,7 @@
 package com.vpjardim.colorbeans.ai;
 
 import com.vpjardim.colorbeans.Map;
+import com.vpjardim.colorbeans.core.Cfg;
 
 /**
  * @author Vinícius Jardim
@@ -12,6 +13,6 @@ import com.vpjardim.colorbeans.Map;
  */
 public interface AiBase {
 
-    void init(Map map);
+    void init(Map map, Cfg.Ai cfg);
     void update();
 }

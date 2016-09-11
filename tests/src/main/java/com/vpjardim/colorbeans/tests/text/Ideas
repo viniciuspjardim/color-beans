@@ -3,9 +3,7 @@
  */
 
 ==== IDEAS ====
-
-Todo ideas
- - Scoring
+ - Scoring on key down (blocks fast fall)
  - Win animation and logic
  - Play block rotate animation
  - Option screen
@@ -30,6 +28,7 @@ Todo ideas
  - Achievements
 
 Done
+ - Scoring
  - Play block horizontal move animation
  - Play block vertical move animation
  - Move multiple times horizontally while controller/input key is down

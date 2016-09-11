@@ -32,7 +32,7 @@ public class AiInput implements InputBase {
     public boolean move;
     private int hMove;
     private int rotation;
-    private boolean fastFall;
+    public boolean fastFall;
 
     @Override
     public void setTarget(TargetBase target) {

@@ -7,9 +7,11 @@ package com.vpjardim.colorbeans.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.defaults.Db;
 
@@ -19,8 +21,8 @@ import com.vpjardim.colorbeans.defaults.Db;
  */
 public class MenuScreen extends ScreenBase {
 
-    public static final int ACT_PLAY = 1;
-    public static final int ACT_SCORE = 2;
+    public static final int ACT_PLAY  = 10;
+    public static final int ACT_SCORE = 11;
 
     private Stage stage;
     private Table table;
@@ -48,7 +50,6 @@ public class MenuScreen extends ScreenBase {
         playButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                isFinished = true;
                 action = ACT_PLAY;
             }
         });
@@ -58,7 +59,6 @@ public class MenuScreen extends ScreenBase {
         scoreButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                isFinished = true;
                 action = ACT_SCORE;
             }
         });
@@ -79,16 +79,25 @@ public class MenuScreen extends ScreenBase {
             }
         });
 
-        table.add(playButt).width(250).pad(20);
+        Label.LabelStyle labelStyle =
+                G.game.skin.get("labelMenu", Label.LabelStyle.class);
+
+        Label label;
+        label = new Label("Color Beans", labelStyle);
+        label.setAlignment(Align.center);
+
+        table.add(label).width(720).height(249);
         table.row();
-        table.add(scoreButt).width(250).pad(20);
+        table.add(playButt).width(250).pad(12);
         table.row();
-        table.add(optionsButt).width(250).pad(20);
+        table.add(scoreButt).width(250).pad(12);
         table.row();
-        table.add(exitButt).width(250).pad(60, 20, 20, 20);
+        table.add(optionsButt).width(250).pad(12);
+        table.row();
+        table.add(exitButt).width(250).pad(60, 12, 12, 12);
 
         stage.addActor(table);
-        // table.debug(); // #debugCode
+        table.debug(); // #debugCode
     }
 
     @Override

@@ -47,12 +47,28 @@ public class Cfg {
         public float speed;
     }
 
+    /**
+     * AI configuration. With this params we can change the AI difficulty level.
+     * Although I wrote "percent" or "percentage" in the fields doc, I mean 0 to 1 intervals. Which
+     * 1 would be 100%; 0.5, 50% etc.
+     */
     public static class Ai {
 
-        public int level;
-        public float downKey;
-        public float doubtness;
+        /** Minimum fall percent in which down key will be pressed */
+        public float downKeyMin;
+        /** Maximum fall percent in which down key will be pressed */
+        public float downKeyMax;
+        /** Minimum fall percent in which the AI will fake doubt (horizontal/rotations moves) */
+        public float doubtMin;
+        /** Maximum fall percent in which the AI will fake doubt (horizontal/rotations moves) */
+        public float doubtMax;
+        /** Minimum fall percent in which the AI should choose another "doubt" move */
+        public float doubtFreqMin;
+        /** Maximum fall percent in which the AI should choose another "doubt" move */
+        public float doubtFreqMax;
+        /** Score random multiplier: 0.5 means 50% */
         public float randomness;
-        public float nonBest;
+        /** Percentage of moves that should be random or almost random */
+        public float trashMoves;
     }
 }

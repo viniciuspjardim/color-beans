@@ -116,7 +116,7 @@ public class StudioScreen extends ScreenBase {
 
         G.game.batch.end();
 
-        if(time >= 10.9f) isFinished = true;
+        if(time >= 10.9f) action = ScreenBase.ACT_NEXT;
     }
 
     @Override
@@ -151,17 +151,17 @@ public class StudioScreen extends ScreenBase {
     }
 
     @Override
-    public void button1(boolean isDown) { isFinished = true; }
+    public void button1(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void button2(boolean isDown) { isFinished = true; }
+    public void button2(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void button3(boolean isDown) { isFinished = true; }
+    public void button3(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void button4(boolean isDown) { isFinished = true; }
+    public void button4(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void buttonStart(boolean isDown) { isFinished = true; }
+    public void buttonStart(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 }

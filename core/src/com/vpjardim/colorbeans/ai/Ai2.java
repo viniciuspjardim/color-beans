@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
 import com.vpjardim.colorbeans.Map;
+import com.vpjardim.colorbeans.core.Cfg;
 
 /**
  * #warning too slow, do not use
@@ -24,7 +25,7 @@ public class Ai2 implements AiBase {
     private Map.MState prevState;
 
     @Override
-    public void init(Map map) {
+    public void init(Map map, Cfg.Ai cfg) {
         m = map;
         moves = new Moves();
         moves.init(m.N_COL);

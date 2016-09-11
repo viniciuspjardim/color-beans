@@ -96,7 +96,7 @@ public class LoadingScreen extends ScreenBase {
         // If stuff has done loading, init some vars and go to the next screen
         if(frameCount > 1 && G.game.assets.update()) {
 
-            isFinished = true;
+            action = ScreenBase.ACT_NEXT;
 
             // After loading is done we can create atlas and skin
             G.game.atlas = G.game.assets.get("img/pack.atlas", TextureAtlas.class);

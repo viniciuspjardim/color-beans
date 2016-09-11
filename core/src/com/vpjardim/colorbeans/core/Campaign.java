@@ -50,7 +50,9 @@ public class Campaign extends MapManager {
 
         G.game.input.linkAll();
 
+        // maps.get(0).ai = new Ai1();
+        // maps.get(0).ai.init(maps.get(0), Db.mediumAi);
         maps.get(1).ai = new Ai1();
-        maps.get(1).ai.init(maps.get(1));
+        maps.get(1).ai.init(maps.get(1), Db.bestAi);
     }
 }

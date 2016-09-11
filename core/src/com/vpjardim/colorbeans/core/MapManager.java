@@ -112,4 +112,22 @@ public abstract class MapManager {
             }
         }
     }
+
+    public void pause(int mapIndex) {
+
+        if(gameCfg.pauseAct == Cfg.Game.PAUSE_SELF) {
+            Map m = maps.get(mapIndex);
+            m.prop.pause = !m.prop.pause;
+        }
+        else if(gameCfg.pauseAct == Cfg.Game.PAUSE_ALL) {
+
+            boolean paused = !maps.get(mapIndex).prop.pause;
+
+            for(int i = 0; i < maps.size; i++) {
+                Map m = maps.get(i);
+                m.prop.pause = paused;
+            }
+        }
+        else if(gameCfg.pauseAct == Cfg.Game.PAUSE_OFF) {}
+    }
 }

@@ -21,10 +21,10 @@ import com.vpjardim.colorbeans.input.TargetBase;
  */
 public class ScreenBase implements Screen, TargetBase {
 
-    public static final int ACT_WAIT = 0;
+    public static final int ACT_RUNNING = 1;
+    public static final int ACT_NEXT    = 2;
 
     protected int action;
-    protected boolean isFinished;
     protected OrthographicCamera cam;
     protected Viewport viewport;
     protected boolean manageInput = true;
@@ -34,13 +34,12 @@ public class ScreenBase implements Screen, TargetBase {
     public float time;
 
     public ScreenBase() {
-        action = ACT_WAIT;
-        isFinished = false;
+        action = ACT_RUNNING;
         time = 0f;
     }
 
     public boolean isFinished() {
-        return isFinished;
+        return action != ACT_RUNNING;
     }
 
     @Override

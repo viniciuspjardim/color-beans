@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.IntMap;
 import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.Map;
+import com.vpjardim.colorbeans.core.Cfg;
 
 /**
  * @author Vinícius Jardim
@@ -30,7 +31,7 @@ public class Ai3 implements AiBase {
     private Map.MState prevState;
 
     @Override
-    public void init(Map map) {
+    public void init(Map map, Cfg.Ai cfg) {
         m = map;
         tree = new Tree3(m.N_COL);
 

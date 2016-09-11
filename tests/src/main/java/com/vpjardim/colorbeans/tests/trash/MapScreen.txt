@@ -41,7 +41,6 @@ public class MapScreen extends ScreenBase {
         manageInput = false;
     }
 
-    // Todo should not return maps in game over state
     public Map getOpponent(Map mCaller) {
 
         if(maps.size <= 1 || mCaller == null) return null;
@@ -127,7 +126,6 @@ public class MapScreen extends ScreenBase {
             }
             G.game.input.linkAll();
 
-            // Todo ai.init() should be called after game.input.linkAll()
             // #debugCode
             //maps.get(0).ai = new Ai3();
             //maps.get(0).ai.init(maps.get(0));
@@ -177,7 +175,6 @@ public class MapScreen extends ScreenBase {
 
         G.game.input.linkAll();
 
-        // Todo ai.init() should be called after game.input.linkAll()
         // #debugCode
         //maps.get(0).ai = new Ai3();
         //maps.get(0).ai.init(maps.get(0));

@@ -1,6 +1,7 @@
 {
     com.badlogic.gdx.graphics.Color: {
-        white: { hex: ffffffff }
+        white: { hex: ffffffff },
+        black: { hex: 000000ff }
     },
 
     com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -27,7 +28,14 @@
     },
 
     com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-        defLabel: {
+        labelMenu: {
+            background: "game/ribbon_red",
+            font: dimbo
+        }
+    },
+
+    com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+        labelDef: {
             font: roboto,
             fontColor: white
         }

@@ -1155,7 +1155,7 @@ public class Map implements TargetBase {
 
     @Override
     public void buttonStart(boolean isDown) {
-        if(isDown) prop.pause = !prop.pause;
+        if(isDown) manager.pause(index);
     }
 
     @Override
@@ -1255,10 +1255,10 @@ public class Map implements TargetBase {
             b[1][11 + OUT_ROW].setColor(5);
             b[2][11 + OUT_ROW].setColor(1);
         }
-        // Only 2 rows free at the top
+        // Only 3 rows free at the top
         else if(shape == 4) {
             for(int col = 0; col < b.length; col++) {
-                for(int row = OUT_ROW + 2; row < b[col].length; row++) {
+                for(int row = OUT_ROW + 3; row < b[col].length; row++) {
                     b[col][row].setColor(Block.CLR_T);
                 }
             }

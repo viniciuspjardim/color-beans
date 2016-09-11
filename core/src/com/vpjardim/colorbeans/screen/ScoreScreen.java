@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
@@ -43,14 +44,25 @@ public class ScoreScreen extends ScreenBase {
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Label.LabelStyle labelStyle =
-                G.game.skin.get("defLabel", Label.LabelStyle.class);
+                G.game.skin.get("labelDef", Label.LabelStyle.class);
 
         int cont = 1;
         for(ScoreTable.Row row : G.game.score.getRows()) {
-            table.add(new Label(Integer.toString(cont), labelStyle)).width(60);
-            table.add(new Label(row.nick, labelStyle)).width(120);
-            table.add(new Label(G.game.intFmt.format(row.score), labelStyle)).width(90);
-            table.row().pad(10, 0, 0, 0);
+            Label label;
+
+            label = new Label(Integer.toString(cont), labelStyle);
+            label.setAlignment(Align.center);
+            table.add(label).width(200);
+
+            label = new Label(row.nick, labelStyle);
+            label.setAlignment(Align.center);
+            table.add(label).width(200);
+
+            label = new Label(G.game.intFmt.format(row.score), labelStyle);
+            label.setAlignment(Align.center);
+            table.add(label).width(200);
+
+            table.row().pad(12, 0, 0, 0);
             cont++;
         }
 
@@ -59,14 +71,14 @@ public class ScoreScreen extends ScreenBase {
         backButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                isFinished = true;
+                action = ScreenBase.ACT_NEXT;
             }
         });
 
-        table.add(backButt).width(200).pad(180, 0, 0, 0);
+        table.add(backButt).width(200).pad(24, 0, 0, 0);
 
         stage.addActor(table);
-        //table.debug(); // #debugCode
+        table.debug(); // #debugCode
     }
 
     @Override
