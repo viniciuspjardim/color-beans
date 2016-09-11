@@ -10,7 +10,7 @@ they will be freed (deleted) and the player will score.
 This game is a clone of Dr. Robotnik's Mean Bean Machine, but It does not
 use any assets or code from the original game.
 
-This project it's for learning purpose only.
+This project is for learning purpose only.
 
 For more details on the game mechanics watch videos of the Dr. Robotnik's
 Mean Bean Machine game or read the source code documentation, for example:
@@ -34,7 +34,7 @@ publish or redistribute any Object Form or Object Form derivation of this
 project. Do not sell, publish or redistribute the assets or source code,
 including derivations in GitHub (forks are allowed), other site or media.
 
-You are allowed to fork this repo and work on your fork, send pull requests
+You are allowed to fork this repo and work at your fork, send pull requests
 and report issues here in GitHub only.
 
 Disclaimer of Warranty. Unless required by applicable law or agreed to in
