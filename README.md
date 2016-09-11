@@ -4,7 +4,7 @@
 
 It's a Tetris like blocks (called beans) game. While in Tetris the goal is
 to complete rows of blocks, in Color Beans the goal is to link beans of
-the same color. If there is a least 4 beans of the same color linked together
+the same color. If there is at least 4 beans of the same color linked together,
 they will be freed (deleted) and the player will score.
 
 This game is a clone of Dr. Robotnik's Mean Bean Machine, but It does not
@@ -12,7 +12,7 @@ use any assets or code from the original game.
 
 This project is for learning purpose only.
 
-For more details on the game mechanics watch videos of the Dr. Robotnik's
+For more details on the game mechanics, watch videos of the Dr. Robotnik's
 Mean Bean Machine game or read the source code documentation, for example:
 the [Map](core/src/com/vpjardim/colorbeans/Map.java) class.
 
@@ -26,7 +26,7 @@ Object Form: mechanical transformation or translation of a source form,
 including but not limited to compiled object code, generated documentation,
 and conversions to other media types.
 
-Work: all the files of this project, including all assets, in source or
+Work: all the files of this project, including all assets, sources or
 Object Form.
 
 Please use this Work for personal or learning purpose only. Do not sell,
