@@ -5,6 +5,7 @@
 package com.vpjardim.colorbeans.core;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.G;
@@ -35,6 +36,8 @@ public class MapRender {
      */
     public float size;
 
+    public GlyphLayout textLayout = new GlyphLayout();
+
     public void renderShapes() {
 
         G.game.sr.setColor(0.1f, 0.2f, 0.25f, 1f);
@@ -46,7 +49,14 @@ public class MapRender {
         TextureAtlas.AtlasRegion tile;
         BitmapFont font = G.game.assets.get("dimbo.ttf", BitmapFont.class);
 
-        font.draw(G.game.batch, m.scoreStr, px + size * 0.1f, py - size * 0.1f);
+        float padding = size * 0.1f;
+
+        font.draw(G.game.batch, m.scoreStr, px + padding, py - padding);
+
+        textLayout.setText(font, m.name);
+        float w = textLayout.width;
+        font.draw(G.game.batch, m.name, px - w + (size * m.b.length) - padding, py - padding);
+
 
         // Draw map blocks
         for(int i = 0; i < m.b.length; i++) {

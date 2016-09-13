@@ -129,7 +129,7 @@ public class Ai1 implements AiBase {
                 float doubt = Math.min(doubtRand, slowFallMax * 0.8f);
                 float deltaH = fallAmount - lastMoveSwitch;
 
-                if(doubt > fallAmount) {
+                if(doubt > fallAmount && !dangerRow(m.pb.mRow)) {
                     if(deltaH >= doubtFreqRand) {
                         input.setMove(MathUtils.random(0, m.b.length),
                                 MathUtils.random(0, 3), false
@@ -148,6 +148,14 @@ public class Ai1 implements AiBase {
             input.fastFall = downKey;
         }
         prevState = m.getState();
+    }
+
+    /** Returns true when the play block row or the below have blocks that may obstruct moves */
+    public boolean dangerRow(int row) {
+        for(int i = 0; i < m.b.length; i++) {
+            if(!m.isEmpty(i, row + 2)) return true;
+        }
+        return false;
     }
 
     private float scoreCalc() {
@@ -180,13 +188,13 @@ public class Ai1 implements AiBase {
         }
 
         // Random small number to avoid even scores
-        score += MathUtils.random(0f, 0.1f);
+        score += MathUtils.random(0.1f);
 
         // Random multiplier for the Ai have a worst performance in easy levels
         score *= 1f + MathUtils.random(cfg.randomness) - cfg.randomness / 2;
 
-        // Trash move
-        if(trashMove) score += MathUtils.random(100f);
+        // Big random number to force AI acts nonsense
+        if(trashMove) score += MathUtils.random(50);
 
         return score;
     }

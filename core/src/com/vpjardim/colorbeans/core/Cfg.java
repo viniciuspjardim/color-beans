@@ -40,11 +40,7 @@ public class Cfg {
     }
 
     public static class Map {
-
-        public int width;
-        public int height;
-        public boolean paused;
-        public float speed;
+        public float moveTime;
     }
 
     /**

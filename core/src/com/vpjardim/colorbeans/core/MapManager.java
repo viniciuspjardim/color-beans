@@ -12,11 +12,9 @@ import com.vpjardim.colorbeans.Map;
 public abstract class MapManager {
 
     public Cfg.Game gameCfg;
-
     public Array<Map> maps;
     public Array<MapRender> render;
-    public Array<Cfg.Map> mapCfgs;
-    public Array<Cfg.Ai> aiCfgs;
+    public Map winnerMap;
 
     public abstract void init();
 
@@ -79,6 +77,10 @@ public abstract class MapManager {
         return opp;
     }
 
+    public abstract void mapWin(int mapIndex);
+
+    public abstract void mapLost(int mapIndex);
+
     public void winLost() {
 
         int mapsAnimating = 0;
@@ -102,6 +104,17 @@ public abstract class MapManager {
         // All maps except one are in OVER or DONE state, so one map win
         if(mapsPlaying == 1 && maps.size > 1) {
             mapPlaying.prop.gameWin = true;
+            winnerMap = mapPlaying;
+        }
+
+        // Wait until animation is over to call mapWin / mapLost events if there is a winner
+        if(winnerMap != null && mapsAnimating == 0) {
+            mapWin(winnerMap.index);
+
+            for(Map m : maps) {
+                if(winnerMap.index == m.index) continue;
+                mapLost(m.index);
+            }
         }
 
         // If auto restart is on and animations finished: restart the game
@@ -110,6 +123,9 @@ public abstract class MapManager {
                 m.recycle();
                 m.state.changeState(Map.MState.FREE_FALL);
             }
+            winnerMap = null;
+            // #debugCode
+            // maps.first().debugShape(2);
         }
     }
 
