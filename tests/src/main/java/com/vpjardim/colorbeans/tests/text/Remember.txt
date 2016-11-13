@@ -12,7 +12,7 @@ Before a release commit
  - In GameClass set LOG_NONE, DELTA_REAL, fpsDebug = false, lagWarn = false
  - See if there is \t indentation
  - Optimize imports
- - Inspect project (folders, libs, todos, files headers, gradle files, package organization, .gitignore files)
+ - Inspect project (folders, libs, external libs, todos, files headers, gradle files, package organization, .gitignore files)
  - Choose the release build variant
  - Run tests
  - See git differences

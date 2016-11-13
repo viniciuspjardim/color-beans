@@ -4,7 +4,6 @@
 
 package com.vpjardim.colorbeans.desktop;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.vpjardim.colorbeans.G;
@@ -19,9 +18,7 @@ public class DesktopLauncher {
 
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
-        config.addIcon("icon/desk256.png", Files.FileType.Internal);
-        config.addIcon("icon/desk64.png", Files.FileType.Internal);
-        config.addIcon("icon/desk32.png", Files.FileType.Internal);
+        config.setWindowIcon("icon/desk256.png", "icon/desk64.png", "icon/desk32.png");
 
         config.setWindowedMode(1080, 860);
         config.setTitle("Color Beans");

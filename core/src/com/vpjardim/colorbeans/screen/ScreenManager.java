@@ -7,6 +7,8 @@ package com.vpjardim.colorbeans.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.core.Campaign;
+import com.vpjardim.colorbeans.core.Training;
 
 import aurelienribon.tweenengine.TweenManager;
 
@@ -71,8 +73,10 @@ public class ScreenManager {
             else if(currScreen instanceof MenuScreen) {
 
                 if(currScreen.action == MenuScreen.ACT_PLAY)
-                    G.game.setScreen(new MapScreen());
-                else
+                    G.game.setScreen(new PlayScreen(new Campaign()));
+                else if(currScreen.action == MenuScreen.ACT_TRAINING)
+                    G.game.setScreen(new PlayScreen(new Training()));
+                else if(currScreen.action == MenuScreen.ACT_SCORE)
                     G.game.setScreen(new ScoreScreen());
             }
             else if(currScreen instanceof ScoreScreen)

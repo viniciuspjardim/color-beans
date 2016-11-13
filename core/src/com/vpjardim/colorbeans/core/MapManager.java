@@ -117,15 +117,26 @@ public abstract class MapManager {
             }
         }
 
-        // If auto restart is on and animations finished: restart the game
-        if(gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART && mapsAnimating == 0) {
-            for(Map m : maps) {
-                m.recycle();
-                m.state.changeState(Map.MState.FREE_FALL);
+        // Maps animations ended
+        if(mapsAnimating == 0) {
+
+            boolean autoRestart = gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART ||
+                    gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
+
+            boolean pause = gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
+
+            // If auto restart is on and animations finished: restart the game
+            if(autoRestart) {
+                for(Map m : maps) {
+                    m.recycle();
+                    m.state.changeState(Map.MState.FREE_FALL);
+
+                    if(pause) pause(m.index);
+                }
+                winnerMap = null;
+                // #debugCode
+                // maps.first().debugShape(2);
             }
-            winnerMap = null;
-            // #debugCode
-            // maps.first().debugShape(2);
         }
     }
 

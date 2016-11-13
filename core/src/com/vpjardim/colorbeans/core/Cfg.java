@@ -12,23 +12,23 @@ public class Cfg {
 
     public static class Game {
 
-        public static final int NET_LOCAL         = 1;
-        public static final int NET_SERVER        = 2;
-        public static final int NET_CLIENT        = 3;
+        public static final int NET_LOCAL           = 1;
+        public static final int NET_SERVER          = 2;
+        public static final int NET_CLIENT          = 3;
 
-        public static final int DIFFICULTY_VEASY  = 1;
-        public static final int DIFFICULTY_EASY   = 2;
-        public static final int DIFFICULTY_NORMAL = 3;
-        public static final int DIFFICULTY_HARD   = 4;
-        public static final int DIFFICULTY_VHARD  = 5;
+        public static final int DIFFICULTY_VEASY    = 1;
+        public static final int DIFFICULTY_EASY     = 2;
+        public static final int DIFFICULTY_NORMAL   = 3;
+        public static final int DIFFICULTY_HARD     = 4;
+        public static final int DIFFICULTY_VHARD    = 5;
 
-        public static final int PAUSE_OFF         = 1;
-        public static final int PAUSE_SELF        = 2;
-        public static final int PAUSE_ALL         = 3;
+        public static final int PAUSE_OFF           = 1;
+        public static final int PAUSE_SELF          = 2;
+        public static final int PAUSE_ALL           = 3;
 
-        public static final int LOST_WAIT         = 1;
-        public static final int LOST_RESTART      = 2;
-        public static final int LOST_AUTO_RESTART = 3;
+        public static final int LOST_WAIT           = 1;
+        public static final int LOST_RESTART_PAUSED = 2;
+        public static final int LOST_AUTO_RESTART   = 3;
 
         public int net;
         public int difficulty;

@@ -70,7 +70,6 @@ public class G extends Game {
         screens.create();
     }
 
-
     @Override
     public void render() { screens.render(); }
 

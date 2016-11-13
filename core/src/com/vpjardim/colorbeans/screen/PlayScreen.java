@@ -6,7 +6,6 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.vpjardim.colorbeans.G;
-import com.vpjardim.colorbeans.core.Campaign;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 
@@ -14,18 +13,18 @@ import com.vpjardim.colorbeans.core.MapRender;
  * @author Vinícius Jardim
  * 02/09/2016
  */
-public class MapScreen extends ScreenBase {
+public class PlayScreen extends ScreenBase {
 
     public MapManager manager;
 
-    public MapScreen() {
+    public PlayScreen(MapManager man) {
         manageInput = false;
+        manager = man;
     }
 
     @Override
     public void show() {
         super.show();
-        manager = new Campaign();
         manager.init();
     }
 

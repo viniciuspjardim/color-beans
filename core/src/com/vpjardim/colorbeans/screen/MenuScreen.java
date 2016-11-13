@@ -21,12 +21,13 @@ import com.vpjardim.colorbeans.defaults.Db;
  */
 public class MenuScreen extends ScreenBase {
 
-    public static final int ACT_PLAY  = 10;
-    public static final int ACT_SCORE = 11;
+    public static final int ACT_PLAY     = 10;
+    public static final int ACT_TRAINING = 11;
+    public static final int ACT_SCORE    = 12;
 
     private Stage stage;
     private Table table;
-    private TextButton playButt, scoreButt, optionsButt, exitButt;
+    private TextButton playButt, trainingButt, scoreButt, optionsButt, exitButt;
 
     public MenuScreen() {
         manageInput = false;
@@ -51,6 +52,15 @@ public class MenuScreen extends ScreenBase {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 action = ACT_PLAY;
+            }
+        });
+
+        trainingButt = new TextButton("Training",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        trainingButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action = ACT_TRAINING;
             }
         });
 
@@ -89,6 +99,8 @@ public class MenuScreen extends ScreenBase {
         table.add(label).width(720).height(249);
         table.row();
         table.add(playButt).width(250).pad(12);
+        table.row();
+        table.add(trainingButt).width(250).pad(12);
         table.row();
         table.add(scoreButt).width(250).pad(12);
         table.row();

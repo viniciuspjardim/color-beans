@@ -114,9 +114,6 @@ public class Ai1 implements AiBase {
                 }
             }
 
-            // Todo fallAmount should be relative to the top block in the row, not to the floor
-            // When it's relative to the floor, blocks in the map can obstruct the path
-
             // Amount fallen until this frame: from 0 (top) to 1 (floor)
             float fallAmount = (float)Math.max(m.pb.mRow - m.OUT_ROW, 0) / (float)m.N_ROW;
 

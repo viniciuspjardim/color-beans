@@ -14,10 +14,10 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '0.0.1'
+    version = '0.1.0'
     ext {
         appName = "Color Beans"
-        gdxVersion = '1.9.4'
+        gdxVersion = '1.9.5-SNAPSHOT'
         aiVersion = '1.8.0'
         gsonVersion = '2.6.1'
     }
@@ -36,10 +36,7 @@ project(":desktop") {
     dependencies {
         compile project(":core")
 
-        // Todo fix when window icon pull request will be accepted
-        // use the line below and remove gdx-backend-lwjgl3-1.9.4-SNAPSHOT.jar from /libs folder
-
-        // compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
@@ -69,12 +66,8 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
 
-        // Todo lwjgl3 jar breaks android, put it in other folder if necessary
-        // compile fileTree(dir: '../libs', include: '*.jar')
+        compile fileTree(dir: '../libs', include: '*.jar')
 
-        // For now, only needs tween-engine and kryonet from the /libs folder
-        compile files('../libs/tween-engine-api.jar')
-        compile files('../libs/kryonet-2.21-all.jar')
     }
 }
 
@@ -87,6 +80,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.google.code.gson:gson:$gsonVersion"
+
         compile fileTree(dir: '../libs', include: '*.jar')
     }
 }

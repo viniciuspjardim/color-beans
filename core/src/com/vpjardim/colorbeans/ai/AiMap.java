@@ -116,7 +116,7 @@ public class AiMap implements Pool.Poolable {
 
         // Done detect insert collisions/obstructed moves
         // When Ai tries to put the play blocks on a obstructed position
-        // Todo detect move that will lead to lost state
+        // Done detect move that will lead to lost state
         // In case of collision on the blocks exit area this move will
         // lead to a lost state
 

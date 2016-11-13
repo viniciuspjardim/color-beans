@@ -17,8 +17,9 @@ public class Db {
     public static final Color[] screenBgColor;
     public static final Color fontShadowColor = new Color(0x00000018);
 
-    public static final Cfg.Game campGame = new Cfg.Game();
-    public static final Cfg.Game loopGame = new Cfg.Game();
+    public static final Cfg.Game campGame     = new Cfg.Game();
+    public static final Cfg.Game loopGame     = new Cfg.Game();
+    public static final Cfg.Game trainingGame = new Cfg.Game();
 
     public static final Cfg.Map map7 = new Cfg.Map();
     public static final Cfg.Map map6 = new Cfg.Map();
@@ -50,21 +51,29 @@ public class Db {
                 new Color(0x10001000), // Dark purple
         };
 
-        campGame.net         = Cfg.Game.NET_LOCAL;
-        campGame.difficulty  = Cfg.Game.DIFFICULTY_NORMAL;
-        campGame.nPlayers    = 2;
-        campGame.nContinues  = 3;
-        campGame.pauseAct    = Cfg.Game.PAUSE_ALL;
-        campGame.finishOnWin = true;
-        campGame.lostAct     = Cfg.Game.LOST_AUTO_RESTART;
+        campGame.net             = Cfg.Game.NET_LOCAL;
+        campGame.difficulty      = Cfg.Game.DIFFICULTY_NORMAL;
+        campGame.nPlayers        = 2;
+        campGame.nContinues      = 3;
+        campGame.pauseAct        = Cfg.Game.PAUSE_ALL;
+        campGame.finishOnWin     = true;
+        campGame.lostAct         = Cfg.Game.LOST_AUTO_RESTART;
 
-        loopGame.net         = Cfg.Game.NET_LOCAL;
-        loopGame.difficulty  = Cfg.Game.DIFFICULTY_NORMAL;
-        loopGame.nPlayers    = 2;
-        loopGame.nContinues  = 3;
-        loopGame.pauseAct    = Cfg.Game.PAUSE_ALL;
-        loopGame.finishOnWin = false;
-        loopGame.lostAct     = Cfg.Game.LOST_AUTO_RESTART;
+        loopGame.net             = Cfg.Game.NET_LOCAL;
+        loopGame.difficulty      = Cfg.Game.DIFFICULTY_NORMAL;
+        loopGame.nPlayers        = 2;
+        loopGame.nContinues      = 3;
+        loopGame.pauseAct        = Cfg.Game.PAUSE_ALL;
+        loopGame.finishOnWin     = false;
+        loopGame.lostAct         = Cfg.Game.LOST_AUTO_RESTART;
+
+        trainingGame.net         = Cfg.Game.NET_LOCAL;
+        trainingGame.difficulty  = Cfg.Game.DIFFICULTY_NORMAL;
+        trainingGame.nPlayers    = 1;
+        trainingGame.nContinues  = -1;
+        trainingGame.pauseAct    = Cfg.Game.PAUSE_ALL;
+        trainingGame.finishOnWin = false;
+        trainingGame.lostAct     = Cfg.Game.LOST_RESTART_PAUSED;
 
         // 13 stages?
         map7.moveTime = 0.12f;
