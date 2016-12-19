@@ -1,8 +1,8 @@
 package com.vpjardim.colorbeans.core;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 
 /**
@@ -11,10 +11,20 @@ import com.vpjardim.colorbeans.Map;
  */
 public abstract class MapManager {
 
+    public static final int PAUSED_NONE  = 1;
+    public static final int PAUSED_ALL   = 2;
+    public static final int PAUSED_MIXED = 3;
+
+    public static final int GAME_CONTIUES = 1;
+    public static final int GAME_OVER     = 2;
+    public static final int GAME_ZEROED   = 3;
+
     public Cfg.Game gameCfg;
     public Array<Map> maps;
     public Array<MapRender> render;
     public Map winnerMap;
+    public int gameStatus = GAME_CONTIUES;
+    public int pauseStatus = PAUSED_NONE;
 
     public abstract void init();
 
@@ -23,15 +33,15 @@ public abstract class MapManager {
         // Calculating side size
 
         // Margin of 2% of the screen width
-        float marginX = Gdx.graphics.getWidth() * (2f / 100f);
+        float marginX = G.width * (2f / 100f);
         float totalMarginX = marginX * (maps.size + 1);
-        float mapsX = Gdx.graphics.getWidth() - totalMarginX;
+        float mapsX = G.width - totalMarginX;
         float sideX = mapsX / (Map.N_COL * maps.size);
 
         // Margin of 2% of the screen height
-        float marginY = Gdx.graphics.getHeight() * (2f / 100f);
+        float marginY = G.height * (2f / 100f);
         float totalMarginY = marginY * 2;
-        float mapsY = Gdx.graphics.getHeight() - totalMarginY;
+        float mapsY = G.height - totalMarginY;
         float sideY = mapsY / Map.N_ROW;
 
         float side = Math.min(sideX, sideY);
@@ -45,12 +55,12 @@ public abstract class MapManager {
             MapRender r = render.get(i);
 
             r.size = side;
-            r.px = (-Gdx.graphics.getWidth() / 2f) + marginX +
+            r.px = (-G.width / 2f) + marginX +
                     (i * (side * Map.N_COL + marginX)) +
-                    ((Gdx.graphics.getWidth() - mapsX) / 2f)
+                    ((G.width - mapsX) / 2f)
             ;
-            r.py = (Gdx.graphics.getHeight() / 2f) - marginY -
-                    ((Gdx.graphics.getHeight() - mapsY) / 2f)
+            r.py = (G.height / 2f) - marginY -
+                    ((G.height - mapsY) / 2f)
             ;
         }
     }
@@ -123,7 +133,7 @@ public abstract class MapManager {
             boolean autoRestart = gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART ||
                     gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
 
-            boolean pause = gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
+            boolean paused = gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
 
             // If auto restart is on and animations finished: restart the game
             if(autoRestart) {
@@ -131,7 +141,7 @@ public abstract class MapManager {
                     m.recycle();
                     m.state.changeState(Map.MState.FREE_FALL);
 
-                    if(pause) pause(m.index);
+                    pause(m.index, paused);
                 }
                 winnerMap = null;
                 // #debugCode
@@ -140,21 +150,34 @@ public abstract class MapManager {
         }
     }
 
-    public void pause(int mapIndex) {
+    public void pause(int mapIndex, boolean paused) {
 
         if(gameCfg.pauseAct == Cfg.Game.PAUSE_SELF) {
             Map m = maps.get(mapIndex);
-            m.prop.pause = !m.prop.pause;
+            m.prop.pause = paused;
         }
         else if(gameCfg.pauseAct == Cfg.Game.PAUSE_ALL) {
-
-            boolean paused = !maps.get(mapIndex).prop.pause;
-
             for(int i = 0; i < maps.size; i++) {
                 Map m = maps.get(i);
                 m.prop.pause = paused;
             }
         }
         else if(gameCfg.pauseAct == Cfg.Game.PAUSE_OFF) {}
+
+        updatePausedStatus();
+    }
+
+    public void updatePausedStatus() {
+
+        int pausedCont = 0;
+
+        for(int i = 0; i < maps.size; i++) {
+            Map m = maps.get(i);
+            if(m.prop.pause) pausedCont++;
+        }
+
+        if(pausedCont == 0) pauseStatus = PAUSED_NONE;
+        else if(pausedCont == maps.size) pauseStatus = PAUSED_ALL;
+        else pauseStatus = PAUSED_MIXED;
     }
 }

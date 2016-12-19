@@ -6,6 +6,7 @@ package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
+import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
@@ -74,17 +75,19 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
         // Returning false cause the event was not handled
         if(target == null) return false;
 
-        if(y < Gdx.graphics.getHeight() * 0.2f) {
+        if(y < G.height * 0.2f) {
             target.buttonStart(true);
-            return true;
+            return false;
         }
 
-        if(x > Gdx.graphics.getWidth() / 2f)
+        if(x > G.width / 2f)
             target.button1(true);
         else
             target.button3(true);
 
-        return true;
+        // Returns false because the stage need this event on the PlayScreen
+        // Todo ControllerInput or other input might have the same problem
+        return false;
     }
 
     @Override

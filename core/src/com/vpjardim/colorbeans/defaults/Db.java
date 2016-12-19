@@ -117,8 +117,8 @@ public class Db {
         ai1.doubtMax = 0.7f;
         ai1.doubtFreqMin = 0.12f;
         ai1.doubtFreqMax = 0.18f;
-        ai1.randomness = 0.6f;
-        ai1.trashMoves = 0.4f;
+        ai1.randomness = 0.75f;
+        ai1.trashMoves = 0.5f;
 
         ai2.downKeyMin = 0.0f;
         ai2.downKeyMax = 0.2f;
@@ -126,8 +126,8 @@ public class Db {
         ai2.doubtMax = 0.6f;
         ai2.doubtFreqMin = 0.1f;
         ai2.doubtFreqMax = 0.16f;
-        ai2.randomness = 0.45f;
-        ai2.trashMoves = 0.25f;
+        ai2.randomness = 0.55f;
+        ai2.trashMoves = 0.3f;
 
         ai3.downKeyMin = 0.2f;
         ai3.downKeyMax = 0.4f;
@@ -135,8 +135,8 @@ public class Db {
         ai3.doubtMax = 0.6f;
         ai3.doubtFreqMin = 0.08f;
         ai3.doubtFreqMax = 0.14f;
-        ai3.randomness = 0.3f;
-        ai3.trashMoves = 0.15f;
+        ai3.randomness = 0.35f;
+        ai3.trashMoves = 0.2f;
 
         ai4.downKeyMin = 0.2f;
         ai4.downKeyMax = 0.5f;

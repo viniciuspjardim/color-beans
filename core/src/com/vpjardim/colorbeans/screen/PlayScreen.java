@@ -4,7 +4,15 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
@@ -15,7 +23,14 @@ import com.vpjardim.colorbeans.core.MapRender;
  */
 public class PlayScreen extends ScreenBase {
 
+    public static final int ACT_MENU     = 10;
+    public static final int ACT_CREDITS  = 11;
+
     public MapManager manager;
+
+    private OrthographicCamera menuCam;
+    private Viewport menuViewport;
+    private Stage stage;
 
     public PlayScreen(MapManager man) {
         manageInput = false;
@@ -24,7 +39,46 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void show() {
+
         super.show();
+
+        menuCam = new OrthographicCamera();
+        menuViewport = new ScreenViewport(menuCam);
+        viewport.apply(false);
+        stage = new Stage(menuViewport, G.game.batch);
+        G.game.input.addProcessor(stage);
+
+        Table table = new Table(G.game.skin);
+        table.setBounds(0, 0, G.width, G.height);
+
+        TextButton menuButt, resumeButt;
+
+        menuButt = new TextButton("Menu",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        menuButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action = ACT_MENU;
+            }
+        });
+
+        resumeButt = new TextButton("Resume",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        resumeButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                manager.pause(0, false);
+            }
+        });
+
+        table.add(menuButt).width(250).pad(12);
+        table.row();
+        table.add(resumeButt).width(250).pad(12);
+        table.row();
+
+        stage.addActor(table);
+        table.debug(); // #debugCode
+
         manager.init();
     }
 
@@ -49,11 +103,33 @@ public class PlayScreen extends ScreenBase {
             r.renderBatch();
         }
         G.game.batch.end();
+
+        if(manager.pauseStatus == MapManager.PAUSED_ALL) {
+            stage.act(delta);
+            stage.draw();
+        }
+
+        if(manager.gameStatus == MapManager.GAME_ZEROED)
+            action = ACT_CREDITS;
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
         manager.resize();
+        menuViewport.update(width, height, false);
+    }
+
+    @Override
+    public void pause() {
+        manager.pause(0, true);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        G.game.input.removeProcessor(stage);
+        // Only dispose what does not come from game.assets. Do not dispose skin.
+        stage.dispose();
     }
 }

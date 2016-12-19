@@ -33,18 +33,18 @@ android {
         }
         // Debug with ProGuard enabled
         debugPG {
-            applicationIdSuffix ".debugPG"
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt'
+            minifyEnabled false
             pseudoLocalesEnabled false
             debuggable true
+            applicationIdSuffix ".debugPG"
         }
         release {
-            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt'
-            signingConfig signingConfigs.AndroidKey
+            minifyEnabled true
             pseudoLocalesEnabled false
             debuggable false
+            signingConfig signingConfigs.AndroidKey
         }
     }
     defaultConfig {

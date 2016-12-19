@@ -32,6 +32,8 @@ public class G extends Game {
     public static final int DELTA_FAST   = 4;
 
     public static float delta;
+    public static int width;
+    public static int height;
     public static G game;
 
     public ScreenManager screens;
@@ -66,6 +68,9 @@ public class G extends Game {
         fpsDebug = false;
         lagWarn  = false;
 
+        G.width = Gdx.graphics.getWidth();
+        G.height = Gdx.graphics.getHeight();
+
         screens = new ScreenManager();
         screens.create();
     }
@@ -77,6 +82,13 @@ public class G extends Game {
     public void resume() {
         super.resume();
         game = (G)Gdx.app.getApplicationListener();
+    }
+
+    @Override
+    public void resize (int width, int height) {
+        G.width = width;
+        G.height = height;
+        if(screen != null) screen.resize(width, height);
     }
 
     @Override

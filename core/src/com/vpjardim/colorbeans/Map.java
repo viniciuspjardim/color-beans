@@ -1162,7 +1162,8 @@ public class Map implements TargetBase {
 
     @Override
     public void buttonStart(boolean isDown) {
-        if(isDown) manager.pause(index);
+        if(isDown && getState() != MState.OVER && getState() != MState.DONE)
+            manager.pause(index, !prop.pause);
     }
 
     @Override

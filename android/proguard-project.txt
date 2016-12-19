@@ -66,7 +66,10 @@
     public void log(...);
 }
 
+# Todo find why it's not working without this line
+# This prevent obfuscation in all gdx package because it was giving class
+# not found exception
+-keep class com.badlogic.gdx.** {*;}
+
 -dontwarn com.esotericsoftware.kryo.**
 -dontwarn org.objenesis.instantiator.sun.**
-# Todo remove on gdx version 1.9.3+
--dontwarn com.badlogic.gdx.controllers.lwjgl3.**

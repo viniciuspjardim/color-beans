@@ -79,8 +79,19 @@ public class ScreenManager {
                 else if(currScreen.action == MenuScreen.ACT_SCORE)
                     G.game.setScreen(new ScoreScreen());
             }
+
             else if(currScreen instanceof ScoreScreen)
                 G.game.setScreen(new MenuScreen());
+
+            else if(currScreen instanceof PlayScreen) {
+                if(currScreen.action == PlayScreen.ACT_MENU)
+                    G.game.setScreen(new MenuScreen());
+                else if(currScreen.action == PlayScreen.ACT_CREDITS)
+                    G.game.setScreen(new CreditsScreen());
+            }
+            else if(currScreen instanceof CreditsScreen) {
+                G.game.setScreen(new MenuScreen());
+            }
         }
 
         // #debugCode

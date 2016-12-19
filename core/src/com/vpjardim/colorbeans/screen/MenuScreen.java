@@ -26,8 +26,6 @@ public class MenuScreen extends ScreenBase {
     public static final int ACT_SCORE    = 12;
 
     private Stage stage;
-    private Table table;
-    private TextButton playButt, trainingButt, scoreButt, optionsButt, exitButt;
 
     public MenuScreen() {
         manageInput = false;
@@ -40,11 +38,13 @@ public class MenuScreen extends ScreenBase {
 
         bgColor = Db.bgColor();
 
-        stage = new Stage(viewport);
+        stage = new Stage(viewport, G.game.batch);
         G.game.input.addProcessor(stage);
 
-        table = new Table(G.game.skin);
-        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Table table = new Table(G.game.skin);
+        table.setBounds(0, 0, G.width, G.height);
+
+        TextButton playButt, trainingButt, scoreButt, optionsButt, exitButt;
 
         playButt = new TextButton("Play!",
                 G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));

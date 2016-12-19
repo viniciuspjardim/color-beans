@@ -4,7 +4,6 @@
 
 package com.vpjardim.colorbeans.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -37,11 +36,11 @@ public class ScoreScreen extends ScreenBase {
 
         bgColor = Db.bgColor();
 
-        stage = new Stage(viewport);
+        stage = new Stage(viewport, G.game.batch);
         G.game.input.addProcessor(stage);
 
         table = new Table(G.game.skin);
-        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        table.setBounds(0, 0, G.width, G.height);
 
         Label.LabelStyle labelStyle =
                 G.game.skin.get("labelDef", Label.LabelStyle.class);

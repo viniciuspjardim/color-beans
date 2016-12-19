@@ -98,11 +98,10 @@ public class Campaign extends MapManager {
             stageIndex++;
             if(stageIndex >= mapCfgs.size) {
                 System.out.println("Game zeroed");
+                gameStatus = GAME_ZEROED;
             }
             // Config maps to the next stage
             else {
-                System.out.println("Next stage...");
-
                 Map playerMap = maps.get(0);
                 playerMap.setCfg(mapCfgs.get(stageIndex));
 

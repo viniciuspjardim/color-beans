@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.3'
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 
@@ -14,10 +14,10 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '0.1.0'
+    version = '0.1.1'
     ext {
         appName = "Color Beans"
-        gdxVersion = '1.9.5-SNAPSHOT'
+        gdxVersion = '1.9.5'
         aiVersion = '1.8.0'
         gsonVersion = '2.6.1'
     }
