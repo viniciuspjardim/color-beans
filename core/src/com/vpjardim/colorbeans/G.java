@@ -47,16 +47,23 @@ public class G extends Game {
     public NumberFormat intFmt;
 
     // #debugCode
-    public int deltaCfg;
-    public boolean fpsDebug;
-    public boolean lagWarn;
+    public final int deltaCfg;
+    public final boolean debug;
+    public final boolean fpsDebug;
+    public final boolean lagWarn;
+
+    // #debugCode
+    public G() {
+        deltaCfg = DELTA_REAL;
+        debug    = false;
+        fpsDebug = false;
+        lagWarn  = false;
+    }
 
     @Override
     public void create() {
 
         // Most things are loaded in the LoadingScreen class. See explanation there.
-
-        game = (G)Gdx.app.getApplicationListener();
 
         // LOG_NONE  = <nothing>
         // LOG_ERROR = error
@@ -64,9 +71,7 @@ public class G extends Game {
         // LOG_DEBUG = error, log, debug
         Gdx.app.setLogLevel(Application.LOG_NONE);
 
-        deltaCfg = DELTA_REAL;
-        fpsDebug = false;
-        lagWarn  = false;
+        game = (G)Gdx.app.getApplicationListener();
 
         G.width = Gdx.graphics.getWidth();
         G.height = Gdx.graphics.getHeight();

@@ -31,7 +31,7 @@ public class Training extends MapManager {
         r.m = playerMap;
         render.add(r);
 
-        playerMap.setCfg(Db.map2);
+        playerMap.setCfg(Db.mapT);
         playerMap.name = "Player";
         G.game.input.addTarget(playerMap);
 

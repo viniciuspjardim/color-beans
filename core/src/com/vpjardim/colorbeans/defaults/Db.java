@@ -21,18 +21,14 @@ public class Db {
     public static final Cfg.Game loopGame     = new Cfg.Game();
     public static final Cfg.Game trainingGame = new Cfg.Game();
 
-    public static final Cfg.Map map7 = new Cfg.Map();
-    public static final Cfg.Map map6 = new Cfg.Map();
-    public static final Cfg.Map map5 = new Cfg.Map();
-    public static final Cfg.Map map4 = new Cfg.Map();
-    public static final Cfg.Map map3 = new Cfg.Map();
-    public static final Cfg.Map map2 = new Cfg.Map();
     public static final Cfg.Map map1 = new Cfg.Map();
-
-
-    public static final Cfg.Ai bestAi     = new Cfg.Ai();
-    public static final Cfg.Ai mediumAi   = new Cfg.Ai();
-    public static final Cfg.Ai worstAi    = new Cfg.Ai();
+    public static final Cfg.Map map2 = new Cfg.Map();
+    public static final Cfg.Map map3 = new Cfg.Map();
+    public static final Cfg.Map map4 = new Cfg.Map();
+    public static final Cfg.Map map5 = new Cfg.Map();
+    public static final Cfg.Map map6 = new Cfg.Map();
+    public static final Cfg.Map map7 = new Cfg.Map();
+    public static final Cfg.Map mapT = new Cfg.Map();
 
     public static final Cfg.Ai ai1 = new Cfg.Ai();
     public static final Cfg.Ai ai2 = new Cfg.Ai();
@@ -75,41 +71,22 @@ public class Db {
         trainingGame.finishOnWin = false;
         trainingGame.lostAct     = Cfg.Game.LOST_RESTART_PAUSED;
 
-        // 13 stages?
-        map7.moveTime = 0.12f;
-        map6.moveTime = 0.16f;
-        map5.moveTime = 0.22f;
-        map4.moveTime = 0.3f;
-        map3.moveTime = 0.4f;
-        map2.moveTime = 0.5f;
-        map1.moveTime = 0.7f;
+        map1.moveTime = new float[] {0, 0.70f, 15, 0.60f, 30, 0.50f, 45, 0.44f, 60, 0.38f};
+        map2.moveTime = new float[] {0, 0.50f, 15, 0.44f, 30, 0.38f, 45, 0.32f, 60, 0.28f};
+        map3.moveTime = new float[] {0, 0.40f, 15, 0.35f, 30, 0.30f, 45, 0.26f, 60, 0.22f};
+        map4.moveTime = new float[] {0, 0.30f, 15, 0.26f, 30, 0.22f, 45, 0.18f, 60, 0.16f};
+        map5.moveTime = new float[] {0, 0.22f, 15, 0.18f, 30, 0.16f, 45, 0.14f, 60, 0.12f};
+        map6.moveTime = new float[] {0, 0.16f, 15, 0.14f, 30, 0.12f, 45, 0.11f, 60, 0.10f};
+        map7.moveTime = new float[] {0, 0.12f, 15, 0.11f, 30, 0.10f, 45, 0.09f, 60, 0.08f};
 
-        bestAi.downKeyMin = 1f;
-        bestAi.downKeyMax = 1f;
-        bestAi.doubtMin = 0f;
-        bestAi.doubtMax = 0f;
-        bestAi.doubtFreqMin = 0f;
-        bestAi.doubtFreqMax = 0f;
-        bestAi.randomness = 0f;
-        bestAi.trashMoves = 0f;
-
-        mediumAi.downKeyMin = 0.2f;
-        mediumAi.downKeyMax = 0.5f;
-        mediumAi.doubtMin = 0.1f;
-        mediumAi.doubtMax = 0.4f;
-        mediumAi.doubtFreqMin = 0.06f;
-        mediumAi.doubtFreqMax = 0.16f;
-        mediumAi.randomness = 0.3f;
-        mediumAi.trashMoves = 0.2f;
-
-        worstAi.downKeyMin = 0.0f;
-        worstAi.downKeyMax = 0.1f;
-        worstAi.doubtMin = 0.5f;
-        worstAi.doubtMax = 0.7f;
-        worstAi.doubtFreqMin = 0.04f;
-        worstAi.doubtFreqMax = 0.12f;
-        worstAi.randomness = 0.6f;
-        worstAi.trashMoves = 0.4f;
+        mapT.moveTime = new float[] {
+                  0, 0.50f,  15, 0.40f,  30, 0.32f,  45, 0.16f,
+                 60, 0.32f,  75, 0.24f,  90, 0.18f, 105, 0.12f,
+                120, 0.18f, 135, 0.16f, 150, 0.14f, 165, 0.10f,
+                180, 0.14f, 195, 0.12f, 210, 0.11f, 225, 0.08f,
+                240, 0.11f, 255, 0.10f, 270, 0.09f, 285, 0.07f,
+                300, 0.09f,
+        };
 
         ai1.downKeyMin = 0.0f;
         ai1.downKeyMax = 0.1f;

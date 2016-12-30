@@ -40,7 +40,8 @@ public class Cfg {
     }
 
     public static class Map {
-        public float moveTime;
+        /** Pairs of change time and the new vertical moveTime (less is faster) */
+        public float[] moveTime;
     }
 
     /**

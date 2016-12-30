@@ -100,13 +100,13 @@ public abstract class MapManager {
         for(Map m : maps) {
 
             // Maps not in (OVER or DONE) state: maps playing
-            if(!(m.isState(Map.MState.OVER) || m.isState(Map.MState.DONE))) {
+            if(!(m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE))) {
                 mapsPlaying++;
                 mapPlaying = m;
             }
 
             // Maps not in DONE state: playing or animating (win or lost animations)
-            if(!m.isState(Map.MState.DONE)) {
+            if(!m.isInState(Map.MState.DONE)) {
                 mapsAnimating++;
             }
         }

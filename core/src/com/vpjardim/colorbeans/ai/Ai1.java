@@ -61,9 +61,9 @@ public class Ai1 implements AiBase {
     @Override
     public void update() {
 
-        if(m.isState(Map.MState.PLAY_FALL)) {
+        if(m.isInState(Map.MState.PLAY_FALL)) {
 
-            if(m.getState() != prevState) {
+            if(!m.isInState(prevState)) {
 
                 downKeyRand = MathUtils.random(cfg.downKeyMin, cfg.downKeyMax);
                 doubtRand = MathUtils.random(cfg.doubtMin, cfg.doubtMax);

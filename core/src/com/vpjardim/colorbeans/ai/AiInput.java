@@ -68,7 +68,7 @@ public class AiInput implements InputBase {
 
     public void move() {
 
-        if(map.isState(Map.MState.PLAY_FALL)) {
+        if(map.isInState(Map.MState.PLAY_FALL)) {
 
             int deltaH = hMove - map.pb.mCol;
             int deltaR = rotation - map.pb.rotation;

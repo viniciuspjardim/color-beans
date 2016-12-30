@@ -40,11 +40,11 @@ public class Ai2 implements AiBase {
     @Override
     public void update() {
 
-        if(m.isState(Map.MState.PLAY_FALL)) {
+        if(m.isInState(Map.MState.PLAY_FALL)) {
 
             input.update();
 
-            if(m.getState() != prevState) {
+            if(!m.isInState(prevState)) {
 
                 if(root != null) Tree3Node.pool.free(root);
 

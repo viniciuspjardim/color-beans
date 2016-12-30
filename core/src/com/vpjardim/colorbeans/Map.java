@@ -348,12 +348,6 @@ public class Map implements TargetBase {
      */
     public static class GameProperties {
 
-        /** Match time */
-        public float matchTime = 0f;
-
-        /** Last update of timeMetrics */
-        public float timeMetricsUpdate = matchTime;
-
         /** True if game is paused */
         public boolean pause = false;
 
@@ -457,11 +451,11 @@ public class Map implements TargetBase {
 
     /** Chain power from 1 to 24+. Ref: https://puyonexus.com/wiki/Chain_Power_Table */
     public static final int[] chainPowerTable = {
-
             0, 8, 16, 32, 64, 128, 256, 512, 999 // Puyo Puyo
-
-            // 0, 8, 16, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 480,
-            // 512, 544, 576, 608, 640, 672      // Puyo Puyo Tsu
+            // 0, 8, 16, 32, 64, 96, 128, 160,   // Puyo Puyo Tsu
+            // 192, 224, 256, 288, 320, 352,
+            // 384, 416, 448, 480, 512, 544,
+            // 576, 608, 640, 672
     };
 
     /** Color bonus from 1 to 8. Ref: https://puyonexus.com/wiki/Scoring */
@@ -562,6 +556,17 @@ public class Map implements TargetBase {
     // <===== End state control variables ======
 
 
+    // ====== Timing control variables =====>
+    /** Match time */
+    public float matchTime = 0f;
+
+    /** Pairs of change time and the new vertical moveTime (less is faster) */
+    public float[] moveTime;
+
+    /** Current index of the pair */
+    public int timeIndex = 0;
+    // <===== End of timing control variables ======
+
     /** Animations logics */
     public Animations anim;
 
@@ -623,9 +628,11 @@ public class Map implements TargetBase {
     }
 
     public void setCfg(Cfg.Map cfg) {
-        prop.vPlayMoveTimeDef = cfg.moveTime;
-        prop.vPlayMoveTime = cfg.moveTime;
-        prop.vPlayMoveWait = cfg.moveTime;
+        moveTime = cfg.moveTime;
+
+        prop.vPlayMoveTimeDef = moveTime[1];
+        prop.vPlayMoveTime = moveTime[1];
+        prop.vPlayMoveWait = moveTime[1];
     }
 
     public void print() {
@@ -667,7 +674,6 @@ public class Map implements TargetBase {
     }
 
     public boolean isEmpty(int col, int row) {
-
         return col >= 0 && col < N_COL && row < N_ROW + OUT_ROW && b[col][row].isEmpty();
     }
 
@@ -996,8 +1002,8 @@ public class Map implements TargetBase {
     }
 
     /** Returns true if the map.state is equals the argument state */
-    public boolean isState(Map.MState state) {
-        return this.state.getCurrentState().equals(state);
+    public boolean isInState(Map.MState state) {
+        return this.state.getCurrentState() == state;
     }
 
     /** Returns map current state */
@@ -1012,16 +1018,13 @@ public class Map implements TargetBase {
         }
     }
 
-    private void timeMetrics() {
+    private void timing() {
 
-        prop.matchTime += G.delta;
-        float delta = prop.matchTime - prop.timeMetricsUpdate;
-
-        // Updates vertical fall velocity each 30s, limited to 10 times
-        if(delta >= 30f && prop.matchTime < 301f) {
-            prop.timeMetricsUpdate = prop.matchTime;
-            prop.vPlayMoveTimeDef *= 0.9f;
-            prop.vPlayMoveTime    *= 0.9f;
+        // Updates vertical fall time (less is faster)
+        if(timeIndex < moveTime.length && matchTime >= moveTime[timeIndex]) {
+            prop.vPlayMoveTimeDef = moveTime[timeIndex + 1];
+            prop.vPlayMoveTime    = moveTime[timeIndex + 1];
+            timeIndex += 2;
         }
     }
 
@@ -1042,24 +1045,31 @@ public class Map implements TargetBase {
 
         for(int i = 0; i < b.length; i++) {
 
-            for(int j =  0; j < b[i].length; j++) {
+            for(int j = 0; j < b[i].length; j++) {
 
                 b[i][j].recycle();
             }
         }
+
         // Todo fix trash blocks still been added on a new match
         // Todo fix blocks starts falling first in a map then in the other
         trashBlocksToAdd = 0;
         prop.gameOver = false;
         prop.gameWin = false;
+        timeIndex = 0;
+        matchTime = 0f;
+        prop.vPlayMoveTimeDef = moveTime[1];
+        prop.vPlayMoveTime = moveTime[1];
+        prop.vPlayMoveWait = moveTime[1];
         pb.recycle();
         pb.init();
-
-        // Todo when recycle time metrics does not return to the start point
     }
 
     public void update() {
+
+        if(!prop.pause) matchTime += G.delta;
         state.update();
+        timing();
         if(ai != null) ai.update();
     }
 
@@ -1162,7 +1172,7 @@ public class Map implements TargetBase {
 
     @Override
     public void buttonStart(boolean isDown) {
-        if(isDown && getState() != MState.OVER && getState() != MState.DONE)
+        if(isDown && !isInState(MState.OVER) && !isInState(MState.DONE))
             manager.pause(index, !prop.pause);
     }
 

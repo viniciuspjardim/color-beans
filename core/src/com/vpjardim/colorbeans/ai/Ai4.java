@@ -43,9 +43,9 @@ public class Ai4 implements AiBase {
     @Override
     public void update() {
 
-        if(m.isState(Map.MState.PLAY_FALL)) {
+        if(m.isInState(Map.MState.PLAY_FALL)) {
 
-            if(m.getState() != prevState) {
+            if(!m.isInState(prevState)) {
 
                 uctTree.reset();
                 input.cleanMove();

@@ -77,7 +77,7 @@ public class PlayScreen extends ScreenBase {
         table.row();
 
         stage.addActor(table);
-        table.debug(); // #debugCode
+        table.setDebug(G.game.debug); // #debugCode
 
         manager.init();
     }

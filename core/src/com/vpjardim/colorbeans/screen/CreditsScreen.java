@@ -35,7 +35,7 @@ public class CreditsScreen extends ScreenBase {
         table.add(label).width(400);
 
         stage.addActor(table);
-        table.debug(); // #debugCode
+        table.setDebug(G.game.debug); // #debugCode
     }
 
     @Override
