@@ -1086,7 +1086,7 @@ public class Map implements TargetBase {
         le = new Array<>();
         lc = new IntMap<>();
 
-        if(pb.mCol != N_COL / 2 || pb.mRow != OUT_ROW -1 || pb.rotation != 0)
+        if(pb.b1x != N_COL / 2 || pb.b1y != OUT_ROW -1 || pb.rotation != 0)
             state = new DefaultStateMachine<>(this, MState.PLAY_FALL);
         else
             state = new DefaultStateMachine<>(this, MState.FREE_FALL);

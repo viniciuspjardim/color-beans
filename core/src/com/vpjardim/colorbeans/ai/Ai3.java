@@ -52,8 +52,8 @@ public class Ai3 implements AiBase {
                 tree.reset();
                 input.cleanMove();
 
-                int color1 = m.pb.b[1][0].intColor; // upper block
-                int color2 = m.pb.b[1][1].intColor; // lower block
+                int color1 = m.pb.b2.intColor; // upper block
+                int color2 = m.pb.b1.intColor; // lower block
 
                 tree.initProcess(AiMap.getByteBlocks(null, m.b), m.prop.deleteSize, m.OUT_ROW,
                         formula1, color1, color2);

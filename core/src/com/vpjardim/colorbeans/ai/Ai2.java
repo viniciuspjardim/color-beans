@@ -51,8 +51,8 @@ public class Ai2 implements AiBase {
                 root = Tree3Node.pool.obtain();
                 root.init(AiMap.getByteBlocks(root.aiMap.b, m.b), m.prop.deleteSize, m.OUT_ROW);
 
-                int color1 = m.pb.b[1][0].intColor; // upper block
-                int color2 = m.pb.b[1][1].intColor; // lower block
+                int color1 = m.pb.b2.intColor; // upper block
+                int color2 = m.pb.b1.intColor; // lower block
 
                 IntArray m1 = moves.getArray(color1, color2);
 

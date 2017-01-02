@@ -7,7 +7,6 @@ package com.vpjardim.colorbeans.core;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 
@@ -57,7 +56,6 @@ public class MapRender {
         float w = textLayout.width;
         font.draw(G.game.batch, m.name, px - w + (size * m.b.length) - padding, py - padding);
 
-
         // Draw map blocks
         for(int i = 0; i < m.b.length; i++) {
 
@@ -78,22 +76,25 @@ public class MapRender {
         }
 
         // Draw play blocks
-        for(int i = 0; i < m.pb.b.length; i++) {
 
-            for(int j = 0; j < m.pb.b[i].length; j++) {
+        tile = G.game.atlas.findRegion(m.pb.b1.strColor, m.pb.b1.tile +1);
 
-                if(m.pb.b[i][j].intColor == Block.EMPTY) continue;
+        G.game.batch.draw(
+                tile,
+                px + (m.pb.b1x + m.pb.b1.px) * size,
+                py + (m.pb.b1y +1 - m.OUT_ROW - m.pb.b1.py) * - size,
+                size,
+                size
+        );
 
-                tile = G.game.atlas.findRegion(m.pb.b[i][j].strColor, m.pb.b[i][j].tile +1);
+        tile = G.game.atlas.findRegion(m.pb.b2.strColor, m.pb.b2.tile +1);
 
-                G.game.batch.draw(
-                        tile,
-                        px + (i + m.pb.mCol -1 + m.pb.b[i][j].px) * size,
-                        py + (j + m.pb.mRow - m.OUT_ROW - m.pb.b[i][j].py) * - size,
-                        size,
-                        size
-                );
-            }
-        }
+        G.game.batch.draw(
+                tile,
+                px + (m.pb.b2x + m.pb.b2.px) * size,
+                py + (m.pb.b2y +1 - m.OUT_ROW - m.pb.b2.py) * - size,
+                size,
+                size
+        );
     }
 }

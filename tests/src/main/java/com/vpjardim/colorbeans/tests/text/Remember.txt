@@ -7,9 +7,9 @@
 
 Before a release commit
  - Increment versions on /build.gradle and /android/AndroidManifest.xml (versionCode, versionName)
- - Review MapScreen and choose the best AI
+ - Choose the best AI
  - See dependencies versions to use the newer ones
- - In GameClass set LOG_NONE, DELTA_REAL, fpsDebug = false, lagWarn = false
+ - In GameClass set LOG_NONE, DELTA_REAL, debug = false, fpsDebug = false, lagWarn = false
  - See if there is \t indentation
  - Optimize imports
  - Inspect project (folders, libs, external libs, todos, files headers, gradle files, package organization, .gitignore files)

@@ -76,8 +76,8 @@ public class Ai1 implements AiBase {
                 // if(trashMove) System.out.println("trash move");
                 // else System.out.println("normal move");
 
-                int color1 = m.pb.b[1][0].intColor; // upper block
-                int color2 = m.pb.b[1][1].intColor; // lower block
+                int color1 = m.pb.b2.intColor; // upper block
+                int color2 = m.pb.b1.intColor; // lower block
 
                 float bestMoveScore = AiMap.MOVE_ILLEGAL;
                 bestMovePosition = 0;
@@ -115,7 +115,7 @@ public class Ai1 implements AiBase {
             }
 
             // Amount fallen until this frame: from 0 (top) to 1 (floor)
-            float fallAmount = (float)Math.max(m.pb.mRow - m.OUT_ROW, 0) / (float)m.N_ROW;
+            float fallAmount = (float)Math.max(m.pb.b1y +1 - m.OUT_ROW, 0) / (float)m.N_ROW;
 
             float slowFallMax = 1 - downKeyRand;
             boolean downKey = fallAmount > slowFallMax;
@@ -126,7 +126,7 @@ public class Ai1 implements AiBase {
                 float doubt = Math.min(doubtRand, slowFallMax * 0.8f);
                 float deltaH = fallAmount - lastMoveSwitch;
 
-                if(doubt > fallAmount && !dangerRow(m.pb.mRow)) {
+                if(doubt > fallAmount && !dangerRow(m.pb.b1y)) {
                     if(deltaH >= doubtFreqRand) {
                         input.setMove(MathUtils.random(0, m.b.length),
                                 MathUtils.random(0, 3), false

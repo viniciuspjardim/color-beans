@@ -14,117 +14,92 @@ public class PlayBlocks {
 
     public transient Map m;
 
-    public Block[][] b;
+    /** Block 1: center block */
+    public Block b1;
+    /** Block 2: this block rotates around the center block*/
+    public Block b2;
+
+    /** Width position (x) on the map of center block */
+    public int b1x;
+    /** Height position (y) on the map of center block */
+    public int b1y;
+    /** Width position (x) on the map of block 2 */
+    public int b2x;
+    /** Height position (y) on the map of block 2 */
+    public int b2y;
 
     /**
-     * Indexes around the center block
+     * Current rotation shape.
+     * Rotations around the center block:
      * <pre>
      *   0
      * 3 C 1
      *   2
      * </pre>
      */
-    public transient Block[] nonCenter;
-
-    /** Width position on the map of the center block on a 3x3 matrix */
-    public int mCol;
-    /** Height position on the map of the center block on a 3x3 matrix */
-    public int mRow;
-
     public int rotation;
 
-    public int moveX; // negative left; positive right
-    public int moveY; // positive down; negative up
-    public float moveTime;
+    /** Amount moved by the player. Negative left; positive right */
+    public int moveX;
 
     public PlayBlocks(Map map) {
-
         m = map;
-        b = new Block[3][3];
-        nonCenter = new Block[4];
-
-        // Create empty blocks
-        for(int i = 0; i < b.length; i++) {
-
-            for(int j = 0; j < b[i].length; j++) {
-
-                b[i][j] = new Block(m);
-            }
-        }
-
+        b1 = new Block(m);
+        b2 = new Block(m);
         recycle();
         init();
     }
 
     public void recycle() {
-
-        for(int i = 0; i < b.length; i++) {
-
-            for(int j = 0; j < b[i].length; j++) {
-
-                b[i][j].recycle();
-            }
-        }
+        b1.recycle();
+        b2.recycle();
     }
 
     public void init() {
         // Above the center
-        b[1][0].setColor(MathUtils.random(Block.CLR_A, Block.CLR_N));
+        b2.setColor(MathUtils.random(Block.CLR_A, Block.CLR_N));
         // Center
-        b[1][1].setColor(MathUtils.random(Block.CLR_A, Block.CLR_N));
+        b1.setColor(MathUtils.random(Block.CLR_A, Block.CLR_N));
 
-        b[1][1].tile = 1;
+        // Center block with the white border tile
+        b1.tile = 1;
 
         // Starts at the center column
-        mCol = Map.N_COL / 2;
+        b1x = Map.N_COL / 2;
         // Starts before the first map row (out of the map)
-        mRow = Map.OUT_ROW -1;
+        b1y = Map.OUT_ROW -1;
 
         rotation = 0;
 
-        bToNonCenter();
+        updateB2pos();
     }
 
-    public void bToNonCenter() {
-        nonCenter[0] = b[1][0];
-        nonCenter[1] = b[2][1];
-        nonCenter[2] = b[1][2];
-        nonCenter[3] = b[0][1];
-    }
-
-    public void nonCenterToB() {
-        b[1][0]= nonCenter[0];
-        b[2][1]= nonCenter[1];
-        b[1][2]= nonCenter[2];
-        b[0][1]= nonCenter[3];
-    }
-
+    /** Returns true if there is collision in the current position */
     public boolean collide() {
-        return collide(mCol, mRow);
+        return collide(b1x, b1y);
     }
 
+    /** Returns true if it would have collision if the center block is in de given position */
     public boolean collide(int mapCol, int mapRow) {
 
-        for(int i = 0; i < b.length; i++) {
+        // Center block check
+        if(!m.isEmpty(mapCol, mapRow)) return true;
 
-            for(int j = 0; j < b[i].length; j++) {
+        // Other block check
+        int deltaX = mapCol - b1x;
+        int deltaY = mapRow - b1y;
 
-                if(b[i][j].isEmpty()) continue;
-
-                if(!m.isEmpty(mapIdxCol(i, mapCol), mapIdxRow(j, mapRow))) {
-                    return true;
-                }
-            }
-        }
+        if(!m.isEmpty(b2x + deltaX, b2y + deltaY)) return true;
 
         return false;
     }
 
     public boolean moveHorizontal(int value) {
 
-        if(!collide(mCol + value, mRow)) {
-            mCol += value;
+        if(!collide(b1x + value, b1y)) {
+            b1x += value;
             moveX = value;
+            updateB2pos();
             return true;
         }
         return false;
@@ -132,21 +107,12 @@ public class PlayBlocks {
 
     public void rotateClockwise(boolean detectCollision) {
 
-        bToNonCenter();
-
-        Block last = nonCenter[3];
-
-        nonCenter[3] = nonCenter[2];
-        nonCenter[2] = nonCenter[1];
-        nonCenter[1] = nonCenter[0];
-        nonCenter[0] = last;
-
         int prevRotation = rotation;
 
         rotation = rotation + 1;
         if(rotation > 3) rotation = 0;
 
-        nonCenterToB();
+        updateB2pos();
 
         if(detectCollision && collide()) {
             if(moveHorizontal(1)) {}
@@ -161,21 +127,12 @@ public class PlayBlocks {
 
     public void rotateCounterclockwise(boolean detectCollision) {
 
-        bToNonCenter();
-
-        Block first = nonCenter[0];
-
-        nonCenter[0] = nonCenter[1];
-        nonCenter[1] = nonCenter[2];
-        nonCenter[2] = nonCenter[3];
-        nonCenter[3] = first;
-
         int prevRotation = rotation;
 
         rotation = rotation - 1 ;
         if(rotation < 0) rotation = 3;
 
-        nonCenterToB();
+        updateB2pos();
 
         if(detectCollision && collide()) {
             if(moveHorizontal(1)) {}
@@ -188,48 +145,51 @@ public class PlayBlocks {
         }
     }
 
-    public void insert() {
+    /** Update block 2 position according to rotation and center block position */
+    public void updateB2pos() {
 
-        for(int i = 0; i < b.length; i++) {
-
-            // Going from the bottom to the top to check collisions
-            // properly. If the lower collide, the upper collide to.
-            for(int j = b[i].length -1; j >= 0; j--) {
-
-                if(b[i][j].isEmpty()) continue;
-
-                int mapRow = mapIdxRow(j);
-                if(mapRow < 0) {
-                    m.prop.lost = true;
-                    return;
-                }
-
-                m.b[mapIdxCol(i)][mapRow].setColor(b[i][j].intColor);
-
-                boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
-                boolean collide = !m.isEmpty(mapIdxCol(i), mapRow + 1);
-
-                if(downKeyPressed && collide) {
-                    m.b[mapIdxCol(i)][mapRow].deformTime = m.prop.afterFreeFallWait;
-                }
-            }
+        if(rotation == 0) {
+            b2x = b1x;
+            b2y = b1y -1;
+        }
+        else if(rotation == 1) {
+            b2x = b1x +1;
+            b2y = b1y;
+        }
+        else if(rotation == 2) {
+            b2x = b1x;
+            b2y = b1y +1;
+        }
+        else if(rotation == 3) {
+            b2x = b1x -1;
+            b2y = b1y;
         }
     }
 
-    public int mapIdxCol(int iCol) {
-        return mapIdxCol(iCol, mCol);
-    }
+    /** Insert the play blocks in the map blocks array */
+    public void insert() {
 
-    public int mapIdxRow(int iRow) {
-        return mapIdxRow(iRow, mRow);
-    }
+        if(b1y < 0 || b2y < 0) {
+            m.prop.lost = true;
+            return;
+        }
 
-    public int mapIdxCol(int iCol, int mapCol) {
-        return +iCol + mapCol -1;
-    }
+        m.b[b1x][b1y].setColor(b1.intColor);
+        m.b[b2x][b2y].setColor(b2.intColor);
 
-    public int mapIdxRow(int iRow, int mapRow) {
-        return +iRow + mapRow -1;
+        boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
+
+        // Triggers b1 deform animation
+        boolean b1Collide = !m.isEmpty(b1x, b1y + 1);
+        if(downKeyPressed && b1Collide) {
+            m.b[b1x][b1y].deformTime = m.prop.afterFreeFallWait;
+        }
+
+        // Triggers b2 deform animation
+        boolean b2Collide = !m.isEmpty(b2x, b2y + 1);
+        if(downKeyPressed && b2Collide) {
+            m.b[b2x][b2y].deformTime = m.prop.afterFreeFallWait;
+        }
     }
 
     public void playFallCalc() {
@@ -239,12 +199,13 @@ public class PlayBlocks {
 
         if(m.prop.vPlayMoveWait <= 0f) {
 
-            // Looking if there is a collision on row bellow mRow
-            if(!collide(mCol, mRow + 1)) {
+            // Looking if there is a collision on row bellow b1y
+            if(!collide(b1x, b1y + 1)) {
 
                 m.prop.vPlayMoveWait += m.prop.vPlayMoveTime;
-                setFallStartEnd(mRow, mRow + 1);
-                mRow++;
+                setFallStartEnd(b1y, b1y + 1);
+                b1y++;
+                updateB2pos();
             }
             // Wait some time before insert the play blocks.
             // The player can use this time to do his last moves
@@ -262,17 +223,11 @@ public class PlayBlocks {
     }
 
     private void setFallStartEnd(int start, int end) {
-
-        for(int i = 0; i < b.length; i++) {
-
-            for(int j = 0; j < b[i].length; j++) {
-
-                if(b[i][j].isEmpty()) continue;
-
-                b[i][j].moveY = end - start;
-                b[i][j].py = end - start;
-            }
-        }
+        int val  = end - start;
+        b1.moveY = val;
+        b1.py    = val;
+        b2.moveY = val;
+        b2.py    = val;
     }
 
     /**
@@ -282,16 +237,7 @@ public class PlayBlocks {
      */
     public void deserialize(Map m) {
         this.m = m;
-
-        for(int i = 0; i < b.length; i++) {
-
-            for(int j = 0; j < b[i].length; j++) {
-
-                b[i][j].deserialize(m);
-            }
-        }
-
-        nonCenter = new Block[4];
-        bToNonCenter();
+        b1.deserialize(m);
+        b2.deserialize(m);
     }
 }

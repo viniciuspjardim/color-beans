@@ -120,16 +120,13 @@ public class Animations {
 
         boolean animating = false;
 
-        for(int i = 0; i < m.pb.b.length; i++) {
-            for(int j =  0; j < m.pb.b[i].length; j++) {
-                animating = animating | blockPlayFall(m.pb.b[i][j], i, j);
-            }
-        }
+        animating = animating | blockPlayFall(m.pb.b1);
+        animating = animating | blockPlayFall(m.pb.b2);
 
         return animating;
     }
 
-    private boolean blockPlayFall(Block b, int i, int j) {
+    private boolean blockPlayFall(Block b) {
 
         if(b.py == 0f || b.isEmpty()) return false;
 
@@ -156,11 +153,8 @@ public class Animations {
 
         boolean animating = false;
 
-        for(int i = 0; i < m.pb.b.length; i++) {
-            for(int j =  0; j < m.pb.b[i].length; j++) {
-                animating = animating | blockPlayHorizontal(m.pb.b[i][j]);
-            }
-        }
+        animating = animating | blockPlayHorizontal(m.pb.b1);
+        animating = animating | blockPlayHorizontal(m.pb.b2);
 
         // End of animation
         if(!animating) {
