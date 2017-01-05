@@ -1,0 +1,117 @@
+/*
+ * Copyright 2017 Vinícius Petrocione Jardim
+ */
+
+package com.vpjardim.colorbeans.screen;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.defaults.Db;
+
+/**
+ * @author Vinícius Jardim
+ *         03/01/2017
+ */
+public class ConfigScreen extends ScreenBase  {
+
+    private Stage stage;
+
+    public ConfigScreen() { manageInput = false; }
+
+    public void restart() {
+        ScreenManager.showStudioScreen = false;
+        G.game.pause();
+        G.game.dispose();
+        G.game.create();
+    }
+
+    public boolean setFullScreen() {
+
+        if(!Gdx.graphics.isFullscreen()) {
+            Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
+            if(Gdx.graphics.setFullscreenMode(mode)) {
+                restart();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean setWindowed() {
+
+        if(Gdx.graphics.isFullscreen()) {
+            if(Gdx.graphics.setWindowedMode(1280, 720)) {
+                restart();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void show() {
+        super.show();
+
+        bgColor = Db.bgColor();
+
+        stage = new Stage(viewport, G.game.batch);
+        G.game.input.addProcessor(stage);
+
+        Table table = new Table(G.game.skin);
+        table.setBounds(0, 0, G.width, G.height);
+
+        TextButton windowedButt, fullScreenButt;
+
+        windowedButt = new TextButton("Windowed",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        windowedButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setWindowed();
+                action = ScreenBase.ACT_NEXT;
+            }
+        });
+
+        fullScreenButt = new TextButton("Full Screen",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        fullScreenButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setFullScreen();
+                action = ScreenBase.ACT_NEXT;
+            }
+        });
+
+        float bttW = G.style.buttWidth;
+        float padM = G.style.padMedium;
+
+        table.add(windowedButt).width(bttW).pad(padM);
+        table.row();
+        table.add(fullScreenButt).width(bttW).pad(padM);
+        table.row();
+
+        stage.addActor(table);
+        table.setDebug(G.game.debug); // #debugCode
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+        stage.act(delta);
+        stage.draw();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        G.game.input.removeProcessor(stage);
+        // Only dispose what does not come from game.assets. Do not dispose skin.
+        stage.dispose();
+    }
+}

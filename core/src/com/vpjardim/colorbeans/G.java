@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.vpjardim.colorbeans.core.ScoreTable;
+import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
 import com.vpjardim.colorbeans.screen.ScreenManager;
 
@@ -26,15 +27,23 @@ import java.text.NumberFormat;
  */
 public class G extends Game {
 
+    // Used to change game speed
     public static final int DELTA_REAL   = 1;
     public static final int DELTA_SLOW   = 2;
     public static final int DELTA_NORMAL = 3;
     public static final int DELTA_FAST   = 4;
 
+    // Game resolution
+    public static final int RES_SMALL    = 1;
+    public static final int RES_MEDIUM   = 2;
+
+    public static G game;
     public static float delta;
+    public static float scale;
+    public static int res;
     public static int width;
     public static int height;
-    public static G game;
+    public static Style style;
 
     public ScreenManager screens;
     public InputManager input;
@@ -51,13 +60,21 @@ public class G extends Game {
     public final boolean debug;
     public final boolean fpsDebug;
     public final boolean lagWarn;
+    public final int logLevel;
 
     // #debugCode
     public G() {
+
         deltaCfg = DELTA_REAL;
         debug    = false;
         fpsDebug = false;
         lagWarn  = false;
+
+        // LOG_NONE  = <nothing>
+        // LOG_ERROR = error
+        // LOG_INFO  = error, log
+        // LOG_DEBUG = error, log, debug
+        logLevel = Application.LOG_NONE;
     }
 
     @Override
@@ -65,16 +82,13 @@ public class G extends Game {
 
         // Most things are loaded in the LoadingScreen class. See explanation there.
 
-        // LOG_NONE  = <nothing>
-        // LOG_ERROR = error
-        // LOG_INFO  = error, log
-        // LOG_DEBUG = error, log, debug
-        Gdx.app.setLogLevel(Application.LOG_NONE);
+        Gdx.app.setLogLevel(logLevel);
 
         game = (G)Gdx.app.getApplicationListener();
 
         G.width = Gdx.graphics.getWidth();
         G.height = Gdx.graphics.getHeight();
+        G.style = new Style();
 
         screens = new ScreenManager();
         screens.create();

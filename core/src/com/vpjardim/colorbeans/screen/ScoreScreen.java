@@ -45,23 +45,26 @@ public class ScoreScreen extends ScreenBase {
         Label.LabelStyle labelStyle =
                 G.game.skin.get("labelDef", Label.LabelStyle.class);
 
+        float bttW = G.style.buttWidth;
+        float padM = G.style.padMedium;
+
         int cont = 1;
         for(ScoreTable.Row row : G.game.score.getRows()) {
             Label label;
 
             label = new Label(Integer.toString(cont), labelStyle);
             label.setAlignment(Align.center);
-            table.add(label).width(200);
+            table.add(label).width(bttW);
 
             label = new Label(row.nick, labelStyle);
             label.setAlignment(Align.center);
-            table.add(label).width(200);
+            table.add(label).width(bttW);
 
             label = new Label(G.game.intFmt.format(row.score), labelStyle);
             label.setAlignment(Align.center);
-            table.add(label).width(200);
+            table.add(label).width(bttW);
 
-            table.row().pad(12, 0, 0, 0);
+            table.row().pad(padM, 0, 0, 0);
             cont++;
         }
 
@@ -74,7 +77,7 @@ public class ScoreScreen extends ScreenBase {
             }
         });
 
-        table.add(backButt).width(200).pad(24, 0, 0, 0);
+        table.add(backButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
         stage.addActor(table);
         table.setDebug(G.game.debug); // #debugCode

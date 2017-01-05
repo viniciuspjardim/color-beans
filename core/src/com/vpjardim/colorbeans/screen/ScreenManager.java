@@ -18,6 +18,8 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public class ScreenManager {
 
+    public static boolean showStudioScreen = true;
+
     private FPSLogger fps;
     private TweenManager transition;
 
@@ -33,22 +35,23 @@ public class ScreenManager {
     public void render() {
 
         G.delta = Gdx.graphics.getDeltaTime();
-        float rawDelta = Gdx.graphics.getRawDeltaTime();
 
         // #debugCode
         // Warn frames longer than a max time; set frames a constant time
         // for debug propose: DELTA_SLOW, DELTA_NORMAL, DELTA_FAST
         if(G.game.deltaCfg == G.DELTA_REAL) {
 
-            if(G.game.lagWarn && rawDelta > 0.02f)
-                Gdx.app.log("Slow Frame", Math.round(1f / rawDelta) + " fps");
+            int fps = Math.round(1f / Gdx.graphics.getRawDeltaTime());
+
+            if(G.game.lagWarn && fps < 50)
+                Gdx.app.log("LagWarn", fps + " fps");
         }
         else if(G.game.deltaCfg == G.DELTA_SLOW)
-            G.delta = 0.004f;
+            G.delta = 0.004f;    // 250 fps
         else if(G.game.deltaCfg == G.DELTA_NORMAL)
-            G.delta = 0.016667f;
+            G.delta = 0.016667f; //  60 fps
         else if(G.game.deltaCfg == G.DELTA_FAST)
-            G.delta = 0.032f;
+            G.delta = 0.032f;    //  31 fps
 
         ScreenBase currScreen = (ScreenBase) G.game.getScreen();
         currScreen.render(G.delta);
@@ -65,8 +68,10 @@ public class ScreenManager {
             // Switch to the next screen based on the current screen
             // and the screen action
             if(currScreen instanceof LoadingScreen)
-                G.game.setScreen(new StudioScreen());
-
+                if(showStudioScreen)
+                    G.game.setScreen(new StudioScreen());
+                else
+                    G.game.setScreen(new MenuScreen());
             else if(currScreen instanceof StudioScreen)
                 G.game.setScreen(new MenuScreen());
 
@@ -78,9 +83,14 @@ public class ScreenManager {
                     G.game.setScreen(new PlayScreen(new Training()));
                 else if(currScreen.action == MenuScreen.ACT_SCORE)
                     G.game.setScreen(new ScoreScreen());
+                else if(currScreen.action == MenuScreen.ACT_CONFIG)
+                    G.game.setScreen(new ConfigScreen());
             }
 
             else if(currScreen instanceof ScoreScreen)
+                G.game.setScreen(new MenuScreen());
+
+            else if(currScreen instanceof ConfigScreen)
                 G.game.setScreen(new MenuScreen());
 
             else if(currScreen instanceof PlayScreen) {

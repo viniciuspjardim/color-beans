@@ -1,224 +1,222 @@
 
-pack.png
+pack_m.png
 size: 1024,1024
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
-game/b_blue_down
+game/bgb
   rotate: false
-  xy: 260, 262
-  size: 126, 126
-  split: 59, 66, 49, 76
-  pad: 18, 20, 29, 42
-  orig: 126, 126
-  offset: 0, 0
-  index: -1
-game/blue
-  rotate: false
-  xy: 381, 639
+  xy: 766, 886
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
-game/blue
+game/bgb
   rotate: false
-  xy: 760, 888
+  xy: 4, 268
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
-game/blue
+game/bgb
   rotate: false
-  xy: 2, 132
+  xy: 385, 635
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 game/blue
   rotate: false
-  xy: 511, 639
+  xy: 4, 136
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+game/blue
+  rotate: false
+  xy: 136, 268
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+game/blue
+  rotate: false
+  xy: 517, 635
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+game/blue
+  rotate: false
+  xy: 4, 4
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 game/dblue
   rotate: false
-  xy: 890, 888
+  xy: 136, 136
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 game/dblue
   rotate: false
-  xy: 2, 2
+  xy: 268, 268
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 game/dblue
   rotate: false
-  xy: 132, 132
+  xy: 136, 4
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 game/dblue
   rotate: false
-  xy: 132, 2
+  xy: 268, 136
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 game/green
   rotate: false
-  xy: 260, 390
+  xy: 268, 4
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 game/green
   rotate: false
-  xy: 262, 132
+  xy: 766, 754
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 game/green
   rotate: false
-  xy: 262, 2
+  xy: 400, 268
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 game/green
   rotate: false
-  xy: 760, 758
+  xy: 400, 136
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 game/magenta
   rotate: false
-  xy: 890, 758
+  xy: 400, 4
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 game/magenta
   rotate: false
-  xy: 390, 509
+  xy: 487, 503
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 game/magenta
   rotate: false
-  xy: 520, 509
+  xy: 619, 503
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 game/magenta
   rotate: false
-  xy: 390, 379
+  xy: 532, 371
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
-game/map_bg
-  rotate: false
-  xy: 2, 262
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
 game/orange
   rotate: false
-  xy: 520, 379
+  xy: 532, 239
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 game/orange
   rotate: false
-  xy: 392, 249
+  xy: 532, 107
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 game/orange
   rotate: false
-  xy: 392, 119
+  xy: 664, 371
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 game/orange
   rotate: false
-  xy: 522, 249
+  xy: 664, 239
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 game/purple
   rotate: false
-  xy: 522, 119
+  xy: 664, 107
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 game/purple
   rotate: false
-  xy: 650, 628
+  xy: 751, 622
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 game/purple
   rotate: false
-  xy: 650, 498
+  xy: 883, 622
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 game/purple
   rotate: false
-  xy: 780, 628
+  xy: 796, 490
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 game/red
   rotate: false
-  xy: 780, 498
+  xy: 796, 358
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 game/red
   rotate: false
-  xy: 652, 368
+  xy: 796, 226
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 game/red
   rotate: false
-  xy: 652, 238
+  xy: 796, 94
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
-game/red
-  rotate: false
-  xy: 782, 368
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 4
 game/ribbon_green
   rotate: false
-  xy: 2, 769
+  xy: 4, 767
   size: 377, 247
   split: 168, 169, 7, 190
   pad: 168, 169, 11, 82
@@ -227,7 +225,7 @@ game/ribbon_green
   index: -1
 game/ribbon_purple
   rotate: false
-  xy: 2, 520
+  xy: 4, 516
   size: 377, 247
   split: 168, 169, 7, 190
   pad: 168, 169, 11, 82
@@ -236,43 +234,38 @@ game/ribbon_purple
   index: -1
 game/ribbon_red
   rotate: false
-  xy: 381, 769
+  xy: 385, 767
   size: 377, 247
   split: 168, 169, 7, 190
   pad: 168, 169, 11, 82
   orig: 377, 247
   offset: 0, 0
   index: -1
-game/transparent
+game/title
   rotate: false
-  xy: 782, 238
-  size: 128, 128
-  orig: 128, 128
+  xy: 4, 400
+  size: 479, 112
+  orig: 479, 112
   offset: 0, 0
-  index: 1
-game/transparent
-  rotate: false
-  xy: 652, 108
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 2
-game/transparent
-  rotate: false
-  xy: 782, 108
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 3
+  index: -1
 
-pack2.png
+pack_m2.png
 size: 1024,512
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
+game/b_blue_down
+  rotate: false
+  xy: 400, 270
+  size: 126, 126
+  split: 59, 66, 49, 76
+  pad: 18, 20, 29, 42
+  orig: 126, 126
+  offset: 0, 0
+  index: -1
 game/b_blue_up
   rotate: false
-  xy: 262, 264
+  xy: 268, 6
   size: 126, 126
   split: 59, 66, 49, 76
   pad: 18, 20, 21, 50
@@ -281,7 +274,7 @@ game/b_blue_up
   index: -1
 game/b_gray_down
   rotate: false
-  xy: 132, 4
+  xy: 400, 140
   size: 126, 126
   split: 59, 66, 49, 76
   pad: 18, 20, 29, 42
@@ -290,7 +283,7 @@ game/b_gray_down
   index: -1
 game/b_gray_up
   rotate: false
-  xy: 262, 136
+  xy: 530, 270
   size: 126, 126
   split: 59, 66, 49, 76
   pad: 18, 20, 21, 50
@@ -299,7 +292,7 @@ game/b_gray_up
   index: -1
 game/b_green_down
   rotate: false
-  xy: 390, 264
+  xy: 530, 140
   size: 126, 126
   split: 59, 66, 49, 76
   pad: 18, 20, 29, 42
@@ -308,7 +301,25 @@ game/b_green_down
   index: -1
 game/b_green_up
   rotate: false
-  xy: 390, 136
+  xy: 660, 270
+  size: 126, 126
+  split: 59, 66, 49, 76
+  pad: 18, 20, 21, 50
+  orig: 126, 126
+  offset: 0, 0
+  index: -1
+game/b_red_down
+  rotate: false
+  xy: 660, 140
+  size: 126, 126
+  split: 59, 66, 49, 76
+  pad: 18, 20, 29, 42
+  orig: 126, 126
+  offset: 0, 0
+  index: -1
+game/b_red_up
+  rotate: false
+  xy: 790, 270
   size: 126, 126
   split: 59, 66, 49, 76
   pad: 18, 20, 21, 50
@@ -317,7 +328,7 @@ game/b_green_up
   index: -1
 game/b_yellow_down
   rotate: false
-  xy: 518, 264
+  xy: 790, 140
   size: 126, 126
   split: 59, 66, 49, 76
   pad: 18, 20, 29, 42
@@ -326,64 +337,85 @@ game/b_yellow_down
   index: -1
 game/b_yellow_up
   rotate: false
-  xy: 518, 136
+  xy: 400, 10
   size: 126, 126
   split: 59, 66, 49, 76
   pad: 18, 20, 21, 50
   orig: 126, 126
   offset: 0, 0
   index: -1
+game/red
+  rotate: false
+  xy: 4, 268
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
 game/transparent
   rotate: false
-  xy: 2, 262
+  xy: 4, 136
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+game/transparent
+  rotate: false
+  xy: 136, 268
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+game/transparent
+  rotate: false
+  xy: 4, 4
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 game/yellow
   rotate: false
-  xy: 2, 132
+  xy: 136, 136
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 game/yellow
   rotate: false
-  xy: 132, 262
+  xy: 268, 268
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 game/yellow
   rotate: false
-  xy: 2, 2
+  xy: 136, 4
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 game/yellow
   rotate: false
-  xy: 132, 132
+  xy: 268, 136
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 
-pack3.png
+pack_m3.png
 size: 1024,1024
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
 studio/studio_logo
   rotate: false
-  xy: 2, 197
+  xy: 4, 201
   size: 800, 800
   orig: 800, 800
   offset: 0, 0
   index: -1
 studio/studio_text
   rotate: false
-  xy: 2, 2
+  xy: 4, 4
   size: 728, 193
   orig: 728, 193
   offset: 0, 0

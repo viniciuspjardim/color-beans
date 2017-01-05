@@ -125,7 +125,7 @@ public class StudioScreen extends ScreenBase {
         super.resize(width, height);
 
         float spriteSide = Math.min(width * 0.8f, height * 0.8f);
-        float spriteScale = Math.min(spriteSide / studioLogo.getWidth(), 1f);
+        float spriteScale = spriteSide / studioLogo.getWidth();
 
         studioLogo.setScale(spriteScale);
         studioText.setScale(spriteScale);

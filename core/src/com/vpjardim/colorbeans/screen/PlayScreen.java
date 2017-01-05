@@ -51,16 +51,7 @@ public class PlayScreen extends ScreenBase {
         Table table = new Table(G.game.skin);
         table.setBounds(0, 0, G.width, G.height);
 
-        TextButton menuButt, resumeButt;
-
-        menuButt = new TextButton("Menu",
-                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
-        menuButt.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                action = ACT_MENU;
-            }
-        });
+        TextButton resumeButt, menuButt;
 
         resumeButt = new TextButton("Resume",
                 G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
@@ -71,10 +62,21 @@ public class PlayScreen extends ScreenBase {
             }
         });
 
-        table.add(menuButt).width(250).pad(12);
+        menuButt = new TextButton("Menu",
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
+        menuButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action = ACT_MENU;
+            }
+        });
+
+        float bttW = G.style.buttWidth;
+        float padM = G.style.padMedium;
+
+        table.add(resumeButt).width(bttW).pad(padM);
         table.row();
-        table.add(resumeButt).width(250).pad(12);
-        table.row();
+        table.add(menuButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
         stage.addActor(table);
         table.setDebug(G.game.debug); // #debugCode

@@ -24,6 +24,7 @@ public class MenuScreen extends ScreenBase {
     public static final int ACT_PLAY     = 10;
     public static final int ACT_TRAINING = 11;
     public static final int ACT_SCORE    = 12;
+    public static final int ACT_CONFIG   = 13;
 
     private Stage stage;
 
@@ -56,7 +57,7 @@ public class MenuScreen extends ScreenBase {
         });
 
         trainingButt = new TextButton("Training",
-                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+                G.game.skin.get("bttBlue", TextButton.TextButtonStyle.class));
         trainingButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -74,14 +75,16 @@ public class MenuScreen extends ScreenBase {
         });
 
         optionsButt = new TextButton("Options...",
-                G.game.skin.get("bttBlue", TextButton.TextButtonStyle.class));
+                G.game.skin.get("bttGray", TextButton.TextButtonStyle.class));
         optionsButt.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {}
+            public void clicked(InputEvent event, float x, float y) {
+                action = ACT_CONFIG;
+            }
         });
 
         exitButt = new TextButton("Exit",
-                G.game.skin.get("bttGray", TextButton.TextButtonStyle.class));
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
         exitButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -92,21 +95,23 @@ public class MenuScreen extends ScreenBase {
         Label.LabelStyle labelStyle =
                 G.game.skin.get("labelMenu", Label.LabelStyle.class);
 
-        Label label;
-        label = new Label("Color Beans", labelStyle);
+        Label label = new Label("Color Beans", labelStyle);
         label.setAlignment(Align.center);
 
-        table.add(label).width(720).height(249);
+        float bttW = G.style.buttWidth;
+        float padM = G.style.padMedium;
+
+        table.add(label).width(G.style.ribbonWidth).height(G.style.ribbonHeight);
         table.row();
-        table.add(playButt).width(250).pad(12);
+        table.add(playButt).width(bttW).pad(padM);
         table.row();
-        table.add(trainingButt).width(250).pad(12);
+        table.add(trainingButt).width(bttW).pad(padM);
         table.row();
-        table.add(scoreButt).width(250).pad(12);
+        table.add(scoreButt).width(bttW).pad(padM);
         table.row();
-        table.add(optionsButt).width(250).pad(12);
+        table.add(optionsButt).width(bttW).pad(padM);
         table.row();
-        table.add(exitButt).width(250).pad(60, 12, 12, 12);
+        table.add(exitButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
         stage.addActor(table);
         table.setDebug(G.game.debug); // #debugCode

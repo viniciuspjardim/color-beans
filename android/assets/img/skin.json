@@ -20,6 +20,11 @@
             down: "game/b_blue_down",
             font: dimbo
         },
+        bttRed: {
+            up: "game/b_red_up",
+            down: "game/b_red_down",
+            font: dimbo
+        },
         bttGray: {
             up: "game/b_gray_up",
             down: "game/b_gray_down",

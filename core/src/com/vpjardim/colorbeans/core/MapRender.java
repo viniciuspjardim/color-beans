@@ -4,6 +4,7 @@
 
 package com.vpjardim.colorbeans.core;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -39,7 +40,7 @@ public class MapRender {
 
     public void renderShapes() {
 
-        G.game.sr.setColor(0.1f, 0.2f, 0.25f, 1f);
+        G.game.sr.setColor(new Color(0x1a3340ff));
         G.game.sr.rect(px, py, size * m.N_COL, -size * m.N_ROW);
     }
 

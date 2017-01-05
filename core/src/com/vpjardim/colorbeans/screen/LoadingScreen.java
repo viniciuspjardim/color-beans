@@ -33,12 +33,20 @@ import java.text.NumberFormat;
 public class LoadingScreen extends ScreenBase {
 
     private int frameCount = 0;
+    private String atlasStr;
 
     public LoadingScreen() {
         manageInput = false;
     }
 
     public void loadStuff() {
+
+        G.game.scale = G.game.height / 720f;
+        if(G.height >= 1080) G.game.res = G.RES_MEDIUM;
+        else G.game.res = G.RES_SMALL;
+
+        G.style.setDefaults();
+        G.style.scale(G.game.scale);
 
         G.game.assets = new AssetManager();
 
@@ -50,17 +58,17 @@ public class LoadingScreen extends ScreenBase {
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         param.fontFileName = "font/roboto.ttf";
-        param.fontParameters.size = 24;
+        param.fontParameters.size = G.style.fontSizeMedium;
         G.game.assets.load("roboto.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         param.fontFileName = "font/roboto_i.ttf";
-        param.fontParameters.size = 24;
+        param.fontParameters.size = G.style.fontSizeMedium;
         G.game.assets.load("roboto-i.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         param.fontFileName = "font/dimbo.ttf";
-        param.fontParameters.size = 32;
+        param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = Color.PURPLE;
         param.fontParameters.borderColor = Color.WHITE;
         param.fontParameters.borderWidth = 1;
@@ -73,7 +81,13 @@ public class LoadingScreen extends ScreenBase {
         G.game.intFmt = NumberFormat.getInstance();
 
         G.game.input.loadInputs();
-        G.game.assets.load("img/pack.atlas", TextureAtlas.class);
+
+        if(G.res == G.RES_MEDIUM) atlasStr = "img/pack_m.atlas"; // Medium size sprites
+        else atlasStr = "img/pack_s.atlas"; // Small size sprites
+
+        System.out.println(atlasStr);
+
+        G.game.assets.load(atlasStr, TextureAtlas.class);
         G.game.assets.load("audio/studio.ogg", Music.class);
 
         // Todo load scores #debugCode
@@ -99,7 +113,7 @@ public class LoadingScreen extends ScreenBase {
             action = ScreenBase.ACT_NEXT;
 
             // After loading is done we can create atlas and skin
-            G.game.atlas = G.game.assets.get("img/pack.atlas", TextureAtlas.class);
+            G.game.atlas = G.game.assets.get(atlasStr, TextureAtlas.class);
 
             G.game.skin  = new Skin();
             G.game.skin.addRegions(G.game.atlas);
