@@ -55,6 +55,7 @@ public class G extends Game {
     public ScoreTable score;
     public NumberFormat intFmt;
 
+    // Todo create a debug class with all debug options
     // #debugCode
     public final int deltaCfg;
     public final boolean debug;
@@ -117,6 +118,6 @@ public class G extends Game {
         batch.dispose();
         sr.dispose();
         atlas.dispose();
-        // Do not dispose skin
+        // Skin is disposed when assets is disposed
     }
 }

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
+import com.vpjardim.colorbeans.core.ScoreTable;
 
 /**
  * @author Vinícius Jardim
@@ -126,6 +127,9 @@ public class PlayScreen extends ScreenBase {
     public void pause() {
         manager.pause(0, true);
     }
+
+    @Override
+    public void hide() { ScoreTable.save(G.game.score); }
 
     @Override
     public void dispose() {

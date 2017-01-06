@@ -90,11 +90,7 @@ public class LoadingScreen extends ScreenBase {
         G.game.assets.load(atlasStr, TextureAtlas.class);
         G.game.assets.load("audio/studio.ogg", Music.class);
 
-        // Todo load scores #debugCode
-        G.game.score.addRow("vini", 55458);
-        G.game.score.addRow("klabo", 25003);
-        G.game.score.addRow("jão", 30058);
-        G.game.score.addRow("pito", 66641);
+        G.game.score = ScoreTable.load("state/scores.json");
     }
 
     @Override

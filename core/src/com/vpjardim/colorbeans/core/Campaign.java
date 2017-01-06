@@ -95,6 +95,11 @@ public class Campaign extends MapManager {
         // Player (index 0) won
         if(mapIndex == 0) {
 
+            Map p = maps.get(0);
+            p.scoreSum += p.score;
+
+            G.game.score.addRow(p.name, p.score, p.scoreSum, p.matchTime);
+
             stageIndex++;
             if(stageIndex >= mapCfgs.size) {
                 gameStatus = GAME_ZEROED;

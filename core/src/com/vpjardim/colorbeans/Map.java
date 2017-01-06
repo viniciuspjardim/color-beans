@@ -518,11 +518,11 @@ public class Map implements TargetBase {
 
     // ====== Score control variables =====>
 
-    /** Score for all matches played in sequence */
-    public int scoreSum;
-
     /** Score number from the current match */
     public int score;
+
+    /** Score for all matches  played in sequence */
+    public int scoreSum;
 
     /** Score string to show in the GUI */
     public String scoreStr;
@@ -1056,6 +1056,8 @@ public class Map implements TargetBase {
         trashBlocksToAdd = 0;
         prop.gameOver = false;
         prop.gameWin = false;
+        score = 0;
+        scoreStr = "0";
         timeIndex = 0;
         matchTime = 0f;
         prop.vPlayMoveTimeDef = moveTime[1];
