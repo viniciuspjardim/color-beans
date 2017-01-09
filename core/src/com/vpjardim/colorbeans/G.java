@@ -4,7 +4,6 @@
 
 package com.vpjardim.colorbeans;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
@@ -27,15 +27,9 @@ import java.text.NumberFormat;
  */
 public class G extends Game {
 
-    // Used to change game speed
-    public static final int DELTA_REAL   = 1;
-    public static final int DELTA_SLOW   = 2;
-    public static final int DELTA_NORMAL = 3;
-    public static final int DELTA_FAST   = 4;
-
     // Game resolution
-    public static final int RES_SMALL    = 1;
-    public static final int RES_MEDIUM   = 2;
+    public static final int RES_SMALL  = 1;
+    public static final int RES_MEDIUM = 2;
 
     public static G game;
     public static float delta;
@@ -55,37 +49,17 @@ public class G extends Game {
     public ScoreTable score;
     public NumberFormat intFmt;
 
-    // Todo create a debug class with all debug options
     // #debugCode
-    public final int deltaCfg;
-    public final boolean debug;
-    public final boolean fpsDebug;
-    public final boolean lagWarn;
-    public final int logLevel;
-
-    // #debugCode
-    public G() {
-
-        deltaCfg = DELTA_REAL;
-        debug    = false;
-        fpsDebug = false;
-        lagWarn  = false;
-
-        // LOG_NONE  = <nothing>
-        // LOG_ERROR = error
-        // LOG_INFO  = error, log
-        // LOG_DEBUG = error, log, debug
-        logLevel = Application.LOG_NONE;
-    }
+    public Dbg dbg;
 
     @Override
     public void create() {
 
         // Most things are loaded in the LoadingScreen class. See explanation there.
 
-        Gdx.app.setLogLevel(logLevel);
-
         game = (G)Gdx.app.getApplicationListener();
+
+        dbg = new Dbg();
 
         G.width = Gdx.graphics.getWidth();
         G.height = Gdx.graphics.getHeight();

@@ -114,7 +114,7 @@ public class MenuScreen extends ScreenBase {
         table.add(exitButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
         stage.addActor(table);
-        table.setDebug(G.game.debug); // #debugCode
+        table.setDebug(G.game.dbg.uiTable); // #debugCode
     }
 
     @Override

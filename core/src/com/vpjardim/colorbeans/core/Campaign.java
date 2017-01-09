@@ -62,8 +62,6 @@ public class Campaign extends MapManager {
         MapRender r;
 
         Map playerMap = new Map(this);
-        // #debugCode
-        // playerMap.debugShape(2);
         playerMap.index = 0;
         maps.add(playerMap);
         r = new MapRender();
@@ -87,6 +85,13 @@ public class Campaign extends MapManager {
         aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
 
         G.game.input.linkAll();
+
+        // #debugCode
+        if(maps.size > 0)
+            maps.get(0).debugShape(G.game.dbg.map0shape);
+        // #debugCode
+        if(maps.size > 1)
+            maps.get(1).debugShape(G.game.dbg.map1shape);
     }
 
     @Override

@@ -144,8 +144,13 @@ public abstract class MapManager {
                     pause(m.index, paused);
                 }
                 winnerMap = null;
+
                 // #debugCode
-                // maps.first().debugShape(2);
+                if(maps.size > 0)
+                    maps.get(0).debugShape(G.game.dbg.map0shape);
+                // #debugCode
+                if(maps.size > 1)
+                    maps.get(1).debugShape(G.game.dbg.map1shape);
             }
         }
     }

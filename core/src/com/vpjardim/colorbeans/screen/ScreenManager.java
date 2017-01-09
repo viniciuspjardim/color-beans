@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Campaign;
+import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.Training;
 
 import aurelienribon.tweenengine.TweenManager;
@@ -39,18 +40,18 @@ public class ScreenManager {
         // #debugCode
         // Warn frames longer than a max time; set frames a constant time
         // for debug propose: DELTA_SLOW, DELTA_NORMAL, DELTA_FAST
-        if(G.game.deltaCfg == G.DELTA_REAL) {
+        if(G.game.dbg.delta == Dbg.DELTA_REAL) {
 
             int fps = Math.round(1f / Gdx.graphics.getRawDeltaTime());
 
-            if(G.game.lagWarn && fps < 50)
+            if(G.game.dbg.lagWarn && fps < 50)
                 Gdx.app.log("LagWarn", fps + " fps");
         }
-        else if(G.game.deltaCfg == G.DELTA_SLOW)
+        else if(G.game.dbg.delta == Dbg.DELTA_SLOW)
             G.delta = 0.004f;    // 250 fps
-        else if(G.game.deltaCfg == G.DELTA_NORMAL)
+        else if(G.game.dbg.delta == Dbg.DELTA_NORMAL)
             G.delta = 0.016667f; //  60 fps
-        else if(G.game.deltaCfg == G.DELTA_FAST)
+        else if(G.game.dbg.delta == Dbg.DELTA_FAST)
             G.delta = 0.032f;    //  31 fps
 
         ScreenBase currScreen = (ScreenBase) G.game.getScreen();
@@ -105,6 +106,6 @@ public class ScreenManager {
         }
 
         // #debugCode
-        if(G.game.fpsDebug) fps.log();
+        if(G.game.dbg.fps) fps.log();
     }
 }

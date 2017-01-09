@@ -1185,8 +1185,10 @@ public class Map implements TargetBase {
 
     public void debugShape(int shape) {
 
+        // Nothing
+        if(shape == 0) {}
         // Small combo
-        if(shape == 0) {
+        if(shape == 1) {
             b[0][14 + OUT_ROW].setColor(1);
             b[0][13 + OUT_ROW].setColor(1);
             b[0][12 + OUT_ROW].setColor(1);
@@ -1204,7 +1206,7 @@ public class Map implements TargetBase {
             b[1][8 + OUT_ROW].setColor(9);
         }
         // Combo
-        if(shape == 1) {
+        else if(shape == 2) {
             b[0][14 + OUT_ROW].setColor(1);
             b[0][13 + OUT_ROW].setColor(1);
             b[0][12 + OUT_ROW].setColor(1);
@@ -1238,7 +1240,7 @@ public class Map implements TargetBase {
             b[3][8 + OUT_ROW].setColor(9);
         }
         // Big combo
-        if(shape == 2) {
+        else if(shape == 3) {
             b[0][14 + OUT_ROW].setColor(1);
             b[0][13 + OUT_ROW].setColor(1);
             b[0][12 + OUT_ROW].setColor(1);
@@ -1280,7 +1282,7 @@ public class Map implements TargetBase {
             b[4][8 + OUT_ROW].setColor(9);
         }
         // Stair: 2 block per step
-        else if(shape == 3) {
+        else if(shape == 4) {
             b[0][14 + OUT_ROW].setColor(1);
             b[1][14 + OUT_ROW].setColor(2);
             b[2][14 + OUT_ROW].setColor(3);
@@ -1294,7 +1296,7 @@ public class Map implements TargetBase {
             b[0][12 + OUT_ROW].setColor(3);
         }
         // Stair: 2 block per step
-        else if(shape == 4) {
+        else if(shape == 5) {
             b[0][14 + OUT_ROW].setColor(1);
             b[1][14 + OUT_ROW].setColor(2);
             b[2][14 + OUT_ROW].setColor(3);
@@ -1318,7 +1320,7 @@ public class Map implements TargetBase {
             b[2][11 + OUT_ROW].setColor(1);
         }
         // Only 3 rows free at the top
-        else if(shape == 5) {
+        else if(shape == 6) {
             for(int col = 0; col < b.length; col++) {
                 for(int row = OUT_ROW + 3; row < b[col].length; row++) {
                     b[col][row].setColor(Block.CLR_T);
@@ -1326,7 +1328,7 @@ public class Map implements TargetBase {
             }
         }
         // Wall (filled column) to block area in the map
-        else if(shape == 6) {
+        else if(shape == 7) {
             for(int row = 0; row < b[2].length; row++) {
                 b[2][row].setColor(Block.CLR_T);
             }
@@ -1336,7 +1338,7 @@ public class Map implements TargetBase {
 
         }
         // 2 Walls (filled column) to block area in the map
-        else if(shape == 7) {
+        else if(shape == 8) {
             for(int row = 0; row < b[2].length; row++) {
                 b[2][row].setColor(Block.CLR_T);
             }

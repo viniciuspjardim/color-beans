@@ -80,7 +80,7 @@ public class ScoreScreen extends ScreenBase {
         table.add(backButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
         stage.addActor(table);
-        table.setDebug(G.game.debug); // #debugCode
+        table.setDebug(G.game.dbg.uiTable); // #debugCode
     }
 
     @Override

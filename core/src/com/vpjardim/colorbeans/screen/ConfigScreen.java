@@ -99,7 +99,7 @@ public class ConfigScreen extends ScreenBase  {
         table.row();
 
         stage.addActor(table);
-        table.setDebug(G.game.debug); // #debugCode
+        table.setDebug(G.game.dbg.uiTable); // #debugCode
     }
 
     @Override
