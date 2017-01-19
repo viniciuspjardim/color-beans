@@ -45,12 +45,12 @@ public class PlayScreen extends ScreenBase {
 
         menuCam = new OrthographicCamera();
         menuViewport = new ScreenViewport(menuCam);
-        viewport.apply(false);
+        viewport.apply(true);
         stage = new Stage(menuViewport, G.game.batch);
         G.game.input.addProcessor(stage);
 
         Table table = new Table(G.game.skin);
-        table.setBounds(0, 0, G.width, G.height);
+        table.setFillParent(true);
 
         TextButton resumeButt, menuButt;
 
@@ -120,7 +120,7 @@ public class PlayScreen extends ScreenBase {
     public void resize(int width, int height) {
         super.resize(width, height);
         manager.resize();
-        menuViewport.update(width, height, false);
+        menuViewport.update(width, height, true);
     }
 
     @Override

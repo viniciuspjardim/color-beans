@@ -34,28 +34,44 @@ public class Campaign extends MapManager {
         aiMapNames = new Array<>();
 
         mapCfgs.add(Db.map1);
-        mapCfgs.add(Db.map2);
-        mapCfgs.add(Db.map3);
-        mapCfgs.add(Db.map4);
-        mapCfgs.add(Db.map5);
-        mapCfgs.add(Db.map6);
-        mapCfgs.add(Db.map7);
-
         aiCfgs.add(Db.ai1);
-        aiCfgs.add(Db.ai2);
-        aiCfgs.add(Db.ai3);
-        aiCfgs.add(Db.ai4);
-        aiCfgs.add(Db.ai5);
-        aiCfgs.add(Db.ai6);
-        aiCfgs.add(Db.ai7);
-
         aiMapNames.add("Stage 1");
-        aiMapNames.add("Stage 2");
-        aiMapNames.add("Stage 3");
-        aiMapNames.add("Stage 4");
-        aiMapNames.add("Stage 5");
-        aiMapNames.add("Stage 6");
-        aiMapNames.add("Stage 7");
+
+        if(G.game.dbg.campLevels > 1) {
+            mapCfgs.add(Db.map2);
+            aiCfgs.add(Db.ai2);
+            aiMapNames.add("Stage 2");
+        }
+
+        if(G.game.dbg.campLevels > 2) {
+            mapCfgs.add(Db.map3);
+            aiCfgs.add(Db.ai3);
+            aiMapNames.add("Stage 3");
+        }
+
+        if(G.game.dbg.campLevels > 3) {
+            mapCfgs.add(Db.map4);
+            aiCfgs.add(Db.ai4);
+            aiMapNames.add("Stage 4");
+        }
+
+        if(G.game.dbg.campLevels > 4) {
+            mapCfgs.add(Db.map5);
+            aiCfgs.add(Db.ai5);
+            aiMapNames.add("Stage 5");
+        }
+
+        if(G.game.dbg.campLevels > 5) {
+            mapCfgs.add(Db.map6);
+            aiCfgs.add(Db.ai6);
+            aiMapNames.add("Stage 6");
+        }
+
+        if(G.game.dbg.campLevels > 6) {
+            mapCfgs.add(Db.map7);
+            aiCfgs.add(Db.ai7);
+            aiMapNames.add("Stage 7");
+        }
 
         G.game.input.targetsClear();
 
@@ -69,7 +85,7 @@ public class Campaign extends MapManager {
         render.add(r);
         // Config player's map to the first stage
         playerMap.setCfg(mapCfgs.get(stageIndex));
-        playerMap.name = "Player";
+        playerMap.name = G.game.players.first();
         G.game.input.addTarget(playerMap);
 
         Map aiMap = new Map(this);

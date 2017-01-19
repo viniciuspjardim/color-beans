@@ -25,7 +25,7 @@ public class CreditsScreen extends ScreenBase {
 
         stage = new Stage(viewport, G.game.batch);
         Table table = new Table(G.game.skin);
-        table.setBounds(0, 0, G.width, G.height);
+        table.setFillParent(true);
 
         Label.LabelStyle labelStyle =
                 G.game.skin.get("labelDef", Label.LabelStyle.class);

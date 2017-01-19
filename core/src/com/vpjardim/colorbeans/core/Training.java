@@ -17,23 +17,25 @@ public class Training extends MapManager {
 
     @Override
     public void init() {
+
         gameCfg = Db.trainingGame;
         maps = new Array<>();
         render = new Array<>();
 
-        Map playerMap = new Map(this);
-        playerMap.index = 0;
-        maps.add(playerMap);
-
         G.game.input.targetsClear();
 
-        MapRender r = new MapRender();
-        r.m = playerMap;
-        render.add(r);
+        for(int i = 0; i < G.game.players.size; i++) {
+            Map m = new Map(this);
+            m.index = i;
+            m.setCfg(Db.mapT);
+            m.name = G.game.players.get(i);
+            maps.add(m);
+            G.game.input.addTarget(m);
 
-        playerMap.setCfg(Db.mapT);
-        playerMap.name = "Player";
-        G.game.input.addTarget(playerMap);
+            MapRender r = new MapRender();
+            r.m = m;
+            render.add(r);
+        }
 
         G.game.input.linkAll();
     }

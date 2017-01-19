@@ -15,8 +15,8 @@ public class PackTextures {
 
         // Bug pack_s.atlas must be fixed by hand. Buttons on low res don't
         // display properly
-        // wrong values are "split: 30, 33, 25, 38
-        // replace with "split: 29, 33, 24, 38"
+        // wrong values are: split: 32, 32, 28, 32 | split: 32, 32, 24, 36
+        // replace with    : split: 31, 32, 27, 32 | split: 31, 32, 23, 36
 
         System.out.println("Packing textures...");
         TexturePacker.process("to_pack/", "packed", "pack");

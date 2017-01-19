@@ -131,12 +131,12 @@ public class StudioScreen extends ScreenBase {
         studioText.setScale(spriteScale);
 
         studioLogo.setPosition(
-                -studioLogo.getWidth() / 2f,
-                -studioLogo.getHeight() / 2f
+                (width - studioLogo.getWidth()) / 2f,
+                (height - studioLogo.getHeight()) / 2f
         );
         studioText.setPosition(
-                -studioText.getWidth() / 2f,
-                -(studioText.getHeight() / 2f) - (studioLogo.getHeight() / 2.9f * spriteScale)
+                (width - studioText.getWidth()) / 2f,
+                (height - studioText.getHeight()) / 2f - (studioLogo.getHeight() / 2.9f * spriteScale)
         );
 
         // #debugCode

@@ -42,8 +42,11 @@ public class MenuScreen extends ScreenBase {
         stage = new Stage(viewport, G.game.batch);
         G.game.input.addProcessor(stage);
 
+        Table outerT = new Table(G.game.skin);
         Table table = new Table(G.game.skin);
-        table.setBounds(0, 0, G.width, G.height);
+
+        outerT.setFillParent(true);
+        table.setBackground("tbg");
 
         TextButton playButt, trainingButt, scoreButt, optionsButt, exitButt;
 
@@ -101,19 +104,25 @@ public class MenuScreen extends ScreenBase {
         float bttW = G.style.buttWidth;
         float padM = G.style.padMedium;
 
+        table.defaults().width(bttW).pad(padM);
+
+        outerT.add();
+        outerT.add(table);
+        outerT.add();
+
         table.add(label).width(G.style.ribbonWidth).height(G.style.ribbonHeight);
         table.row();
-        table.add(playButt).width(bttW).pad(padM);
+        table.add(playButt);
         table.row();
-        table.add(trainingButt).width(bttW).pad(padM);
+        table.add(trainingButt);
         table.row();
-        table.add(scoreButt).width(bttW).pad(padM);
+        table.add(scoreButt);
         table.row();
-        table.add(optionsButt).width(bttW).pad(padM);
+        table.add(optionsButt);
         table.row();
         table.add(exitButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
-        stage.addActor(table);
+        stage.addActor(outerT);
         table.setDebug(G.game.dbg.uiTable); // #debugCode
     }
 

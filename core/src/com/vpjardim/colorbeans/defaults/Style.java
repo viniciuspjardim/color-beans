@@ -8,7 +8,7 @@ import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
- *         04/01/2017
+ * 04/01/2017
  */
 public class Style {
 

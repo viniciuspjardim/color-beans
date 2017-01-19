@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 
@@ -80,22 +81,23 @@ public class MapRender {
 
         tile = G.game.atlas.findRegion(m.pb.b1.strColor, m.pb.b1.tile +1);
 
-        G.game.batch.draw(
-                tile,
-                px + (m.pb.b1x + m.pb.b1.px) * size,
-                py + (m.pb.b1y +1 - m.OUT_ROW - m.pb.b1.py) * - size,
-                size,
-                size
-        );
+        float b1X = px + (m.pb.b1x + m.pb.b1.px) * size;
+        float b1Y = py + (m.pb.b1y +1 - m.OUT_ROW - m.pb.b1.py) * - size;
+        float ang = -(m.pb.rotationAnim - 0.5f) / 4f * 2f * MathUtils.PI;
+
+        G.game.batch.draw(tile, b1X, b1Y, size, size);
 
         tile = G.game.atlas.findRegion(m.pb.b2.strColor, m.pb.b2.tile +1);
 
+        float size2 = size * 0.75f;
+
         G.game.batch.draw(
                 tile,
-                px + (m.pb.b2x + m.pb.b2.px) * size,
-                py + (m.pb.b2y +1 - m.OUT_ROW - m.pb.b2.py) * - size,
+                b1X + (size2 * MathUtils.cos(ang) - size2 * MathUtils.sin(ang)),
+                b1Y + (size2 * MathUtils.sin(ang) + size2 * MathUtils.cos(ang)),
                 size,
                 size
         );
+        // Todo review ang and size2 it's a weird code
     }
 }

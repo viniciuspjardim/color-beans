@@ -5,6 +5,7 @@
 package com.vpjardim.colorbeans;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -39,6 +40,9 @@ public class PlayBlocks {
      */
     public int rotation;
 
+    /** Float numbers between -4 and 4 (4 is 360º) similar to rotation */
+    public float rotationAnim;
+
     /** Amount moved by the player. Negative left; positive right */
     public int moveX;
 
@@ -70,6 +74,7 @@ public class PlayBlocks {
         b1y = Map.OUT_ROW -1;
 
         rotation = 0;
+        rotationAnim = 0f;
 
         updateB2pos();
     }
@@ -105,6 +110,33 @@ public class PlayBlocks {
         return false;
     }
 
+    public boolean moveDueCollision() {
+
+        // Should not collide
+        if(rotation == 0) {
+            Dbg.print("processCollision: rotation == 0");
+            return false;
+        }
+        // Move play blocks left
+        if(rotation == 1) {
+            m.prop.hPlayMoveWait = m.prop.hPlayMoveTime;
+            return moveHorizontal(-1);
+        }
+        // Move play blocks up
+        if(rotation == 2) {
+            b1y--;
+            updateB2pos();
+            return true;
+        }
+        // Move play blocks right
+        if(rotation == 3) {
+            m.prop.hPlayMoveWait = m.prop.hPlayMoveTime;
+            return moveHorizontal(1);
+        }
+
+        return false;
+    }
+
     public void rotateClockwise(boolean detectCollision) {
 
         int prevRotation = rotation;
@@ -115,8 +147,7 @@ public class PlayBlocks {
         updateB2pos();
 
         if(detectCollision && collide()) {
-            if(moveHorizontal(1)) {}
-            else if(moveHorizontal(-1)) {}
+            if(moveDueCollision()) {}
             else rotateCounterclockwise(false);
         }
 
@@ -135,8 +166,7 @@ public class PlayBlocks {
         updateB2pos();
 
         if(detectCollision && collide()) {
-            if(moveHorizontal(1)) {}
-            else if(moveHorizontal(-1)) {}
+            if(moveDueCollision()) {}
             else rotateClockwise(false);
         }
 

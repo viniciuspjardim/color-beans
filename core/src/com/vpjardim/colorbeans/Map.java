@@ -1146,6 +1146,7 @@ public class Map implements TargetBase {
         pb.playFallCalc();
         anim.playFall();
         anim.playHorizontal();
+        anim.playRotation();
     }
 
     @Override

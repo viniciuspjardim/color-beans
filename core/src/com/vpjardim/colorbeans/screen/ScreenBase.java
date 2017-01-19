@@ -46,7 +46,7 @@ public class ScreenBase implements Screen, TargetBase {
     public void show() {
         cam = new OrthographicCamera();
         viewport = new ScreenViewport(cam);
-        viewport.apply(false);
+        viewport.apply(true);
 
         if(manageInput) {
             G.game.input.targetsClear();
@@ -67,9 +67,7 @@ public class ScreenBase implements Screen, TargetBase {
     }
 
     @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height, false);
-    }
+    public void resize(int width, int height) { viewport.update(width, height, true); }
 
     @Override
     public void hide() {}

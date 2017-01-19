@@ -34,20 +34,23 @@ public abstract class MapManager {
 
         // Margin of 2% of the screen width
         float marginX = G.width * (2f / 100f);
-        float totalMarginX = marginX * (maps.size + 1);
+        // Margin of 2% of the screen height
+        float marginY = G.height * (2f / 100f);
+        // Used margin
+        float margin = Math.min(marginX, marginY);
+
+        float totalMarginX = margin * (maps.size + 1);
         float mapsX = G.width - totalMarginX;
         float sideX = mapsX / (Map.N_COL * maps.size);
 
-        // Margin of 2% of the screen height
-        float marginY = G.height * (2f / 100f);
-        float totalMarginY = marginY * 2;
+        float totalMarginY = margin * 2;
         float mapsY = G.height - totalMarginY;
         float sideY = mapsY / Map.N_ROW;
 
         float side = Math.min(sideX, sideY);
 
-        mapsX = side * gameCfg.nPlayers * Map.N_COL + totalMarginX;
-        mapsY = side * Map.N_ROW + totalMarginY;
+        float totalX = totalMarginX + side * Map.N_COL * maps.size;
+        float totalY = totalMarginY + side * Map.N_ROW;
 
         // Updating size and positions
         for(int i = 0; i < render.size; i++) {
@@ -55,13 +58,11 @@ public abstract class MapManager {
             MapRender r = render.get(i);
 
             r.size = side;
-            r.px = (-G.width / 2f) + marginX +
-                    (i * (side * Map.N_COL + marginX)) +
-                    ((G.width - mapsX) / 2f)
-            ;
-            r.py = (G.height / 2f) - marginY -
-                    ((G.height - mapsY) / 2f)
-            ;
+
+            r.px = margin + (margin + side * Map.N_COL) * i
+                   + (G.width - totalX) / 2f;
+
+            r.py = -margin + (G.height + totalY) / 2f;
         }
     }
 

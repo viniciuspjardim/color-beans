@@ -91,6 +91,8 @@ public class LoadingScreen extends ScreenBase {
         G.game.assets.load("audio/studio.ogg", Music.class);
 
         G.game.score = ScoreTable.load("state/scores.json");
+
+        if(G.game.players.size == 0) G.game.players.add("Player");
     }
 
     @Override

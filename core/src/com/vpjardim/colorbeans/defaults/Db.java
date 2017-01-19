@@ -38,6 +38,8 @@ public class Db {
     public static final Cfg.Ai ai6 = new Cfg.Ai();
     public static final Cfg.Ai ai7 = new Cfg.Ai();
 
+    public static String bigText;
+
     static {
 
         screenBgColor = new Color[]{
@@ -150,6 +152,65 @@ public class Db {
         ai7.doubtFreqMax = 0f;
         ai7.randomness = 0f;
         ai7.trashMoves = 0f;
+
+        bigText =
+                        "In sem justo, commodo ut, suscipit at, pharetra vitae, orci.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui. Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui. Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui.\n" +
+                        "Praesent in mauris eu tortor porttitor accumsan. Mauris suscipit.\n";
     }
 
     public static Color bgColor() {

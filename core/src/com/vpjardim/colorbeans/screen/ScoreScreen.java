@@ -40,7 +40,7 @@ public class ScoreScreen extends ScreenBase {
         G.game.input.addProcessor(stage);
 
         table = new Table(G.game.skin);
-        table.setBounds(0, 0, G.width, G.height);
+        table.setFillParent(true);
 
         Label.LabelStyle labelStyle =
                 G.game.skin.get("labelDef", Label.LabelStyle.class);

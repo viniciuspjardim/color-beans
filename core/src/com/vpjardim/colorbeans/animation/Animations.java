@@ -174,6 +174,43 @@ public class Animations {
         return true;
     }
 
+    public void playRotation() {
+
+        float fRotation = (float)m.pb.rotation;
+
+        if(fRotation == m.pb.rotationAnim) return;
+
+        // Correction in counterclockwise rotation.
+        // 3 is equivalent to -1 and 0 to 4
+        if(fRotation == 3 && m.pb.rotationAnim <= 0f)
+            fRotation = -1f;
+        if(fRotation == 0 && m.pb.rotationAnim >= 2f)
+            fRotation = 4f;
+
+        boolean isClockwise = fRotation > m.pb.rotationAnim;
+
+        if(isClockwise) {
+            m.pb.rotationAnim = 1f / m.prop.rPlayMoveTime *
+                    (m.prop.rPlayMoveTime - m.prop.rPlayMoveWait) +
+                    fRotation -1;
+
+            if(m.pb.rotationAnim >= fRotation) {
+                m.pb.rotationAnim = fRotation;
+                if(m.pb.rotationAnim > 3f) m.pb.rotationAnim = 0f;
+            }
+        }
+        else {
+            m.pb.rotationAnim = -1f / m.prop.rPlayMoveTime *
+                    (m.prop.rPlayMoveTime - m.prop.rPlayMoveWait) +
+                    fRotation +1;
+
+            if(m.pb.rotationAnim <= fRotation) {
+                m.pb.rotationAnim = fRotation;
+                if(m.pb.rotationAnim < 0f) m.pb.rotationAnim = 3f;
+            }
+        }
+    }
+
     /** @return true if it's animating - animation not finished yet */
     public boolean labelDelete() {
 

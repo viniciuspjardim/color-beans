@@ -32,6 +32,10 @@
         }
     },
 
+    com.badlogic.gdx.graphics.g2d.NinePatch: {
+        tbg: "game/tbg_yellow"
+    },
+
     com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
         labelMenu: {
             background: "game/ribbon_red",
