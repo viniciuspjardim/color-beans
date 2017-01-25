@@ -20,8 +20,6 @@ import com.vpjardim.colorbeans.defaults.Db;
  */
 public class ConfigScreen extends ScreenBase  {
 
-    // Todo fix fps going from 60 to 30 after changing to windowed mode
-
     private Stage stage;
 
     public ConfigScreen() { manageInput = false; }

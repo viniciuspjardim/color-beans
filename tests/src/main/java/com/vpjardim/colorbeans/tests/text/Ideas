@@ -5,9 +5,8 @@
 ==== IDEAS ====
  - Scoring on key down (blocks fast fall)
  - Win animation and logic
- - Play block rotate animation
  - Option screen
-    - Debug scree where all hidden options are available
+    - Debug screen where all hidden options are available
     - Difficulties options (Very Easy, Easy, Medium, Hard, Hardest)
     - Controller and keyboard key map screen
     - Audio options
@@ -15,7 +14,8 @@
  - Show the next play blocks
  - Statistics screen (show all players score / statistics, including AI players)
  - Compare statistics between two players
- - Player can do a few moves before the play blocks are inserted (rotation not working always)
+ - Player can do a few moves before the play blocks are inserted (move up animation and logic is not
+   ok)
  - Improve AI skills and efficiency, and make options to it play worst (for the easy levels):
     - Doubt (the AI moves blocks, like it's in doubt where to put it);
     - Velocity (the AI don't use de down key always. Just a percentage of the play fall);
@@ -36,18 +36,19 @@ Done
  - Play blocks automatic move when there is not enough room to rotate
  - Game over animation and logic
  - Fix bug when game restored trash blocks fall even if the map is on player movement
+ - Play block rotate animation
 
 Achievements (Listed):
- - 4    blocks delete once
- - 8    blocks delete once
+ -  4   blocks delete once
+ -  8   blocks delete once
  - 16   blocks delete once
  - 24   blocks delete once
  - 24 + blocks delete once
- - 1    level combo
- - 2    level combo
-   ...
- - 6    level combo
- - 6+   level combo
+ -  1   level combo
+ -  2   level combo
+    ...
+ -  6   level combo
+ -  6 + level combo
 
  - Newbie: 500 blocks delete
  - Medium: 5000 blocks delete
@@ -61,11 +62,11 @@ Achievements (Listed):
 
 Secret Achievements (Is in the list but don't show the name and description. Show a "?"):
  - 32   blocks delete once
- - 32+  blocks delete once
- - 8    level combo
-   ...
+ - 32 + blocks delete once
+ -  8   level combo
+    ...
  - 12   level combo
- - 12+  level combo
+ - 12 + level combo
  - New difficulty level: hardest (Unlock after zeroed in hard difficulty)
  - Color Dark Blue (Unlock after zeroed in the hardest difficulty)
  - Color Orange (Unlock after ?)

@@ -23,6 +23,7 @@ public class Dbg {
 
     public int delta;
     public boolean fps;
+    public boolean fpsText;
     public boolean lagWarn;
     /** LOG_NONE = []; LOG_ERROR [error]; LOG_INFO [error, log]; LOG_DEBUG [error, log, debug] */
     public int logLevel;
@@ -37,6 +38,7 @@ public class Dbg {
 
         delta     = DELTA_REAL;
         fps       = false;
+        fpsText   = false;
         lagWarn   = false;
         logLevel  = Application.LOG_NONE;
         uiTable   = false;

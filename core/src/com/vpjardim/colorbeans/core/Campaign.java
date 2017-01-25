@@ -26,6 +26,7 @@ public class Campaign extends MapManager {
 
         gameCfg = Db.campGame;
         maps = new Array<>();
+        opp = new Array<>();
         render = new Array<>();
 
         stageIndex = 0;

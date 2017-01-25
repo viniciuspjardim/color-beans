@@ -12,8 +12,8 @@ android {
             keyPassword keyProp['keyPassword']
         }
     }
-    buildToolsVersion "23.0.3"
-    compileSdkVersion 23
+    buildToolsVersion "25.0.2"
+    compileSdkVersion 25
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -50,7 +50,7 @@ android {
     defaultConfig {
         signingConfig signingConfigs.AndroidKey
         applicationId 'com.gmail.vpjardimdev.colorbeans'
-        targetSdkVersion 21
+        targetSdkVersion 25
     }
 }
 // called every time gradle gets executed, takes the native dependencies of

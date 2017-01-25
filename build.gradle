@@ -67,7 +67,6 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
 
         compile fileTree(dir: '../libs', include: '*.jar')
-
     }
 }
 

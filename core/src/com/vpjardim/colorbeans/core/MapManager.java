@@ -21,6 +21,7 @@ public abstract class MapManager {
 
     public Cfg.Game gameCfg;
     public Array<Map> maps;
+    public Array<Map> opp;
     public Array<MapRender> render;
     public Map winnerMap;
     public int gameStatus = GAME_CONTIUES;
@@ -68,24 +69,21 @@ public abstract class MapManager {
 
     public Map getOpponent(int excludeIndex) {
 
-        // Todo should not return maps in game over state
-
         if(maps.size <= 1) return null;
 
-        int rand = MathUtils.random(0, maps.size -1);
-        Map opp = maps.get(rand);
-
-        // If the random map picked is the on that
-        // has called this method, chose the next on
-        if(rand == excludeIndex) {
-
-            // If it`s the last, get the first one
-            if(rand == maps.size -1) opp = maps.get(0);
-            else {
-                opp = maps.get(rand +1);
-            }
+        opp.clear();
+        opp.addAll(maps);
+        opp.removeIndex(excludeIndex);
+        for(int i = 0; i < opp.size; i++) {
+            // Todo fix cause the map go to FREE_FALL state in winLost method if is autoRestart
+            if(opp.get(i).isInState(Map.MState.OVER) || opp.get(i).isInState(Map.MState.DONE))
+                opp.removeIndex(i);
         }
-        return opp;
+
+        if(opp.size > 0) {
+            return opp.get(MathUtils.random(0, opp.size - 1));
+        }
+        return null;
     }
 
     public abstract void mapWin(int mapIndex);
@@ -139,7 +137,7 @@ public abstract class MapManager {
             // If auto restart is on and animations finished: restart the game
             if(autoRestart) {
                 for(Map m : maps) {
-                    m.recycle();
+                    m.recycle(); // Todo remove and test. It's done in MState
                     m.state.changeState(Map.MState.FREE_FALL);
 
                     pause(m.index, paused);

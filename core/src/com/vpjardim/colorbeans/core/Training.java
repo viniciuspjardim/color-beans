@@ -20,6 +20,7 @@ public class Training extends MapManager {
 
         gameCfg = Db.trainingGame;
         maps = new Array<>();
+        opp = new Array<>();
         render = new Array<>();
 
         G.game.input.targetsClear();

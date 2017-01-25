@@ -6,6 +6,7 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Campaign;
 import com.vpjardim.colorbeans.core.Dbg;
@@ -54,10 +55,23 @@ public class ScreenManager {
         else if(G.game.dbg.delta == Dbg.DELTA_FAST)
             G.delta = 0.032f;    //  31 fps
 
+        transition.update(G.delta);
+
         ScreenBase currScreen = (ScreenBase) G.game.getScreen();
         currScreen.render(G.delta);
 
-        transition.update(G.delta);
+        // #debugCode
+        if(G.game.dbg.fpsText) fps.log();
+
+        // #debugCode
+        if(!G.loading && G.game.dbg.fps) {
+            G.game.batch.setProjectionMatrix(currScreen.cam.combined);
+            G.game.batch.begin();
+            BitmapFont font = G.game.assets.get("dimbo.ttf", BitmapFont.class);
+            font.draw(G.game.batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
+                    G.width - 60, G.height - G.game.style.fontSizeMedium);
+            G.game.batch.end();
+        }
 
         // When the screen is done we change to the
         // next screen
@@ -104,8 +118,5 @@ public class ScreenManager {
                 G.game.setScreen(new MenuScreen());
             }
         }
-
-        // #debugCode
-        if(G.game.dbg.fps) fps.log();
     }
 }

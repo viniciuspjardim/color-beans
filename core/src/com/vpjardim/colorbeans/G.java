@@ -38,6 +38,7 @@ public class G extends Game {
     public static int res;
     public static int width;
     public static int height;
+    public static boolean loading;
     public static Style style;
 
     public Array<String> players; // Todo create a player class
@@ -70,7 +71,8 @@ public class G extends Game {
         // dbg.uiTable = true;
         // dbg.map0shape = 4;
         // dbg.campLevels = 2;
-        // dbg.delta = Dbg.DELTA_SLOW;
+        // dbg.delta = Dbg.DELTA_NORMAL;
+        // dbg.fps = true;
 
         players = new Array<>();
         screens = new ScreenManager();

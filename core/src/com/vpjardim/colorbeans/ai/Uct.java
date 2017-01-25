@@ -16,7 +16,7 @@ public class Uct {
     // Done fix child nodes add
     // child nodes has always been added from right to left (should be randomly) until all child has
     // at least on child
-    // Todo fix exploitation vx exploration balance. It's always exploiting. Research RAVE
+    // Todo fix exploitation vs exploration balance. It's always exploiting. Research RAVE
 
     static final float EPSILON1 = 0.00001f;
     static final float EPSILON2 = 0.01f;

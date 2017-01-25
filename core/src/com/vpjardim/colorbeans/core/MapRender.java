@@ -89,7 +89,7 @@ public class MapRender {
 
         tile = G.game.atlas.findRegion(m.pb.b2.strColor, m.pb.b2.tile +1);
 
-        float size2 = size * 0.75f;
+        float size2 = size * 0.7071f; // 1/sqrt(2) == 0.7071
 
         G.game.batch.draw(
                 tile,

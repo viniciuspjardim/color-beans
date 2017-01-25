@@ -39,6 +39,12 @@ public class LoadingScreen extends ScreenBase {
         manageInput = false;
     }
 
+    @Override
+    public void show() {
+        super.show();
+        G.loading = true;
+    }
+
     public void loadStuff() {
 
         G.game.scale = G.game.height / 720f;
@@ -85,14 +91,18 @@ public class LoadingScreen extends ScreenBase {
         if(G.res == G.RES_MEDIUM) atlasStr = "img/pack_m.atlas"; // Medium size sprites
         else atlasStr = "img/pack_s.atlas"; // Small size sprites
 
-        System.out.println(atlasStr);
-
         G.game.assets.load(atlasStr, TextureAtlas.class);
         G.game.assets.load("audio/studio.ogg", Music.class);
 
         G.game.score = ScoreTable.load("state/scores.json");
 
         if(G.game.players.size == 0) G.game.players.add("Player");
+
+        G.game.players.add("Julio");
+        G.game.players.add("Ariovaldo");
+        G.game.players.add("Juvenal");
+        G.game.players.add("Orlando");
+        G.game.players.add("Ganga");
     }
 
     @Override
@@ -125,6 +135,8 @@ public class LoadingScreen extends ScreenBase {
             G.game.skin.add("dimbo", font);
 
             G.game.skin.load(Gdx.files.internal("img/skin.json"));
+
+            G.loading = false;
         }
 
         frameCount++;
