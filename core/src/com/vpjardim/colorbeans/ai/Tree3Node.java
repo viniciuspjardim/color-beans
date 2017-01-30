@@ -6,6 +6,7 @@ package com.vpjardim.colorbeans.ai;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -99,7 +100,7 @@ public class Tree3Node implements Pool.Poolable {
 
         // #debugCode
         if(Ai3.debug) {
-            System.out.println("scoreSum = " + scoreSum);
+            Dbg.print("scoreSum = " + scoreSum);
         }
     }
 

@@ -4,7 +4,6 @@
 
 package com.vpjardim.colorbeans;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
@@ -16,22 +15,21 @@ import com.badlogic.gdx.utils.IntSet;
 import com.vpjardim.colorbeans.ai.AiBase;
 import com.vpjardim.colorbeans.animation.Animations;
 import com.vpjardim.colorbeans.core.Cfg;
+import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
 /**
- * Represents a field/map where one player can do it`s actions.
- * The goal it's to group colors blocks ({@link Block}) until they
- * reach at least 4, for example. This number can be set in
- * {@link GameProperties#deleteSize}. Once this group is formed the
- * color beans/blocks will be deleted to make space for the falling
- * ones. If there isn't enough space for other blocks (the map is
- * full/the falling blocks are obstructed) it's game over.
+ * Represents a field/map where one player can do his actions. The goal is to group
+ * {@link Block blocks} of the same color until they reach at least 4. This number can be set in
+ * {@link GameProperties#deleteSize}. Once this group is formed, the color beans/blocks will be
+ * deleted to make room to the falling ones ({@link PlayBlocks}). If there isn't enough room (the
+ * play blocks are obstructed) it's game over.
  * <pre>
  *
  * Examples of color group (uses the 4 neighborhood):
- * Obs.: blue = 1, red = 2; deleteSize = 4
+ * Note: blue = 1, red = 2; deleteSize = 4
  *
  * Ex 1       Ex 2       Ex 3       Ex 4       Ex 5       Ex 6
  * . 1 . .    . . . .    . . . .    . . . .    . . . .    . . 1 .
@@ -49,9 +47,10 @@ import com.vpjardim.colorbeans.input.TargetBase;
  * Ex 6: all blues and all reds are deleted.
  * </pre>
  *
- * The game can have one or more maps depending on the number
- * of players. One player can interfere on others players map
- * by doing combos that will send trash blocks to the others map.
+ * Blocks in the same color group have the same {@link Block#label}
+ *
+ * The game can have one or more maps depending on the number of players. One player can disturb
+ * other player's map by doing combos that will send trash blocks to the other map.
  * <pre>
  *
  * ==== Standard matrix: row x col ====
@@ -72,9 +71,8 @@ import com.vpjardim.colorbeans.input.TargetBase;
  * Y|x x x x x x |3 0 0 0 0 0 0 0 0 0 0 0 0 0 4
  * </pre>
  *
- * On the Game the matrix has kind of a rotation for render and
- * logics: make the column a row (top becomes left, bottom becomes
- * right), then make the next column as the next row and so on.
+ * At the Game, the matrix has a kind of rotation to render and logics: make the first column a row
+ * (top becomes left, bottom becomes right), then make the next column as the next row and so on.
  * <pre>
  *
  * ==== Game matrix: col x row ====
@@ -113,9 +111,8 @@ public class Map implements TargetBase {
     // ====== Static members =====>
 
     /**
-     * A finite state machine to track the
-     * main states of the map and perform actions
-     * required by each state
+     * A finite state machine to track the main states of the map and perform actions required by
+     * each state
      */
     public enum MState implements State<Map> {
 
@@ -124,10 +121,10 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Gdx.app.debug(map.getClass().getSimpleName() + "#" + map.toString(), "state = FREE_FALL");
+                Dbg.dbg(Dbg.tag(map), "state = FREE_FALL");
 
-                map.shuffleColAcceleration();
-                map.prop.afterFreeFallTime = map.prop.afterFreeFallWait;
+                map.shuffleColAcceleration(0.3f);
+                map.prop.afterFreeFallTimer = map.prop.afterFreeFallWait;
                 map.freeFallCalc();
                 map.anim.freeFall();
             }
@@ -150,10 +147,10 @@ public class Map implements TargetBase {
 
                 if(freeFallAnim) return;
 
-                map.prop.afterFreeFallTime -= G.delta;
+                map.prop.afterFreeFallTimer -= G.delta;
 
                 // Wait some time before change state
-                if(map.prop.afterFreeFallTime > 0f) return;
+                if(map.prop.afterFreeFallTimer > 0f) return;
 
                 // If a block change it's position the labels
                 // needs to be recalculated
@@ -162,11 +159,11 @@ public class Map implements TargetBase {
                     map.blockFall = false;
                     map.blockInsert = false;
                 }
-                // If not see if is time to add trash blocks
+                // If not, see if is time to add trash blocks
                 else if(map.trashBlocksToAdd > 0 && map.trashBlocksTurn) {
                     map.state.changeState(MState.TRASH_ADD);
                 }
-                // If not change to play fall state
+                // If not, change to play fall state
                 else {
                     map.state.changeState(MState.PLAY_FALL);
                 }
@@ -181,7 +178,7 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Gdx.app.debug(map.getClass().getSimpleName() + "#" + map.toString(), "state = LABEL_CALC");
+                Dbg.dbg(Dbg.tag(map), "state = LABEL_CALC");
 
                 map.labelCalc();
                 map.groupBonusCalc();
@@ -221,7 +218,7 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Gdx.app.debug(map.getClass().getSimpleName() + "#" + map.toString(), "state = PLAY_FALL");
+                Dbg.dbg(Dbg.tag(map), "state = PLAY_FALL");
 
                 map.chainPowerCount = 0;
                 map.scoredBlocks = 0;
@@ -233,14 +230,14 @@ public class Map implements TargetBase {
                     return;
                 }
 
-                map.prop.vPlayMoveWait = map.prop.beforePlayFallWait;
-                map.prop.hPlayMoveWait = map.prop.beforePlayFallWait;
-                map.prop.rPlayMoveWait = map.prop.beforePlayFallWait;
+                map.prop.vPlayMoveTimer = map.prop.beforePlayFallWait;
+                map.prop.hPlayMoveTimer = map.prop.beforePlayFallWait;
+                map.prop.rPlayMoveTimer = map.prop.beforePlayFallWait;
 
                 map.trashBlocksTurn = true;
                 map.throwTrashBlocks();
 
-                // processing input and input animation
+                // processing input
                 map.inputUpdate();
             }
 
@@ -258,6 +255,10 @@ public class Map implements TargetBase {
 
                 // processing input and input animation
                 map.inputUpdate();
+                map.pb.playFallCalc();
+                map.anim.playFall();
+                map.anim.playHorizontal();
+                map.anim.playRotation();
 
                 if(map.blockInsert) {
                     map.state.changeState(MState.FREE_FALL);
@@ -278,7 +279,7 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Gdx.app.debug(map.getClass().getSimpleName() + "#" + map.toString(), "state = TRASH_ADD");
+                Dbg.dbg(Dbg.tag(map), "state = TRASH_ADD");
 
                 map.addTrashBlocks();
                 map.trashBlocksTurn = false;
@@ -297,8 +298,8 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Gdx.app.debug(map.getClass().getSimpleName() + "#" + map.toString(), "state = OVER");
-                System.out.println(map + " over");
+                Dbg.dbg(Dbg.tag(map), "state = OVER");
+                Dbg.inf(Dbg.tag(map), "game over");
 
                 map.shuffleColAcceleration(0.8f);
                 map.colAcceleration[map.b.length/2] = map.prop.freeFallAcceleration * 0.8f;
@@ -323,9 +324,9 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Gdx.app.debug(map.getClass().getSimpleName() + "#" + map.toString(), "state = DONE");
+                Dbg.dbg(Dbg.tag(map), "state = DONE");
                 if(map.prop.gameWin) {
-                    System.out.println(map + " win\n");
+                    Dbg.inf(Dbg.tag(map), "game win\n");
                 }
             }
 
@@ -343,9 +344,7 @@ public class Map implements TargetBase {
         }
     }
 
-    /**
-     * Basic draw proprieties
-     */
+    /** Basic draw proprieties */
     public static class GameProperties {
 
         /** True if game is paused */
@@ -361,91 +360,97 @@ public class Map implements TargetBase {
         public boolean lost = false;
 
         /**
-         * Wait some time before insert the play blocks.
-         * The player can use this time to do his last moves
+         * Default time to wait before insert the play blocks. The player can use this time to do
+         * his last moves
          */
         public float beforeInsertWait = 0.2f;
 
+        /**
+         * Default time to wait before changing from the {@link Map.MState#FREE_FALL FREE_FALL}
+         * state to the next state
+         */
         public float afterFreeFallWait = 0.23f;
 
-        public float afterFreeFallTime = afterFreeFallWait;
+        /**
+         * Remaining time to wait before changing from the {@link Map.MState#FREE_FALL FREE_FALL}
+         * state to the next state
+         */
+        public float afterFreeFallTimer = afterFreeFallWait;
 
-        /** Wait some time before current play blocks starts to fall */
+        /** Default time to wait before current {@link PlayBlocks} starts to fall */
         public float beforePlayFallWait = 0.025f;
 
-        /** Rotation default time to wait */
-        public float rPlayMoveTime = 0.1f;
+        /** Default time to wait before next {@link PlayBlocks} rotation */
+        public float rPlayMoveWait = 0.1f;
 
-        /** Rotation remaining time to wait */
-        public float rPlayMoveWait = 0f;
+        /** Remaining time to wait before next {@link PlayBlocks} rotation */
+        public float rPlayMoveTimer = 0f;
 
         /**
-         * Horizontal move time (when player press the horizontal
-         * arrows in the controller/input)
+         * Default time to wait before next {@link PlayBlocks} horizontal move (when player press
+         * the right/left arrows in the controller/input)
          */
-        public float hPlayMoveTime = 0.1f;
+        public float hPlayMoveWait = 0.1f;
 
-        public float hPlayMoveWait = 0f;
+        /** Remaining time to wait before next {@link PlayBlocks} horizontal move */
+        public float hPlayMoveTimer = 0f;
 
         /**
-         * Default time to a play block fall 1 level in seconds
+         * Default time to a {@link PlayBlocks} fall 1 row. In seconds (less is fester). This field
+         * sets the PlayBlocks default vertical speed. It remains unchanged wen players press the
+         * down key of the controller/input.
          * Slow 0.5f; Normal 0.34; fast 0.16
          */
-        public float vPlayMoveTimeDef = 0.5f;
+        public float vPlayMoveWait = 0.5f;
 
         /**
-         * The multiplier (times faster) for a play block fall
-         * used when a player press the down key of the controller/input
+         * The multiplier (times faster) for {@link PlayBlocks PlayBlock's} speed when the player
+         * press the down key of the controller/input
          */
         public float vPlayMoveMultip = 10f;
 
         /**
-         * Fall time of a play block (one floor): less is faster.
-         * It changes when a player press the down key of the
-         * controller/input to the block fall faster
+         * Default time to {@link PlayBlocks} fall 1 row. In seconds (less is fester). This field
+         * sets the PlayBlocks default vertical speed. It changes when a player press/release the
+         * down key of the controller/input to the block fall faster or go back to the default
+         * speed
          */
-        public float vPlayMoveTime = vPlayMoveTimeDef;
+        public float vPlayMoveWait2 = vPlayMoveWait;
 
-        /** Remaining time to a play block fall to the next floor */
-        public float vPlayMoveWait = vPlayMoveTimeDef;
+        /** Remaining time to the {@link PlayBlocks} falls to the next row */
+        public float vPlayMoveTimer = vPlayMoveWait;
 
-        /**
-         * Acceleration of the free fall blocks in side[s] per
-         * second squared: 80 default
-         */
+        /** Acceleration of the free fall blocks in rows per second squared: 80 default */
         public float freeFallAcceleration = 80f;
 
-        /** Time to wait before delete de block */
-        public float deleteTime = 0.5f;
+        /** Default time to wait before delete the block */
+        public float deleteWait = 0.5f;
 
-        /** A third of deleteTime */
-        public float delTime3 = deleteTime / 3f;
+        /** A third of {@link #deleteWait} */
+        public float delWait3 = deleteWait / 3f;
 
         /**
-         * Max trash blocks that can be put in the map
-         * in one turn. The others will wait the next turns
+         * Max trash blocks that can be put in the map in one turn. The others will wait the next
+         * turns
          */
         public int maxTrashOnce = N_COL * 5;
 
         /**
-         * If there is at least {@link #deleteSize} blocks with the same
-         * label (color group) the blocks of this label will be deleted.
-         * 4 default.
+         * If there is at least this number of blocks with the same {@link Block#label} (color
+         * group), the blocks of this label will be deleted. 4 default.
          */
         public int deleteSize = 4;
     }
 
-    /** Map width [number of block columns]: 7 default */
+    /** Map width (number of block columns): 7 default */
     public static final int N_COL = 7;
 
-    /** Map height [number of block rows]: 15 default */
+    /** Map height (number of block rows): 15 default */
     public static final int N_ROW = 15;
 
     /**
-     * Out of screen rows: space used to place trash
-     * blocks and avoid collisions at the top. It`s
-     * a kind of back stage that is not shown to
-     * the player. 10 default
+     * Out of screen rows: space used to place trash blocks and avoid collisions at the top. It`s a
+     * kind of back stage that is not shown to the player. 10 default
      */
     public static final int OUT_ROW = 10;
 
@@ -506,8 +511,8 @@ public class Map implements TargetBase {
     public PlayBlocks pb;
 
     /**
-     * Abstract input method: a controller, touch screen,
-     * keyboard etc from which this map will be controlled
+     * Abstract input method: a controller, touch screen, keyboard etc from which this map will be
+     * controlled
      */
     public transient InputBase input;
 
@@ -547,20 +552,21 @@ public class Map implements TargetBase {
     private int trashBlocksToAdd = 0;
 
     /**
-     * {@link #trashBlocksToAdd} has a limit in one turn:
-     * {@link GameProperties#maxTrashOnce}. When this limit is
-     * reached the player will have one turn then more trash
-     * blocks can be added
+     * {@link #trashBlocksToAdd} has a limit in per turn: {@link GameProperties#maxTrashOnce}. When
+     * this limit is reached the player will have one turn then more trash blocks can be added
      */
     public boolean trashBlocksTurn = true;
     // <===== End state control variables ======
 
 
     // ====== Timing control variables =====>
-    /** Match time */
+    /** Match time. Only non paused time is computed */
     public float matchTime = 0f;
 
-    /** Pairs of change time and the new vertical moveTime (less is faster) */
+    /** Time at the current speed */
+    public float speedTime = 0f;
+
+    /** Pairs of change time and the new vertical moveTime (less is faster then more speed) */
     public float[] moveTime;
 
     /** Current index of the pair */
@@ -630,9 +636,9 @@ public class Map implements TargetBase {
     public void setCfg(Cfg.Map cfg) {
         moveTime = cfg.moveTime;
 
-        prop.vPlayMoveTimeDef = moveTime[1];
-        prop.vPlayMoveTime = moveTime[1];
         prop.vPlayMoveWait = moveTime[1];
+        prop.vPlayMoveWait2 = moveTime[1];
+        prop.vPlayMoveTimer = moveTime[1];
     }
 
     public void print() {
@@ -645,13 +651,13 @@ public class Map implements TargetBase {
 
                 System.out.print(b[col][row].intColor + " ");
             }
-            System.out.println();
+            Dbg.print("");
         }
     }
 
     public void printLabel() {
 
-        System.out.println("Label print ->");
+        Dbg.print("Label print ->");
 
         // row 0 -> 14 + OUT_ROW
         for(int row = 0; row < b[0].length; row++) {
@@ -661,7 +667,7 @@ public class Map implements TargetBase {
 
                 System.out.printf(" %5d", b[col][row].label);
             }
-            System.out.println();
+            Dbg.print("");
         }
 
         // Prints labels count
@@ -670,7 +676,7 @@ public class Map implements TargetBase {
             System.out.print(entry.key + ":" + entry.value + "; ");
         }
 
-        System.out.println();
+        Dbg.print("");
     }
 
     public boolean isEmpty(int col, int row) {
@@ -714,10 +720,9 @@ public class Map implements TargetBase {
     }
 
     /**
-     * Label blocks based on it's color and neighborhood.
-     * Each group of blocks with the same color will have
-     * a unique label number. It's is based on a image
-     * processing algorithm to detect objects
+     * Label blocks based on it's color and neighborhood. Each group of blocks with the same color
+     * will have a unique label number. It's is based on a image processing algorithm to detect
+     * objects
      */
     private void labelCalc() {
 
@@ -778,9 +783,7 @@ public class Map implements TargetBase {
         labelDelete();
     }
 
-    /**
-     * Adding to {@link #le} two labels that are equivalent
-     */
+    /** Adding to {@link #le} two labels that are equivalent */
     private void addLabelEquivalence(int labelA, int labelB) {
 
         // If they are equal they not need to be marked
@@ -812,8 +815,7 @@ public class Map implements TargetBase {
     }
 
     /**
-     * Relabel using the label equivalence:
-     * uses the first label in the set to all equivalent labels
+     * Relabel using the label equivalence: uses the first label in the set to all equivalent labels
      * and increment {@link #lc}: the number of blocks per label
      */
     private void mergeEquivalentLabels() {
@@ -841,9 +843,8 @@ public class Map implements TargetBase {
     }
 
     /**
-     * This method is called to search and delete blocks groups
-     * that big enough (labels that has the number of blocks equals
-     * or grater then {@link GameProperties#deleteSize}).
+     * This method is called to search and delete blocks groups that big enough (labels that has the
+     * number of blocks equals or grater then {@link GameProperties#deleteSize}).
      */
     private void labelDelete() {
 
@@ -858,30 +859,27 @@ public class Map implements TargetBase {
                     // Color bonus: Marking the colors that will be deleted.
                     colorBonusArr[b[i][j].intColor -1] = true;
 
-                    b[i][j].toDelete = prop.deleteTime;
+                    b[i][j].toDelete = prop.deleteWait;
                     blocksDeleted++;
 
                     // Check the 4 adjacent blocks: delete those that are trash blocks
                     if(i -1 >= 0 && b[i -1][j].isTrash())
-                        b[i -1][j].toDelete = prop.deleteTime;
+                        b[i -1][j].toDelete = prop.deleteWait;
 
                     if(i +1 < b.length && b[i +1][j].isTrash())
-                        b[i +1][j].toDelete = prop.deleteTime;
+                        b[i +1][j].toDelete = prop.deleteWait;
 
                     if(j -1 >= 0 && b[i][j -1].isTrash())
-                        b[i][j -1].toDelete = prop.deleteTime;
+                        b[i][j -1].toDelete = prop.deleteWait;
 
                     if(j +1 < b[i].length && b[i][j +1].isTrash())
-                        b[i][j +1].toDelete = prop.deleteTime;
+                        b[i][j +1].toDelete = prop.deleteWait;
                 }
             }
         }
     }
 
-    /**
-     * Clear the sets but not lose reference
-     * to reuse them and avoid garbage collection
-     */
+    /** Clear the sets but not lose reference to reuse them and avoid garbage collection */
     private void recycleLabelEquivalence() {
 
         for(IntSet s : le) {
@@ -918,10 +916,7 @@ public class Map implements TargetBase {
         int ab = a * b;
 
         // #debugCode
-        if(ab > 0) {
-            Gdx.app.log(this.getClass().getSimpleName() + "#" + this.toString(),
-                    "Score = " + score);
-        }
+        if(ab > 0) Dbg.inf(Dbg.tag(this), "Score = " + score);
 
         score += ab;
 
@@ -946,9 +941,7 @@ public class Map implements TargetBase {
         }
     }
 
-    /**
-     * Throw trash blocks in the opponent map
-     */
+    /** Throw trash blocks in the opponent map */
     private void throwTrashBlocks() {
 
         if(blocksDeleted <= 0) return;
@@ -963,9 +956,7 @@ public class Map implements TargetBase {
         blocksDeleted = 0;
     }
 
-    /**
-     * Add trash blocks (thrown by the opponent) in this map
-     */
+    /** Add trash blocks (thrown by the opponent) in this map */
     private void addTrashBlocks() {
 
         if(trashBlocksToAdd <= 0) return;
@@ -1001,7 +992,7 @@ public class Map implements TargetBase {
         return nTrashBlocks;
     }
 
-    /** Returns true if the map.state is equals the argument state */
+    /** Returns true if the {@link #state} is equals the argument state */
     public boolean isInState(Map.MState state) {
         return this.state.getCurrentState() == state;
     }
@@ -1018,18 +1009,17 @@ public class Map implements TargetBase {
         }
     }
 
+    /** Control {@link PlayBlocks} speed that can change during tha game */
     private void timing() {
 
         // Updates vertical fall time (less is faster)
-        if(timeIndex < moveTime.length && matchTime >= moveTime[timeIndex]) {
-            prop.vPlayMoveTimeDef = moveTime[timeIndex + 1];
-            prop.vPlayMoveTime    = moveTime[timeIndex + 1];
+        if(timeIndex < moveTime.length && speedTime >= moveTime[timeIndex]) {
+            prop.vPlayMoveWait = moveTime[timeIndex + 1];
+            prop.vPlayMoveWait2 = moveTime[timeIndex + 1];
+            speedTime = 0f;
+            Dbg.dbg(Dbg.tag(this), "timing t = " + matchTime + "; s = " + moveTime[timeIndex + 1]);
             timeIndex += 2;
         }
-    }
-
-    public void shuffleColAcceleration() {
-        shuffleColAcceleration(0.3f);
     }
 
     public void shuffleColAcceleration(float intensity) {
@@ -1060,25 +1050,28 @@ public class Map implements TargetBase {
         scoreStr = "0";
         timeIndex = 0;
         matchTime = 0f;
-        prop.vPlayMoveTimeDef = moveTime[1];
-        prop.vPlayMoveTime = moveTime[1];
+        speedTime = 0f;
         prop.vPlayMoveWait = moveTime[1];
+        prop.vPlayMoveWait2 = moveTime[1];
+        prop.vPlayMoveTimer = moveTime[1];
         pb.recycle();
         pb.init();
     }
 
     public void update() {
 
-        if(!prop.pause) matchTime += G.delta;
+        if(!prop.pause) {
+            matchTime += G.delta;
+            speedTime += G.delta;
+        }
         state.update();
         timing();
         if(ai != null) ai.update();
     }
 
     /**
-     * Needs to be called before render when the map is loaded from
-     * a serialized source. This because some references and objects
-     * are not serialized and it needs to be setup
+     * Needs to be called before render when the map is loaded from a serialized source. This
+     * because some references and objects are not serialized and it needs to be setup
      */
     public void deserialize(MapManager manager) {
 
@@ -1100,9 +1093,7 @@ public class Map implements TargetBase {
         }
     }
 
-    /**
-     * Updates inputs and inputs animations
-     */
+    /** Updates inputs and inputs and related animations */
     private void inputUpdate() {
 
         if(input != null) {
@@ -1114,62 +1105,57 @@ public class Map implements TargetBase {
             int verticalOld = input.getAxisYOld();
 
             // ==== Rotation move timing control ====
-            if(prop.rPlayMoveWait > 0f) {
-                prop.rPlayMoveWait -= G.delta;
+            if(prop.rPlayMoveTimer > 0f) {
+                prop.rPlayMoveTimer -= G.delta;
             }
 
             // ==== Horizontal move timing control ====
-            if(prop.hPlayMoveWait > 0f) {
-                prop.hPlayMoveWait -= G.delta;
+            if(prop.hPlayMoveTimer > 0f) {
+                prop.hPlayMoveTimer -= G.delta;
             }
-            if(horizontal != 0 && prop.hPlayMoveWait <= 0f) {
+            if(horizontal != 0 && prop.hPlayMoveTimer <= 0f) {
                 pb.moveHorizontal(horizontal);
-                prop.hPlayMoveWait += prop.hPlayMoveTime;
+                prop.hPlayMoveTimer += prop.hPlayMoveWait;
             }
 
             // ==== Vertical move timing control ====
             if(vertical == 1) {
-                prop.vPlayMoveTime = prop.vPlayMoveTimeDef / prop.vPlayMoveMultip;
+                prop.vPlayMoveWait2 = prop.vPlayMoveWait / prop.vPlayMoveMultip;
             }
             else if(vertical == 0 && verticalOld == 1) {
-                prop.vPlayMoveTime = prop.vPlayMoveTimeDef;
-                prop.vPlayMoveWait = prop.vPlayMoveTimeDef;
+                prop.vPlayMoveWait2 = prop.vPlayMoveWait;
+                prop.vPlayMoveTimer = prop.vPlayMoveWait;
             }
 
             // Start pressing the down button right now
             if(verticalOld == 0 && vertical == 1) {
                 // Do not wait to start falling faster
-                prop.vPlayMoveWait = 0.0001f;
+                prop.vPlayMoveTimer = 0.0001f;
             }
         }
-
-        pb.playFallCalc();
-        anim.playFall();
-        anim.playHorizontal();
-        anim.playRotation();
     }
 
     @Override
     public void button1(boolean isDown) {
-        if(!prop.pause && isDown && prop.rPlayMoveWait <= 0f)
+        if(!prop.pause && isDown && prop.rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void button2(boolean isDown) {
-        if(!prop.pause && isDown && prop.rPlayMoveWait <= 0f)
+        if(!prop.pause && isDown && prop.rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void button3(boolean isDown) {
-        if(!prop.pause && isDown && prop.rPlayMoveWait <= 0f)
+        if(!prop.pause && isDown && prop.rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void button4(boolean isDown) {
-        if(!prop.pause && isDown && prop.rPlayMoveWait <= 0f)
+        if(!prop.pause && isDown && prop.rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 

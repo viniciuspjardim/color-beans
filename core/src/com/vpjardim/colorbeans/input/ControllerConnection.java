@@ -4,13 +4,13 @@
 
 package com.vpjardim.colorbeans.input;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -21,8 +21,8 @@ public class ControllerConnection implements ControllerListener {
     @Override
     public void connected(Controller controller) {
         // #debugCode
-        Gdx.app.log(this.getClass().getSimpleName(), "Controller " + controller.getName()
-                + " connected; n = " + Controllers.getControllers().size);
+        Dbg.inf(Dbg.tag(this, false), "Controller " + controller.getName() + " connected; n = " +
+                Controllers.getControllers().size);
         G.game.input.loadInputs();
         G.game.input.linkAll();
     }
@@ -30,8 +30,8 @@ public class ControllerConnection implements ControllerListener {
     @Override
     public void disconnected(Controller controller) {
         // #debugCode
-        Gdx.app.log(this.getClass().getSimpleName(), "Controller " + controller.getName()
-                + " disconnected; n = " + Controllers.getControllers().size);
+        Dbg.inf(Dbg.tag(this, false), "Controller " + controller.getName() + " disconnected; n = " +
+                Controllers.getControllers().size);
         G.game.input.loadInputs();
         G.game.input.linkAll();
     }

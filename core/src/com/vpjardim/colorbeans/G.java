@@ -73,6 +73,8 @@ public class G extends Game {
         // dbg.campLevels = 2;
         // dbg.delta = Dbg.DELTA_NORMAL;
         // dbg.fps = true;
+        // dbg.logLevel = Application.LOG_INFO;
+        // dbg.on();
 
         players = new Array<>();
         screens = new ScreenManager();

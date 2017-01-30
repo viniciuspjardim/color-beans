@@ -5,9 +5,8 @@
 package com.vpjardim.colorbeans.input;
 
 /**
- * Any screen that need to be controlled by an input
- * method should implement this interface telling what
- * actions needs to be done on each input event
+ * Any screen that need to be controlled by an input method should implement this interface telling
+ * what actions needs to be done on each input event
  *
  * @author Vinícius Jardim
  * 01/11/2015

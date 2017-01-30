@@ -73,8 +73,8 @@ public class Ai1 implements AiBase {
                 isFinalMoveSet = false;
 
                 // #debugCode
-                // if(trashMove) System.out.println("trash move");
-                // else System.out.println("normal move");
+                // if(trashMove) Dbg.print("trash move");
+                // else Dbg.print("normal move");
 
                 int color1 = m.pb.b2.intColor; // upper block
                 int color2 = m.pb.b1.intColor; // lower block

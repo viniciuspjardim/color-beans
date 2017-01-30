@@ -11,7 +11,7 @@ import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.core.Cfg;
 
 /**
- * #warning too slow, do not use
+ * Todo too slow, not usable
  *
  * @author Vinícius Jardim
  * 29/04/2016
@@ -73,8 +73,8 @@ public class Ai2 implements AiBase {
 
                 input.setMove(bestNode.position, bestNode.rotation, true);
 
-                //System.out.println("===================");
-                //System.out.println("BestNode: pos = " + bestNode.position + "; rot = " +
+                //Dbg.print("===================");
+                //Dbg.print("BestNode: pos = " + bestNode.position + "; rot = " +
                 //        bestNode.rotation + "; score = " + bestNode.score);
             }
         }

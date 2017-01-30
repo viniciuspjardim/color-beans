@@ -73,21 +73,21 @@ public class Db {
         trainingGame.finishOnWin = false;
         trainingGame.lostAct     = Cfg.Game.LOST_RESTART_PAUSED;
 
-        map1.moveTime = new float[] {0, 0.70f, 15, 0.60f, 30, 0.50f, 45, 0.44f, 60, 0.38f};
-        map2.moveTime = new float[] {0, 0.50f, 15, 0.44f, 30, 0.38f, 45, 0.32f, 60, 0.28f};
-        map3.moveTime = new float[] {0, 0.40f, 15, 0.35f, 30, 0.30f, 45, 0.26f, 60, 0.22f};
-        map4.moveTime = new float[] {0, 0.30f, 15, 0.26f, 30, 0.22f, 45, 0.18f, 60, 0.16f};
-        map5.moveTime = new float[] {0, 0.22f, 15, 0.18f, 30, 0.16f, 45, 0.14f, 60, 0.12f};
-        map6.moveTime = new float[] {0, 0.16f, 15, 0.14f, 30, 0.12f, 45, 0.11f, 60, 0.10f};
-        map7.moveTime = new float[] {0, 0.12f, 15, 0.11f, 30, 0.10f, 45, 0.09f, 60, 0.08f};
+        map1.moveTime = new float[] {0, 0.70f, 15, 0.60f, 15, 0.50f, 15, 0.44f, 15, 0.38f};
+        map2.moveTime = new float[] {0, 0.50f, 15, 0.44f, 15, 0.38f, 15, 0.32f, 15, 0.28f};
+        map3.moveTime = new float[] {0, 0.40f, 15, 0.35f, 15, 0.30f, 15, 0.26f, 15, 0.22f};
+        map4.moveTime = new float[] {0, 0.30f, 15, 0.26f, 15, 0.22f, 15, 0.18f, 15, 0.16f};
+        map5.moveTime = new float[] {0, 0.22f, 15, 0.18f, 15, 0.16f, 15, 0.14f, 15, 0.12f};
+        map6.moveTime = new float[] {0, 0.16f, 15, 0.14f, 15, 0.12f, 15, 0.11f, 15, 0.10f};
+        map7.moveTime = new float[] {0, 0.12f, 15, 0.11f, 15, 0.10f, 15, 0.09f, 15, 0.08f};
 
         mapT.moveTime = new float[] {
-                  0, 0.50f,  15, 0.40f,  30, 0.32f,  45, 0.16f,
-                 60, 0.32f,  75, 0.24f,  90, 0.18f, 105, 0.12f,
-                120, 0.18f, 135, 0.16f, 150, 0.14f, 165, 0.10f,
-                180, 0.14f, 195, 0.12f, 210, 0.11f, 225, 0.08f,
-                240, 0.11f, 255, 0.10f, 270, 0.09f, 285, 0.07f,
-                300, 0.09f,
+                 0, 0.50f, 15, 0.40f, 15, 0.32f, 15, 0.16f,
+                15, 0.32f, 15, 0.24f, 15, 0.18f, 15, 0.12f,
+                15, 0.18f, 15, 0.16f, 15, 0.14f, 15, 0.10f,
+                15, 0.14f, 15, 0.12f, 15, 0.11f, 15, 0.08f,
+                15, 0.11f, 15, 0.10f, 15, 0.09f, 15, 0.07f,
+                15, 0.09f,
         };
 
         ai1.downKeyMin = 0.0f;

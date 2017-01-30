@@ -8,6 +8,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -41,7 +42,7 @@ public class GameClient {
                     if(object instanceof NetData) {
 
                         NetData data = (NetData) object;
-                        System.out.println("C[" + data.clientID + "] rec: " + data.num);
+                        Dbg.print("C[" + data.clientID + "] rec: " + data.num);
                         data.num++;
                         b = data.b;
 
@@ -58,12 +59,12 @@ public class GameClient {
 
                 @Override
                 public void connected(Connection connection) {
-                    System.out.println("Connected to server " + connection.getID());
+                    Dbg.print("Connected to server " + connection.getID());
                 }
 
                 @Override
                 public void disconnected(Connection connection) {
-                    System.out.println("Disconnected to server " + connection.getID());
+                    Dbg.print("Disconnected to server " + connection.getID());
                 }
 
             });
@@ -75,7 +76,7 @@ public class GameClient {
             data.num = 0;
             client.sendUDP(data);
 
-            System.out.println("==== Client start ====");
+            Dbg.print("==== Client start ====");
         }
         catch(Exception e) {
             e.printStackTrace();

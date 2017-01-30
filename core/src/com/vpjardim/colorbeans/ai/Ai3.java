@@ -67,8 +67,8 @@ public class Ai3 implements AiBase {
                 input.setMove(bestNode.position, bestNode.rotation, true);
 
                 // #debugCode
-                // System.out.println("===================");
-                // System.out.println("BestNode: pos = " + bestNode.position + "; rot = " +
+                // Dbg.print("===================");
+                // Dbg.print("BestNode: pos = " + bestNode.position + "; rot = " +
                 //         bestNode.rotation + "; scoreSum = " + bestNode.scoreSum);
             }
 

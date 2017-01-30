@@ -4,12 +4,12 @@
 
 package com.vpjardim.colorbeans.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.animation.SpriteAccessor;
+import com.vpjardim.colorbeans.core.Dbg;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
@@ -140,8 +140,8 @@ public class StudioScreen extends ScreenBase {
         );
 
         // #debugCode
-        Gdx.app.log(this.getClass().getSimpleName(), "scale = " + spriteScale +
-                "; textH = " + studioText.getHeight() + "; logoH = " + studioLogo.getHeight());
+        Dbg.inf(Dbg.tag(this, false), "scale = " + spriteScale + "; textH = " +
+                studioText.getHeight() + "; logoH = " + studioLogo.getHeight());
     }
 
     @Override

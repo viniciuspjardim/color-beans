@@ -119,7 +119,7 @@ public class PlayBlocks {
         }
         // Move play blocks left
         if(rotation == 1) {
-            m.prop.hPlayMoveWait = m.prop.hPlayMoveTime;
+            m.prop.hPlayMoveTimer = m.prop.hPlayMoveWait;
             return moveHorizontal(-1);
         }
         // Move play blocks up
@@ -130,7 +130,7 @@ public class PlayBlocks {
         }
         // Move play blocks right
         if(rotation == 3) {
-            m.prop.hPlayMoveWait = m.prop.hPlayMoveTime;
+            m.prop.hPlayMoveTimer = m.prop.hPlayMoveWait;
             return moveHorizontal(1);
         }
 
@@ -152,7 +152,7 @@ public class PlayBlocks {
         }
 
         if(detectCollision && prevRotation != rotation) {
-            m.prop.rPlayMoveWait = m.prop.rPlayMoveTime;
+            m.prop.rPlayMoveTimer = m.prop.rPlayMoveWait;
         }
     }
 
@@ -171,7 +171,7 @@ public class PlayBlocks {
         }
 
         if(detectCollision && prevRotation != rotation) {
-            m.prop.rPlayMoveWait = m.prop.rPlayMoveTime;
+            m.prop.rPlayMoveTimer = m.prop.rPlayMoveWait;
         }
     }
 
@@ -224,29 +224,29 @@ public class PlayBlocks {
 
     public void playFallCalc() {
 
-        m.prop.vPlayMoveWait -= G.delta;
+        m.prop.vPlayMoveTimer -= G.delta;
         boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
 
-        if(m.prop.vPlayMoveWait <= 0f) {
+        if(m.prop.vPlayMoveTimer <= 0f) {
 
             // Looking if there is a collision on row bellow b1y
             if(!collide(b1x, b1y + 1)) {
 
-                m.prop.vPlayMoveWait += m.prop.vPlayMoveTime;
+                m.prop.vPlayMoveTimer += m.prop.vPlayMoveWait2;
                 setFallStartEnd(b1y, b1y + 1);
                 b1y++;
                 updateB2pos();
             }
             // Wait some time before insert the play blocks.
             // The player can use this time to do his last moves
-            else if(!downKeyPressed && m.prop.vPlayMoveWait >= -m.prop.beforeInsertWait) {
+            else if(!downKeyPressed && m.prop.vPlayMoveTimer >= -m.prop.beforeInsertWait) {
 
             }
             else {
                 insert();
                 recycle();
                 init();
-                m.prop.vPlayMoveWait = m.prop.vPlayMoveTime;
+                m.prop.vPlayMoveTimer = m.prop.vPlayMoveWait2;
                 m.blockInsert = true;
             }
         }
@@ -261,9 +261,8 @@ public class PlayBlocks {
     }
 
     /**
-     * Needs to be called before render when the map is loaded from
-     * a serialized source. This because some references and objects
-     * are not serialized and it needs to be setup
+     * Needs to be called before render when the map is loaded from a serialized source. This
+     * because some references and objects are not serialized and it needs to be setup
      */
     public void deserialize(Map m) {
         this.m = m;

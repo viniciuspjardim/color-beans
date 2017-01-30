@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.Pool;
 import com.vpjardim.colorbeans.Block;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -152,8 +153,8 @@ public class AiMap implements Pool.Poolable {
         }
 
         if(Ai3.debug) {
-            System.out.println("================");
-            System.out.println("pos = " + position + "; rot = " + rotation);
+            Dbg.print("================");
+            Dbg.print("pos = " + position + "; rot = " + rotation);
             print();
         }
 
@@ -391,7 +392,7 @@ public class AiMap implements Pool.Poolable {
     // #debugCode
     public void print() {
 
-        System.out.println("Blocks print ->");
+        Dbg.print("Blocks print ->");
 
         // row 0 -> 14 + OUT_ROW
         for(int row = 7; row < b[0].length; row++) {
@@ -401,15 +402,15 @@ public class AiMap implements Pool.Poolable {
 
                 System.out.print(b[col][row] + " ");
             }
-            System.out.println();
-            if(row == outRow -1) System.out.println("---");
+            Dbg.print("");
+            if(row == outRow -1) Dbg.print("---");
         }
     }
 
     // #debugCode
     public void printLabel() {
 
-        System.out.println("Label print ->");
+        Dbg.print("Label print ->");
 
         // row 0 -> 14 + OUT_ROW
         for(int row = 7; row < b[0].length; row++) {
@@ -419,8 +420,8 @@ public class AiMap implements Pool.Poolable {
 
                 System.out.printf(" %5d", l[col][row]);
             }
-            System.out.println();
-            if(row == outRow -1) System.out.println("---");
+            Dbg.print("");
+            if(row == outRow -1) Dbg.print("---");
         }
 
         // Prints labels count
@@ -429,7 +430,7 @@ public class AiMap implements Pool.Poolable {
             System.out.print(entry.key + ":" + entry.value + "; ");
         }
 
-        System.out.println();
+        Dbg.print("");
     }
 
     @Override

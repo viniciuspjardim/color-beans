@@ -96,13 +96,11 @@ public class LoadingScreen extends ScreenBase {
 
         G.game.score = ScoreTable.load("state/scores.json");
 
-        if(G.game.players.size == 0) G.game.players.add("Player");
+        // #debugCode
+        G.game.players.add("Vini");
+        // G.game.players.add("André");
 
-        G.game.players.add("Julio");
-        G.game.players.add("Ariovaldo");
-        G.game.players.add("Juvenal");
-        G.game.players.add("Orlando");
-        G.game.players.add("Ganga");
+        if(G.game.players.size == 0) G.game.players.add("Player");
     }
 
     @Override

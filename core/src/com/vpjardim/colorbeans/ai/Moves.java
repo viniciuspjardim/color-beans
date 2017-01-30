@@ -89,7 +89,8 @@ public class Moves {
     }
 
     /**
-     * @param move number in the format AABBPPR (AA = color1, BB color2, PP = position, R = rotation)
+     * @param move number in the format AABBPPR (AA = color1, BB color2, PP = position, R =
+     *             rotation)
      */
     public void setMove(int move) {
         color1 = move / 100000;

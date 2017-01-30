@@ -45,9 +45,9 @@ public class Cfg {
     }
 
     /**
-     * AI configuration. With this params we can change the AI difficulty level.
-     * Although I wrote "percent" or "percentage" in the fields doc, I mean 0 to 1 intervals. Which
-     * 1 would be 100%; 0.5, 50% etc.
+     * AI configuration. With this params we can change the AI difficulty level. Although I wrote
+     * "percent" or "percentage" in the fields doc, I mean 0 to 1 intervals. Which 1 would be 100%;
+     * 0.5, 50% etc.
      */
     public static class Ai {
 

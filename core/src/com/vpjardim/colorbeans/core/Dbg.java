@@ -51,7 +51,18 @@ public class Dbg {
 
     public void on() { Gdx.app.setLogLevel(logLevel); }
 
-    public static void print(String str) {
-        System.out.println(str);
+    public static void print(String str) { System.out.println(str); }
+
+    public static void err(String tag, String str) { Gdx.app.error(tag, str); }
+
+    public static void inf(String tag, String str) { Gdx.app.log(tag, str); }
+
+    public static void dbg(String tag, String str) { Gdx.app.debug(tag, str); }
+
+    public static String tag(Object o) { return tag(o, true); }
+
+    public static String tag(Object o, boolean oName) {
+        if(oName) return o.getClass().getSimpleName() + "#" + o;
+        return o.getClass().getSimpleName();
     }
 }

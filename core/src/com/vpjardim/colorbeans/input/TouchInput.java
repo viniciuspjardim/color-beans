@@ -4,9 +4,9 @@
 
 package com.vpjardim.colorbeans.input;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -68,8 +68,8 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     public boolean tap(float x, float y, int count, int button) {
 
         // #debugCode
-        Gdx.app.debug(this.getClass().getSimpleName(), "tap -> x = " + x +
-                "; y = " + y + "; count = " + count + "; button = " + button);
+        Dbg.dbg(Dbg.tag(this, false), "tap -> x = " + x + "; y = " + y + "; count = " + count +
+                "; button = " + button);
 
         // Could not dispatch the event to any target
         // Returning false cause the event was not handled

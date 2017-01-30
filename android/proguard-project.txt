@@ -67,8 +67,7 @@
 }
 
 # Todo find why it's not working without this line
-# This prevent obfuscation in all gdx package because it was giving class
-# not found exception
+# This prevent obfuscation in all gdx package because it was throwing class not found exception
 -keep class com.badlogic.gdx.** {*;}
 
 -dontwarn com.esotericsoftware.kryo.**

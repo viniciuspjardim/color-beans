@@ -10,6 +10,7 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.vpjardim.colorbeans.ai.AiMap;
 import com.vpjardim.colorbeans.core.Campaign;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -40,7 +41,7 @@ public class GameServer extends Server {
 
                         NetData data = (NetData) object;
                         data.clientID = connection.getID();
-                        System.out.println("S rec from[" + data.clientID + "]: " + data.num);
+                        Dbg.print("S rec from[" + data.clientID + "]: " + data.num);
 
                         data.num++;
 
@@ -52,19 +53,19 @@ public class GameServer extends Server {
 
                 @Override
                 public void connected (Connection connection) {
-                    System.out.println("Client " + connection.getID() + " connected");
+                    Dbg.print("Client " + connection.getID() + " connected");
                 }
 
                 @Override
                 public void disconnected (Connection connection) {
-                    System.out.println("Client " + connection.getID() + " disconnected");
+                    Dbg.print("Client " + connection.getID() + " disconnected");
                 }
             });
 
             bind(Net.tcpPort, Net.udpPort);
             start();
 
-            System.out.println("==== Server start ====");
+            Dbg.print("==== Server start ====");
         }
         catch(Exception e) {
             e.printStackTrace();

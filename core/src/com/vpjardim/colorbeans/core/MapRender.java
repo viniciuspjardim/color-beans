@@ -20,21 +20,13 @@ public class MapRender {
 
     public Map m;
 
-    /**
-     * Map top-left corner position in X axis: useful to position
-     * multiple maps in one screen
-     */
+    /** Map top-left corner position in X axis: useful to position multiple maps in one screen */
     public float px;
 
-    /**
-     * Map top-left corner position in Y axis: useful to position
-     * multiple maps in one screen
-     */
+    /** Map top-left corner position in Y axis: useful to position multiple maps in one screen */
     public float py;
 
-    /**
-     * Size in pixels of each block (equals the diameter).
-     */
+    /** Size in pixels of each block (equals the diameter) */
     public float size;
 
     public GlyphLayout textLayout = new GlyphLayout();

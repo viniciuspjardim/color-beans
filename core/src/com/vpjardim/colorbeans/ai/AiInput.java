@@ -92,7 +92,6 @@ public class AiInput implements InputBase {
     }
 
     /**
-     *
      * @param hMove column of the block (the left one when horizontal) on the map.
      * @param rotation rotation between 0 and 3
      * @param fastFall when true, act like the down key is pressed to the blocks fall faster

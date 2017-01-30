@@ -11,7 +11,7 @@ import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.core.Cfg;
 
 /**
- * #warning not usable yet
+ * Todo not usable yet
  *
  * @author Vinícius Jardim
  * 28/07/2016
@@ -65,10 +65,10 @@ public class Ai4 implements AiBase {
                 input.setMove(bestNode.position, bestNode.rotation, true);
 
                 // #debugCode
-                //System.out.println("Uct iterations: " + uctTree.totalIter);
-                //System.out.println("UctNodes obj: " + UctNode.objCount);
-                //System.out.println("AiMap obj: " + AiMap.objCount);
-                //System.out.println("======================");
+                //Dbg.print("Uct iterations: " + uctTree.totalIter);
+                //Dbg.print("UctNodes obj: " + UctNode.objCount);
+                //Dbg.print("AiMap obj: " + AiMap.objCount);
+                //Dbg.print("======================");
             }
 
             input.update();

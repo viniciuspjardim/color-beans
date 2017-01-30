@@ -46,7 +46,7 @@ public class ScreenManager {
             int fps = Math.round(1f / Gdx.graphics.getRawDeltaTime());
 
             if(G.game.dbg.lagWarn && fps < 50)
-                Gdx.app.log("LagWarn", fps + " fps");
+                Dbg.inf("LagWarn", fps + " fps");
         }
         else if(G.game.dbg.delta == Dbg.DELTA_SLOW)
             G.delta = 0.004f;    // 250 fps

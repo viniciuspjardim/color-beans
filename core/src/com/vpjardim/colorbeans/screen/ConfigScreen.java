@@ -61,7 +61,7 @@ public class ConfigScreen extends ScreenBase  {
                 G.game.skin.get("labelDef", Label.LabelStyle.class);
 
         Label titleL = new Label("Options", labelStyle);
-        Label gameL  = new Label(Db.bigText, labelStyle);
+        Label gameL  = new Label("Content 1", labelStyle);
         Label videoL = new Label("Content 2", labelStyle);
 
         gameL.setWrap(true);

@@ -134,7 +134,7 @@ public class Animations {
 
         b.moveTime += G.delta;
 
-        float shift =  G.delta / m.prop.vPlayMoveTime * 2f;
+        float shift =  G.delta / m.prop.vPlayMoveWait2 * 2f;
 
         b.py -= shift * 2;
 
@@ -164,12 +164,12 @@ public class Animations {
 
     private boolean blockPlayHorizontal(Block b) {
 
-        if(m.prop.hPlayMoveWait < m.prop.hPlayMoveTime / 2f) {
+        if(m.prop.hPlayMoveTimer < m.prop.hPlayMoveWait / 2f) {
             b.px = 0;
             return false;
         }
 
-        b.px = m.pb.moveX - (m.pb.moveX * (m.prop.hPlayMoveWait / (m.prop.hPlayMoveTime / 2f)));
+        b.px = m.pb.moveX - (m.pb.moveX * (m.prop.hPlayMoveTimer / (m.prop.hPlayMoveWait / 2f)));
 
         return true;
     }
@@ -190,8 +190,8 @@ public class Animations {
         boolean isClockwise = fRotation > m.pb.rotationAnim;
 
         if(isClockwise) {
-            m.pb.rotationAnim = 1f / m.prop.rPlayMoveTime *
-                    (m.prop.rPlayMoveTime - m.prop.rPlayMoveWait) +
+            m.pb.rotationAnim = 1f / m.prop.rPlayMoveWait *
+                    (m.prop.rPlayMoveWait - m.prop.rPlayMoveTimer) +
                     fRotation -1;
 
             if(m.pb.rotationAnim >= fRotation) {
@@ -200,8 +200,8 @@ public class Animations {
             }
         }
         else {
-            m.pb.rotationAnim = -1f / m.prop.rPlayMoveTime *
-                    (m.prop.rPlayMoveTime - m.prop.rPlayMoveWait) +
+            m.pb.rotationAnim = -1f / m.prop.rPlayMoveWait *
+                    (m.prop.rPlayMoveWait - m.prop.rPlayMoveTimer) +
                     fRotation +1;
 
             if(m.pb.rotationAnim <= fRotation) {
@@ -239,15 +239,15 @@ public class Animations {
             blockTime = 0f;
             animating = false;
         }
-        else if(blockTime <= m.prop.delTime3) {
+        else if(blockTime <= m.prop.delWait3) {
 
             b.visible = true;
         }
-        else if(blockTime <= 2 * m.prop.delTime3) {
+        else if(blockTime <= 2 * m.prop.delWait3) {
 
             b.visible = false;
         }
-        else if(blockTime <= 3 * m.prop.delTime3) {
+        else if(blockTime <= 3 * m.prop.delWait3) {
 
             b.visible = true;
         }
@@ -293,9 +293,8 @@ public class Animations {
     }
 
     /**
-     * Needs to be called before render when the map is loaded from
-     * a serialized source. This because some references and objects
-     * are not serialized and it needs to be setup
+     * Needs to be called before render when the map is loaded from a serialized source. This
+     * because some references and objects are not serialized and it needs to be setup
      */
     public void deserialize(Map m) {
         this.m = m;
