@@ -120,7 +120,7 @@ public class Campaign extends MapManager {
             Map p = maps.get(0);
             p.scoreSum += p.score;
 
-            G.game.score.addRow(p.name, p.score, p.scoreSum, p.matchTime);
+            G.game.score.addRow(p.name, p.score, p.scoreSum, p.matchTimer);
 
             stageIndex++;
             if(stageIndex >= mapCfgs.size) {

@@ -112,7 +112,7 @@ public abstract class MapManager {
 
         // All maps except one are in OVER or DONE state, so one map win
         if(mapsPlaying == 1 && maps.size > 1) {
-            mapPlaying.prop.gameWin = true;
+            mapPlaying.gameWin = true;
             winnerMap = mapPlaying;
         }
 
@@ -158,12 +158,12 @@ public abstract class MapManager {
 
         if(gameCfg.pauseAct == Cfg.Game.PAUSE_SELF) {
             Map m = maps.get(mapIndex);
-            m.prop.pause = paused;
+            m.pause = paused;
         }
         else if(gameCfg.pauseAct == Cfg.Game.PAUSE_ALL) {
             for(int i = 0; i < maps.size; i++) {
                 Map m = maps.get(i);
-                m.prop.pause = paused;
+                m.pause = paused;
             }
         }
         else if(gameCfg.pauseAct == Cfg.Game.PAUSE_OFF) {}
@@ -177,7 +177,7 @@ public abstract class MapManager {
 
         for(int i = 0; i < maps.size; i++) {
             Map m = maps.get(i);
-            if(m.prop.pause) pausedCont++;
+            if(m.pause) pausedCont++;
         }
 
         if(pausedCont == 0) pauseStatus = PAUSED_NONE;

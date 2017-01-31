@@ -43,7 +43,7 @@ public class Animations {
         b.moveTime += G.delta;
 
         // position = 1/2 * a * t^2
-        float shift = 0.5f * (m.prop.freeFallAcceleration + m.colAcceleration[col]) * b.moveTime * b.moveTime;
+        float shift = 0.5f * (m.freeFallAcceleration + m.colAcceleration[col]) * b.moveTime * b.moveTime;
 
         // Initial py - shift. The block on the matrix on Map
         // has already felt (it`s on the bottom), but on the screen
@@ -53,7 +53,7 @@ public class Animations {
         if(b.py <= 0f) {
             animating = false;
             b.recycleFall();
-            b.deformTime = m.prop.afterFreeFallWait;
+            b.deformTime = m.afterFreeFallWait;
         }
 
         return animating;
@@ -79,7 +79,7 @@ public class Animations {
 
         boolean animating = true;
 
-        float deformTime = m.prop.afterFreeFallWait;
+        float deformTime = m.afterFreeFallWait;
 
         b.deformTime -= G.delta;
 
@@ -134,7 +134,7 @@ public class Animations {
 
         b.moveTime += G.delta;
 
-        float shift =  G.delta / m.prop.vPlayMoveWait2 * 2f;
+        float shift =  G.delta / m.vPlayMoveWait2 * 2f;
 
         b.py -= shift * 2;
 
@@ -164,12 +164,12 @@ public class Animations {
 
     private boolean blockPlayHorizontal(Block b) {
 
-        if(m.prop.hPlayMoveTimer < m.prop.hPlayMoveWait / 2f) {
+        if(m.hPlayMoveTimer < m.hPlayMoveWait / 2f) {
             b.px = 0;
             return false;
         }
 
-        b.px = m.pb.moveX - (m.pb.moveX * (m.prop.hPlayMoveTimer / (m.prop.hPlayMoveWait / 2f)));
+        b.px = m.pb.moveX - (m.pb.moveX * (m.hPlayMoveTimer / (m.hPlayMoveWait / 2f)));
 
         return true;
     }
@@ -190,8 +190,8 @@ public class Animations {
         boolean isClockwise = fRotation > m.pb.rotationAnim;
 
         if(isClockwise) {
-            m.pb.rotationAnim = 1f / m.prop.rPlayMoveWait *
-                    (m.prop.rPlayMoveWait - m.prop.rPlayMoveTimer) +
+            m.pb.rotationAnim = 1f / m.rPlayMoveWait *
+                    (m.rPlayMoveWait - m.rPlayMoveTimer) +
                     fRotation -1;
 
             if(m.pb.rotationAnim >= fRotation) {
@@ -200,8 +200,8 @@ public class Animations {
             }
         }
         else {
-            m.pb.rotationAnim = -1f / m.prop.rPlayMoveWait *
-                    (m.prop.rPlayMoveWait - m.prop.rPlayMoveTimer) +
+            m.pb.rotationAnim = -1f / m.rPlayMoveWait *
+                    (m.rPlayMoveWait - m.rPlayMoveTimer) +
                     fRotation +1;
 
             if(m.pb.rotationAnim <= fRotation) {
@@ -239,15 +239,15 @@ public class Animations {
             blockTime = 0f;
             animating = false;
         }
-        else if(blockTime <= m.prop.delWait3) {
+        else if(blockTime <= m.delWait3) {
 
             b.visible = true;
         }
-        else if(blockTime <= 2 * m.prop.delWait3) {
+        else if(blockTime <= 2 * m.delWait3) {
 
             b.visible = false;
         }
-        else if(blockTime <= 3 * m.prop.delWait3) {
+        else if(blockTime <= 3 * m.delWait3) {
 
             b.visible = true;
         }
@@ -280,7 +280,8 @@ public class Animations {
         b.moveTime += G.delta;
 
         // position = 1/2 * a * t^2
-        float shift = 0.5f * ((m.prop.freeFallAcceleration + m.colAcceleration[col]) / 4f) * b.moveTime * b.moveTime;
+        float shift = 0.5f * ((m.freeFallAcceleration + m.colAcceleration[col]) / 4f) * b.moveTime *
+                b.moveTime;
         b.py = -shift;
 
         if(b.py <= -m.N_ROW) {

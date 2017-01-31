@@ -119,7 +119,7 @@ public class PlayBlocks {
         }
         // Move play blocks left
         if(rotation == 1) {
-            m.prop.hPlayMoveTimer = m.prop.hPlayMoveWait;
+            m.hPlayMoveTimer = m.hPlayMoveWait;
             return moveHorizontal(-1);
         }
         // Move play blocks up
@@ -130,7 +130,7 @@ public class PlayBlocks {
         }
         // Move play blocks right
         if(rotation == 3) {
-            m.prop.hPlayMoveTimer = m.prop.hPlayMoveWait;
+            m.hPlayMoveTimer = m.hPlayMoveWait;
             return moveHorizontal(1);
         }
 
@@ -152,7 +152,7 @@ public class PlayBlocks {
         }
 
         if(detectCollision && prevRotation != rotation) {
-            m.prop.rPlayMoveTimer = m.prop.rPlayMoveWait;
+            m.rPlayMoveTimer = m.rPlayMoveWait;
         }
     }
 
@@ -171,7 +171,7 @@ public class PlayBlocks {
         }
 
         if(detectCollision && prevRotation != rotation) {
-            m.prop.rPlayMoveTimer = m.prop.rPlayMoveWait;
+            m.rPlayMoveTimer = m.rPlayMoveWait;
         }
     }
 
@@ -200,7 +200,7 @@ public class PlayBlocks {
     public void insert() {
 
         if(b1y < 0 || b2y < 0) {
-            m.prop.lost = true;
+            m.lost = true;
             return;
         }
 
@@ -212,42 +212,42 @@ public class PlayBlocks {
         // Triggers b1 deform animation
         boolean b1Collide = !m.isEmpty(b1x, b1y + 1);
         if(downKeyPressed && b1Collide) {
-            m.b[b1x][b1y].deformTime = m.prop.afterFreeFallWait;
+            m.b[b1x][b1y].deformTime = m.afterFreeFallWait;
         }
 
         // Triggers b2 deform animation
         boolean b2Collide = !m.isEmpty(b2x, b2y + 1);
         if(downKeyPressed && b2Collide) {
-            m.b[b2x][b2y].deformTime = m.prop.afterFreeFallWait;
+            m.b[b2x][b2y].deformTime = m.afterFreeFallWait;
         }
     }
 
     public void playFallCalc() {
 
-        m.prop.vPlayMoveTimer -= G.delta;
+        m.vPlayMoveTimer -= G.delta;
         boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
 
-        if(m.prop.vPlayMoveTimer <= 0f) {
+        if(m.vPlayMoveTimer <= 0f) {
 
             // Looking if there is a collision on row bellow b1y
             if(!collide(b1x, b1y + 1)) {
 
-                m.prop.vPlayMoveTimer += m.prop.vPlayMoveWait2;
+                m.vPlayMoveTimer += m.vPlayMoveWait2;
                 setFallStartEnd(b1y, b1y + 1);
                 b1y++;
                 updateB2pos();
             }
             // Wait some time before insert the play blocks.
             // The player can use this time to do his last moves
-            else if(!downKeyPressed && m.prop.vPlayMoveTimer >= -m.prop.beforeInsertWait) {
+            else if(!downKeyPressed && m.vPlayMoveTimer >= -m.beforeInsertWait) {
 
             }
             else {
                 insert();
                 recycle();
                 init();
-                m.prop.vPlayMoveTimer = m.prop.vPlayMoveWait2;
-                m.blockInsert = true;
+                m.vPlayMoveTimer = m.vPlayMoveWait2;
+                m.blockChanged = true;
             }
         }
     }

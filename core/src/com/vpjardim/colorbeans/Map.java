@@ -23,7 +23,7 @@ import com.vpjardim.colorbeans.input.TargetBase;
 /**
  * Represents a field/map where one player can do his actions. The goal is to group
  * {@link Block blocks} of the same color until they reach at least 4. This number can be set in
- * {@link GameProperties#deleteSize}. Once this group is formed, the color beans/blocks will be
+ * {@link #deleteSize}. Once this group is formed, the color beans/blocks will be
  * deleted to make room to the falling ones ({@link PlayBlocks}). If there isn't enough room (the
  * play blocks are obstructed) it's game over.
  * <pre>
@@ -124,7 +124,7 @@ public class Map implements TargetBase {
                 Dbg.dbg(Dbg.tag(map), "state = FREE_FALL");
 
                 map.shuffleColAcceleration(0.3f);
-                map.prop.afterFreeFallTimer = map.prop.afterFreeFallWait;
+                map.afterFreeFallTimer = map.afterFreeFallWait;
                 map.freeFallCalc();
                 map.anim.freeFall();
             }
@@ -133,13 +133,13 @@ public class Map implements TargetBase {
             public void update(Map map) {
 
                 // Case the player of this map won the game
-                if(map.prop.gameWin) {
+                if(map.gameWin) {
                     map.state.changeState(MState.DONE);
                     return;
                 }
 
                 // Waiting til next frame if the game is paused
-                if(map.prop.pause) return;
+                if(map.pause) return;
 
                 // Waiting animation to end
                 boolean freeFallAnim = map.anim.freeFall();
@@ -147,17 +147,16 @@ public class Map implements TargetBase {
 
                 if(freeFallAnim) return;
 
-                map.prop.afterFreeFallTimer -= G.delta;
+                map.afterFreeFallTimer -= G.delta;
 
                 // Wait some time before change state
-                if(map.prop.afterFreeFallTimer > 0f) return;
+                if(map.afterFreeFallTimer > 0f) return;
 
                 // If a block change it's position the labels
                 // needs to be recalculated
-                if(map.blockFall || map.blockInsert) {
+                if(map.blockChanged) {
                     map.state.changeState(MState.LABEL_CALC);
-                    map.blockFall = false;
-                    map.blockInsert = false;
+                    map.blockChanged = false;
                 }
                 // If not, see if is time to add trash blocks
                 else if(map.trashBlocksToAdd > 0 && map.trashBlocksTurn) {
@@ -192,13 +191,13 @@ public class Map implements TargetBase {
             public void update(Map map) {
 
                 // Case the player of this map won the game
-                if(map.prop.gameWin) {
+                if(map.gameWin) {
                     map.state.changeState(MState.DONE);
                     return;
                 }
 
                 // Waiting til next frame if the game is paused
-                if(map.prop.pause) return;
+                if(map.pause) return;
 
                 // Waiting animation to end
                 if(map.anim.labelDelete()) return;
@@ -225,14 +224,14 @@ public class Map implements TargetBase {
 
                 map.gameOver();
 
-                if(map.prop.gameOver) {
+                if(map.gameOver) {
                     map.state.changeState(MState.OVER);
                     return;
                 }
 
-                map.prop.vPlayMoveTimer = map.prop.beforePlayFallWait;
-                map.prop.hPlayMoveTimer = map.prop.beforePlayFallWait;
-                map.prop.rPlayMoveTimer = map.prop.beforePlayFallWait;
+                map.vPlayMoveTimer = map.beforePlayFallWait;
+                map.hPlayMoveTimer = map.beforePlayFallWait;
+                map.rPlayMoveTimer = map.beforePlayFallWait;
 
                 map.trashBlocksTurn = true;
                 map.throwTrashBlocks();
@@ -245,13 +244,13 @@ public class Map implements TargetBase {
             public void update(Map map) {
 
                 // Case the player of this map won the game
-                if(map.prop.gameWin) {
+                if(map.gameWin) {
                     map.state.changeState(MState.DONE);
                     return;
                 }
 
                 // Waiting til next frame if the game is paused
-                if(map.prop.pause) return;
+                if(map.pause) return;
 
                 // processing input and input animation
                 map.inputUpdate();
@@ -260,7 +259,7 @@ public class Map implements TargetBase {
                 map.anim.playHorizontal();
                 map.anim.playRotation();
 
-                if(map.blockInsert) {
+                if(map.blockChanged) {
                     map.state.changeState(MState.FREE_FALL);
                 }
             }
@@ -269,7 +268,7 @@ public class Map implements TargetBase {
             public void exit(Map map) {
                 // #debugCode
                 //AiMap aiMap = new AiMap();
-                //aiMap.init(map.b, map.prop.deleteSize, map.OUT_ROW);
+                //aiMap.init(map.b, map.deleteSize, map.OUT_ROW);
                 //aiMap.iterate(0, 0, 0, 0);
             }
         },
@@ -302,7 +301,7 @@ public class Map implements TargetBase {
                 Dbg.inf(Dbg.tag(map), "game over");
 
                 map.shuffleColAcceleration(0.8f);
-                map.colAcceleration[map.b.length/2] = map.prop.freeFallAcceleration * 0.8f;
+                map.colAcceleration[map.b.length/2] = map.freeFallAcceleration * 0.8f;
                 map.anim.gameOver();
             }
 
@@ -325,7 +324,7 @@ public class Map implements TargetBase {
             public void enter(Map map) {
                 // #debugCode
                 Dbg.dbg(Dbg.tag(map), "state = DONE");
-                if(map.prop.gameWin) {
+                if(map.gameWin) {
                     Dbg.inf(Dbg.tag(map), "game win\n");
                 }
             }
@@ -342,104 +341,6 @@ public class Map implements TargetBase {
         public boolean onMessage(Map map, Telegram telegram) {
             return false;
         }
-    }
-
-    /** Basic draw proprieties */
-    public static class GameProperties {
-
-        /** True if game is paused */
-        public boolean pause = false;
-
-        /** True if the game is over */
-        public boolean gameOver = false;
-
-        /** True if the game was won */
-        public boolean gameWin = false;
-
-        /** If true the blocks reach the top and this game is lost */
-        public boolean lost = false;
-
-        /**
-         * Default time to wait before insert the play blocks. The player can use this time to do
-         * his last moves
-         */
-        public float beforeInsertWait = 0.2f;
-
-        /**
-         * Default time to wait before changing from the {@link Map.MState#FREE_FALL FREE_FALL}
-         * state to the next state
-         */
-        public float afterFreeFallWait = 0.23f;
-
-        /**
-         * Remaining time to wait before changing from the {@link Map.MState#FREE_FALL FREE_FALL}
-         * state to the next state
-         */
-        public float afterFreeFallTimer = afterFreeFallWait;
-
-        /** Default time to wait before current {@link PlayBlocks} starts to fall */
-        public float beforePlayFallWait = 0.025f;
-
-        /** Default time to wait before next {@link PlayBlocks} rotation */
-        public float rPlayMoveWait = 0.1f;
-
-        /** Remaining time to wait before next {@link PlayBlocks} rotation */
-        public float rPlayMoveTimer = 0f;
-
-        /**
-         * Default time to wait before next {@link PlayBlocks} horizontal move (when player press
-         * the right/left arrows in the controller/input)
-         */
-        public float hPlayMoveWait = 0.1f;
-
-        /** Remaining time to wait before next {@link PlayBlocks} horizontal move */
-        public float hPlayMoveTimer = 0f;
-
-        /**
-         * Default time to a {@link PlayBlocks} fall 1 row. In seconds (less is fester). This field
-         * sets the PlayBlocks default vertical speed. It remains unchanged wen players press the
-         * down key of the controller/input.
-         * Slow 0.5f; Normal 0.34; fast 0.16
-         */
-        public float vPlayMoveWait = 0.5f;
-
-        /**
-         * The multiplier (times faster) for {@link PlayBlocks PlayBlock's} speed when the player
-         * press the down key of the controller/input
-         */
-        public float vPlayMoveMultip = 10f;
-
-        /**
-         * Default time to {@link PlayBlocks} fall 1 row. In seconds (less is fester). This field
-         * sets the PlayBlocks default vertical speed. It changes when a player press/release the
-         * down key of the controller/input to the block fall faster or go back to the default
-         * speed
-         */
-        public float vPlayMoveWait2 = vPlayMoveWait;
-
-        /** Remaining time to the {@link PlayBlocks} falls to the next row */
-        public float vPlayMoveTimer = vPlayMoveWait;
-
-        /** Acceleration of the free fall blocks in rows per second squared: 80 default */
-        public float freeFallAcceleration = 80f;
-
-        /** Default time to wait before delete the block */
-        public float deleteWait = 0.5f;
-
-        /** A third of {@link #deleteWait} */
-        public float delWait3 = deleteWait / 3f;
-
-        /**
-         * Max trash blocks that can be put in the map in one turn. The others will wait the next
-         * turns
-         */
-        public int maxTrashOnce = N_COL * 5;
-
-        /**
-         * If there is at least this number of blocks with the same {@link Block#label} (color
-         * group), the blocks of this label will be deleted. 4 default.
-         */
-        public int deleteSize = 4;
     }
 
     /** Map width (number of block columns): 7 default */
@@ -498,11 +399,20 @@ public class Map implements TargetBase {
 
     // <===== End of static members ======
 
-
-    /** Reference holding the screen object */
+    /** Reference holding the MapManager object */
     public transient MapManager manager;
 
+    /** Index of this object at {@link MapManager} maps list */
     public int index;
+
+    /** Name of this map object */
+    public String name = "";
+
+    /** Current map state */
+    public transient StateMachine<Map, MState> state;
+
+    /** Animations logics */
+    public Animations anim;
 
     /** Blocks in the map */
     public Block[][] b;
@@ -516,10 +426,38 @@ public class Map implements TargetBase {
      */
     public transient InputBase input;
 
+    /** Reference to AI object. Null if is a real player's map */
     public transient AiBase ai;
 
-    /** Current map state */
-    public transient StateMachine<Map, MState> state;
+    // ====== Block's logic =====>
+
+    /**
+     * Labels equivalence
+     * @see #labelCalc()
+     */
+    private transient Array<IntSet> le;
+
+    /**
+     * Labels count: the number of blocks per label
+     * @see #mergeEquivalentLabels()
+     */
+    private transient IntMap<Integer> lc;
+
+    /**
+     * If there is at least this number of blocks with the same {@link Block#label} (color group),
+     * the blocks of this label will be deleted. 4 default.
+     */
+    public int deleteSize = 4;
+
+    /** Number of blocks deleted */
+    private int blocksDeleted = 0;
+
+    /**
+     * Max trash blocks that can be put in the map in one turn. The others will wait the next turns
+     */
+    public int maxTrashOnce = N_COL * 5;
+
+    // <===== End of block's logic ======
 
     // ====== Score control variables =====>
 
@@ -542,90 +480,171 @@ public class Map implements TargetBase {
 
     public int groupBonus;
 
-    // <===== End score control variables ======
+    // <===== End of score control variables ======
 
     // ====== State control variables =====>
-    public boolean blockFall = false;
-    public boolean blockInsert = false;
+
+    /** True if game is paused */
+    public boolean pause = false;
+
+    /** True if the game is over */
+    public boolean gameOver = false;
+
+    /** True if the game was won */
+    public boolean gameWin = false;
+
+    /** If true the blocks reach the top and this game is lost */
+    public boolean lost = false;
+
+    /** True if any block has changed it's position then label calc needs to be redone */
+    public boolean blockChanged = false;
 
     /** Number of trash blocks to add when it's {@link #trashBlocksTurn} */
     private int trashBlocksToAdd = 0;
 
     /**
-     * {@link #trashBlocksToAdd} has a limit in per turn: {@link GameProperties#maxTrashOnce}. When
-     * this limit is reached the player will have one turn then more trash blocks can be added
+     * {@link #trashBlocksToAdd} has a limit in per turn: {@link #maxTrashOnce}. When this limit is
+     * reached the player will have one turn then more trash blocks can be added
      */
     public boolean trashBlocksTurn = true;
-    // <===== End state control variables ======
 
+    // <===== End of state control variables ======
 
-    // ====== Timing control variables =====>
+    // ====== Default times, timers and other speed control variables =====>
+
     /** Match time. Only non paused time is computed */
-    public float matchTime = 0f;
+    public float matchTimer = 0f;
 
     /** Time at the current speed */
-    public float speedTime = 0f;
+    public float speedTimer = 0f;
 
     /** Pairs of change time and the new vertical moveTime (less is faster then more speed) */
-    public float[] moveTime;
+    public float[] speedArr;
 
-    /** Current index of the pair */
-    public int timeIndex = 0;
-    // <===== End of timing control variables ======
-
-    /** Animations logics */
-    public Animations anim;
+    /** Current index of the {@link #speedArr} */
+    public int speedIndex = 0;
 
     /**
-     * Labels equivalence
-     * @see #labelCalc()
+     * Multiplier (times faster) for {@link PlayBlocks PlayBlock's} speed when the player press
+     * the down key of the controller/input
      */
-    private transient Array<IntSet> le;
+    public float vPlayMoveMultip = 10f;
 
-    /**
-     * Labels count: the number of blocks per label
-     * @see #mergeEquivalentLabels()
-     */
-    private transient IntMap<Integer> lc;
+    /** Acceleration of the free fall blocks in rows per second squared: 80 default */
+    public float freeFallAcceleration = 80f;
 
-    /** Number of blocks deleted */
-    private int blocksDeleted = 0;
-
-    /** Proprieties */
-    public GameProperties prop;
-
-    /** Name of this map instance */
-    public String name = "";
-
+    /** Used to make each column of blocks fall at random speed (for better visual) */
     public float colAcceleration[];
+
+    /**
+     * Default time to wait before insert the play blocks. The player can use this time to do his
+     * last moves
+     */
+    public float beforeInsertWait = 0.2f;
+
+    /**
+     * Default time to wait before changing from the {@link Map.MState#FREE_FALL FREE_FALL} state to
+     * the next state
+     */
+    public float afterFreeFallWait = 0.23f;
+
+    /**
+     * Remaining time to wait before changing from the {@link Map.MState#FREE_FALL FREE_FALL} state
+     * to the next state
+     */
+    public float afterFreeFallTimer = afterFreeFallWait;
+
+    /** Default time to wait before current {@link PlayBlocks} starts to fall */
+    public float beforePlayFallWait = 0.025f;
+
+    /** Default time to wait before next {@link PlayBlocks} rotation */
+    public float rPlayMoveWait = 0.1f;
+
+    /** Remaining time to wait before next {@link PlayBlocks} rotation */
+    public float rPlayMoveTimer = 0f;
+
+    /**
+     * Default time to wait before next {@link PlayBlocks} horizontal move (when player press the
+     * right/left arrows in the controller/input)
+     */
+    public float hPlayMoveWait = 0.1f;
+
+    /** Remaining time to wait before next {@link PlayBlocks} horizontal move */
+    public float hPlayMoveTimer = 0f;
+
+    /**
+     * Default time to {@link PlayBlocks} fall 1 row. In seconds (less is fester). This field sets
+     * the PlayBlocks default vertical speed. It remains unchanged when the player press the down
+     * key of the controller/input.
+     * Slow 0.5f; Normal 0.34; fast 0.16
+     */
+    public float vPlayMoveWait = 0.5f;
+
+    /**
+     * Default time to {@link PlayBlocks} fall 1 row. In seconds (less is fester). This field sets
+     * the PlayBlocks default vertical speed. It changes when the player press/release the down key
+     * of the controller/input to the block fall faster or go back to the default speed
+     */
+    public float vPlayMoveWait2 = vPlayMoveWait;
+
+    /** Remaining time to the {@link PlayBlocks} falls to the next row */
+    public float vPlayMoveTimer = vPlayMoveWait;
+
+    /** Default time to wait before delete the block */
+    public float deleteWait = 0.5f;
+
+    /** A third of {@link #deleteWait} */
+    public float delWait3 = deleteWait / 3f;
+
+    // <===== End of default times, timers and other speed control variables ======
 
     public Map(MapManager manager) {
 
         this.manager = manager;
 
-        prop = new GameProperties();
-        pb   = new PlayBlocks(this);
-        anim = new Animations(this);
-        le   = new Array<>();
-        lc   = new IntMap<>();
-
         state = new DefaultStateMachine<>(this, MState.FREE_FALL);
+        anim = new Animations(this);
+        b = new Block[N_COL][OUT_ROW + N_ROW];
+        pb = new PlayBlocks(this);
+        le = new Array<>();
+        lc = new IntMap<>();
 
         colorBonusArr = new boolean[Block.CLR_N];
         scoreStr = "0";
 
-        // Creating space
-        b = new Block[N_COL][OUT_ROW + N_ROW];
         colAcceleration = new float[N_COL];
 
-        // With empty blocks
+        // Fill map with empty blocks
         for(int i = 0; i < b.length; i++) {
-
             for(int j = 0; j < b[i].length; j++) {
-
                 b[i][j] = new Block(this);
             }
         }
+    }
+
+    public void recycle() {
+
+        for(int i = 0; i < b.length; i++) {
+            for(int j = 0; j < b[i].length; j++) {
+                b[i][j].recycle();
+            }
+        }
+
+        // Todo fix trash blocks still been added on a new match
+        // Todo fix blocks starts falling first in a map then in the other
+        trashBlocksToAdd = 0;
+        gameOver = false;
+        gameWin = false;
+        score = 0;
+        scoreStr = "0";
+        speedIndex = 0;
+        matchTimer = 0f;
+        speedTimer = 0f;
+        vPlayMoveWait = speedArr[1];
+        vPlayMoveWait2 = speedArr[1];
+        vPlayMoveTimer = speedArr[1];
+        pb.recycle();
+        pb.init();
     }
 
     @Override
@@ -634,49 +653,11 @@ public class Map implements TargetBase {
     }
 
     public void setCfg(Cfg.Map cfg) {
-        moveTime = cfg.moveTime;
+        speedArr = cfg.moveTime;
 
-        prop.vPlayMoveWait = moveTime[1];
-        prop.vPlayMoveWait2 = moveTime[1];
-        prop.vPlayMoveTimer = moveTime[1];
-    }
-
-    public void print() {
-
-        // row 0 -> 14 + OUT_ROW
-        for(int row = 0; row < b[0].length; row++) {
-
-            // col 0 -> 6
-            for(int col = 0; col < b.length; col++) {
-
-                System.out.print(b[col][row].intColor + " ");
-            }
-            Dbg.print("");
-        }
-    }
-
-    public void printLabel() {
-
-        Dbg.print("Label print ->");
-
-        // row 0 -> 14 + OUT_ROW
-        for(int row = 0; row < b[0].length; row++) {
-
-            // col 0 -> 6
-            for(int col = 0; col < b.length; col++) {
-
-                System.out.printf(" %5d", b[col][row].label);
-            }
-            Dbg.print("");
-        }
-
-        // Prints labels count
-        for(IntMap.Entry<Integer> entry : lc.entries())
-        {
-            System.out.print(entry.key + ":" + entry.value + "; ");
-        }
-
-        Dbg.print("");
+        vPlayMoveWait = speedArr[1];
+        vPlayMoveWait2 = speedArr[1];
+        vPlayMoveTimer = speedArr[1];
     }
 
     public boolean isEmpty(int col, int row) {
@@ -694,8 +675,7 @@ public class Map implements TargetBase {
             // Loop through the rows 14 + OUT_ROW (floor) to 0 (top) of the actual
             // column. Keep looking from floor to top and counting empty blocks
             // then move down non empty the number that has been counted
-            for(int row = b[col].length -1; row >= 0; row--)
-            {
+            for(int row = b[col].length -1; row >= 0; row--) {
                 // If it`s not empty then swap: the block goes down
                 // and the empty goes up
                 if(!b[col][row].isEmpty()) {
@@ -708,13 +688,11 @@ public class Map implements TargetBase {
                         b[col][row + nEmpty] = b[col][row];
                         b[col][row] = swap;
 
-                        blockFall = true;
+                        blockChanged = true;
                     }
                 }
                 // If it`s empty increment
-                else {
-                    nEmpty++;
-                }
+                else nEmpty++;
             }
         }
     }
@@ -844,7 +822,7 @@ public class Map implements TargetBase {
 
     /**
      * This method is called to search and delete blocks groups that big enough (labels that has the
-     * number of blocks equals or grater then {@link GameProperties#deleteSize}).
+     * number of blocks equals or grater then {@link #deleteSize}).
      */
     private void labelDelete() {
 
@@ -854,26 +832,26 @@ public class Map implements TargetBase {
 
                 if(b[i][j].label == 0) continue;
 
-                if(lc.get(b[i][j].label) >= prop.deleteSize) {
+                if(lc.get(b[i][j].label) >= deleteSize) {
 
                     // Color bonus: Marking the colors that will be deleted.
                     colorBonusArr[b[i][j].intColor -1] = true;
 
-                    b[i][j].toDelete = prop.deleteWait;
+                    b[i][j].toDelete = deleteWait;
                     blocksDeleted++;
 
                     // Check the 4 adjacent blocks: delete those that are trash blocks
                     if(i -1 >= 0 && b[i -1][j].isTrash())
-                        b[i -1][j].toDelete = prop.deleteWait;
+                        b[i -1][j].toDelete = deleteWait;
 
                     if(i +1 < b.length && b[i +1][j].isTrash())
-                        b[i +1][j].toDelete = prop.deleteWait;
+                        b[i +1][j].toDelete = deleteWait;
 
                     if(j -1 >= 0 && b[i][j -1].isTrash())
-                        b[i][j -1].toDelete = prop.deleteWait;
+                        b[i][j -1].toDelete = deleteWait;
 
                     if(j +1 < b[i].length && b[i][j +1].isTrash())
-                        b[i][j +1].toDelete = prop.deleteWait;
+                        b[i][j +1].toDelete = deleteWait;
                 }
             }
         }
@@ -961,7 +939,7 @@ public class Map implements TargetBase {
 
         if(trashBlocksToAdd <= 0) return;
 
-        int toAdd = Math.min(trashBlocksToAdd, prop.maxTrashOnce);
+        int toAdd = Math.min(trashBlocksToAdd, maxTrashOnce);
         trashBlocksToAdd -= toAdd;
 
         // row OUT_ROW -1 -> 0
@@ -1005,7 +983,7 @@ public class Map implements TargetBase {
     private void gameOver() {
 
         if(!b[N_COL/2][OUT_ROW].isEmpty()) {
-            prop.gameOver = true;
+            gameOver = true;
         }
     }
 
@@ -1013,56 +991,29 @@ public class Map implements TargetBase {
     private void timing() {
 
         // Updates vertical fall time (less is faster)
-        if(timeIndex < moveTime.length && speedTime >= moveTime[timeIndex]) {
-            prop.vPlayMoveWait = moveTime[timeIndex + 1];
-            prop.vPlayMoveWait2 = moveTime[timeIndex + 1];
-            speedTime = 0f;
-            Dbg.dbg(Dbg.tag(this), "timing t = " + matchTime + "; s = " + moveTime[timeIndex + 1]);
-            timeIndex += 2;
+        if(speedIndex < speedArr.length && speedTimer >= speedArr[speedIndex]) {
+            vPlayMoveWait = speedArr[speedIndex + 1];
+            vPlayMoveWait2 = speedArr[speedIndex + 1];
+            speedTimer = 0f;
+            Dbg.dbg(Dbg.tag(this), "timing t = " + matchTimer + "; s = " + speedArr[speedIndex + 1]);
+            speedIndex += 2;
         }
     }
 
-    public void shuffleColAcceleration(float intensity) {
+    private void shuffleColAcceleration(float intensity) {
 
-        float max = prop.freeFallAcceleration * intensity;
+        float max = freeFallAcceleration * intensity;
 
         for(int i = 0; i < colAcceleration.length; i++) {
             colAcceleration[i] = MathUtils.random(max);
         }
     }
 
-    public void recycle() {
-
-        for(int i = 0; i < b.length; i++) {
-
-            for(int j = 0; j < b[i].length; j++) {
-
-                b[i][j].recycle();
-            }
-        }
-
-        // Todo fix trash blocks still been added on a new match
-        // Todo fix blocks starts falling first in a map then in the other
-        trashBlocksToAdd = 0;
-        prop.gameOver = false;
-        prop.gameWin = false;
-        score = 0;
-        scoreStr = "0";
-        timeIndex = 0;
-        matchTime = 0f;
-        speedTime = 0f;
-        prop.vPlayMoveWait = moveTime[1];
-        prop.vPlayMoveWait2 = moveTime[1];
-        prop.vPlayMoveTimer = moveTime[1];
-        pb.recycle();
-        pb.init();
-    }
-
     public void update() {
 
-        if(!prop.pause) {
-            matchTime += G.delta;
-            speedTime += G.delta;
+        if(!pause) {
+            matchTimer += G.delta;
+            speedTimer += G.delta;
         }
         state.update();
         timing();
@@ -1105,64 +1056,64 @@ public class Map implements TargetBase {
             int verticalOld = input.getAxisYOld();
 
             // ==== Rotation move timing control ====
-            if(prop.rPlayMoveTimer > 0f) {
-                prop.rPlayMoveTimer -= G.delta;
+            if(rPlayMoveTimer > 0f) {
+                rPlayMoveTimer -= G.delta;
             }
 
             // ==== Horizontal move timing control ====
-            if(prop.hPlayMoveTimer > 0f) {
-                prop.hPlayMoveTimer -= G.delta;
+            if(hPlayMoveTimer > 0f) {
+                hPlayMoveTimer -= G.delta;
             }
-            if(horizontal != 0 && prop.hPlayMoveTimer <= 0f) {
+            if(horizontal != 0 && hPlayMoveTimer <= 0f) {
                 pb.moveHorizontal(horizontal);
-                prop.hPlayMoveTimer += prop.hPlayMoveWait;
+                hPlayMoveTimer += hPlayMoveWait;
             }
 
             // ==== Vertical move timing control ====
             if(vertical == 1) {
-                prop.vPlayMoveWait2 = prop.vPlayMoveWait / prop.vPlayMoveMultip;
+                vPlayMoveWait2 = vPlayMoveWait / vPlayMoveMultip;
             }
             else if(vertical == 0 && verticalOld == 1) {
-                prop.vPlayMoveWait2 = prop.vPlayMoveWait;
-                prop.vPlayMoveTimer = prop.vPlayMoveWait;
+                vPlayMoveWait2 = vPlayMoveWait;
+                vPlayMoveTimer = vPlayMoveWait;
             }
 
             // Start pressing the down button right now
             if(verticalOld == 0 && vertical == 1) {
                 // Do not wait to start falling faster
-                prop.vPlayMoveTimer = 0.0001f;
+                vPlayMoveTimer = 0.0001f;
             }
         }
     }
 
     @Override
     public void button1(boolean isDown) {
-        if(!prop.pause && isDown && prop.rPlayMoveTimer <= 0f)
+        if(!pause && isDown && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void button2(boolean isDown) {
-        if(!prop.pause && isDown && prop.rPlayMoveTimer <= 0f)
+        if(!pause && isDown && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void button3(boolean isDown) {
-        if(!prop.pause && isDown && prop.rPlayMoveTimer <= 0f)
+        if(!pause && isDown && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void button4(boolean isDown) {
-        if(!prop.pause && isDown && prop.rPlayMoveTimer <= 0f)
+        if(!pause && isDown && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void buttonStart(boolean isDown) {
         if(isDown && !isInState(MState.OVER) && !isInState(MState.DONE))
-            manager.pause(index, !prop.pause);
+            manager.pause(index, !pause);
     }
 
     @Override
@@ -1342,5 +1293,43 @@ public class Map implements TargetBase {
             b[6][13 + OUT_ROW].setColor(3);
             b[6][12 + OUT_ROW].setColor(3);
         }
+    }
+
+    public void print() {
+
+        // row 0 -> 14 + OUT_ROW
+        for(int row = 0; row < b[0].length; row++) {
+
+            // col 0 -> 6
+            for(int col = 0; col < b.length; col++) {
+
+                System.out.print(b[col][row].intColor + " ");
+            }
+            Dbg.print("");
+        }
+    }
+
+    public void printLabel() {
+
+        Dbg.print("Label print ->");
+
+        // row 0 -> 14 + OUT_ROW
+        for(int row = 0; row < b[0].length; row++) {
+
+            // col 0 -> 6
+            for(int col = 0; col < b.length; col++) {
+
+                System.out.printf(" %5d", b[col][row].label);
+            }
+            Dbg.print("");
+        }
+
+        // Prints labels count
+        for(IntMap.Entry<Integer> entry : lc.entries())
+        {
+            System.out.print(entry.key + ":" + entry.value + "; ");
+        }
+
+        Dbg.print("");
     }
 }

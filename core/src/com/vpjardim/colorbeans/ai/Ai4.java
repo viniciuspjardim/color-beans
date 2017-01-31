@@ -53,7 +53,7 @@ public class Ai4 implements AiBase {
                 int color1 = m.pb.b2.intColor; // upper block
                 int color2 = m.pb.b1.intColor; // lower block
 
-                uctTree.initProcess(AiMap.getByteBlocks(null, m.b), m.prop.deleteSize, m.OUT_ROW,
+                uctTree.initProcess(AiMap.getByteBlocks(null, m.b), m.deleteSize, m.OUT_ROW,
                         formula1, color1, color2);
             }
 
