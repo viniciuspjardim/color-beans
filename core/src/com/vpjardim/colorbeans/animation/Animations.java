@@ -83,7 +83,7 @@ public class Animations {
 
         b.deformTime -= G.delta;
 
-        // 3, 0, 2, 0, 3, 0, 2, 0 (tile index)
+        // 4, 0, 3, 0, 4, 0, 3, 0 (tile index)
 
         if(b.deformTime <= 0f) {
             animating = false;
@@ -91,25 +91,25 @@ public class Animations {
             b.tile = 0;
         }
         else if(b.deformTime <= deformTime * 1f/7f) {
-            b.tile = 2;
+            b.tile = 3;
         }
         else if(b.deformTime <= deformTime * 2f/7f) {
             b.tile = 0;
         }
         else if(b.deformTime <= deformTime * 3f/7f) {
-            b.tile = 3;
+            b.tile = 4;
         }
         else if(b.deformTime <= deformTime * 4f/7f) {
             b.tile = 0;
         }
         else if(b.deformTime <= deformTime * 5f/7f) {
-            b.tile = 2;
+            b.tile = 3;
         }
         else if(b.deformTime <= deformTime * 6f/7f) {
             b.tile = 0;
         }
         else if(b.deformTime <= deformTime) {
-            b.tile = 3;
+            b.tile = 4;
         }
 
         return animating;
@@ -264,6 +264,7 @@ public class Animations {
 
         for(int i = 0; i < m.b.length; i++) {
             for(int j =  0; j < m.b[i].length; j++) {
+                m.b[i][j].tile = 0;
                 animating = animating | blockGameOver(m.b[i][j], i);
             }
         }

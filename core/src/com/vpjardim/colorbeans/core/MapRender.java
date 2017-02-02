@@ -57,7 +57,7 @@ public class MapRender {
 
                 if(!m.b[i][j].visible) continue;
 
-                tile = G.game.atlas.findRegion(m.b[i][j].strColor, m.b[i][j].tile + 1);
+                tile = G.game.atlas.findRegion(m.b[i][j].strColor, m.b[i][j].tile);
 
                 G.game.batch.draw(
                         tile,
@@ -71,7 +71,7 @@ public class MapRender {
 
         // Draw play blocks
 
-        tile = G.game.atlas.findRegion(m.pb.b1.strColor, m.pb.b1.tile +1);
+        tile = G.game.atlas.findRegion(m.pb.b1.strColor, m.pb.b1.tile);
 
         float b1X = px + (m.pb.b1x + m.pb.b1.px) * size;
         float b1Y = py + (m.pb.b1y +1 - m.OUT_ROW - m.pb.b1.py) * - size;
@@ -79,7 +79,7 @@ public class MapRender {
 
         G.game.batch.draw(tile, b1X, b1Y, size, size);
 
-        tile = G.game.atlas.findRegion(m.pb.b2.strColor, m.pb.b2.tile +1);
+        tile = G.game.atlas.findRegion(m.pb.b2.strColor, m.pb.b2.tile);
 
         float size2 = size * 0.7071f; // 1/sqrt(2) == 0.7071
 

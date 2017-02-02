@@ -66,7 +66,7 @@ public class PlayBlocks {
         b1.setColor(MathUtils.random(Block.CLR_A, Block.CLR_N));
 
         // Center block with the white border tile
-        b1.tile = 1;
+        b1.tile = 2;
 
         // Starts at the center column
         b1x = Map.N_COL / 2;

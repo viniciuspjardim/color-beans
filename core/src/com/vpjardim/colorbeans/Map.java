@@ -179,9 +179,11 @@ public class Map implements TargetBase {
                 // #debugCode
                 Dbg.dbg(Dbg.tag(map), "state = LABEL_CALC");
 
+                map.mapLinks();
+
                 map.labelCalc();
                 map.groupBonusCalc();
-                // Chain power: incrementing chain power (combo level).
+                // Chain power: incrementing chain power (combo level)
                 map.chainPowerCount++;
                 map.scoreCalc();
                 map.anim.labelDelete();
@@ -688,6 +690,8 @@ public class Map implements TargetBase {
                         b[col][row + nEmpty] = b[col][row];
                         b[col][row] = swap;
 
+                        b[col][row + nEmpty].tile = 0;
+                        fixSideLinks(col, row);
                         blockChanged = true;
                     }
                 }
@@ -864,6 +868,52 @@ public class Map implements TargetBase {
             s.clear();
         }
         lc.clear();
+    }
+
+    private void mapLinks() {
+
+        // Todo fix some PlayBlocks glitch when rotating
+
+        for(int i = 0; i < b.length; i++) {
+            for(int j = 0; j < b[i].length; j++) {
+                blockLinks(i, j);
+            }
+        }
+    }
+
+    private void blockLinks(int col, int row) {
+
+        Block block = b[col][row];
+
+        if(block.isEmpty() || block.isTrash()) return;
+
+        int color = block.intColor;
+        int tile = 0;
+
+        // Check the 4 adjacent blocks if they are linked to center one
+        // Up
+        if(row - 1 >= 0 && b[col][row - 1].intColor == color)
+            tile += 1000;
+        // Right
+        if(col + 1 < b.length && b[col + 1][row].intColor == color)
+            tile += 100;
+        // Down
+        if(row + 1 < b[col].length && b[col][row + 1].intColor == color)
+            tile += 10;
+        // Left
+        if(col - 1 >= 0 && b[col - 1][row].intColor == color)
+            tile += 1;
+
+        block.tile = tile;
+    }
+
+    private void fixSideLinks(int col, int row) {
+        // Right
+        if(col + 1 < b.length)
+            blockLinks(col + 1, row);
+        // Left
+        if(col - 1 >= 0)
+            blockLinks(col - 1, row);
     }
 
     /**

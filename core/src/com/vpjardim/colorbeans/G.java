@@ -71,7 +71,7 @@ public class G extends Game {
         // dbg.uiTable = true;
         // dbg.map0shape = 4;
         // dbg.campLevels = 2;
-        // dbg.delta = Dbg.DELTA_NORMAL;
+        // dbg.delta = Dbg.DELTA_SLOW;
         // dbg.fps = true;
         // dbg.logLevel = Application.LOG_INFO;
         // dbg.on();
