@@ -27,7 +27,18 @@ public class Test {
 
     public static void main(String[] args){
         Test t = new Test();
-        t.test11();
+        t.test12();
+    }
+
+    public void test12() {
+        System.out.println("1110 = " + 1110/100 % 10);
+        System.out.println("10   = " + 10  /100 % 10);
+        System.out.println("100  = " + 100 /100 % 10);
+        System.out.println("1    = " + 1   /100 % 10);
+        System.out.println("1010 = " + 1010/100 % 10);
+        System.out.println("1000 = " + 1000/100 % 10);
+        System.out.println("1111 = " + 1111/100 % 10);
+        System.out.println("1100 = " + 1100/100 % 10);
     }
 
     public void test11() {

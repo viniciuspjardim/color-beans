@@ -40,6 +40,16 @@ public class Block {
 
     public int intColor;
     public String strColor;
+
+    /**
+     * X represents de current block, then the tile number will have de shape ABCD. Each digit
+     * represents if there is a link (1) or not (0). There are 3 tiles that don't have links and
+     * don't follow this rule: the white bordered (2), the stretched (3) and the squeezed (4)
+     *   A
+     * D X B
+     *   C
+     * Example: 101. There are links only in B and D (no leading zeros needed cause it's a integer)
+     */
     public int tile;
     public boolean visible;
 

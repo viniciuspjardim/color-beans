@@ -530,7 +530,7 @@ public class Map implements TargetBase {
      * Multiplier (times faster) for {@link PlayBlocks PlayBlock's} speed when the player press
      * the down key of the controller/input
      */
-    public float vPlayMoveMultip = 10f;
+    public float vPlayMoveMultip = 8f;
 
     /** Acceleration of the free fall blocks in rows per second squared: 80 default */
     public float freeFallAcceleration = 80f;
@@ -872,8 +872,6 @@ public class Map implements TargetBase {
 
     private void mapLinks() {
 
-        // Todo fix some PlayBlocks glitch when rotating
-
         for(int i = 0; i < b.length; i++) {
             for(int j = 0; j < b[i].length; j++) {
                 blockLinks(i, j);
@@ -881,6 +879,7 @@ public class Map implements TargetBase {
         }
     }
 
+    /** Updates the links with the block's 4 neighbours */
     private void blockLinks(int col, int row) {
 
         Block block = b[col][row];
@@ -907,13 +906,14 @@ public class Map implements TargetBase {
         block.tile = tile;
     }
 
+    /** Removes the link with the current block because it will start to fall */
     private void fixSideLinks(int col, int row) {
-        // Right
-        if(col + 1 < b.length)
-            blockLinks(col + 1, row);
-        // Left
-        if(col - 1 >= 0)
-            blockLinks(col - 1, row);
+        // Right block, left link
+        if(col + 1 < b.length && b[col + 1][row].tile % 10 == 1)
+            b[col + 1][row].tile -= 1;
+        // Left block, right link
+        if(col - 1 >= 0 && b[col - 1][row].tile / 100 % 10 == 1)
+            b[col - 1][row].tile -= 100;
     }
 
     /**
