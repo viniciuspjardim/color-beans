@@ -61,7 +61,7 @@ public class ConfigScreen extends ScreenBase  {
                 G.game.skin.get("labelDef", Label.LabelStyle.class);
 
         Label titleL = new Label("Options", labelStyle);
-        Label gameL  = new Label("Content 1", labelStyle);
+        Label gameL  = new Label(Db.bigText, labelStyle);
         Label videoL = new Label("Content 2", labelStyle);
 
         gameL.setWrap(true);
@@ -87,7 +87,6 @@ public class ConfigScreen extends ScreenBase  {
         logicGroup.add(videoButt);
 
         // ==== Scrolls ====
-        // Todo fix scrolls not working on android
         final ScrollPane gameScroll = new ScrollPane(gameT);
         final ScrollPane videoScroll = new ScrollPane(videoT);
         gameScroll.setScrollingDisabled(true, false);
@@ -119,8 +118,8 @@ public class ConfigScreen extends ScreenBase  {
 
         // ==== Stack ====
         Stack tabs = new Stack();
-        tabs.add(gameScroll);
         tabs.add(videoScroll);
+        tabs.add(gameScroll);
 
         // ==== Align, Pad / widths / heights ====
         float bttW = G.style.buttWidth;

@@ -30,7 +30,8 @@ public class Dbg {
     public boolean uiTable;
     public int map0shape;
     public int map1shape;
-    public int campLevels;
+    public int campStart;
+    public int campEnd;
 
     public Dbg() { off(); }
 
@@ -44,7 +45,8 @@ public class Dbg {
         uiTable   = false;
         map0shape = 0;
         map1shape = 0;
-        campLevels = Integer.MAX_VALUE;
+        campStart = 0;
+        campEnd   = Integer.MAX_VALUE;
 
         Gdx.app.setLogLevel(logLevel);
     }

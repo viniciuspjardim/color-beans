@@ -317,7 +317,7 @@ public class Map implements TargetBase {
             }
 
             @Override
-            public void exit(Map map) { map.recycle(); }
+            public void exit(Map map) {}
         },
 
         DONE() {

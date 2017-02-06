@@ -91,7 +91,7 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     }
 
     @Override
-    public boolean pan (float x, float y, float deltaX, float deltaY) {
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
 
         // Horizontal move if move is more horizontal then vertical
         if(vertical == 0 && Math.abs(deltaX) >= Math.abs(deltaY) * 0.8) {
@@ -114,7 +114,7 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
         if(deltaY <= 0) verticalClean();
 
-        return true;
+        return false;
     }
 
     @Override
@@ -125,7 +125,7 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
         horizontal = 0;
 
         verticalClean();
-        return true;
+        return false;
     }
 
     public void verticalClean() {

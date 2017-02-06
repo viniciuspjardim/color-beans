@@ -69,8 +69,9 @@ public class G extends Game {
         dbg = new Dbg();
         // #debugCode
         // dbg.uiTable = true;
-        // dbg.map0shape = 4;
-        // dbg.campLevels = 2;
+        // dbg.map0shape = 3;
+        // dbg.campStart = 7;
+        // dbg.campEnd = 2;
         // dbg.delta = Dbg.DELTA_SLOW;
         // dbg.fps = true;
         // dbg.logLevel = Application.LOG_INFO;
