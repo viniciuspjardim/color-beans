@@ -4,6 +4,7 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,6 +18,7 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.core.ScoreTable;
+import com.vpjardim.colorbeans.input.TouchInput2;
 
 /**
  * @author Vinícius Jardim
@@ -32,6 +34,7 @@ public class PlayScreen extends ScreenBase {
     private OrthographicCamera menuCam;
     private Viewport menuViewport;
     private Stage stage;
+    private Color hlColor = new Color(0x2a4350ff);
 
     public PlayScreen(MapManager man) {
         manageInput = false;
@@ -92,11 +95,24 @@ public class PlayScreen extends ScreenBase {
 
         manager.winLost();
 
+        TouchInput2 input = null;
+
         G.game.sr.setProjectionMatrix(cam.combined);
         G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
         for(MapRender r : manager.render) {
             r.m.update();
             r.renderShapes();
+            if(r.m.input instanceof TouchInput2) {
+
+                input = (TouchInput2) r.m.input;
+                if(input.draw) {
+                    G.game.sr.setColor(hlColor);
+                    // Draw map highlight
+                    G.game.sr.rect(
+                            input.moveCurr * r.size + r.px, r.py,
+                            r.size, r.m.N_ROW * -r.size);
+                }
+            }
         }
         G.game.sr.end();
 
@@ -110,6 +126,46 @@ public class PlayScreen extends ScreenBase {
         if(manager.pauseStatus == MapManager.PAUSED_ALL) {
             stage.act(delta);
             stage.draw();
+        }
+
+        if(input != null && input.draw) {
+
+            G.game.sr.setProjectionMatrix(cam.combined);
+            G.game.sr.setAutoShapeType(true);
+            G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
+
+            float yShift = 80;
+            float x = input.div[input.moveCurr];
+            float dx = input.div[input.moveCurr + 1] - x;
+
+            G.game.sr.setColor(Color.ORANGE);
+            // Draw subdivision highlight
+            G.game.sr.rect(
+                    x, G.height - input.touchY + yShift,
+                    dx, 150);
+
+            G.game.sr.set(ShapeRenderer.ShapeType.Line);
+
+            G.game.sr.setColor(Color.RED);
+            // Draw input subdivisions
+            for(int i = 0; i < input.div.length -1; i++) {
+                x = input.div[i];
+                dx = input.div[i + 1] - x;
+                G.game.sr.rect(
+                        x, G.height - input.touchY + yShift,
+                        dx, 150);
+            }
+
+            G.game.sr.set(ShapeRenderer.ShapeType.Filled);
+            G.game.sr.setColor(Color.WHITE);
+
+            // Draw touch triangle
+            G.game.sr.triangle(
+                    input.touchX + input.dTouchX, G.height - input.touchY + 1.3f * yShift,
+                    input.touchX + input.dTouchX - 50, G.height - input.touchY - 15,
+                    input.touchX + input.dTouchX + 50, G.height - input.touchY - 15);
+
+            G.game.sr.end();
         }
 
         if(manager.gameStatus == MapManager.GAME_ZEROED)

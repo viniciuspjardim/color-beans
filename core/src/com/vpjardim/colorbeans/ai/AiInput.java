@@ -36,7 +36,6 @@ public class AiInput implements InputBase {
 
     @Override
     public void setTarget(TargetBase target) {
-
         if(target instanceof Map) {
             map = (Map) target;
             cleanMove();

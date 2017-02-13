@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -65,6 +66,12 @@ public class ConfigScreen extends ScreenBase  {
         Label videoL = new Label("Content 2", labelStyle);
 
         gameL.setWrap(true);
+
+        // Text fields
+        final TextField player1 = new TextField("fuck", G.game.skin, "tField");
+        final TextField player2 = new TextField("fuck", G.game.skin, "tField");
+        final TextField player3 = new TextField("fuck", G.game.skin, "tField");
+        final TextField player4 = new TextField("fuck", G.game.skin, "tField");
 
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",
@@ -149,6 +156,15 @@ public class ConfigScreen extends ScreenBase  {
         tabT.add(videoButt);
 
         gameT.add(gameL).expand().fill();
+        gameT.row();
+        gameT.add(player1);
+        gameT.row();
+        gameT.add(player2);
+        gameT.row();
+        gameT.add(player3);
+        gameT.row();
+        gameT.add(player4);
+        gameT.row();
         videoT.add(videoL).expand().fill();
 
         stage.addActor(titleT);

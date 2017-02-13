@@ -23,6 +23,28 @@ import java.text.NumberFormat;
 /**
  * Game class
  *
+ * libGDX coordinate system
+ *
+ * Touch
+ *    0
+ *   --------------
+ * 0 |x  >  .  .  .|
+ *   |V  .  .  .  .|
+ *   |.  .  .  .  .|
+ *   |.  .  .  .  .|
+ *   |.  .  .  .  .|W
+ *                H
+ *
+ * Render
+ *                H
+ *   --------------
+ *   |.  .  .  .  .| W
+ *   |.  .  .  .  .|
+ *   |.  .  .  .  .|
+ *   |A  .  .  .  .|
+ * 0 |x  >  .  .  .|
+ *    0
+ *
  * @author Vinícius Jardim
  * 21/03/2015
  */

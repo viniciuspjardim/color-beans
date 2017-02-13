@@ -32,6 +32,13 @@
         }
     },
 
+    com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+        tField: {
+            font: dimbo,
+            fontColor: white
+        }
+    },
+
     com.badlogic.gdx.graphics.g2d.NinePatch: {
         tbg: "game/tbg_yellow"
     },

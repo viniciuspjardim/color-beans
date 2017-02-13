@@ -19,6 +19,7 @@ import com.vpjardim.colorbeans.Map;
 public class MapRender {
 
     public Map m;
+    public Color bgColor = new Color(0x1a3340ff);
 
     /** Map top-left corner position in X axis: useful to position multiple maps in one screen */
     public float px;
@@ -33,7 +34,7 @@ public class MapRender {
 
     public void renderShapes() {
 
-        G.game.sr.setColor(new Color(0x1a3340ff));
+        G.game.sr.setColor(bgColor);
         G.game.sr.rect(px, py, size * m.N_COL, -size * m.N_ROW);
     }
 

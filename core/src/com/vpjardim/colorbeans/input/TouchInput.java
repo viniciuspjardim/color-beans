@@ -12,8 +12,8 @@ import com.vpjardim.colorbeans.core.Dbg;
  * @author Vinícius Jardim
  * 26/09/2015
  */
-public class TouchInput extends GestureDetector.GestureAdapter implements InputBase
-{
+public class TouchInput extends GestureDetector.GestureAdapter implements InputBase {
+
     // Todo redo this class logic for better control
     // so when the finger stops moving the play blocks stops moving to
     // following a shape like this
@@ -38,9 +38,7 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     private int verticalOld = 0;
 
     @Override
-    public void setTarget(TargetBase target) {
-        this.target = target;
-    }
+    public void setTarget(TargetBase target) { this.target = target; }
 
     @Override
     public void update() {
@@ -129,7 +127,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     }
 
     public void verticalClean() {
-
         if(vertical == 1) {
             verticalEvent = true;
             verticalOld = vertical;
