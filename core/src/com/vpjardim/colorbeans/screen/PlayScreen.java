@@ -34,6 +34,7 @@ public class PlayScreen extends ScreenBase {
     private OrthographicCamera menuCam;
     private Viewport menuViewport;
     private Stage stage;
+    private Table table;
     private Color hlColor = new Color(0x2a4350ff);
 
     public PlayScreen(MapManager man) {
@@ -52,7 +53,7 @@ public class PlayScreen extends ScreenBase {
         stage = new Stage(menuViewport, G.game.batch);
         G.game.input.addProcessor(stage);
 
-        Table table = new Table(G.game.skin);
+        table = new Table(G.game.skin);
         table.setFillParent(true);
 
         TextButton resumeButt, menuButt;
@@ -123,10 +124,13 @@ public class PlayScreen extends ScreenBase {
         }
         G.game.batch.end();
 
-        if(manager.pauseStatus == MapManager.PAUSED_ALL) {
-            stage.act(delta);
-            stage.draw();
-        }
+        stage.act(delta);
+        stage.draw();
+
+        if(manager.pauseStatus == MapManager.PAUSED_ALL)
+            table.setVisible(true);
+        else
+            table.setVisible(false);
 
         if(input != null && input.draw) {
 
