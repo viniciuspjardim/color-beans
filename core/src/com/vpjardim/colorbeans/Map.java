@@ -1138,25 +1138,25 @@ public class Map implements TargetBase {
 
     @Override
     public void button1(boolean isDown) {
-        if(!pause && isDown && rPlayMoveTimer <= 0f)
+        if(!pause && isInState(MState.PLAY_FALL)&& isDown && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void button2(boolean isDown) {
-        if(!pause && isDown && rPlayMoveTimer <= 0f)
+        if(!pause && isInState(MState.PLAY_FALL) && isDown && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void button3(boolean isDown) {
-        if(!pause && isDown && rPlayMoveTimer <= 0f)
+        if(!pause && isInState(MState.PLAY_FALL) && isDown && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void button4(boolean isDown) {
-        if(!pause && isDown && rPlayMoveTimer <= 0f)
+        if(!pause && isInState(MState.PLAY_FALL) && isDown && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 

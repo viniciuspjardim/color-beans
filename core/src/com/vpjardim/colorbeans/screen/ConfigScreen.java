@@ -68,10 +68,10 @@ public class ConfigScreen extends ScreenBase  {
         gameL.setWrap(true);
 
         // Text fields
-        final TextField player1 = new TextField("fuck", G.game.skin, "tField");
-        final TextField player2 = new TextField("fuck", G.game.skin, "tField");
-        final TextField player3 = new TextField("fuck", G.game.skin, "tField");
-        final TextField player4 = new TextField("fuck", G.game.skin, "tField");
+        final TextField player1 = new TextField("bla", G.game.skin, "tField");
+        final TextField player2 = new TextField("fooo", G.game.skin, "tField");
+        final TextField player3 = new TextField("mnist", G.game.skin, "tField");
+        final TextField player4 = new TextField("benas", G.game.skin, "tField");
 
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",

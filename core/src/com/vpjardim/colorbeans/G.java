@@ -31,15 +31,13 @@ import java.text.NumberFormat;
  * 0 |x  >  .  .  .|
  *   |V  .  .  .  .|
  *   |.  .  .  .  .|
- *   |.  .  .  .  .|
- *   |.  .  .  .  .|W
- *                H
+ *   |.  .  .  .  .| H
+ *                W [x = 5, y = 4]
  *
  * Render
- *                H
- *   --------------
- *   |.  .  .  .  .| W
- *   |.  .  .  .  .|
+ *                W
+ *   -------------- [x = 5, y = 4]
+ *   |.  .  .  .  .| H
  *   |.  .  .  .  .|
  *   |A  .  .  .  .|
  * 0 |x  >  .  .  .|
@@ -49,6 +47,8 @@ import java.text.NumberFormat;
  * 21/03/2015
  */
 public class G extends Game {
+
+    // Todo small memory leak even in debugPG variant. Update Proguard File to remove log methods
 
     // Game resolution
     public static final int RES_SMALL  = 1;
