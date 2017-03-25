@@ -7,6 +7,13 @@ package com.vpjardim.colorbeans;
 import com.badlogic.gdx.graphics.Color;
 
 /**
+ * Describe a space indexed by column index and row index on the {@link Map#b} matrix. It can be
+ * empty when {@link #intColor} equals the EMPTY constant or represent a bean of the following
+ * colors: red, blue, green, yellow, purple. It's also used in the {@link PlayBlocks} class as the
+ * playable falling beans.
+ * Each bean is grouped to all 4-neighborhood beans that has the same color creating chains. Each
+ * chain has a unique number stored in {@link #label} field.
+ *
  * @author Vinícius Jardim
  * 21/03/2015
  */
@@ -27,10 +34,13 @@ public class Block {
 
     /** Empty space: no block */
     public static final int EMPTY = 0;
+
     /** First color number (1 default)*/
     public static final int CLR_A = 1;
+
     /** Last color number (5 default)*/
     public static final int CLR_N = 5;
+
     /** Color of the trash block */
     public static final int CLR_T = 9;
 
@@ -39,6 +49,7 @@ public class Block {
     public transient Color color;
 
     public int intColor;
+
     public String strColor;
 
     /**
@@ -51,17 +62,42 @@ public class Block {
      * Example: 101. There are links only in B and D (no leading zeros needed cause it's a integer)
      */
     public int tile;
+
+    /** true to be rendered */
     public boolean visible;
 
+    /** Unique group / chain number shared with blocks chained in 4-neighborhood */
     public int label;
+
+    /** Time before block is deleted. 0 means it's not tagged to deletion */
     public float toDelete;
 
-    public int moveX; // negative left; positive right
-    public int moveY; // positive down; negative up
+    public int moveX;
+
+    /** The number of levels (rows) it fell down. Used to know the block's previous position */
+    public int moveY;
+
+    /**
+     * The time that the block is falling. Starts at 0 and increment.
+     * When there is a free fall or a play fall the block is moved to its final position instantly.
+     * For the animation to happen the {@link #py} shift and moveTime is used to track the block's
+     * position.
+     */
     public float moveTime;
+
+    /** Deform animation timer. Starts at {@link Map#afterFreeFallWait} and decrement */
     public float deformTime;
 
+    /**
+     * Shift in the x axis relative to the block's position in the Map. Negative is left, positive
+     * is right. The unit is the block side length
+     */
     public float px;
+
+    /**
+     * Shift in the y axis relative to the block's position in the Map. Negative is up, positive
+     * is down. The unit is the block side length
+     */
     public float py;
 
 

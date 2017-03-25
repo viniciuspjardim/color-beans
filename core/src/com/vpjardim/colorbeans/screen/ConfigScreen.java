@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.defaults.Db;
 
@@ -29,6 +30,11 @@ public class ConfigScreen extends ScreenBase  {
     // Todo fix fps going from 60 to 30 after changing to windowed mode
 
     private Stage stage;
+
+    private TextField player1;
+    private TextField player2;
+    private TextField player3;
+    private TextField player4;
 
     public ConfigScreen() { manageInput = false; }
 
@@ -62,16 +68,25 @@ public class ConfigScreen extends ScreenBase  {
                 G.game.skin.get("labelDef", Label.LabelStyle.class);
 
         Label titleL = new Label("Options", labelStyle);
-        Label gameL  = new Label(Db.bigText, labelStyle);
+        Label gameL  = new Label("Type the players name:", labelStyle);
         Label videoL = new Label("Content 2", labelStyle);
 
-        gameL.setWrap(true);
-
         // Text fields
-        final TextField player1 = new TextField("bla", G.game.skin, "tField");
-        final TextField player2 = new TextField("fooo", G.game.skin, "tField");
-        final TextField player3 = new TextField("mnist", G.game.skin, "tField");
-        final TextField player4 = new TextField("benas", G.game.skin, "tField");
+        final Array<String> pls = G.game.players;
+
+        player1 = new TextField("", G.game.skin, "tField");
+        player2 = new TextField("", G.game.skin, "tField");
+        player3 = new TextField("", G.game.skin, "tField");
+        player4 = new TextField("", G.game.skin, "tField");
+
+        if(pls.size >= 1)
+            player1.setText(pls.get(0));
+        if(pls.size >= 2)
+            player2.setText(pls.get(1));
+        if(pls.size >= 3)
+            player3.setText(pls.get(2));
+        if(pls.size >= 4)
+            player4.setText(pls.get(3));
 
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",
@@ -103,6 +118,19 @@ public class ConfigScreen extends ScreenBase  {
         backBtt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                pls.clear();
+
+                if(!player1.getText().equals(""))
+                    pls.add(player1.getText());
+                else
+                    pls.add("Player");
+                if(!player2.getText().equals(""))
+                    pls.add(player2.getText());
+                if(!player3.getText().equals(""))
+                    pls.add(player3.getText());
+                if(!player4.getText().equals(""))
+                    pls.add(player4.getText());
+
                 action = ScreenBase.ACT_NEXT;
             }
         });
@@ -155,7 +183,7 @@ public class ConfigScreen extends ScreenBase  {
         tabT.add(gameButt);
         tabT.add(videoButt);
 
-        gameT.add(gameL).expand().fill();
+        gameT.add(gameL);
         gameT.row();
         gameT.add(player1);
         gameT.row();

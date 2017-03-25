@@ -49,6 +49,7 @@ import java.text.NumberFormat;
 public class G extends Game {
 
     // Todo small memory leak even in debugPG variant. Update Proguard File to remove log methods
+    // Todo one map play blocks falls first then the others when if the game is restarted
 
     // Game resolution
     public static final int RES_SMALL  = 1;
@@ -94,9 +95,10 @@ public class G extends Game {
         // dbg.map0shape = 3;
         // dbg.campStart = 7;
         // dbg.campEnd = 7;
-        // dbg.delta = Dbg.DELTA_SLOW;
+        // dbg.delta = Dbg.DELTA_FAST;
         // dbg.fps = true;
         // dbg.logLevel = Application.LOG_INFO;
+        // dbg.aiPlayerCamp = true;
         // dbg.on();
 
         players = new Array<>();

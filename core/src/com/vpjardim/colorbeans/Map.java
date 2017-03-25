@@ -21,11 +21,11 @@ import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
 /**
- * Represents a field/map where one player can do his actions. The goal is to group
+ * Represents a field/map where one player can do his actions. The goal is to group / chain
  * {@link Block blocks} of the same color until they reach at least 4. This number can be set in
- * {@link #deleteSize}. Once this group is formed, the color beans/blocks will be
- * deleted to make room to the falling ones ({@link PlayBlocks}). If there isn't enough room (the
- * play blocks are obstructed) it's game over.
+ * {@link #deleteSize}. Once this group is formed, the color beans/blocks will be deleted to make
+ * room to the falling ones ({@link PlayBlocks}). If there isn't enough room (the play blocks are
+ * obstructed) it's game over.
  * <pre>
  *
  * Examples of color group (uses the 4 neighborhood):
@@ -666,6 +666,10 @@ public class Map implements TargetBase {
         return col >= 0 && col < N_COL && row < N_ROW + OUT_ROW && b[col][row].isEmpty();
     }
 
+    /**
+     * Perform the calculation of each block moving down the blocks that need to fall i.e. the ones
+     * that have empty space below it
+     */
     private void freeFallCalc() {
 
         // Loop through the columns 0(left) to 6(right)
@@ -906,7 +910,7 @@ public class Map implements TargetBase {
         block.tile = tile;
     }
 
-    /** Removes the link with the current block because it will start to fall */
+    /** Removes the side links with the current block because it will start to fall */
     private void fixSideLinks(int col, int row) {
         // Right block, left link
         if(col + 1 < b.length && b[col + 1][row].tile % 10 == 1)

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.core.Cfg;
+import com.vpjardim.colorbeans.input.InputBase;
 
 /**
  * Todo too slow, not usable
@@ -36,6 +37,9 @@ public class Ai2 implements AiBase {
 
         prevState = null;
     }
+
+    @Override
+    public InputBase getInput() { return input; }
 
     @Override
     public void update() {

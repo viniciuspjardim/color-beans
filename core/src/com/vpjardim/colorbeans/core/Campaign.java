@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.Ai1;
+import com.vpjardim.colorbeans.ai.Ai3;
 import com.vpjardim.colorbeans.defaults.Db;
 
 /**
@@ -15,6 +16,8 @@ import com.vpjardim.colorbeans.defaults.Db;
  * 02/09/2016
  */
 public class Campaign extends MapManager {
+
+    // #debugCode all over the class
 
     public int stageIndex;
     public Array<Cfg.Map> mapCfgs;
@@ -90,6 +93,12 @@ public class Campaign extends MapManager {
         playerMap.setCfg(mapCfgs.get(stageIndex));
         playerMap.name = G.game.players.first();
         G.game.input.addTarget(playerMap);
+
+        if(G.game.dbg.aiPlayerCamp) {
+            playerMap.ai = new Ai3();
+            playerMap.ai.init(playerMap, Db.ai7);
+            G.game.input.removeTarget(playerMap);
+        }
 
         Map aiMap = new Map(this);
         aiMap.index = 1;

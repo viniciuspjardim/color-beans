@@ -20,9 +20,9 @@ public class InputManager {
 
     private Array<InputBase> inputs;
     private Array<TargetBase> targets;
-    ControllerConnection ctrlConn;
-
     private InputMultiplexer multiplex;
+
+    ControllerConnection ctrlConn;
 
     public InputManager() {
 
@@ -80,6 +80,10 @@ public class InputManager {
         targets.add(target);
     }
 
+    public void removeTarget(TargetBase target) {
+        targets.removeValue(target, true);
+    }
+
     public void linkAll() {
 
         int max = Math.min(inputs.size, targets.size);
@@ -125,12 +129,12 @@ public class InputManager {
             t.setInput(null);
         }
 
-        // Clear references for all targets
-        targets.clear();
-
         // Clear inputs references for targets
         for(InputBase i : inputs) {
             i.setTarget(null);
         }
+
+        // Clear references for all targets
+        targets.clear();
     }
 }

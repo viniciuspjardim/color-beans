@@ -17,15 +17,19 @@ public class PlayBlocks {
 
     /** Block 1: center block */
     public Block b1;
+
     /** Block 2: this block rotates around the center block*/
     public Block b2;
 
     /** Width position (x) on the map of center block */
     public int b1x;
+
     /** Height position (y) on the map of center block */
     public int b1y;
+
     /** Width position (x) on the map of block 2 */
     public int b2x;
+
     /** Height position (y) on the map of block 2 */
     public int b2y;
 

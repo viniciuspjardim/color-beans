@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.IntMap;
 import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.core.Cfg;
+import com.vpjardim.colorbeans.input.InputBase;
 
 /**
  * @author Vinícius Jardim
@@ -57,6 +58,9 @@ public class Ai1 implements AiBase {
         lastMoveSwitch = 0;
         isFinalMoveSet = false;
     }
+
+    @Override
+    public InputBase getInput() { return input; }
 
     @Override
     public void update() {
