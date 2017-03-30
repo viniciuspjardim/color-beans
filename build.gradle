@@ -19,7 +19,7 @@ allprojects {
         appName = "Color Beans"
         gdxVersion = '1.9.6'
         aiVersion = '1.8.0'
-        gsonVersion = '2.6.1'
+        gsonVersion = '2.8.0'
     }
 
     repositories {

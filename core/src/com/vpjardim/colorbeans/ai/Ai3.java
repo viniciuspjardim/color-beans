@@ -15,7 +15,7 @@ import com.vpjardim.colorbeans.input.InputBase;
  * @author Vinícius Jardim
  * 30/05/2016
  */
-public class Ai3 implements AiBase {
+public class Ai3 extends AiCommon {
 
     // Todo persist the last ai move
     // When the game resume, because the ai has a small random factor, the new ai
@@ -25,61 +25,45 @@ public class Ai3 implements AiBase {
 
     // #debugCode
     public static boolean debug = false;
-
-    private Map m;
     private Tree3 tree;
-    private AiInput input;
-    private Map.MState prevState;
 
     @Override
     public void init(Map map, Cfg.Ai cfg) {
-        m = map;
+        super.init(map, cfg);
         tree = new Tree3(m.N_COL);
+    }
 
-        input = new AiInput();
-        input.setTarget(m);
-        m.input = input;
+    @Override
+    protected void entryPoint1() {}
 
-        prevState = null;
+    @Override
+    protected void entryPoint2() {
+        tree.reset();
+        input.cleanMove();
+
+        int color1 = m.pb.b2.intColor; // upper block
+        int color2 = m.pb.b1.intColor; // lower block
+
+        tree.initProcess(
+                AiMap.getByteBlocks(null, m.b), m.deleteSize, m.OUT_ROW, formula1, color1, color2);
+    }
+
+    @Override
+    protected void entryPoint3() {
+
+        if(!tree.processFinished) {
+            tree.process();
+        }
+        else if(!input.move) {
+            Tree3Node bestNode = tree.bestRootChild();
+            bestMovePosition = bestNode.position;
+            bestMoveRotation = bestNode.rotation;
+            bestMoveDefined = true;
+        }
     }
 
     @Override
     public InputBase getInput() { return input; }
-
-    @Override
-    public void update() {
-
-        if(m.isInState(Map.MState.PLAY_FALL)) {
-
-            if(!m.isInState(prevState)) {
-
-                tree.reset();
-                input.cleanMove();
-
-                int color1 = m.pb.b2.intColor; // upper block
-                int color2 = m.pb.b1.intColor; // lower block
-
-                tree.initProcess(AiMap.getByteBlocks(null, m.b), m.deleteSize, m.OUT_ROW,
-                        formula1, color1, color2);
-            }
-
-            if(!tree.processFinished) {
-                tree.process();
-            }
-            else if(!input.move) {
-                Tree3Node bestNode = tree.bestRootChild();
-                input.setMove(bestNode.position, bestNode.rotation, true);
-
-                // #debugCode
-                // Dbg.print("===================");
-                // Dbg.print("BestNode: pos = " + bestNode.position + "; rot = " +
-                //         bestNode.rotation + "; scoreSum = " + bestNode.scoreSum);
-            }
-
-            input.update();
-        }
-        prevState = m.getState();
-    }
 
     public static ScoreFormula formula1 = new ScoreFormula() {
 

@@ -21,6 +21,12 @@ public class PlayBlocks {
     /** Block 2: this block rotates around the center block*/
     public Block b2;
 
+    /** Block 1 color at the next ply */
+    public int nextB1;
+
+    /** Block 2 color at the next ply */
+    public int nextB2;
+
     /** Width position (x) on the map of center block */
     public int b1x;
 
@@ -61,13 +67,22 @@ public class PlayBlocks {
     public void recycle() {
         b1.recycle();
         b2.recycle();
+        nextB1 = MathUtils.random(Block.CLR_A, Block.CLR_N);
+        nextB2 = MathUtils.random(Block.CLR_A, Block.CLR_N);
     }
 
     public void init() {
+
+        b1.recycle();
+        b2.recycle();
+
         // Above the center
-        b2.setColor(MathUtils.random(Block.CLR_A, Block.CLR_N));
+        b2.setColor(nextB2);
         // Center
-        b1.setColor(MathUtils.random(Block.CLR_A, Block.CLR_N));
+        b1.setColor(nextB1);
+
+        nextB2 = MathUtils.random(Block.CLR_A, Block.CLR_N);
+        nextB1 = MathUtils.random(Block.CLR_A, Block.CLR_N);
 
         // Center block with the white border tile
         b1.tile = 2;
@@ -248,7 +263,6 @@ public class PlayBlocks {
             }
             else {
                 insert();
-                recycle();
                 init();
                 m.vPlayMoveTimer = m.vPlayMoveWait2;
                 m.blockChanged = true;

@@ -22,7 +22,8 @@ public class DesktopLauncher {
 
         config.setWindowedMode(1280, 720);
         config.setTitle("Color Beans");
-        config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+        // config.setWindowSizeLimits(480, 320, 3840, 2160);
+        // config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 
         new Lwjgl3Application(new G(), config);
     }

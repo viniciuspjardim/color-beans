@@ -42,7 +42,7 @@ public abstract class MapManager {
 
         float totalMarginX = margin * (maps.size + 1);
         float mapsX = G.width - totalMarginX;
-        float sideX = mapsX / (Map.N_COL * maps.size);
+        float sideX = mapsX / ((Map.N_COL + 1.1f) * maps.size); // 1.1 is the next block space
 
         float totalMarginY = margin * 2;
         float mapsY = G.height - totalMarginY;
@@ -50,7 +50,8 @@ public abstract class MapManager {
 
         float side = Math.min(sideX, sideY);
 
-        float totalX = totalMarginX + side * Map.N_COL * maps.size;
+        // 1.1 is the next block space
+        float totalX = totalMarginX + (side * (Map.N_COL + 1.1f) * maps.size);
         float totalY = totalMarginY + side * Map.N_ROW;
 
         // Updating size and positions
@@ -60,7 +61,8 @@ public abstract class MapManager {
 
             r.size = side;
 
-            r.px = margin + (margin + side * Map.N_COL) * i
+                                                            // The next block space
+            r.px = margin + (side * Map.N_COL + margin) * i + (side * 1.1f * (i + 1))
                    + (G.width - totalX) / 2f;
 
             r.py = -margin + (G.height + totalY) / 2f;

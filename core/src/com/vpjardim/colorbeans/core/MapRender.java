@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
+import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 
@@ -27,6 +28,12 @@ public class MapRender {
     /** Map top-left corner position in Y axis: useful to position multiple maps in one screen */
     public float py;
 
+    /** Next blocks position in X axis */
+    public float nextPx;
+
+    /** Next blocks position in Y axis */
+    public float nextPy;
+
     /** Size in pixels of each block (equals the diameter) */
     public float size;
 
@@ -36,6 +43,11 @@ public class MapRender {
 
         G.game.sr.setColor(bgColor);
         G.game.sr.rect(px, py, size * m.N_COL, -size * m.N_ROW);
+
+        nextPx = px - size * 1.1f;
+        nextPy = py - size;
+
+        G.game.sr.rect(nextPx, nextPy + size, size, - size * 2);
     }
 
     public void renderBatch() {
@@ -92,5 +104,16 @@ public class MapRender {
                 size
         );
         // Todo review ang and size2 it's a weird code
+
+        // Draw next blocks
+
+        nextPx = px - size * 1.1f;
+        nextPy = py - size;
+
+        tile = G.game.atlas.findRegion(Block.intToColorStr(m.pb.nextB2), 0);
+        G.game.batch.draw(tile, nextPx, nextPy, size, size);
+
+        tile = G.game.atlas.findRegion(Block.intToColorStr(m.pb.nextB1), 0);
+        G.game.batch.draw(tile, nextPx, nextPy - size, size, size);
     }
 }

@@ -94,6 +94,7 @@ public class Campaign extends MapManager {
         playerMap.name = G.game.players.first();
         G.game.input.addTarget(playerMap);
 
+        // #debugCode
         if(G.game.dbg.aiPlayerCamp) {
             playerMap.ai = new Ai3();
             playerMap.ai.init(playerMap, Db.ai7);
