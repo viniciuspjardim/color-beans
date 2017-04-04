@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
 import com.vpjardim.colorbeans.Map;
+import com.vpjardim.colorbeans.ai.ai3.Tree3Node;
 import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.input.InputBase;
 

@@ -2,11 +2,14 @@
  * Copyright 2015 Vinícius Petrocione Jardim
  */
 
-package com.vpjardim.colorbeans.ai;
+package com.vpjardim.colorbeans.ai.ai3;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vpjardim.colorbeans.ai.AiMap;
+import com.vpjardim.colorbeans.ai.Moves;
+import com.vpjardim.colorbeans.ai.ScoreFormula;
 
 /**
  * @author Vinícius Jardim
@@ -30,6 +33,8 @@ public class Tree3 {
 
     public int color1;
     public int color2;
+    public int nColor1;
+    public int nColor2;
 
     public Tree3(int nCol) {
 
@@ -71,11 +76,13 @@ public class Tree3 {
     }
 
     public void initProcess(byte[][] map, int deleteSize, int outRow, ScoreFormula formula,
-                            int color1, int color2) {
+                            int color1, int color2, int nColor1, int nColor2) {
 
         this.formula = formula;
         this.color1 = color1;
         this.color2 = color2;
+        this.nColor1 = nColor1;
+        this.nColor2 = nColor2;
 
         processFinished = false;
         root = Tree3Node.pool.obtain();
@@ -85,7 +92,7 @@ public class Tree3 {
 
         // If the color is defined, add moves only for that color
         if(this.color1 != -1) {
-            addColorChild(root);
+            addChild(root, color1, color2);
             cacheSwap();
         }
     }
@@ -99,24 +106,24 @@ public class Tree3 {
 
                 if(!hasTime()) return;
 
-                addChild(cacheA.get(cachePos));
+                if(levelPos == 0)
+                    addChild(cacheA.get(cachePos), nColor1, nColor2);
+                else
+                    addChild(cacheA.get(cachePos));
             }
             cacheSwap();
         }
         processFinished = true;
     }
 
-    public void addColorChild(Tree3Node node) {
+    public void addChild(Tree3Node node, int c1, int c2) {
 
-        IntArray movesArr = moves.getArray(color1, color2);
-
-        // #debugCode
-        // Ai3.debug = true;
+        IntArray movesArr = moves.getArray(c1, c2);
 
         for(int i = 0; i < movesArr.size; i++) {
 
             moves.setMove(movesArr.get(i));
-            Tree3Node childNode = node.addChild(color1, color2, moves.position, moves.rotation);
+            Tree3Node childNode = node.addChild(c1, c2, moves.position, moves.rotation);
             childNode.setScoreFormula(formula);
             childNode.process(node);
             cacheB.add(childNode);
@@ -126,9 +133,6 @@ public class Tree3 {
                 bestNode = childNode;
             }
         }
-
-        // #debugCode
-        // Ai3.debug = false;
 
         // As all child of this node has been added, we don't need
         // it's AiMap object anymore

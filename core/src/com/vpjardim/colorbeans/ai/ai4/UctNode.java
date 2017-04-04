@@ -2,12 +2,15 @@
  * Copyright 2015 Vinícius Petrocione Jardim
  */
 
-package com.vpjardim.colorbeans.ai;
+package com.vpjardim.colorbeans.ai.ai4;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.Pool;
+import com.vpjardim.colorbeans.ai.AiMap;
+import com.vpjardim.colorbeans.ai.DebugNode;
+import com.vpjardim.colorbeans.ai.Moves;
 
 import java.text.NumberFormat;
 

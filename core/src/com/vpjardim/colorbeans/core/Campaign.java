@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.Ai1;
-import com.vpjardim.colorbeans.ai.Ai3;
+import com.vpjardim.colorbeans.ai.ai3.Ai3;
 import com.vpjardim.colorbeans.defaults.Db;
 
 /**

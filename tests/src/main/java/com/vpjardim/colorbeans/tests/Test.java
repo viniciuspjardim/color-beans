@@ -8,13 +8,13 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.ai.Ai4;
+import com.vpjardim.colorbeans.ai.ai4.Ai4;
 import com.vpjardim.colorbeans.ai.AiMap;
 import com.vpjardim.colorbeans.ai.Moves;
-import com.vpjardim.colorbeans.ai.Tree3;
-import com.vpjardim.colorbeans.ai.Tree3Node;
-import com.vpjardim.colorbeans.ai.Uct;
-import com.vpjardim.colorbeans.ai.UctNode;
+import com.vpjardim.colorbeans.ai.ai3.Tree3;
+import com.vpjardim.colorbeans.ai.ai3.Tree3Node;
+import com.vpjardim.colorbeans.ai.ai4.Uct;
+import com.vpjardim.colorbeans.ai.ai4.UctNode;
 import com.vpjardim.colorbeans.tests.treeview.RunnableTV;
 import com.vpjardim.colorbeans.tests.treeview.TVNode;
 import com.vpjardim.colorbeans.tests.treeview.TreeView;
@@ -303,7 +303,7 @@ public class Test {
             t.color2 = 2;
 
             if(t.color1 != -1) {
-                t.addColorChild(t.root);
+                t.addChild(t.root, t.color1, t.color2);
                 t.cacheSwap();
             }
 

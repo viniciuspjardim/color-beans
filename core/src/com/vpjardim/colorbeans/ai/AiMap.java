@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.Pool;
 import com.vpjardim.colorbeans.Block;
+import com.vpjardim.colorbeans.ai.ai3.Ai3;
 import com.vpjardim.colorbeans.core.Dbg;
 
 /**

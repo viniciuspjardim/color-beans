@@ -2,10 +2,12 @@
  * Copyright 2015 Vinícius Petrocione Jardim
  */
 
-package com.vpjardim.colorbeans.ai;
+package com.vpjardim.colorbeans.ai.ai4;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vpjardim.colorbeans.ai.Moves;
+import com.vpjardim.colorbeans.ai.ScoreFormula;
 
 /**
  * @author Vinícius Jardim
