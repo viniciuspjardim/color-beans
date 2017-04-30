@@ -12,8 +12,10 @@ android {
             keyPassword keyProp['keyPassword']
         }
     }
+
     buildToolsVersion "25.0.2"
     compileSdkVersion 25
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -27,14 +29,27 @@ android {
 
         instrumentTest.setRoot('tests')
     }
+
+    defaultConfig {
+        signingConfig signingConfigs.AndroidKey
+        applicationId 'com.gmail.vpjardimdev.colorbeans'
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 5
+        versionName "0.1.3"
+    }
+
     buildTypes {
         debug {
+            minifyEnabled false
+            pseudoLocalesEnabled true
+            debuggable true
             applicationIdSuffix ".debug"
         }
         // Debug with ProGuard enabled
         debugPG {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt'
-            minifyEnabled false
+            minifyEnabled true
             pseudoLocalesEnabled false
             debuggable true
             applicationIdSuffix ".debugPG"
@@ -46,11 +61,6 @@ android {
             debuggable false
             signingConfig signingConfigs.AndroidKey
         }
-    }
-    defaultConfig {
-        signingConfig signingConfigs.AndroidKey
-        applicationId 'com.gmail.vpjardimdev.colorbeans'
-        targetSdkVersion 25
     }
 }
 // called every time gradle gets executed, takes the native dependencies of

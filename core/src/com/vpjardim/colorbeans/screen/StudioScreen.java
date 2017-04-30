@@ -140,7 +140,7 @@ public class StudioScreen extends ScreenBase {
         );
 
         // #debugCode
-        Dbg.inf(Dbg.tag(this, false), "scale = " + spriteScale + "; textH = " +
+        Dbg.inf(Dbg.tag(this), "scale = " + spriteScale + "; textH = " +
                 studioText.getHeight() + "; logoH = " + studioLogo.getHeight());
     }
 

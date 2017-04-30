@@ -99,7 +99,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     public boolean tap(float x, float y, int count, int button) {
 
         // #debugCode
-        Dbg.dbg(Dbg.tag(this, false), "tap -> x = " + x + "; y = " + y + "; count = " + count +
+        Dbg.dbg(Dbg.tag(this), "tap -> x = " + x + "; y = " + y + "; count = " + count +
                 "; button = " + button);
 
         if(map == null) return false;
@@ -123,8 +123,8 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     public boolean pan(float x, float y, float deltaX, float deltaY) {
 
         // #debugCode
-        Dbg.print(Dbg.tag(this, false) + ": pan ->   x = " + x + ";  y = " + y + "; dTouchX = " + deltaX
-                + "; dTouchY = " + deltaY);
+        Dbg.print(Dbg.tag(this) + ": pan ->   x = " + x + ";  y = " + y + "; dTouchX = " + deltaX +
+                "; dTouchY = " + deltaY);
 
         if(!hPanning && !vPanning) {
             move = false;
@@ -164,7 +164,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
         if(Math.abs(dTouchX) > width / map.N_COL / 2) verticalClean();
 
         // #debugCode
-        Dbg.print(Dbg.tag(this, false) + ": pan2 -> tx = " + touchX + "; ty = " + touchY +
+        Dbg.print(Dbg.tag(this) + ": pan2 -> tx = " + touchX + "; ty = " + touchY +
                 "; dTouchX = " + this.dTouchX + "; dTouchY = " + this.dTouchY);
 
         return false;
@@ -215,7 +215,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     public boolean panStop (float x, float y, int pointer, int button) {
 
         // #debugCode
-        Dbg.print(Dbg.tag(this, false) + ": panStop -> x = " + x + "; y = " + y);
+        Dbg.print(Dbg.tag(this) + ": panStop -> x = " + x + "; y = " + y);
 
         horizontalEvent = true;
         horizontalOld = horizontal;

@@ -121,7 +121,7 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Dbg.dbg(Dbg.tag(map), "state = FREE_FALL");
+                Dbg.dbg(Dbg.tagO(map), "state = FREE_FALL");
 
                 map.shuffleColAcceleration(0.3f);
                 map.afterFreeFallTimer = map.afterFreeFallWait;
@@ -177,7 +177,7 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Dbg.dbg(Dbg.tag(map), "state = LABEL_CALC");
+                Dbg.dbg(Dbg.tagO(map), "state = LABEL_CALC");
 
                 map.mapLinks();
 
@@ -219,7 +219,7 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Dbg.dbg(Dbg.tag(map), "state = PLAY_FALL");
+                Dbg.dbg(Dbg.tagO(map), "state = PLAY_FALL");
 
                 map.chainPowerCount = 0;
                 map.scoredBlocks = 0;
@@ -280,7 +280,7 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Dbg.dbg(Dbg.tag(map), "state = TRASH_ADD");
+                Dbg.dbg(Dbg.tagO(map), "state = TRASH_ADD");
 
                 map.addTrashBlocks();
                 map.trashBlocksTurn = false;
@@ -299,8 +299,8 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Dbg.dbg(Dbg.tag(map), "state = OVER");
-                Dbg.inf(Dbg.tag(map), "game over");
+                Dbg.dbg(Dbg.tagO(map), "state = OVER");
+                Dbg.inf(Dbg.tagO(map), "game over");
 
                 map.shuffleColAcceleration(0.8f);
                 map.colAcceleration[map.b.length/2] = map.freeFallAcceleration * 0.8f;
@@ -325,9 +325,9 @@ public class Map implements TargetBase {
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Dbg.dbg(Dbg.tag(map), "state = DONE");
+                Dbg.dbg(Dbg.tagO(map), "state = DONE");
                 if(map.gameWin) {
-                    Dbg.inf(Dbg.tag(map), "game win\n");
+                    Dbg.inf(Dbg.tagO(map), "game win\n");
                 }
             }
 
@@ -948,7 +948,7 @@ public class Map implements TargetBase {
         int ab = a * b;
 
         // #debugCode
-        if(ab > 0) Dbg.inf(Dbg.tag(this), "Score = " + score);
+        if(ab > 0) Dbg.inf(Dbg.tagO(this), "Score = " + score);
 
         score += ab;
 
@@ -1049,7 +1049,8 @@ public class Map implements TargetBase {
             vPlayMoveWait = speedArr[speedIndex + 1];
             vPlayMoveWait2 = speedArr[speedIndex + 1];
             speedTimer = 0f;
-            Dbg.dbg(Dbg.tag(this), "timing t = " + matchTimer + "; s = " + speedArr[speedIndex + 1]);
+            Dbg.dbg(Dbg.tagO(this), "timing t = " + matchTimer +
+                    "; s = " + speedArr[speedIndex + 1]);
             speedIndex += 2;
         }
     }

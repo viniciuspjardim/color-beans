@@ -6,7 +6,7 @@
 ==== REMEMBER ====
 
 Before a release commit
- - Increment versions on /build.gradle and /android/AndroidManifest.xml (versionCode, versionName)
+ - Increment versions on /build.gradle and /android/build.gradle (versionCode, versionName)
  - Choose the best AI
  - See dependencies versions to use the newer ones
  - Make sure all debug options are off

@@ -63,10 +63,9 @@ public class Dbg {
 
     public static void dbg(String tag, String str) { Gdx.app.debug(tag, str); }
 
-    public static String tag(Object o) { return tag(o, true); }
+    /** Tag only class name */
+    public static String tag(Object o) { return o.getClass().getSimpleName(); }
 
-    public static String tag(Object o, boolean oName) {
-        if(oName) return o.getClass().getSimpleName() + "#" + o;
-        return o.getClass().getSimpleName();
-    }
+    /** Tag class # object name */
+    public static String tagO(Object o) { return o.getClass().getSimpleName() + "#" + o; }
 }

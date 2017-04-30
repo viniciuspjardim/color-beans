@@ -21,7 +21,7 @@ public class ControllerConnection implements ControllerListener {
     @Override
     public void connected(Controller controller) {
         // #debugCode
-        Dbg.inf(Dbg.tag(this, false), "Controller " + controller.getName() + " connected; n = " +
+        Dbg.inf(Dbg.tag(this), "Controller " + controller.getName() + " connected; n = " +
                 Controllers.getControllers().size);
         G.game.input.loadInputs();
         G.game.input.linkAll();
@@ -30,7 +30,7 @@ public class ControllerConnection implements ControllerListener {
     @Override
     public void disconnected(Controller controller) {
         // #debugCode
-        Dbg.inf(Dbg.tag(this, false), "Controller " + controller.getName() + " disconnected; n = " +
+        Dbg.inf(Dbg.tag(this), "Controller " + controller.getName() + " disconnected; n = " +
                 Controllers.getControllers().size);
         G.game.input.loadInputs();
         G.game.input.linkAll();

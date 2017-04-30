@@ -66,7 +66,7 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     public boolean tap(float x, float y, int count, int button) {
 
         // #debugCode
-        Dbg.dbg(Dbg.tag(this, false), "tap -> x = " + x + "; y = " + y + "; count = " + count +
+        Dbg.dbg(Dbg.tag(this), "tap -> x = " + x + "; y = " + y + "; count = " + count +
                 "; button = " + button);
 
         // Could not dispatch the event to any target

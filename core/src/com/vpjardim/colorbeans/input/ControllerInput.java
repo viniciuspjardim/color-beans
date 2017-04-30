@@ -8,6 +8,7 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -66,21 +67,30 @@ public class ControllerInput implements InputBase, ControllerListener {
     @Override
     public boolean buttonDown(Controller controller, int buttonIndex) {
 
+        // #debugCode
+        Dbg.dbg(Dbg.tag(this), "btDown -> buttonIndex = " + buttonIndex);
+
         if(target == null) return true;
 
-        if(buttonIndex == 9) {
+        // Todo remove this buttonIndex 'ors' and use profiles like keyboard
+
+        if(buttonIndex == 9 || buttonIndex == 197) {
             target.buttonStart(true);
         }
-        else if(buttonIndex == 0) {
+        // Up button
+        else if(buttonIndex == 0 || buttonIndex == 188) {
             target.button1(true);
         }
-        else if(buttonIndex == 1) {
+        // Right button
+        else if(buttonIndex == 1 || buttonIndex == 189) {
             target.button2(true);
         }
-        else if(buttonIndex == 2) {
+        // Down button
+        else if(buttonIndex == 2 || buttonIndex == 190) {
             target.button3(true);
         }
-        else if(buttonIndex == 3) {
+        // Left
+        else if(buttonIndex == 3 || buttonIndex == 191) {
             target.button4(true);
         }
         return true;
@@ -88,6 +98,9 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
+
+        // #debugCode
+        Dbg.dbg(Dbg.tag(this), "axMove -> axisIndex = " + axisIndex + "; value = " + value);
 
         int val = Math.round(value);
 
@@ -109,14 +122,10 @@ public class ControllerInput implements InputBase, ControllerListener {
     }
 
     @Override
-    public void connected(Controller controller) {
-
-    }
+    public void connected(Controller controller) {}
 
     @Override
-    public void disconnected(Controller controller) {
-
-    }
+    public void disconnected(Controller controller) {}
 
     @Override
     public boolean buttonUp(Controller controller, int buttonIndex) {
