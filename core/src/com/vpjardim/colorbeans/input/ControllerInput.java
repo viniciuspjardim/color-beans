@@ -17,6 +17,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 public class ControllerInput implements InputBase, ControllerListener {
 
     private TargetBase target;
+    public Profile p;
     public Controller gdxController;
 
     private boolean horizontalEvent = false;
@@ -34,6 +35,10 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public void setTarget(TargetBase target) { this.target = target; }
+
+    public void setProfile(Profile profile) {
+        p = profile;
+    }
 
     @Override
     public void update() {
@@ -72,25 +77,23 @@ public class ControllerInput implements InputBase, ControllerListener {
 
         if(target == null) return true;
 
-        // Todo remove this buttonIndex 'ors' and use profiles like keyboard
-
-        if(buttonIndex == 9 || buttonIndex == 197) {
+        if(buttonIndex == p.start) {
             target.buttonStart(true);
         }
         // Up button
-        else if(buttonIndex == 0 || buttonIndex == 188) {
+        else if(buttonIndex == p.button1) {
             target.button1(true);
         }
         // Right button
-        else if(buttonIndex == 1 || buttonIndex == 189) {
+        else if(buttonIndex == p.button2) {
             target.button2(true);
         }
         // Down button
-        else if(buttonIndex == 2 || buttonIndex == 190) {
+        else if(buttonIndex == p.button3) {
             target.button3(true);
         }
         // Left
-        else if(buttonIndex == 3 || buttonIndex == 191) {
+        else if(buttonIndex == p.button4) {
             target.button4(true);
         }
         return true;
@@ -148,7 +151,8 @@ public class ControllerInput implements InputBase, ControllerListener {
     }
 
     @Override
-    public boolean accelerometerMoved(Controller controller, int accelerometerIndex, Vector3 value) {
+    public boolean accelerometerMoved(
+            Controller controller, int accelerometerIndex, Vector3 value) {
         return true;
     }
 }

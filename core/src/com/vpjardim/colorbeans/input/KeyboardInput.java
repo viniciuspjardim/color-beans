@@ -5,7 +5,6 @@
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -14,41 +13,8 @@ import com.badlogic.gdx.InputProcessor;
  */
 public class KeyboardInput implements InputBase, InputProcessor {
 
-    public static Profile[] profiles =
-    {
-        new Profile(), new Profile(),
-    };
-
-    {
-        profiles[0].up = Keys.W;
-        profiles[0].right = Keys.D;
-        profiles[0].down = Keys.S;
-        profiles[0].left = Keys.A;
-        profiles[0].button1 = Keys.G;
-        profiles[0].button2 = Keys.V;
-        profiles[0].start = Keys.SPACE;
-
-        // #debugCode other key config
-        // profiles[0].up = Keys.UP;
-        // profiles[0].right = Keys.RIGHT;
-        // profiles[0].down = Keys.DOWN;
-        // profiles[0].left = Keys.LEFT;
-        // profiles[0].button1 = Keys.A;
-        // profiles[0].button2 = Keys.S;
-        // profiles[0].start = Keys.SPACE;
-
-        profiles[1].up = Keys.UP;
-        profiles[1].right = Keys.RIGHT;
-        profiles[1].down = Keys.DOWN;
-        profiles[1].left = Keys.LEFT;
-        profiles[1].button1 = Keys.NUMPAD_5;
-        profiles[1].button2 = Keys.NUMPAD_6;
-        profiles[1].start = Keys.NUMPAD_0;
-    }
-
     private TargetBase target;
-
-    public Profile p = profiles[0];
+    public Profile p;
 
     /** -1 left; 1 right */
     private int horizontal = 0;
@@ -121,7 +87,15 @@ public class KeyboardInput implements InputBase, InputProcessor {
             return true;
         }
         else if(keycode == p.button2) {
+            target.button2(true);
+            return true;
+        }
+        else if(keycode == p.button3) {
             target.button3(true);
+            return true;
+        }
+        else if(keycode == p.button4) {
+            target.button4(true);
             return true;
         }
 
@@ -161,23 +135,5 @@ public class KeyboardInput implements InputBase, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
-    }
-
-    public static class Profile {
-
-        // Directional movements
-        public int up;
-        public int right;
-        public int down;
-        public int left;
-
-        /** Button 1: in game is clock wise rotation movement */
-        public int button1;
-
-        /** Button 2: in game is counter clock wise rotation movement */
-        public int button2;
-
-        /** Start / play / pause button */
-        public int start;
     }
 }

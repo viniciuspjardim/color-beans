@@ -4,9 +4,13 @@
 
 package com.vpjardim.colorbeans.defaults;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.vpjardim.colorbeans.core.Cfg;
+import com.vpjardim.colorbeans.input.Profile;
 
 /**
  * @author Vinícius Jardim
@@ -14,12 +18,23 @@ import com.vpjardim.colorbeans.core.Cfg;
  */
 public class Db {
 
+    // Todo add function to save and load this properties in a file
+
     public static final Color[] screenBgColor;
     public static final Color fontShadowColor = new Color(0x00000018);
 
     public static final Cfg.Game campGame     = new Cfg.Game();
     public static final Cfg.Game loopGame     = new Cfg.Game();
     public static final Cfg.Game trainingGame = new Cfg.Game();
+
+    /** The keyboard profiles are used to enable 2 or more players play in the same keyboard */
+    public static final Profile[] kbProfs = new Profile[] { new Profile(),  new Profile(), };
+
+    /**
+     * The controller profiles are used to enable 2 or more players in controllers with different
+     * keys configuration. For example, controllers of different manufactures
+     */
+    public static final Profile[] ctrlProfs = new Profile[] { new Profile(),  new Profile(), };
 
     public static final Cfg.Map map1 = new Cfg.Map();
     public static final Cfg.Map map2 = new Cfg.Map();
@@ -72,6 +87,64 @@ public class Db {
         trainingGame.pauseAct    = Cfg.Game.PAUSE_ALL;
         trainingGame.finishOnWin = false;
         trainingGame.lostAct     = Cfg.Game.LOST_RESTART_PAUSED;
+
+        kbProfs[0].start   = Keys.SPACE;
+        kbProfs[0].up      = Keys.W;
+        kbProfs[0].right   = Keys.D;
+        kbProfs[0].down    = Keys.S;
+        kbProfs[0].left    = Keys.A;
+        kbProfs[0].button1 = Profile.UNDEFINED;
+        kbProfs[0].button2 = Keys.G;
+        kbProfs[0].button3 = Keys.V;
+        kbProfs[0].button4 = Profile.UNDEFINED;
+
+        // #debugCode other key config
+        // kbProfs[0].start   = Keys.SPACE;
+        // kbProfs[0].up      = Keys.UP;
+        // kbProfs[0].right   = Keys.RIGHT;
+        // kbProfs[0].down    = Keys.DOWN;
+        // kbProfs[0].left    = Keys.LEFT;
+        // kbProfs[0].button1 = Keys.A;
+        // kbProfs[0].button2 = Profile.UNDEFINED;
+        // kbProfs[0].button3 = Keys.S;
+        // kbProfs[0].button4 = Profile.UNDEFINED;
+
+        kbProfs[1].start   = Keys.NUMPAD_0;
+        kbProfs[1].up      = Keys.UP;
+        kbProfs[1].right   = Keys.RIGHT;
+        kbProfs[1].down    = Keys.DOWN;
+        kbProfs[1].left    = Keys.LEFT;
+        kbProfs[1].button1 = Profile.UNDEFINED;
+        kbProfs[1].button2 = Keys.NUMPAD_6;
+        kbProfs[1].button3 = Keys.NUMPAD_2;
+        kbProfs[1].button4 = Profile.UNDEFINED;
+
+        if(Gdx.app.getType() == Application.ApplicationType.Android) {
+            ctrlProfs[0].start   = 197;
+            ctrlProfs[0].button1 = 188;
+            ctrlProfs[0].button2 = 189;
+            ctrlProfs[0].button3 = 190;
+            ctrlProfs[0].button4 = 191;
+
+            ctrlProfs[1].start   = 197;
+            ctrlProfs[1].button1 = 188;
+            ctrlProfs[1].button2 = 189;
+            ctrlProfs[1].button3 = 190;
+            ctrlProfs[1].button4 = 191;
+        }
+        else {
+            ctrlProfs[0].start   = 9;
+            ctrlProfs[0].button1 = 0;
+            ctrlProfs[0].button2 = 1;
+            ctrlProfs[0].button3 = 2;
+            ctrlProfs[0].button4 = 3;
+
+            ctrlProfs[1].start   = 9;
+            ctrlProfs[1].button1 = 0;
+            ctrlProfs[1].button2 = 1;
+            ctrlProfs[1].button3 = 2;
+            ctrlProfs[1].button4 = 3;
+        }
 
         map1.moveTime = new float[] {0, 0.70f, 15, 0.60f, 15, 0.50f, 15, 0.44f, 15, 0.38f};
         map2.moveTime = new float[] {0, 0.50f, 15, 0.44f, 15, 0.38f, 15, 0.32f, 15, 0.28f};

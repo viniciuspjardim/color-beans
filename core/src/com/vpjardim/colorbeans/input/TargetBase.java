@@ -15,9 +15,9 @@ public interface TargetBase {
 
     void setInput(InputBase input);
 
+    void buttonStart(boolean isDown);
     void button1(boolean isDown);
     void button2(boolean isDown);
     void button3(boolean isDown);
     void button4(boolean isDown);
-    void buttonStart(boolean isDown);
 }

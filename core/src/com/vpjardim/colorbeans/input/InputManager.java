@@ -11,6 +11,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.Array;
+import com.vpjardim.colorbeans.defaults.Db;
+
+import static com.badlogic.gdx.Gdx.input;
 
 /**
  * @author Vinícius Jardim
@@ -33,7 +36,7 @@ public class InputManager {
         Controllers.addListener(ctrlConn);
 
         multiplex = new InputMultiplexer();
-        Gdx.input.setInputProcessor(multiplex);
+        input.setInputProcessor(multiplex);
     }
 
     public void loadInputs() {
@@ -44,6 +47,11 @@ public class InputManager {
         for(int i = 0; i < Controllers.getControllers().size; i++) {
 
             ControllerInput input = new ControllerInput();
+
+            // If there is profile add, otherwise create a new one
+            if(i < Db.ctrlProfs.length) input.setProfile(Db.ctrlProfs[i]);
+            else input.setProfile(new Profile());
+
             input.gdxController = Controllers.getControllers().get(i);
             input.gdxController.addListener(input);
 
@@ -64,11 +72,11 @@ public class InputManager {
         else if(Gdx.app.getType() == Application.ApplicationType.Desktop) {
 
             // One keyboard can control one or more maps, depending on the number of
-            // profiles the class KeyboardInput has
-            for(int i = 0; i < KeyboardInput.profiles.length; i++) {
+            // profiles the keyboard has
+            for(int i = 0; i < Db.kbProfs.length; i++) {
 
                 KeyboardInput input = new KeyboardInput();
-                input.setProfile(KeyboardInput.profiles[i]);
+                input.setProfile(Db.kbProfs[i]);
                 multiplex.addProcessor(input);
 
                 inputs.add(input);
