@@ -7,7 +7,6 @@ package com.vpjardim.colorbeans.core;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.defaults.Db;
 
 /**
  * @author Vinícius Jardim
@@ -18,18 +17,18 @@ public class Training extends MapManager {
     @Override
     public void init() {
 
-        gameCfg = Db.trainingGame;
+        gameCfg = G.game.data.trainingGame;
         maps = new Array<>();
         opp = new Array<>();
         render = new Array<>();
 
         G.game.input.targetsClear();
 
-        for(int i = 0; i < G.game.players.size; i++) {
+        for(int i = 0; i < G.game.data.players.size; i++) {
             Map m = new Map(this);
             m.index = i;
-            m.setCfg(Db.mapT);
-            m.name = G.game.players.get(i);
+            m.setCfg(G.game.data.mapT);
+            m.name = G.game.data.players.get(i).name;
             maps.add(m);
             G.game.input.addTarget(m);
 

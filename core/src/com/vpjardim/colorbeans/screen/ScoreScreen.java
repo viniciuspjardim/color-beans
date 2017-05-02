@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.ScoreTable;
-import com.vpjardim.colorbeans.defaults.Db;
 
 /**
  * @author Vinícius Jardim
@@ -34,7 +33,7 @@ public class ScoreScreen extends ScreenBase {
 
         super.show();
 
-        bgColor = Db.bgColor();
+        bgColor = G.game.data.bgColor();
 
         stage = new Stage(viewport, G.game.batch);
         G.game.input.addProcessor(stage);

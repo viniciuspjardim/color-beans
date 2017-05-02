@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.defaults.Db;
 
 /**
@@ -42,7 +43,7 @@ public class ConfigScreen extends ScreenBase  {
     public void show() {
         super.show();
 
-        bgColor = Db.bgColor();
+        bgColor = G.game.data.bgColor();
 
         stage = new Stage(viewport, G.game.batch);
         G.game.input.addProcessor(stage);
@@ -72,7 +73,7 @@ public class ConfigScreen extends ScreenBase  {
         Label videoL = new Label("Content 2", labelStyle);
 
         // Text fields
-        final Array<String> pls = G.game.players;
+        final Array<Cfg.Player> pls = G.game.data.players;
 
         player1 = new TextField("", G.game.skin, "tField");
         player2 = new TextField("", G.game.skin, "tField");
@@ -80,13 +81,13 @@ public class ConfigScreen extends ScreenBase  {
         player4 = new TextField("", G.game.skin, "tField");
 
         if(pls.size >= 1)
-            player1.setText(pls.get(0));
+            player1.setText(pls.get(0).name);
         if(pls.size >= 2)
-            player2.setText(pls.get(1));
+            player2.setText(pls.get(1).name);
         if(pls.size >= 3)
-            player3.setText(pls.get(2));
+            player3.setText(pls.get(2).name);
         if(pls.size >= 4)
-            player4.setText(pls.get(3));
+            player4.setText(pls.get(3).name);
 
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",
@@ -121,15 +122,18 @@ public class ConfigScreen extends ScreenBase  {
                 pls.clear();
 
                 if(!player1.getText().equals(""))
-                    pls.add(player1.getText());
+                    pls.add(new Cfg.Player(player1.getText()));
                 else
-                    pls.add("Player");
+                    pls.add(new Cfg.Player("Player"));
+
                 if(!player2.getText().equals(""))
-                    pls.add(player2.getText());
+                    pls.add(new Cfg.Player(player2.getText()));
                 if(!player3.getText().equals(""))
-                    pls.add(player3.getText());
+                    pls.add(new Cfg.Player(player3.getText()));
                 if(!player4.getText().equals(""))
-                    pls.add(player4.getText());
+                    pls.add(new Cfg.Player(player4.getText()));
+
+                Db.save(G.game.data);
 
                 action = ScreenBase.ACT_NEXT;
             }

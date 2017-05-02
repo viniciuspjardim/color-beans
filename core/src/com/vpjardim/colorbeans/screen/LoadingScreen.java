@@ -20,12 +20,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.ScoreTable;
+import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.input.InputManager;
 
 import java.text.NumberFormat;
 
 /**
- * Just a black screen waiting loading is done
+ * Just a black screen waiting load to be done
  *
  * @author Vinícius Jardim
  * 10/06/2016
@@ -80,27 +81,20 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.borderWidth = 1;
         G.game.assets.load("dimbo.ttf", BitmapFont.class, param);
 
+        G.game.data   = Db.load();
+        G.game.input  = new InputManager();
         G.game.batch  = new SpriteBatch();
         G.game.sr     = new ShapeRenderer();
-        G.game.input  = new InputManager();
-        G.game.score  = new ScoreTable();
+        G.game.score  = ScoreTable.load();
         G.game.intFmt = NumberFormat.getInstance();
 
         G.game.input.loadInputs();
 
         if(G.res == G.RES_MEDIUM) atlasStr = "img/pack_m.atlas"; // Medium size sprites
-        else atlasStr = "img/pack_s.atlas"; // Small size sprites
+        else atlasStr = "img/pack_s.atlas";                      // Small size sprites
 
         G.game.assets.load(atlasStr, TextureAtlas.class);
         G.game.assets.load("audio/studio.ogg", Music.class);
-
-        G.game.score = ScoreTable.load("state/scores.json");
-
-        // #debugCode
-        G.game.players.add("Vini");
-        // G.game.players.add("André");
-
-        if(G.game.players.size == 0) G.game.players.add("Player");
     }
 
     @Override

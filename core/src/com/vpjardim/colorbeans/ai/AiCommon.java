@@ -12,6 +12,8 @@ import com.vpjardim.colorbeans.input.InputBase;
 
 public abstract class AiCommon implements AiBase {
 
+    // Todo fix bug that looks like ai 6 (campaign) fake doubt and down key is messing with it
+
     protected Map m;
     protected AiInput input;
     protected Map.MState prevState;

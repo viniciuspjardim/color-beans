@@ -19,7 +19,6 @@ allprojects {
         appName = "Color Beans"
         gdxVersion = '1.9.6'
         aiVersion = '1.8.0'
-        gsonVersion = '2.8.0'
     }
 
     repositories {
@@ -78,7 +77,6 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile "com.google.code.gson:gson:$gsonVersion"
 
         compile fileTree(dir: '../libs', include: '*.jar')
     }

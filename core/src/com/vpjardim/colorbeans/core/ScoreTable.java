@@ -7,8 +7,8 @@ package com.vpjardim.colorbeans.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Sort;
-import com.google.gson.Gson;
 
 import java.util.Comparator;
 
@@ -75,22 +75,6 @@ public class ScoreTable {
         sorted = true;
     }
 
-    public static ScoreTable load(String path) {
-
-        // The object loaded is already sorted and obviously saved
-
-        FileHandle file = Gdx.files.local(path);
-        ScoreTable score = new ScoreTable();
-
-        if(file.exists()) {
-            String jsonTxt = file.readString();
-            Gson gson = new Gson();
-            score.rows.addAll(gson.fromJson(jsonTxt, Row[].class));
-        }
-
-        return score;
-    }
-
     public static void save(ScoreTable table) {
 
         if(table.saved) return;
@@ -98,12 +82,28 @@ public class ScoreTable {
         // Sort before save
         table.sort();
 
-        Gson gson = new Gson();
+        Json json = new Json();
 
-        String jsonTxt = gson.toJson(table.rows.toArray());
+        String jsonTxt = json.prettyPrint(table.rows.toArray());
         FileHandle file = Gdx.files.local("state/scores.json");
         file.writeString(jsonTxt, false);
 
         table.saved = true;
+    }
+
+    public static ScoreTable load() {
+
+        // The object loaded is already sorted and obviously saved
+
+        FileHandle file = Gdx.files.local("state/scores.json");
+        ScoreTable score = new ScoreTable();
+
+        if(file.exists()) {
+            String jsonTxt = file.readString();
+            Json json = new Json();
+            score.rows.addAll(json.fromJson(Row[].class, jsonTxt));
+        }
+
+        return score;
     }
 }

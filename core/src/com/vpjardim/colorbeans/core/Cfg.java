@@ -44,6 +44,14 @@ public class Cfg {
         public float[] moveTime;
     }
 
+    public static class Player {
+        public String name;
+
+        public Player() {}
+
+        public Player(String name) { this.name = name; }
+    }
+
     /**
      * AI configuration. With this params we can change the AI difficulty level. Although I wrote
      * "percent" or "percentage" in the fields doc, I mean 0 to 1 intervals. Which 1 would be 100%;
@@ -51,20 +59,37 @@ public class Cfg {
      */
     public static class Ai {
 
-        /** Minimum fall percent in which down key will be pressed */
+        /**
+         * Minimum fall percent in which down key will be pressed. It happens in the end of the fall
+         */
         public float downKeyMin;
-        /** Maximum fall percent in which down key will be pressed */
+
+        /**
+         * Maximum fall percent in which down key will be pressed. It happens in the end of the fall
+         */
         public float downKeyMax;
-        /** Minimum fall percent in which the AI will fake doubt (horizontal/rotations moves) */
+
+        /**
+         * Minimum fall percent in which the AI will fake doubt (horizontal/rotations moves). It
+         * happens in the beginning of the fall
+         */
         public float doubtMin;
-        /** Maximum fall percent in which the AI will fake doubt (horizontal/rotations moves) */
+
+        /**
+         * Maximum fall percent in which the AI will fake doubt (horizontal/rotations moves). It
+         * happens in the beginning of the fall
+         */
         public float doubtMax;
+
         /** Minimum fall percent in which the AI should choose another "doubt" move */
         public float doubtFreqMin;
+
         /** Maximum fall percent in which the AI should choose another "doubt" move */
         public float doubtFreqMax;
+
         /** Score random multiplier: 0.5 means 50% */
         public float randomness;
+
         /** Percentage of moves that should be random or almost random */
         public float trashMoves;
     }

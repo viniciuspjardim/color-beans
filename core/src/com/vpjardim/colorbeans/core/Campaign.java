@@ -9,7 +9,6 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.Ai1;
 import com.vpjardim.colorbeans.ai.ai3.Ai3;
-import com.vpjardim.colorbeans.defaults.Db;
 
 /**
  * @author Vinícius Jardim
@@ -27,7 +26,7 @@ public class Campaign extends MapManager {
     @Override
     public void init() {
 
-        gameCfg = Db.campGame;
+        gameCfg = G.game.data.campGame;
         maps = new Array<>();
         opp = new Array<>();
         render = new Array<>();
@@ -38,44 +37,44 @@ public class Campaign extends MapManager {
         aiMapNames = new Array<>();
 
         if(G.game.dbg.campStart <= 1 && G.game.dbg.campEnd >= 1) {
-            mapCfgs.add(Db.map1);
-            aiCfgs.add(Db.ai1);
+            mapCfgs.add(G.game.data.map1);
+            aiCfgs.add(G.game.data.ai1);
             aiMapNames.add("Stage 1");
         }
 
         if(G.game.dbg.campStart <= 2 && G.game.dbg.campEnd >= 2) {
-            mapCfgs.add(Db.map2);
-            aiCfgs.add(Db.ai2);
+            mapCfgs.add(G.game.data.map2);
+            aiCfgs.add(G.game.data.ai2);
             aiMapNames.add("Stage 2");
         }
 
         if(G.game.dbg.campStart <= 3 && G.game.dbg.campEnd >= 3) {
-            mapCfgs.add(Db.map3);
-            aiCfgs.add(Db.ai3);
+            mapCfgs.add(G.game.data.map3);
+            aiCfgs.add(G.game.data.ai3);
             aiMapNames.add("Stage 3");
         }
 
         if(G.game.dbg.campStart <= 4 && G.game.dbg.campEnd >= 4) {
-            mapCfgs.add(Db.map4);
-            aiCfgs.add(Db.ai4);
+            mapCfgs.add(G.game.data.map4);
+            aiCfgs.add(G.game.data.ai4);
             aiMapNames.add("Stage 4");
         }
 
         if(G.game.dbg.campStart <= 5 && G.game.dbg.campEnd >= 5) {
-            mapCfgs.add(Db.map5);
-            aiCfgs.add(Db.ai5);
+            mapCfgs.add(G.game.data.map5);
+            aiCfgs.add(G.game.data.ai5);
             aiMapNames.add("Stage 5");
         }
 
         if(G.game.dbg.campStart <= 6 && G.game.dbg.campEnd >= 6) {
-            mapCfgs.add(Db.map6);
-            aiCfgs.add(Db.ai6);
+            mapCfgs.add(G.game.data.map6);
+            aiCfgs.add(G.game.data.ai6);
             aiMapNames.add("Stage 6");
         }
 
         if(G.game.dbg.campStart <= 7 && G.game.dbg.campEnd >= 7) {
-            mapCfgs.add(Db.map7);
-            aiCfgs.add(Db.ai7);
+            mapCfgs.add(G.game.data.map7);
+            aiCfgs.add(G.game.data.ai7);
             aiMapNames.add("Stage 7");
         }
 
@@ -91,13 +90,13 @@ public class Campaign extends MapManager {
         render.add(r);
         // Config player's map to the first stage
         playerMap.setCfg(mapCfgs.get(stageIndex));
-        playerMap.name = G.game.players.first();
+        playerMap.name = G.game.data.players.first().name;
         G.game.input.addTarget(playerMap);
 
         // #debugCode
         if(G.game.dbg.aiPlayerCamp) {
             playerMap.ai = new Ai3();
-            playerMap.ai.init(playerMap, Db.ai7);
+            playerMap.ai.init(playerMap, G.game.data.ai7);
             G.game.input.removeTarget(playerMap);
         }
 

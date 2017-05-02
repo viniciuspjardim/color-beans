@@ -11,9 +11,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.ScoreTable;
+import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
 import com.vpjardim.colorbeans.screen.ScreenManager;
@@ -65,7 +65,7 @@ public class G extends Game {
     public static boolean loading;
     public static Style style;
 
-    public Array<String> players; // Todo create a player class
+    public Db data;
     public ScreenManager screens;
     public InputManager input;
     public AssetManager assets;
@@ -91,6 +91,7 @@ public class G extends Game {
         G.style = new Style();
 
         dbg = new Dbg();
+
         // #debugCode
         // dbg.uiTable = true;
         // dbg.map0shape = 3;
@@ -102,7 +103,6 @@ public class G extends Game {
         // dbg.aiPlayerCamp = true;
         // dbg.on();
 
-        players = new Array<>();
         screens = new ScreenManager();
         screens.create();
     }
