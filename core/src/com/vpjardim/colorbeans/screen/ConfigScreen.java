@@ -20,13 +20,20 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Cfg;
+import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.defaults.Db;
+import com.vpjardim.colorbeans.input.ControllerInput;
+import com.vpjardim.colorbeans.input.InputBase;
+import com.vpjardim.colorbeans.input.KeyboardInput;
+import com.vpjardim.colorbeans.input.Profile;
+import com.vpjardim.colorbeans.views.ControllerActor;
+import com.vpjardim.colorbeans.views.InputActor;
 
 /**
  * @author Vinícius Jardim
  * 03/01/2017
  */
-public class ConfigScreen extends ScreenBase  {
+public class ConfigScreen extends ScreenBase {
 
     // Todo fix fps going from 60 to 30 after changing to windowed mode
 
@@ -54,8 +61,10 @@ public class ConfigScreen extends ScreenBase  {
         Table tabT     = new Table(G.game.skin);
         Table gameT    = new Table(G.game.skin);
         Table videoT   = new Table(G.game.skin);
+        Table inputT   = new Table(G.game.skin);
 
         titleT.setFillParent(true);
+        // titleT.setBackground("tbg");
 
         // #debugCode
         titleT.setDebug(G.game.dbg.uiTable);
@@ -63,6 +72,7 @@ public class ConfigScreen extends ScreenBase  {
         tabT.setDebug(G.game.dbg.uiTable);
         gameT.setDebug(G.game.dbg.uiTable);
         videoT.setDebug(G.game.dbg.uiTable);
+        inputT.setDebug(G.game.dbg.uiTable);
 
         // ==== Labels ====
         Label.LabelStyle labelStyle =
@@ -71,6 +81,7 @@ public class ConfigScreen extends ScreenBase  {
         Label titleL = new Label("Options", labelStyle);
         Label gameL  = new Label("Type the players name:", labelStyle);
         Label videoL = new Label("Content 2", labelStyle);
+        Label inputL = new Label("Content 3", labelStyle);
 
         // Text fields
         final Array<Cfg.Player> pls = G.game.data.players;
@@ -91,11 +102,13 @@ public class ConfigScreen extends ScreenBase  {
 
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",
-                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+                G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
         final TextButton gameButt = new TextButton("Game",
-                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
         final TextButton videoButt = new TextButton("Video",
-                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
+        final TextButton inputButt = new TextButton("Input",
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
         // ==== Groups ====
         // HorizontalGroup layoutGroup = new HorizontalGroup();
@@ -108,12 +121,15 @@ public class ConfigScreen extends ScreenBase  {
         logicGroup.setMaxCheckCount(1);
         logicGroup.add(gameButt);
         logicGroup.add(videoButt);
+        logicGroup.add(inputButt);
 
         // ==== Scrolls ====
         final ScrollPane gameScroll = new ScrollPane(gameT);
         final ScrollPane videoScroll = new ScrollPane(videoT);
+        final ScrollPane inputScroll = new ScrollPane(inputT);
         gameScroll.setScrollingDisabled(true, false);
         videoScroll.setScrollingDisabled(true, false);
+        inputScroll.setScrollingDisabled(true, false);
 
         // ==== Listeners ====
         backBtt.addListener(new ClickListener() {
@@ -133,19 +149,55 @@ public class ConfigScreen extends ScreenBase  {
                 if(!player4.getText().equals(""))
                     pls.add(new Cfg.Player(player4.getText()));
 
+                G.game.data.kbProfs.clear();
+                G.game.data.ctrlProfs.clear();
+
+                for(int i = 0; i < G.game.input.getInputs().size; i++) {
+
+                    final InputBase input = G.game.input.getInputs().get(i);
+
+                    if(input instanceof ControllerInput)
+                        G.game.data.ctrlProfs.add(input.getProfile());
+                    else if(input instanceof KeyboardInput)
+                        G.game.data.kbProfs.add(input.getProfile());
+                }
+
                 Db.save(G.game.data);
 
                 action = ScreenBase.ACT_NEXT;
             }
         });
 
+        // ==== Stack ====
+        final Stack tabs = new Stack();
+        tabs.add(inputScroll);
+        tabs.add(videoScroll);
+        tabs.add(gameScroll);
+
         // Listen to changes in the tab button checked states
         // Set visibility of the tab content to match the checked state
-        ChangeListener tabListener = new ChangeListener(){
+        final ChangeListener tabListener = new ChangeListener(){
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
+                TextButton.TextButtonStyle buttOff = G.game.skin.get(
+                        "bttRed", TextButton.TextButtonStyle.class);
+
+                TextButton.TextButtonStyle buttOn = G.game.skin.get(
+                        "bttGreen", TextButton.TextButtonStyle.class);
+
                 gameScroll.setVisible(gameButt.isChecked());
                 videoScroll.setVisible(videoButt.isChecked());
+                inputScroll.setVisible(inputButt.isChecked());
+
+                if(gameButt.isChecked()) gameButt.setStyle(buttOn);
+                else gameButt.setStyle(buttOff);
+
+                if(videoButt.isChecked()) videoButt.setStyle(buttOn);
+                else videoButt.setStyle(buttOff);
+
+                if(inputButt.isChecked()) inputButt.setStyle(buttOn);
+                else inputButt.setStyle(buttOff);
             }
         };
 
@@ -154,11 +206,7 @@ public class ConfigScreen extends ScreenBase  {
 
         gameButt.addListener(tabListener);
         videoButt.addListener(tabListener);
-
-        // ==== Stack ====
-        Stack tabs = new Stack();
-        tabs.add(videoScroll);
-        tabs.add(gameScroll);
+        inputButt.addListener(tabListener);
 
         // ==== Align, Pad / widths / heights ====
         float bttW = G.style.buttWidth;
@@ -167,6 +215,7 @@ public class ConfigScreen extends ScreenBase  {
         titleL.setAlignment(Align.center);
         gameL.setAlignment(Align.topLeft);
         videoL.setAlignment(Align.topLeft);
+        inputL.setAlignment(Align.topLeft);
 
         titleT.pad(padM);
         titleT.defaults().minWidth(bttW);
@@ -180,12 +229,13 @@ public class ConfigScreen extends ScreenBase  {
         titleT.row();
         titleT.add(backBtt);
 
-        contentT.add(tabT);
+        contentT.add(tabT).align(Align.center);
         contentT.row();
         contentT.add(tabs).expand().fill();
 
         tabT.add(gameButt);
         tabT.add(videoButt);
+        tabT.add(inputButt);
 
         gameT.add(gameL);
         gameT.row();
@@ -197,7 +247,62 @@ public class ConfigScreen extends ScreenBase  {
         gameT.row();
         gameT.add(player4);
         gameT.row();
+
         videoT.add(videoL).expand().fill();
+
+        final ControllerActor controllerActor = new ControllerActor();
+        inputT.add(controllerActor); //.expand().fill();
+        inputT.row();
+
+        G.game.input.targetsClear();
+
+        int count = 1;
+
+        for(int i = 0; i < G.game.input.getInputs().size; i++) {
+
+            final InputBase input = G.game.input.getInputs().get(i);
+            final InputActor inputActor;
+
+            if(input instanceof ControllerInput)
+                inputActor = new InputActor(InputActor.CONTROLLER, null);
+            else if(input instanceof KeyboardInput)
+                inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
+            else
+                continue;
+
+            inputActor.setNumber(count);
+            inputT.add(inputActor);
+            G.game.input.addTarget(inputActor);
+
+            final TextButton setBtt = new TextButton("Edit keys",
+                    G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
+
+            setBtt.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    controllerActor.setPosition(0);
+                    controllerActor.addCallBack(new ControllerActor.KeysSetListener() {
+
+                        @Override
+                        public void finished(Profile profile) {
+                            input.setProfile(profile);
+                            input.setTarget(inputActor);
+
+                            // #debugCode
+                            Dbg.dbg(Dbg.tag(ConfigScreen.this), "Key config finished");
+                        }
+                    });
+                    input.setTarget(controllerActor);
+                }
+            });
+
+            inputT.add(setBtt);
+
+            inputT.row();
+            count++;
+        }
+
+        G.game.input.linkAll();
 
         stage.addActor(titleT);
         titleT.setDebug(G.game.dbg.uiTable); // #debugCode

@@ -54,6 +54,12 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     }
 
     @Override
+    public void setProfile(Profile profile) {}
+
+    @Override
+    public Profile getProfile() { return null; }
+
+    @Override
     public void update() {
 
         if(!horizontalEvent) { horizontalOld = horizontal; }

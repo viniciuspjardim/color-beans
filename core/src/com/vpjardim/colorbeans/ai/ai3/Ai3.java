@@ -44,8 +44,8 @@ public class Ai3 extends AiCommon {
         tree.reset();
         input.cleanMove();
 
-        int color1 = m.pb.b2.intColor; // upper block
-        int color2 = m.pb.b1.intColor; // lower block
+        int color1 = m.pb.b2.color; // upper block
+        int color2 = m.pb.b1.color; // lower block
         int nColor1 = m.pb.nextB2;
         int nColor2 = m.pb.nextB1;
 

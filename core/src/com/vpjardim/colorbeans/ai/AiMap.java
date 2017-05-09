@@ -51,7 +51,7 @@ public class AiMap implements Pool.Poolable {
 
         for(int i = 0; i < source.length; i++) {
             for(int j = 0; j < source[i].length; j++) {
-                result[i][j] = (byte)source[i][j].intColor;
+                result[i][j] = (byte)source[i][j].color;
             }
         }
 

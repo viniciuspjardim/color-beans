@@ -11,6 +11,9 @@ package com.vpjardim.colorbeans.input;
 public interface InputBase {
 
     void setTarget(TargetBase target);
+    void setProfile(Profile profile);
+    Profile getProfile();
+
     void update();
 
     /** Returns axis X (horizontal) position: -1 left; 0 center; 1 right */

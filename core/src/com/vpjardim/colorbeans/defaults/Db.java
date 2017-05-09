@@ -60,13 +60,13 @@ public class Db {
     public Array<Cfg.Player> players = new Array<>();
 
     /** The keyboard profiles are used to enable 2 or more players play in the same keyboard */
-    public Profile[] kbProfs = new Profile[] { new Profile(),  new Profile(), };
+    public Array<Profile> kbProfs = new Array<>();
 
     /**
      * The controller profiles are used to enable 2 or more players in controllers with different
      * keys configuration. For example, controllers of different manufactures
      */
-    public Profile[] ctrlProfs = new Profile[] { new Profile(),  new Profile(), };
+    public Array<Profile> ctrlProfs = new Array<>();
 
     public Cfg.Map mapT  = null;
 
@@ -196,53 +196,75 @@ public class Db {
 
         // Keyboard key profiles
 
-        kbProfs[0].start   = Keys.SPACE;
-        kbProfs[0].up      = Keys.W;
-        kbProfs[0].right   = Keys.D;
-        kbProfs[0].down    = Keys.S;
-        kbProfs[0].left    = Keys.A;
-        kbProfs[0].button1 = Profile.UNDEFINED;
-        kbProfs[0].button2 = Keys.G;
-        kbProfs[0].button3 = Keys.V;
-        kbProfs[0].button4 = Profile.UNDEFINED;
+        Profile p;
 
-        kbProfs[1].start   = Keys.NUMPAD_0;
-        kbProfs[1].up      = Keys.UP;
-        kbProfs[1].right   = Keys.RIGHT;
-        kbProfs[1].down    = Keys.DOWN;
-        kbProfs[1].left    = Keys.LEFT;
-        kbProfs[1].button1 = Profile.UNDEFINED;
-        kbProfs[1].button2 = Keys.NUMPAD_6;
-        kbProfs[1].button3 = Keys.NUMPAD_2;
-        kbProfs[1].button4 = Profile.UNDEFINED;
+        p = new Profile();
+        kbProfs.add(p);
+
+        p.up      = Keys.W;
+        p.right   = Keys.D;
+        p.down    = Keys.S;
+        p.left    = Keys.A;
+        p.start   = Keys.SPACE;
+        p.button1 = Profile.UNDEFINED;
+        p.button2 = Keys.G;
+        p.button3 = Keys.V;
+        p.button4 = Profile.UNDEFINED;
+
+        p = new Profile();
+        kbProfs.add(p);
+
+        p.up      = Keys.UP;
+        p.right   = Keys.RIGHT;
+        p.down    = Keys.DOWN;
+        p.left    = Keys.LEFT;
+        p.start   = Keys.NUMPAD_0;
+        p.button1 = Profile.UNDEFINED;
+        p.button2 = Keys.NUMPAD_6;
+        p.button3 = Keys.NUMPAD_2;
+        p.button4 = Profile.UNDEFINED;
 
         // Controller key profiles
 
         if(Gdx.app.getType() == Application.ApplicationType.Android) {
-            ctrlProfs[0].start   = 197;
-            ctrlProfs[0].button1 = 188;
-            ctrlProfs[0].button2 = 189;
-            ctrlProfs[0].button3 = 190;
-            ctrlProfs[0].button4 = 191;
 
-            ctrlProfs[1].start   = 197;
-            ctrlProfs[1].button1 = 188;
-            ctrlProfs[1].button2 = 189;
-            ctrlProfs[1].button3 = 190;
-            ctrlProfs[1].button4 = 191;
+            p = new Profile();
+            ctrlProfs.add(p);
+
+            p.start   = 197;
+            p.button1 = 188;
+            p.button2 = 189;
+            p.button3 = 190;
+            p.button4 = 191;
+
+            p = new Profile();
+            ctrlProfs.add(p);
+
+            p.start   = 197;
+            p.button1 = 188;
+            p.button2 = 189;
+            p.button3 = 190;
+            p.button4 = 191;
         }
         else {
-            ctrlProfs[0].start   = 9;
-            ctrlProfs[0].button1 = 0;
-            ctrlProfs[0].button2 = 1;
-            ctrlProfs[0].button3 = 2;
-            ctrlProfs[0].button4 = 3;
 
-            ctrlProfs[1].start   = 9;
-            ctrlProfs[1].button1 = 0;
-            ctrlProfs[1].button2 = 1;
-            ctrlProfs[1].button3 = 2;
-            ctrlProfs[1].button4 = 3;
+            p = new Profile();
+            ctrlProfs.add(p);
+
+            p.start   = 9;
+            p.button1 = 0;
+            p.button2 = 1;
+            p.button3 = 2;
+            p.button4 = 3;
+
+            p = new Profile();
+            ctrlProfs.add(p);
+
+            p.start   = 9;
+            p.button1 = 0;
+            p.button2 = 1;
+            p.button3 = 2;
+            p.button4 = 3;
         }
 
         // Current training mode play fall speed

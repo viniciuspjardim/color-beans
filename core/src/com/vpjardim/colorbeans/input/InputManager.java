@@ -25,7 +25,7 @@ public class InputManager {
     private Array<TargetBase> targets;
     private InputMultiplexer multiplex;
 
-    ControllerConnection ctrlConn;
+    private ControllerConnection ctrlConn;
 
     public InputManager() {
 
@@ -39,6 +39,10 @@ public class InputManager {
         input.setInputProcessor(multiplex);
     }
 
+    public Array<InputBase> getInputs() {
+        return inputs;
+    }
+
     public void loadInputs() {
 
         inputsClear();
@@ -49,7 +53,7 @@ public class InputManager {
             ControllerInput input = new ControllerInput();
 
             // If there is profile add, otherwise create a new one
-            if(i < G.game.data.ctrlProfs.length) input.setProfile(G.game.data.ctrlProfs[i]);
+            if(i < G.game.data.ctrlProfs.size) input.setProfile(G.game.data.ctrlProfs.get(i));
             else input.setProfile(new Profile());
 
             input.gdxController = Controllers.getControllers().get(i);
@@ -73,10 +77,10 @@ public class InputManager {
 
             // One keyboard can control one or more maps, depending on the number of
             // profiles the keyboard has
-            for(int i = 0; i < G.game.data.kbProfs.length; i++) {
+            for(int i = 0; i < G.game.data.kbProfs.size; i++) {
 
                 KeyboardInput input = new KeyboardInput();
-                input.setProfile(G.game.data.kbProfs[i]);
+                input.setProfile(G.game.data.kbProfs.get(i));
                 multiplex.addProcessor(input);
 
                 inputs.add(input);

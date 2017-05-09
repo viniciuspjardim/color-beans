@@ -39,8 +39,8 @@ public class Ai1 extends AiCommon {
     @Override
     protected void entryPoint2() {
 
-        int color1 = m.pb.b2.intColor; // upper block
-        int color2 = m.pb.b1.intColor; // lower block
+        int color1 = m.pb.b2.color; // upper block
+        int color2 = m.pb.b1.color; // lower block
         float bestMoveScore = AiMap.MOVE_ILLEGAL;
 
         IntArray movesArr = this.moves.getArray(color1, color2);

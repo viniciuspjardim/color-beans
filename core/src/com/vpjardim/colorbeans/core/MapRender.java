@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.IntMap;
 import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
@@ -18,6 +19,20 @@ import com.vpjardim.colorbeans.Map;
  * 02/09/2016
  */
 public class MapRender {
+
+    public static final IntMap<String> COLORS = new IntMap<>();
+
+    static {
+        COLORS.put(1, "beans/red");
+        COLORS.put(2, "beans/blue");
+        COLORS.put(3, "beans/green");
+        COLORS.put(4, "beans/yellow");
+        COLORS.put(5, "beans/purple");
+        COLORS.put(6, "beans/dblue");
+        COLORS.put(7, "beans/orange");
+        COLORS.put(8, "beans/magenta");
+        COLORS.put(9, "beans/transparent");
+    }
 
     public Map m;
     public Color bgColor = new Color(0x1a3340ff);
@@ -63,28 +78,30 @@ public class MapRender {
         float w = textLayout.width;
         font.draw(G.game.batch, m.name, px - w + (size * m.b.length) - padding, py - padding);
 
-        // Draw map blocks
+        // ===== Draw map blocks =====
         for(int i = 0; i < m.b.length; i++) {
 
             for(int j = m.OUT_ROW; j < m.b[i].length; j++) {
 
+                Block block = m.b[i][j];
+
                 if(!m.b[i][j].visible) continue;
 
-                tile = G.game.atlas.findRegion(m.b[i][j].strColor, m.b[i][j].tile);
+                tile = G.game.atlas.findRegion(COLORS.get(block.color), block.tile);
 
                 G.game.batch.draw(
                         tile,
                         px + (size * i),
-                        py + (j +1 - m.OUT_ROW - m.b[i][j].py) * - size,
+                        py + (j +1 - m.OUT_ROW - block.py) * - size,
                         size,
                         size
                 );
             }
         }
 
-        // Draw play blocks
+        // ===== Draw play blocks =====
 
-        tile = G.game.atlas.findRegion(m.pb.b1.strColor, m.pb.b1.tile);
+        tile = G.game.atlas.findRegion(COLORS.get(m.pb.b1.color), m.pb.b1.tile);
 
         float b1X = px + (m.pb.b1x + m.pb.b1.px) * size;
         float b1Y = py + (m.pb.b1y +1 - m.OUT_ROW - m.pb.b1.py) * - size;
@@ -92,7 +109,7 @@ public class MapRender {
 
         G.game.batch.draw(tile, b1X, b1Y, size, size);
 
-        tile = G.game.atlas.findRegion(m.pb.b2.strColor, m.pb.b2.tile);
+        tile = G.game.atlas.findRegion(COLORS.get(m.pb.b2.color), m.pb.b2.tile);
 
         float size2 = size * 0.7071f; // 1/sqrt(2) == 0.7071
 
@@ -105,15 +122,15 @@ public class MapRender {
         );
         // Todo review ang and size2 it's a weird code
 
-        // Draw next blocks
+        // ==== Draw next blocks =====
 
         nextPx = px - size * 1.1f;
         nextPy = py - size;
 
-        tile = G.game.atlas.findRegion(Block.intToColorStr(m.pb.nextB2), 0);
+        tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB2), 0);
         G.game.batch.draw(tile, nextPx, nextPy, size, size);
 
-        tile = G.game.atlas.findRegion(Block.intToColorStr(m.pb.nextB1), 0);
+        tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB1), 0);
         G.game.batch.draw(tile, nextPx, nextPy - size, size, size);
     }
 }

@@ -36,9 +36,13 @@ public class ControllerInput implements InputBase, ControllerListener {
     @Override
     public void setTarget(TargetBase target) { this.target = target; }
 
+    @Override
     public void setProfile(Profile profile) {
         p = profile;
     }
+
+    @Override
+    public Profile getProfile() { return p; }
 
     @Override
     public void update() {
@@ -77,6 +81,8 @@ public class ControllerInput implements InputBase, ControllerListener {
 
         if(target == null) return true;
 
+        target.keyPressed(buttonIndex);
+
         if(buttonIndex == p.start) {
             target.buttonStart(true);
         }
@@ -106,6 +112,8 @@ public class ControllerInput implements InputBase, ControllerListener {
         Dbg.dbg(Dbg.tag(this), "axMove -> axisIndex = " + axisIndex + "; value = " + value);
 
         int val = Math.round(value);
+
+        if(target != null && val != 0) target.keyPressed(Profile.UNDEFINED);
 
         // Axis 0 (horizontal): -1 left; 1 right
         if(axisIndex == 0) {

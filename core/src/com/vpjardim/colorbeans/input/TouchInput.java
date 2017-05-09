@@ -41,6 +41,12 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     public void setTarget(TargetBase target) { this.target = target; }
 
     @Override
+    public void setProfile(Profile profile) {}
+
+    @Override
+    public Profile getProfile() { return null; }
+
+    @Override
     public void update() {
 
         if(!horizontalEvent) { horizontalOld = horizontal; }

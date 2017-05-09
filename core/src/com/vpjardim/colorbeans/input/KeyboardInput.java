@@ -31,9 +31,13 @@ public class KeyboardInput implements InputBase, InputProcessor {
         this.target = target;
     }
 
+    @Override
     public void setProfile(Profile profile) {
         p = profile;
     }
+
+    @Override
+    public Profile getProfile() { return p; }
 
     @Override
     public void update() {
@@ -73,6 +77,8 @@ public class KeyboardInput implements InputBase, InputProcessor {
     public boolean keyDown(int keycode) {
 
         if(target == null) return false;
+
+        target.keyPressed(keycode);
 
         // Return true when the key down event is handled
         // false if it's not so others input processors may

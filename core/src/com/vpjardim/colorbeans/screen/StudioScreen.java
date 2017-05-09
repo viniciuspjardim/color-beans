@@ -151,6 +151,9 @@ public class StudioScreen extends ScreenBase {
     }
 
     @Override
+    public void buttonStart(boolean isDown) { action = ScreenBase.ACT_NEXT; }
+
+    @Override
     public void button1(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 
     @Override
@@ -161,7 +164,4 @@ public class StudioScreen extends ScreenBase {
 
     @Override
     public void button4(boolean isDown) { action = ScreenBase.ACT_NEXT; }
-
-    @Override
-    public void buttonStart(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 }

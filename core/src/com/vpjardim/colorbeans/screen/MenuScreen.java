@@ -5,7 +5,6 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -129,16 +128,6 @@ public class MenuScreen extends ScreenBase {
     @Override
     public void render(float delta) {
         super.render(delta);
-
-        float size = G.height / 15f;
-        TextureAtlas.AtlasRegion tile = G.game.atlas.findRegion("game/bgb", 1);
-
-        G.game.batch.begin();
-
-        G.game.batch.setColor(1, 1, 1, 0.3f);
-        G.game.batch.draw(tile, 50, 50, size, size);
-        G.game.batch.end();
-
         stage.act(delta);
         stage.draw();
     }

@@ -85,6 +85,12 @@ public class ScreenBase implements Screen, TargetBase {
     public void setInput(InputBase input) {}
 
     @Override
+    public void keyPressed(int key) {}
+
+    @Override
+    public void buttonStart(boolean isDown) {}
+
+    @Override
     public void button1(boolean isDown) {}
 
     @Override
@@ -95,7 +101,4 @@ public class ScreenBase implements Screen, TargetBase {
 
     @Override
     public void button4(boolean isDown) {}
-
-    @Override
-    public void buttonStart(boolean isDown) {}
 }

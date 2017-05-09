@@ -4,11 +4,9 @@
 
 package com.vpjardim.colorbeans;
 
-import com.badlogic.gdx.graphics.Color;
-
 /**
  * Describe a space indexed by column index and row index on the {@link Map#b} matrix. It can be
- * empty when {@link #intColor} equals the EMPTY constant or represent a bean of the following
+ * empty when {@link #color} equals the EMPTY constant or represent a bean of the following
  * colors: red, blue, green, yellow, purple. It's also used in the {@link PlayBlocks} class as the
  * playable falling beans.
  * Each bean is grouped to all 4-neighborhood beans that has the same color creating chains. Each
@@ -18,19 +16,6 @@ import com.badlogic.gdx.graphics.Color;
  * 21/03/2015
  */
 public class Block {
-
-    public static final String RED_STR     = "game/red";
-    public static final String BLUE_STR    = "game/blue";
-    public static final String GREEN_STR   = "game/green";
-    public static final String YELLOW_STR  = "game/yellow";
-    public static final String PURPLE_STR  = "game/purple";
-    public static final String DBLUE_STR   = "game/dblue";
-    public static final String ORANGE_STR  = "game/orange";
-    public static final String MAGENTA_STR = "game/magenta";
-    public static final String MAROON_STR  = "";
-    public static final String WHITE_STR   = "";
-    public static final String BLACK_STR   = "";
-    public static final String TRASH_STR   = "game/transparent";
 
     /** Empty space: no block */
     public static final int EMPTY = 0;
@@ -46,11 +31,7 @@ public class Block {
 
     public transient Map m;
 
-    public transient Color color;
-
-    public int intColor;
-
-    public String strColor;
+    public int color;
 
     /**
      * X represents de current block, then the tile number will have de shape ABCD. Each digit
@@ -106,52 +87,9 @@ public class Block {
         recycle();
     }
 
-    public static Color intToColor(int iColor) {
-
-        Color c = null;
-
-        if(iColor == Block.CLR_A)          c = Color.RED;     // 1
-        else if(iColor == Block.CLR_A +1)  c = Color.BLUE;    // 2
-        else if(iColor == Block.CLR_A +2)  c = Color.GREEN;   // 3
-        else if(iColor == Block.CLR_A +3)  c = Color.YELLOW;  // 4
-        else if(iColor == Block.CLR_A +4)  c = Color.PURPLE;  // 5 (last on by default)
-        else if(iColor == Block.CLR_A +5)  c = Color.CYAN;    // 6 should be dark blue instead
-        else if(iColor == Block.CLR_A +6)  c = Color.ORANGE;  // 7
-        else if(iColor == Block.CLR_A +7)  c = Color.MAGENTA; // 8
-        else if(iColor == Block.CLR_A +8)  c = Color.MAROON;  // 9
-        else if(iColor == Block.CLR_A +9)  c = Color.WHITE;   // 10
-        else if(iColor == Block.CLR_A +10) c = Color.BLACK;   // 11
-
-        if(iColor == Block.CLR_T)          c = Color.GRAY;    // 9
-
-        return c;
-    }
-
-    public static String intToColorStr(int iColor) {
-
-        String c = null;
-
-        if(iColor == Block.CLR_A)          c = RED_STR;
-        else if(iColor == Block.CLR_A +1)  c = BLUE_STR;
-        else if(iColor == Block.CLR_A +2)  c = GREEN_STR;
-        else if(iColor == Block.CLR_A +3)  c = YELLOW_STR;
-        else if(iColor == Block.CLR_A +4)  c = PURPLE_STR;
-        else if(iColor == Block.CLR_A +5)  c = DBLUE_STR;
-        else if(iColor == Block.CLR_A +6)  c = ORANGE_STR;
-        else if(iColor == Block.CLR_A +7)  c = MAGENTA_STR;
-        else if(iColor == Block.CLR_A +8)  c = MAROON_STR;
-        else if(iColor == Block.CLR_A +9)  c = WHITE_STR;
-        else if(iColor == Block.CLR_A +10) c = BLACK_STR;
-
-        if(iColor == Block.CLR_T)          c = TRASH_STR;
-
-        return c;
-    }
-
     public void recycle() {
 
-        intColor   = EMPTY;
-        strColor   = null;
+        color = EMPTY;
         tile       = 0;
         visible    = false;
 
@@ -172,25 +110,21 @@ public class Block {
     }
 
     public boolean isColor() {
-        return intColor >= CLR_A && intColor <= CLR_N;
+        return color >= CLR_A && color <= CLR_N;
     }
 
     public boolean isEmpty() {
-        return intColor == EMPTY;
+        return color == EMPTY;
     }
 
     public boolean isTrash() {
-        return intColor == CLR_T;
+        return color == CLR_T;
     }
 
-    public void setColor(int intColor) {
-
-        assert(intColor != EMPTY);
+    public void setColor(int color) {
 
         recycle();
-        this.intColor = intColor;
-        strColor = Block.intToColorStr(intColor);
-        color = Block.intToColor(intColor);
+        this.color = color;
         visible = true;
     }
 
@@ -212,6 +146,5 @@ public class Block {
      */
     public void deserialize(Map m) {
         this.m = m;
-        color = Block.intToColor(intColor);
     }
 }

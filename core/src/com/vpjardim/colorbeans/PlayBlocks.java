@@ -223,8 +223,8 @@ public class PlayBlocks {
             return;
         }
 
-        m.b[b1x][b1y].setColor(b1.intColor);
-        m.b[b2x][b2y].setColor(b2.intColor);
+        m.b[b1x][b1y].setColor(b1.color);
+        m.b[b2x][b2y].setColor(b2.color);
 
         boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
 

@@ -737,13 +737,13 @@ public class Map implements TargetBase {
 
                 // If it has the same color of the left block
                 // then mark with the same label
-                if(left >= 0 && b[left][row].intColor == b[col][row].intColor) {
+                if(left >= 0 && b[left][row].color == b[col][row].color) {
                     b[col][row].label = b[left][row].label;
                     sameColorLeft = true;
                 }
 
                 // If it has the same color of the upper block
-                if(upper >= 0 && b[col][upper].intColor == b[col][row].intColor) {
+                if(upper >= 0 && b[col][upper].color == b[col][row].color) {
 
                     sameColorUpper = true;
 
@@ -843,7 +843,7 @@ public class Map implements TargetBase {
                 if(lc.get(b[i][j].label) >= deleteSize) {
 
                     // Color bonus: Marking the colors that will be deleted.
-                    colorBonusArr[b[i][j].intColor -1] = true;
+                    colorBonusArr[b[i][j].color -1] = true;
 
                     b[i][j].toDelete = deleteWait;
                     blocksDeleted++;
@@ -890,21 +890,21 @@ public class Map implements TargetBase {
 
         if(block.isEmpty() || block.isTrash()) return;
 
-        int color = block.intColor;
+        int color = block.color;
         int tile = 0;
 
         // Check the 4 adjacent blocks if they are linked to center one
         // Up
-        if(row - 1 >= 0 && b[col][row - 1].intColor == color)
+        if(row - 1 >= 0 && b[col][row - 1].color == color)
             tile += 1000;
         // Right
-        if(col + 1 < b.length && b[col + 1][row].intColor == color)
+        if(col + 1 < b.length && b[col + 1][row].color == color)
             tile += 100;
         // Down
-        if(row + 1 < b[col].length && b[col][row + 1].intColor == color)
+        if(row + 1 < b[col].length && b[col][row + 1].color == color)
             tile += 10;
         // Left
-        if(col - 1 >= 0 && b[col - 1][row].intColor == color)
+        if(col - 1 >= 0 && b[col - 1][row].color == color)
             tile += 1;
 
         block.tile = tile;
@@ -1142,6 +1142,9 @@ public class Map implements TargetBase {
     }
 
     @Override
+    public void keyPressed(int key) {}
+
+    @Override
     public void buttonStart(boolean isDown) {
         if(isDown && !isInState(MState.OVER) && !isInState(MState.DONE))
             manager.pause(index, !pause);
@@ -1358,7 +1361,7 @@ public class Map implements TargetBase {
             // col 0 -> 6
             for(int col = 0; col < b.length; col++) {
 
-                System.out.print(b[col][row].intColor + " ");
+                System.out.print(b[col][row].color + " ");
             }
             Dbg.print("");
         }

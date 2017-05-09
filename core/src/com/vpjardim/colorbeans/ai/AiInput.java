@@ -6,6 +6,7 @@ package com.vpjardim.colorbeans.ai;
 
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.input.InputBase;
+import com.vpjardim.colorbeans.input.Profile;
 import com.vpjardim.colorbeans.input.TargetBase;
 
 /**
@@ -41,6 +42,12 @@ public class AiInput implements InputBase {
             cleanMove();
         }
     }
+
+    @Override
+    public void setProfile(Profile profile) {}
+
+    @Override
+    public Profile getProfile() { return null; }
 
     @Override
     public void update() {
