@@ -21,7 +21,7 @@ public abstract class MapManager {
 
     public Cfg.Game gameCfg;
     public Array<Map> maps;
-    public Array<Map> opp;
+    public Array<Map> opps;
     public Array<MapRender> render;
     public Map winnerMap;
     public int gameStatus = GAME_CONTIUES;
@@ -73,17 +73,21 @@ public abstract class MapManager {
 
         if(maps.size <= 1) return null;
 
-        opp.clear();
-        opp.addAll(maps);
-        opp.removeIndex(excludeIndex);
-        for(int i = 0; i < opp.size; i++) {
+        opps.clear();
+        opps.addAll(maps);
+        opps.removeIndex(excludeIndex);
+
+        for(int i = 0; i < opps.size; i++) {
+
+            Map opp = opps.get(i);
+
             // Todo fix cause the map go to FREE_FALL state in winLost method if is autoRestart
-            if(opp.get(i).isInState(Map.MState.OVER) || opp.get(i).isInState(Map.MState.DONE))
-                opp.removeIndex(i);
+            if(opp.isInState(Map.MState.OVER) || opp.isInState(Map.MState.DONE))
+                opps.removeIndex(i);
         }
 
-        if(opp.size > 0) {
-            return opp.get(MathUtils.random(0, opp.size - 1));
+        if(opps.size > 0) {
+            return opps.get(MathUtils.random(0, opps.size - 1));
         }
         return null;
     }

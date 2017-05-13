@@ -33,22 +33,24 @@ public class Dbg {
     public int campStart;
     public int campEnd;
     public boolean aiPlayerCamp;
+    public boolean aiDisableMap1;
 
     public Dbg() { off(); }
 
     public void off() {
 
-        delta        = DELTA_REAL;
-        fps          = false;
-        fpsText      = false;
-        lagWarn      = false;
-        logLevel     = Application.LOG_NONE;
-        uiTable      = false;
-        map0shape    = 0;
-        map1shape    = 0;
-        campStart    = 0;
-        campEnd      = Integer.MAX_VALUE;
-        aiPlayerCamp = false;
+        delta         = DELTA_REAL;
+        fps           = false;
+        fpsText       = false;
+        lagWarn       = false;
+        logLevel      = Application.LOG_NONE;
+        uiTable       = false;
+        map0shape     = 0;
+        map1shape     = 0;
+        campStart     = 0;
+        campEnd       = Integer.MAX_VALUE;
+        aiPlayerCamp  = false;
+        aiDisableMap1 = false;
 
         Gdx.app.setLogLevel(logLevel);
     }

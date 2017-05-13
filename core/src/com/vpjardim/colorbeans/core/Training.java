@@ -19,7 +19,7 @@ public class Training extends MapManager {
 
         gameCfg = G.game.data.trainingGame;
         maps = new Array<>();
-        opp = new Array<>();
+        opps = new Array<>();
         render = new Array<>();
 
         G.game.input.targetsClear();

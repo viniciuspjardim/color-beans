@@ -499,7 +499,7 @@ public class Map implements TargetBase {
     public boolean lost = false;
 
     /** True if any block has changed it's position then label calc needs to be redone */
-    public boolean blockChanged = false;
+    public boolean blockChanged = true;
 
     /** Number of trash blocks to add when it's {@link #trashBlocksTurn} */
     private int trashBlocksToAdd = 0;
@@ -626,15 +626,20 @@ public class Map implements TargetBase {
 
     public void recycle() {
 
+        // Todo review this whole method because some variables might not being recyclerecycled
+
+        Dbg.dbg(Dbg.tagO(this), "recycle() method call");
+
         for(int i = 0; i < b.length; i++) {
             for(int j = 0; j < b[i].length; j++) {
                 b[i][j].recycle();
             }
         }
 
-        // Todo fix trash blocks still been added on a new match
         // Todo fix blocks starts falling first in a map then in the other
+        blockChanged = true;
         trashBlocksToAdd = 0;
+        blocksDeleted = 0;
         gameOver = false;
         gameWin = false;
         score = 0;
@@ -976,6 +981,8 @@ public class Map implements TargetBase {
     /** Throw trash blocks in the opponent map */
     private void throwTrashBlocks() {
 
+        Dbg.dbg(Dbg.tagO(this), "throwTrashBlocks() method call. blocksDeleted = " + blocksDeleted);
+
         if(blocksDeleted <= 0) return;
 
         Map opp = manager.getOpponent(index);
@@ -990,6 +997,9 @@ public class Map implements TargetBase {
 
     /** Add trash blocks (thrown by the opponent) in this map */
     private void addTrashBlocks() {
+
+        Dbg.dbg(Dbg.tagO(this),
+                "throwTrashBlocks() method call. trashBlocksToAdd = " + trashBlocksToAdd);
 
         if(trashBlocksToAdd <= 0) return;
 
@@ -1184,7 +1194,7 @@ public class Map implements TargetBase {
         // Nothing
         if(shape == 0) {}
         // Small combo
-        if(shape == 1) {
+        else if(shape == 1) {
             b[0][14 + OUT_ROW].setColor(1);
             b[0][13 + OUT_ROW].setColor(1);
             b[0][12 + OUT_ROW].setColor(1);
@@ -1323,8 +1333,19 @@ public class Map implements TargetBase {
                 }
             }
         }
-        // Wall (filled column) to block area in the map
+        // About to lose: only 3 blocks empty space
         else if(shape == 7) {
+            for(int col = 0; col < b.length; col++) {
+                for(int row = OUT_ROW; row < b[col].length; row++) {
+                    b[col][row].setColor(Block.CLR_T);
+                }
+            }
+            b[3][    OUT_ROW].setEmpty();
+            b[3][1 + OUT_ROW].setEmpty();
+            b[3][2 + OUT_ROW].setEmpty();
+        }
+        // Wall (filled column) to block area in the map
+        else if(shape == 8) {
             for(int row = 0; row < b[2].length; row++) {
                 b[2][row].setColor(Block.CLR_T);
             }
@@ -1334,7 +1355,7 @@ public class Map implements TargetBase {
 
         }
         // 2 Walls (filled column) to block area in the map
-        else if(shape == 8) {
+        else if(shape == 9) {
             for(int row = 0; row < b[2].length; row++) {
                 b[2][row].setColor(Block.CLR_T);
             }
@@ -1350,6 +1371,32 @@ public class Map implements TargetBase {
             b[6][14 + OUT_ROW].setColor(3);
             b[6][13 + OUT_ROW].setColor(3);
             b[6][12 + OUT_ROW].setColor(3);
+        }
+        // All colors with 3 blocks
+        else if(shape == 10) {
+            b[0][14 + OUT_ROW].setColor(1);
+            b[0][13 + OUT_ROW].setColor(1);
+            b[0][12 + OUT_ROW].setColor(1);
+
+            b[1][14 + OUT_ROW].setColor(2);
+            b[1][13 + OUT_ROW].setColor(2);
+            b[1][12 + OUT_ROW].setColor(2);
+
+            b[2][14 + OUT_ROW].setColor(3);
+            b[2][13 + OUT_ROW].setColor(3);
+            b[2][12 + OUT_ROW].setColor(3);
+
+            b[3][14 + OUT_ROW].setColor(4);
+            b[3][13 + OUT_ROW].setColor(4);
+            b[3][12 + OUT_ROW].setColor(4);
+
+            b[4][14 + OUT_ROW].setColor(5);
+            b[4][13 + OUT_ROW].setColor(5);
+            b[4][12 + OUT_ROW].setColor(5);
+
+            pb.b1.setColor(4);
+            pb.b2.setColor(5);
+            pb.b1y = 8 + OUT_ROW;
         }
     }
 

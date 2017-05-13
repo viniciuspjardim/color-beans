@@ -89,7 +89,7 @@ public class Block {
 
     public void recycle() {
 
-        color = EMPTY;
+        color      = EMPTY;
         tile       = 0;
         visible    = false;
 
@@ -122,10 +122,15 @@ public class Block {
     }
 
     public void setColor(int color) {
-
         recycle();
         this.color = color;
         visible = true;
+    }
+
+    public void setEmpty() {
+        recycle();
+        color = EMPTY;
+        visible = false;
     }
 
     public void recycleFall() {
@@ -135,7 +140,6 @@ public class Block {
     }
 
     public void setFreeFallTrajectory(int freeFallStart, int freeFallEnd) {
-
         moveY = freeFallEnd - freeFallStart;
         py = freeFallEnd - freeFallStart;
     }

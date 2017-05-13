@@ -28,7 +28,7 @@ public class Campaign extends MapManager {
 
         gameCfg = G.game.data.campGame;
         maps = new Array<>();
-        opp = new Array<>();
+        opps = new Array<>();
         render = new Array<>();
 
         stageIndex = 0;
@@ -106,11 +106,16 @@ public class Campaign extends MapManager {
         r = new MapRender();
         r.m = aiMap;
         render.add(r);
+
         // Config AI's map to the first stage
         aiMap.setCfg(mapCfgs.get(stageIndex));
         aiMap.name = aiMapNames.get(stageIndex);
-        aiMap.ai = new Ai1();
-        aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
+
+        // #DebugCode the content is needed, just the if is debug
+        if(!G.game.dbg.aiDisableMap1) {
+            aiMap.ai = new Ai1();
+            aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
+        }
 
         G.game.input.linkAll();
 
@@ -145,7 +150,10 @@ public class Campaign extends MapManager {
                 Map aiMap = maps.get(1);
                 aiMap.setCfg(mapCfgs.get(stageIndex));
                 aiMap.name = aiMapNames.get(stageIndex);
-                aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
+
+                // #DebugCode
+                if(!G.game.dbg.aiDisableMap1)
+                    aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
             }
         }
     }

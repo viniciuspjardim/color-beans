@@ -95,12 +95,14 @@ public class G extends Game {
         // #debugCode
         // dbg.uiTable = true;
         // dbg.map0shape = 3;
+        // dbg.map1shape = 7;
         // dbg.campStart = 7;
         // dbg.campEnd = 7;
         // dbg.delta = Dbg.DELTA_NORMAL;
         // dbg.fps = true;
         // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;
+        // dbg.aiDisableMap1 = true;
         // dbg.on();
 
         screens = new ScreenManager();
