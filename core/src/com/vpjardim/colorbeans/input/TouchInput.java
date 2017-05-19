@@ -15,7 +15,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 public class TouchInput extends GestureDetector.GestureAdapter implements InputBase {
 
     // Todo redo this class logic for better control
-    // so when the finger stops moving the play blocks stops moving to
+    // so when the finger stops moving the player blocks stops moving to
     // following a shape like this
     // finger on the center:     ||.|..|...|..|.||
     // finger more to the left:  |..|...|..|.|.|||

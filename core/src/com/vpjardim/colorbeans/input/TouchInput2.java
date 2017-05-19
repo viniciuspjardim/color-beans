@@ -85,7 +85,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
     public void move() {
 
-        if(map.isInState(Map.MState.PLAY_FALL)) {
+        if(map.isInState(Map.MState.PLAYER_FALL)) {
 
             int deltaH = moveCurr - map.pb.b1x;
 

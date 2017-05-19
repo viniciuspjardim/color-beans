@@ -24,8 +24,8 @@ import com.vpjardim.colorbeans.input.TargetBase;
  * Represents a field/map where one player can do his actions. The goal is to group / chain
  * {@link Block blocks} of the same color until they reach at least 4. This number can be set in
  * {@link #deleteSize}. Once this group is formed, the color beans/blocks will be deleted to make
- * room to the falling ones ({@link PlayBlocks}). If there isn't enough room (the play blocks are
- * obstructed) it's game over.
+ * room to the falling ones ({@link PlayerBlocks}). If there isn't enough room (the player blocks
+ * are obstructed) it's game over.
  * <pre>
  *
  * Examples of color group (uses the 4 neighborhood):
@@ -116,17 +116,23 @@ public class Map implements TargetBase {
      */
     public enum MState implements State<Map> {
 
-        FREE_FALL() {
+        /**
+         * The initial state of the Map. When the blocks fall by gravity (not controlled by the
+         * player). It calls gravityFallCalc() and if there are animations they are executed. If there
+         * no blocks to fall or the animation is over it can go to 3 different states: LABEL_CALC,
+         * TRASH_ADD, PLAYER_FALL
+         */
+        GRAVITY_FALL() {
 
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Dbg.dbg(Dbg.tagO(map), "state = FREE_FALL");
+                Dbg.dbg(Dbg.tagO(map), "state = GRAVITY_FALL");
 
                 map.shuffleColAcceleration(0.3f);
-                map.afterFreeFallTimer = map.afterFreeFallWait;
-                map.freeFallCalc();
-                map.anim.freeFall();
+                map.afterGravityFallTimer = map.afterGravityFallWait;
+                map.gravityFallCalc();
+                map.anim.gravityFall();
             }
 
             @Override
@@ -142,15 +148,15 @@ public class Map implements TargetBase {
                 if(map.pause) return;
 
                 // Waiting animation to end
-                boolean freeFallAnim = map.anim.freeFall();
+                boolean gravityFallAnim = map.anim.gravityFall();
                 map.anim.deform();
 
-                if(freeFallAnim) return;
+                if(gravityFallAnim) return;
 
-                map.afterFreeFallTimer -= G.delta;
+                map.afterGravityFallTimer -= G.delta;
 
                 // Wait some time before change state
-                if(map.afterFreeFallTimer > 0f) return;
+                if(map.afterGravityFallTimer > 0f) return;
 
                 // If a block change it's position the labels
                 // needs to be recalculated
@@ -162,9 +168,9 @@ public class Map implements TargetBase {
                 else if(map.trashBlocksToAdd > 0 && map.trashBlocksTurn) {
                     map.state.changeState(MState.TRASH_ADD);
                 }
-                // If not, change to play fall state
+                // If not, change to player fall state
                 else {
-                    map.state.changeState(MState.PLAY_FALL);
+                    map.state.changeState(MState.PLAYER_FALL);
                 }
             }
 
@@ -172,6 +178,12 @@ public class Map implements TargetBase {
             public void exit(Map map) {}
         },
 
+        /**
+         * The state that the labels are calculated and it can remove the blocks that will score.
+         * It's called after GRAVITY_FALL when there are blocks that change position in the Map. It
+         * returns to GRAVITY_FALL state because some blocks might be deleted and the ones above
+         * them must fall by gravity
+         */
         LABEL_CALC() {
 
             @Override
@@ -204,7 +216,7 @@ public class Map implements TargetBase {
                 // Waiting animation to end
                 if(map.anim.labelDelete()) return;
 
-                map.state.changeState(MState.FREE_FALL);
+                map.state.changeState(MState.GRAVITY_FALL);
             }
 
             @Override
@@ -214,12 +226,18 @@ public class Map implements TargetBase {
             }
         },
 
-        PLAY_FALL() {
+        /**
+         * The state that the player is controlling the PlayerBlocks. It's called when no blocks
+         * moved during the GRAVITY_FALL state and there is no trash to add (or it's not the trash
+         * turn). Since the player have placed blocks in the map, it goes back to the GRAVITY_FALL
+         * state
+         */
+        PLAYER_FALL() {
 
             @Override
             public void enter(Map map) {
                 // #debugCode
-                Dbg.dbg(Dbg.tagO(map), "state = PLAY_FALL");
+                Dbg.dbg(Dbg.tagO(map), "state = PLAYER_FALL");
 
                 map.chainPowerCount = 0;
                 map.scoredBlocks = 0;
@@ -231,9 +249,9 @@ public class Map implements TargetBase {
                     return;
                 }
 
-                map.vPlayMoveTimer = map.beforePlayFallWait;
-                map.hPlayMoveTimer = map.beforePlayFallWait;
-                map.rPlayMoveTimer = map.beforePlayFallWait;
+                map.vPlayMoveTimer = map.beforePlayerFallWait;
+                map.hPlayMoveTimer = map.beforePlayerFallWait;
+                map.rPlayMoveTimer = map.beforePlayerFallWait;
 
                 map.trashBlocksTurn = true;
                 map.throwTrashBlocks();
@@ -256,13 +274,13 @@ public class Map implements TargetBase {
 
                 // processing input and input animation
                 map.inputUpdate();
-                map.pb.playFallCalc();
-                map.anim.playFall();
+                map.pb.playerFallCalc();
+                map.anim.playerFall();
                 map.anim.playHorizontal();
                 map.anim.playRotation();
 
                 if(map.blockChanged) {
-                    map.state.changeState(MState.FREE_FALL);
+                    map.state.changeState(MState.GRAVITY_FALL);
                 }
             }
 
@@ -275,6 +293,10 @@ public class Map implements TargetBase {
             }
         },
 
+        /**
+         * Called when no blocks have moved in the GRAVITY_FALL state && there are trash blocks to
+         * add && it is trash blocks turn
+         */
         TRASH_ADD() {
 
             @Override
@@ -284,7 +306,7 @@ public class Map implements TargetBase {
 
                 map.addTrashBlocks();
                 map.trashBlocksTurn = false;
-                map.state.changeState(MState.FREE_FALL);
+                map.state.changeState(MState.GRAVITY_FALL);
             }
 
             @Override
@@ -294,6 +316,10 @@ public class Map implements TargetBase {
             public void exit(Map map) {}
         },
 
+        /**
+         * When there is no more space for new PlayerBlocks (they are obstructed) this map player
+         * lost the match. It came after PLAYER_FALL state and before DONE state
+         */
         OVER() {
 
             @Override
@@ -303,7 +329,7 @@ public class Map implements TargetBase {
                 Dbg.inf(Dbg.tagO(map), "game over");
 
                 map.shuffleColAcceleration(0.8f);
-                map.colAcceleration[map.b.length/2] = map.freeFallAcceleration * 0.8f;
+                map.colAcceleration[map.b.length/2] = map.gravityFallAcceleration * 0.8f;
                 map.anim.gameOver();
             }
 
@@ -320,6 +346,9 @@ public class Map implements TargetBase {
             public void exit(Map map) {}
         },
 
+        /**
+         * The final state when the player win or lose the game and all animations of this map ended
+         */
         DONE() {
 
             @Override
@@ -336,8 +365,7 @@ public class Map implements TargetBase {
 
             @Override
             public void exit(Map map) {}
-        }
-        ;
+        };
 
         @Override
         public boolean onMessage(Map map, Telegram telegram) {
@@ -420,7 +448,7 @@ public class Map implements TargetBase {
     public Block[][] b;
 
     /** Blocks falling (controlled by the player) */
-    public PlayBlocks pb;
+    public PlayerBlocks pb;
 
     /**
      * Abstract input method: a controller, touch screen, keyboard etc from which this map will be
@@ -527,69 +555,69 @@ public class Map implements TargetBase {
     public int speedIndex = 0;
 
     /**
-     * Multiplier (times faster) for {@link PlayBlocks PlayBlock's} speed when the player press
+     * Multiplier (times faster) for {@link PlayerBlocks PlayerBlock's} speed when the player press
      * the down key of the controller/input
      */
     public float vPlayMoveMultip = 8f;
 
-    /** Acceleration of the free fall blocks in rows per second squared: 80 default */
-    public float freeFallAcceleration = 80f;
+    /** Acceleration of the gravity fall blocks in rows per second squared: 80 default */
+    public float gravityFallAcceleration = 80f;
 
     /** Used to make each column of blocks fall at random speed (for better visual) */
     public float colAcceleration[];
 
     /**
-     * Default time to wait before insert the play blocks. The player can use this time to do his
+     * Default time to wait before insert the player blocks. The player can use this time to do his
      * last moves
      */
     public float beforeInsertWait = 0.2f;
 
     /**
-     * Default time to wait before changing from the {@link Map.MState#FREE_FALL FREE_FALL} state to
-     * the next state
+     * Default time to wait before changing from the {@link Map.MState#GRAVITY_FALL GRAVITY_FALL}
+     * state to the next state
      */
-    public float afterFreeFallWait = 0.23f;
+    public float afterGravityFallWait = 0.23f;
 
     /**
-     * Remaining time to wait before changing from the {@link Map.MState#FREE_FALL FREE_FALL} state
-     * to the next state
+     * Remaining time to wait before changing from the {@link Map.MState#GRAVITY_FALL GRAVITY_FALL}
+     * state to the next state
      */
-    public float afterFreeFallTimer = afterFreeFallWait;
+    public float afterGravityFallTimer = afterGravityFallWait;
 
-    /** Default time to wait before current {@link PlayBlocks} starts to fall */
-    public float beforePlayFallWait = 0.025f;
+    /** Default time to wait before current {@link PlayerBlocks} starts to fall */
+    public float beforePlayerFallWait = 0.025f;
 
-    /** Default time to wait before next {@link PlayBlocks} rotation */
+    /** Default time to wait before next {@link PlayerBlocks} rotation */
     public float rPlayMoveWait = 0.1f;
 
-    /** Remaining time to wait before next {@link PlayBlocks} rotation */
+    /** Remaining time to wait before next {@link PlayerBlocks} rotation */
     public float rPlayMoveTimer = 0f;
 
     /**
-     * Default time to wait before next {@link PlayBlocks} horizontal move (when player press the
+     * Default time to wait before next {@link PlayerBlocks} horizontal move (when player press the
      * right/left arrows in the controller/input)
      */
     public float hPlayMoveWait = 0.1f;
 
-    /** Remaining time to wait before next {@link PlayBlocks} horizontal move */
+    /** Remaining time to wait before next {@link PlayerBlocks} horizontal move */
     public float hPlayMoveTimer = 0f;
 
     /**
-     * Default time to {@link PlayBlocks} fall 1 row. In seconds (less is fester). This field sets
-     * the PlayBlocks default vertical speed. It remains unchanged when the player press the down
+     * Default time to {@link PlayerBlocks} fall 1 row. In seconds (less is fester). This field sets
+     * the PlayerBlocks default vertical speed. It remains unchanged when the player press the down
      * key of the controller/input.
      * Slow 0.5f; Normal 0.34; fast 0.16
      */
     public float vPlayMoveWait = 0.5f;
 
     /**
-     * Default time to {@link PlayBlocks} fall 1 row. In seconds (less is fester). This field sets
-     * the PlayBlocks default vertical speed. It changes when the player press/release the down key
+     * Default time to {@link PlayerBlocks} fall 1 row. In seconds (less is fester). This field sets
+     * the PlayerBlocks default vertical speed. It changes when the player press/release the down key
      * of the controller/input to the block fall faster or go back to the default speed
      */
     public float vPlayMoveWait2 = vPlayMoveWait;
 
-    /** Remaining time to the {@link PlayBlocks} falls to the next row */
+    /** Remaining time to the {@link PlayerBlocks} falls to the next row */
     public float vPlayMoveTimer = vPlayMoveWait;
 
     /** Default time to wait before delete the block */
@@ -604,10 +632,10 @@ public class Map implements TargetBase {
 
         this.manager = manager;
 
-        state = new DefaultStateMachine<>(this, MState.FREE_FALL);
+        state = new DefaultStateMachine<>(this, MState.GRAVITY_FALL);
         anim = new Animations(this);
         b = new Block[N_COL][OUT_ROW + N_ROW];
-        pb = new PlayBlocks(this);
+        pb = new PlayerBlocks(this);
         le = new Array<>();
         lc = new IntMap<>();
 
@@ -675,7 +703,7 @@ public class Map implements TargetBase {
      * Perform the calculation of each block moving down the blocks that need to fall i.e. the ones
      * that have empty space below it
      */
-    private void freeFallCalc() {
+    private void gravityFallCalc() {
 
         // Loop through the columns 0(left) to 6(right)
         for(int col = 0; col < b.length; col++) {
@@ -693,7 +721,7 @@ public class Map implements TargetBase {
 
                     if(nEmpty > 0) {
 
-                        b[col][row].setFreeFallTrajectory(row, row + nEmpty);
+                        b[col][row].setGravityFallTrajectory(row, row + nEmpty);
 
                         Block swap = b[col][row + nEmpty];
                         b[col][row + nEmpty] = b[col][row];
@@ -1051,7 +1079,7 @@ public class Map implements TargetBase {
         }
     }
 
-    /** Control {@link PlayBlocks} speed that can change during tha game */
+    /** Control {@link PlayerBlocks} speed that can change during tha game */
     private void timing() {
 
         // Updates vertical fall time (less is faster)
@@ -1067,7 +1095,7 @@ public class Map implements TargetBase {
 
     private void shuffleColAcceleration(float intensity) {
 
-        float max = freeFallAcceleration * intensity;
+        float max = gravityFallAcceleration * intensity;
 
         for(int i = 0; i < colAcceleration.length; i++) {
             colAcceleration[i] = MathUtils.random(max);
@@ -1098,9 +1126,9 @@ public class Map implements TargetBase {
         lc = new IntMap<>();
 
         if(pb.b1x != N_COL / 2 || pb.b1y != OUT_ROW -1 || pb.rotation != 0)
-            state = new DefaultStateMachine<>(this, MState.PLAY_FALL);
+            state = new DefaultStateMachine<>(this, MState.PLAYER_FALL);
         else
-            state = new DefaultStateMachine<>(this, MState.FREE_FALL);
+            state = new DefaultStateMachine<>(this, MState.GRAVITY_FALL);
 
         for(int i = 0; i < b.length; i++) {
             for(int j = 0; j < b[i].length; j++) {
@@ -1162,25 +1190,25 @@ public class Map implements TargetBase {
 
     @Override
     public void button1(boolean isDown) {
-        if(!pause && isInState(MState.PLAY_FALL)&& isDown && rPlayMoveTimer <= 0f)
+        if(!pause && isInState(MState.PLAYER_FALL)&& isDown && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void button2(boolean isDown) {
-        if(!pause && isInState(MState.PLAY_FALL) && isDown && rPlayMoveTimer <= 0f)
+        if(!pause && isInState(MState.PLAYER_FALL) && isDown && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void button3(boolean isDown) {
-        if(!pause && isInState(MState.PLAY_FALL) && isDown && rPlayMoveTimer <= 0f)
+        if(!pause && isInState(MState.PLAYER_FALL) && isDown && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void button4(boolean isDown) {
-        if(!pause && isInState(MState.PLAY_FALL) && isDown && rPlayMoveTimer <= 0f)
+        if(!pause && isInState(MState.PLAYER_FALL) && isDown && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 

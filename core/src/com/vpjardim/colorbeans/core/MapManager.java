@@ -81,7 +81,7 @@ public abstract class MapManager {
 
             Map opp = opps.get(i);
 
-            // Todo fix cause the map go to FREE_FALL state in winLost method if is autoRestart
+            // Todo fix cause the map go to GRAVITY_FALL state in winLost method if is autoRestart
             if(opp.isInState(Map.MState.OVER) || opp.isInState(Map.MState.DONE))
                 opps.removeIndex(i);
         }
@@ -144,7 +144,7 @@ public abstract class MapManager {
             if(autoRestart) {
                 for(Map m : maps) {
                     m.recycle(); // Todo remove and test. It's done in MState
-                    m.state.changeState(Map.MState.FREE_FALL);
+                    m.state.changeState(Map.MState.GRAVITY_FALL);
 
                     pause(m.index, paused);
                 }

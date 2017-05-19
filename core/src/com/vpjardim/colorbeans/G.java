@@ -49,7 +49,7 @@ import java.text.NumberFormat;
 public class G extends Game {
 
     // Todo small memory leak even in debugPG variant. Update Proguard File to remove log methods
-    // Todo one map play blocks falls first then the others when if the game is restarted
+    // Todo one map player blocks falls first then the others when if the game is restarted
     // Todo touch and drag in Android crashes app when using controller
 
     // Game resolution

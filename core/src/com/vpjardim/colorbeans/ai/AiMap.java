@@ -117,7 +117,7 @@ public class AiMap implements Pool.Poolable {
         // #debugCode in all the method
 
         // Done detect insert collisions/obstructed moves
-        // When Ai tries to put the play blocks on a obstructed position
+        // When Ai tries to put the player blocks on a obstructed position
         // Done detect move that will lead to lost state
         // In case of collision on the blocks exit area this move will
         // lead to a lost state
@@ -160,7 +160,7 @@ public class AiMap implements Pool.Poolable {
         }
 
         do {
-            freeFallCalc();
+            gravityFallCalc();
             labelCalc();
 
         } while(labelDeleted);
@@ -202,7 +202,7 @@ public class AiMap implements Pool.Poolable {
         trashBlocks = Math.round(((blocksDeleted * 10f) * (blocksDeleted - 3f)) / 70f);
     }
 
-    private void freeFallCalc() {
+    private void gravityFallCalc() {
 
         // Loop through the columns 0(left) to 6(right)
         for(int col = 0; col < b.length; col++) {

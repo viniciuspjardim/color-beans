@@ -11,7 +11,7 @@ import com.vpjardim.colorbeans.core.Dbg;
  * @author Vinícius Jardim
  * 21/03/2015
  */
-public class PlayBlocks {
+public class PlayerBlocks {
 
     public transient Map m;
 
@@ -56,7 +56,7 @@ public class PlayBlocks {
     /** Amount moved by the player. Negative left; positive right */
     public int moveX;
 
-    public PlayBlocks(Map map) {
+    public PlayerBlocks(Map map) {
         m = map;
         b1 = new Block(m);
         b2 = new Block(m);
@@ -136,18 +136,18 @@ public class PlayBlocks {
             Dbg.print("processCollision: rotation == 0");
             return false;
         }
-        // Move play blocks left
+        // Move player blocks left
         if(rotation == 1) {
             m.hPlayMoveTimer = m.hPlayMoveWait;
             return moveHorizontal(-1);
         }
-        // Move play blocks up
+        // Move player blocks up
         if(rotation == 2) {
             b1y--;
             updateB2pos();
             return true;
         }
-        // Move play blocks right
+        // Move player blocks right
         if(rotation == 3) {
             m.hPlayMoveTimer = m.hPlayMoveWait;
             return moveHorizontal(1);
@@ -215,7 +215,7 @@ public class PlayBlocks {
         }
     }
 
-    /** Insert the play blocks in the map blocks array */
+    /** Insert the player blocks in the map blocks array */
     public void insert() {
 
         if(b1y < 0 || b2y < 0) {
@@ -231,17 +231,17 @@ public class PlayBlocks {
         // Triggers b1 deform animation
         boolean b1Collide = !m.isEmpty(b1x, b1y + 1);
         if(downKeyPressed && b1Collide) {
-            m.b[b1x][b1y].deformTime = m.afterFreeFallWait;
+            m.b[b1x][b1y].deformTime = m.afterGravityFallWait;
         }
 
         // Triggers b2 deform animation
         boolean b2Collide = !m.isEmpty(b2x, b2y + 1);
         if(downKeyPressed && b2Collide) {
-            m.b[b2x][b2y].deformTime = m.afterFreeFallWait;
+            m.b[b2x][b2y].deformTime = m.afterGravityFallWait;
         }
     }
 
-    public void playFallCalc() {
+    public void playerFallCalc() {
 
         m.vPlayMoveTimer -= G.delta;
         boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
@@ -256,7 +256,7 @@ public class PlayBlocks {
                 b1y++;
                 updateB2pos();
             }
-            // Wait some time before insert the play blocks.
+            // Wait some time before insert the player blocks.
             // The player can use this time to do his last moves
             else if(!downKeyPressed && m.vPlayMoveTimer >= -m.beforeInsertWait) {
 

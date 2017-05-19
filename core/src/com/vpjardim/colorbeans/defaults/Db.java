@@ -104,7 +104,7 @@ public class Db {
         trainingGame.finishOnWin = false;
         trainingGame.lostAct     = Cfg.Game.LOST_RESTART_PAUSED;
 
-        // Camping maps play fall speed
+        // Camping maps player fall speed
         map1.moveTime = new float[] {0, 0.70f, 15, 0.60f, 15, 0.50f, 15, 0.44f, 15, 0.38f};
         map2.moveTime = new float[] {0, 0.50f, 15, 0.44f, 15, 0.38f, 15, 0.32f, 15, 0.28f};
         map3.moveTime = new float[] {0, 0.40f, 15, 0.35f, 15, 0.30f, 15, 0.26f, 15, 0.22f};
@@ -113,7 +113,7 @@ public class Db {
         map6.moveTime = new float[] {0, 0.16f, 15, 0.14f, 15, 0.12f, 15, 0.11f, 15, 0.10f};
         map7.moveTime = new float[] {0, 0.12f, 15, 0.11f, 15, 0.10f, 15, 0.09f, 15, 0.08f};
 
-        // Training mode play fall speed default options
+        // Training mode player fall speed default options
         mapT1.moveTime = new float[] {0, 0.30f, 15, 0.26f, 15, 0.22f, 15, 0.18f, 15, 0.16f};
         mapT2.moveTime = new float[] {
                 0, 0.50f, 15, 0.40f, 15, 0.32f, 15, 0.16f,
@@ -267,7 +267,7 @@ public class Db {
             p.button4 = 3;
         }
 
-        // Current training mode play fall speed
+        // Current training mode player fall speed
         mapT = mapT1;
     }
 

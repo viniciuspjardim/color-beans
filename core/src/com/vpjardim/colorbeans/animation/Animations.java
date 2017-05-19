@@ -21,20 +21,20 @@ public class Animations {
     }
 
     /** @return true if it's animating - animation not finished yet */
-    public boolean freeFall() {
+    public boolean gravityFall() {
 
         boolean animating = false;
 
         for(int i = 0; i < m.b.length; i++) {
             for(int j =  0; j < m.b[i].length; j++) {
-                animating = animating | blockFreeFall(m.b[i][j], i);
+                animating = animating | blockGravityFall(m.b[i][j], i);
             }
         }
 
         return animating;
     }
 
-    private boolean blockFreeFall(Block b, int col) {
+    private boolean blockGravityFall(Block b, int col) {
 
         if(b.py == 0f) return false;
 
@@ -43,7 +43,7 @@ public class Animations {
         b.moveTime += G.delta;
 
         // position = 1/2 * a * t^2
-        float shift = 0.5f * (m.freeFallAcceleration + m.colAcceleration[col]) * b.moveTime * b.moveTime;
+        float shift = 0.5f * (m.gravityFallAcceleration + m.colAcceleration[col]) * b.moveTime * b.moveTime;
 
         // Initial py - shift. The block on the matrix on Map
         // has already felt (it`s on the bottom), but on the screen
@@ -53,7 +53,7 @@ public class Animations {
         if(b.py <= 0f) {
             animating = false;
             b.recycleFall();
-            b.deformTime = m.afterFreeFallWait;
+            b.deformTime = m.afterGravityFallWait;
         }
 
         return animating;
@@ -79,7 +79,7 @@ public class Animations {
 
         boolean animating = true;
 
-        float deformTime = m.afterFreeFallWait;
+        float deformTime = m.afterGravityFallWait;
 
         b.deformTime -= G.delta;
 
@@ -116,17 +116,17 @@ public class Animations {
     }
 
     /** @return true if it's animating - animation not finished yet */
-    public boolean playFall() {
+    public boolean playerFall() {
 
         boolean animating = false;
 
-        animating = animating | blockPlayFall(m.pb.b1);
-        animating = animating | blockPlayFall(m.pb.b2);
+        animating = animating | blockPlayerFall(m.pb.b1);
+        animating = animating | blockPlayerFall(m.pb.b2);
 
         return animating;
     }
 
-    private boolean blockPlayFall(Block b) {
+    private boolean blockPlayerFall(Block b) {
 
         if(b.py == 0f || b.isEmpty()) return false;
 
@@ -281,7 +281,7 @@ public class Animations {
         b.moveTime += G.delta;
 
         // position = 1/2 * a * t^2
-        float shift = 0.5f * ((m.freeFallAcceleration + m.colAcceleration[col]) / 4f) * b.moveTime *
+        float shift = 0.5f * ((m.gravityFallAcceleration + m.colAcceleration[col]) / 4f) * b.moveTime *
                 b.moveTime;
         b.py = -shift;
 

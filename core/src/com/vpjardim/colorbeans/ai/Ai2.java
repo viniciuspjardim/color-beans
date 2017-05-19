@@ -45,7 +45,7 @@ public class Ai2 implements AiBase {
     @Override
     public void update() {
 
-        if(m.isInState(Map.MState.PLAY_FALL)) {
+        if(m.isInState(Map.MState.PLAYER_FALL)) {
 
             input.update();
 

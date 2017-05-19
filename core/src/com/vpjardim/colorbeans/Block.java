@@ -7,7 +7,7 @@ package com.vpjardim.colorbeans;
 /**
  * Describe a space indexed by column index and row index on the {@link Map#b} matrix. It can be
  * empty when {@link #color} equals the EMPTY constant or represent a bean of the following
- * colors: red, blue, green, yellow, purple. It's also used in the {@link PlayBlocks} class as the
+ * colors: red, blue, green, yellow, purple. It's also used in the {@link PlayerBlocks} class as the
  * playable falling beans.
  * Each bean is grouped to all 4-neighborhood beans that has the same color creating chains. Each
  * chain has a unique number stored in {@link #label} field.
@@ -60,13 +60,13 @@ public class Block {
 
     /**
      * The time that the block is falling. Starts at 0 and increment.
-     * When there is a free fall or a play fall the block is moved to its final position instantly.
-     * For the animation to happen the {@link #py} shift and moveTime is used to track the block's
-     * position.
+     * When there is a gravity fall or a player fall the block is moved to its final position
+     * instantly. For the animation to happen the {@link #py} shift and moveTime is used to track
+     * the block's position.
      */
     public float moveTime;
 
-    /** Deform animation timer. Starts at {@link Map#afterFreeFallWait} and decrement */
+    /** Deform animation timer. Starts at {@link Map#afterGravityFallWait} and decrement */
     public float deformTime;
 
     /**
@@ -139,9 +139,9 @@ public class Block {
         py = 0f;
     }
 
-    public void setFreeFallTrajectory(int freeFallStart, int freeFallEnd) {
-        moveY = freeFallEnd - freeFallStart;
-        py = freeFallEnd - freeFallStart;
+    public void setGravityFallTrajectory(int gravityFallStart, int gravityFallEnd) {
+        moveY = gravityFallEnd - gravityFallStart;
+        py = gravityFallEnd - gravityFallStart;
     }
 
     /**

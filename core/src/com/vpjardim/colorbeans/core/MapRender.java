@@ -99,7 +99,7 @@ public class MapRender {
             }
         }
 
-        // ===== Draw play blocks =====
+        // ===== Draw player blocks =====
 
         tile = G.game.atlas.findRegion(COLORS.get(m.pb.b1.color), m.pb.b1.tile);
 

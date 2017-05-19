@@ -71,10 +71,10 @@ public abstract class AiCommon implements AiBase {
 
         entryPoint1();
 
-        // Is in the PLAY_FALL state
-        if(m.isInState(Map.MState.PLAY_FALL)) {
+        // Is in the PLAYER_FALL state
+        if(m.isInState(Map.MState.PLAYER_FALL)) {
 
-            // And was in another state before. Just entered in the PLAY_FALL state
+            // And was in another state before. Just entered in the PLAYER_FALL state
             if(!m.isInState(prevState)) {
 
                 downKeyRand = MathUtils.random(cfg.downKeyMin, cfg.downKeyMax);
@@ -106,8 +106,8 @@ public abstract class AiCommon implements AiBase {
             input.fastFall = downKey;
         }
 
-        // Just lived the PLAY_FALL state
-        if(!m.isInState(Map.MState.PLAY_FALL) && prevState == Map.MState.PLAY_FALL) {
+        // Just lived the PLAYER_FALL state
+        if(!m.isInState(Map.MState.PLAYER_FALL) && prevState == Map.MState.PLAYER_FALL) {
             input.fastFall = false;
         }
 
@@ -129,7 +129,7 @@ public abstract class AiCommon implements AiBase {
             float doubt = Math.min(doubtRand, slowFallMax * 0.8f);
             float deltaH = fallAmount - lastMoveSwitch;
 
-            // If the play blocks is before (fall less) the doubt limit...
+            // If the player blocks are before (fall less) the doubt limit...
             if(fallAmount < doubt && !dangerRow(m.pb.b1y)) {
 
                 if(deltaH >= doubtFreqRand) {
@@ -146,7 +146,7 @@ public abstract class AiCommon implements AiBase {
         }
     }
 
-    /** Returns true when the play block row or the below have blocks that may obstruct moves */
+    /** Returns true when the player block row or the below have blocks that may obstruct moves */
     protected boolean dangerRow(int row) {
         for(int i = 0; i < m.b.length; i++) {
             if(!m.isEmpty(i, row + 2)) return true;
