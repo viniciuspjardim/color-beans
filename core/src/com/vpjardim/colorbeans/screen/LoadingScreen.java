@@ -9,6 +9,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -95,6 +96,21 @@ public class LoadingScreen extends ScreenBase {
 
         G.game.assets.load(atlasStr, TextureAtlas.class);
         G.game.assets.load("audio/studio.ogg", Music.class);
+        G.game.assets.load("audio/music1.ogg", Music.class);
+        G.game.assets.load("audio/chain_11.ogg", Sound.class);
+        G.game.assets.load("audio/chain_12.ogg", Sound.class);
+        G.game.assets.load("audio/chain_13.ogg", Sound.class);
+        G.game.assets.load("audio/chain_14.ogg", Sound.class);
+        G.game.assets.load("audio/chain_15.ogg", Sound.class);
+        G.game.assets.load("audio/chain_16.ogg", Sound.class);
+        G.game.assets.load("audio/chain_17.ogg", Sound.class);
+        G.game.assets.load("audio/chain_21.ogg", Sound.class);
+        G.game.assets.load("audio/chain_22.ogg", Sound.class);
+        G.game.assets.load("audio/chain_23.ogg", Sound.class);
+        G.game.assets.load("audio/chain_24.ogg", Sound.class);
+        G.game.assets.load("audio/chain_25.ogg", Sound.class);
+        G.game.assets.load("audio/chain_26.ogg", Sound.class);
+        G.game.assets.load("audio/chain_27.ogg", Sound.class);
     }
 
     @Override

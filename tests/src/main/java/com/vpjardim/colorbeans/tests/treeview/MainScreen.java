@@ -304,7 +304,7 @@ public class MainScreen<T extends DebugNode> implements Screen {
                     continue;
                 }
 
-                sr.setColor(Block.intToColor(b[i][j]));
+                // sr.setColor(Block.intToColor(b[i][j]));
                 sr.circle(
                         px + (side * i),
                         py - (side * (j -outRow)),

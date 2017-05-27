@@ -87,7 +87,7 @@ public class ClientTest extends Game implements Screen {
                     continue;
                 }
 
-                sr.setColor(Block.intToColor(b[i][j]));
+                // sr.setColor(Block.intToColor(b[i][j]));
                 sr.circle(
                         px + (side * i),
                         py - (side * (j -outRow)),

@@ -8,6 +8,7 @@ import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
@@ -668,6 +669,7 @@ public class Map implements TargetBase {
         blockChanged = true;
         trashBlocksToAdd = 0;
         blocksDeleted = 0;
+        scoredBlocks = 0;
         gameOver = false;
         gameWin = false;
         score = 0;
@@ -976,17 +978,59 @@ public class Map implements TargetBase {
                 + Map.getColorBonus(colorBonusCount)
                 + groupBonus;
 
+        // #debugCode
+        Dbg.dbg(Dbg.tagO(this), "scoreCalc() a = " + a + "; b = " + b);
+
+        if(a < 0) a = 0;
         if(b < 1) b = 1;
 
         int ab = a * b;
 
         // #debugCode
-        if(ab > 0) Dbg.inf(Dbg.tagO(this), "Score = " + score);
+        if(ab > 0) Dbg.inf(Dbg.tagO(this), "scoreCalc() score = " + score);
 
         score += ab;
 
         if(a > 0 && b > 1) scoreStr = "+ " + a + " x " + b;
         else if(ab > 0)    scoreStr = "+ " + a;
+
+        if(ab > 0) playScoreSound();
+    }
+
+    private void playScoreSound() {
+
+        if(index % 2 == 0) {
+            if(chainPowerCount == 1)
+                G.game.assets.get("audio/chain_11.ogg", Sound.class).play();
+            else if(chainPowerCount == 2)
+                G.game.assets.get("audio/chain_12.ogg", Sound.class).play();
+            else if(chainPowerCount == 3)
+                G.game.assets.get("audio/chain_13.ogg", Sound.class).play();
+            else if(chainPowerCount == 4)
+                G.game.assets.get("audio/chain_14.ogg", Sound.class).play();
+            else if(chainPowerCount == 5)
+                G.game.assets.get("audio/chain_15.ogg", Sound.class).play();
+            else if(chainPowerCount == 6)
+                G.game.assets.get("audio/chain_16.ogg", Sound.class).play();
+            else if(chainPowerCount >= 7)
+                G.game.assets.get("audio/chain_17.ogg", Sound.class).play();
+        }
+        else {
+            if(chainPowerCount == 1)
+                G.game.assets.get("audio/chain_21.ogg", Sound.class).play();
+            else if(chainPowerCount == 2)
+                G.game.assets.get("audio/chain_22.ogg", Sound.class).play();
+            else if(chainPowerCount == 3)
+                G.game.assets.get("audio/chain_23.ogg", Sound.class).play();
+            else if(chainPowerCount == 4)
+                G.game.assets.get("audio/chain_24.ogg", Sound.class).play();
+            else if(chainPowerCount == 5)
+                G.game.assets.get("audio/chain_25.ogg", Sound.class).play();
+            else if(chainPowerCount == 6)
+                G.game.assets.get("audio/chain_26.ogg", Sound.class).play();
+            else if(chainPowerCount >= 7)
+                G.game.assets.get("audio/chain_27.ogg", Sound.class).play();
+        }
     }
 
     private void groupBonusCalc() {

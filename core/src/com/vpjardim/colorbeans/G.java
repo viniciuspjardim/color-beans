@@ -51,6 +51,7 @@ public class G extends Game {
     // Todo small memory leak even in debugPG variant. Update Proguard File to remove log methods
     // Todo one map player blocks falls first then the others when if the game is restarted
     // Todo touch and drag in Android crashes app when using controller
+    // Todo negative score sometimes after first match in campaign
 
     // Game resolution
     public static final int RES_SMALL  = 1;
@@ -95,8 +96,8 @@ public class G extends Game {
         // #debugCode
         // dbg.uiTable = true;
         // dbg.map0shape = 3;
-        // dbg.map1shape = 7;
-        // dbg.campStart = 7;
+        // dbg.map1shape = 2;
+        // dbg.campStart = 6;
         // dbg.campEnd = 7;
         // dbg.delta = Dbg.DELTA_NORMAL;
         // dbg.fps = true;

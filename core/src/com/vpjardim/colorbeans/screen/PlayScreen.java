@@ -4,6 +4,7 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -55,6 +56,10 @@ public class PlayScreen extends ScreenBase {
 
         table = new Table(G.game.skin);
         table.setFillParent(true);
+
+        G.game.assets.get("audio/music1.ogg", Music.class).setVolume(0.2f);
+        G.game.assets.get("audio/music1.ogg", Music.class).setLooping(true);
+        G.game.assets.get("audio/music1.ogg", Music.class).play();
 
         TextButton resumeButt, menuButt;
 
@@ -189,7 +194,10 @@ public class PlayScreen extends ScreenBase {
     }
 
     @Override
-    public void hide() { ScoreTable.save(G.game.score); }
+    public void hide() {
+        ScoreTable.save(G.game.score);
+        G.game.assets.get("audio/music1.ogg", Music.class).stop();
+    }
 
     @Override
     public void dispose() {
