@@ -57,7 +57,7 @@ public class PlayScreen extends ScreenBase {
         table = new Table(G.game.skin);
         table.setFillParent(true);
 
-        G.game.assets.get("audio/music1.ogg", Music.class).setVolume(0.2f);
+        G.game.assets.get("audio/music1.ogg", Music.class).setVolume(0.4f);
         G.game.assets.get("audio/music1.ogg", Music.class).setLooping(true);
         G.game.assets.get("audio/music1.ogg", Music.class).play();
 

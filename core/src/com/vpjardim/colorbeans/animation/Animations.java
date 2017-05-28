@@ -83,6 +83,11 @@ public class Animations {
 
         b.deformTime -= G.delta;
 
+        // Todo why it's working only when is not on trashBlocksTurn?
+        if(b.color == Block.CLR_T && !m.trashBlocksTurn && m.trashSound == Map.TRASH_SOUND_NO) {
+            m.trashSound = Map.TRASH_SOUND_YES;
+        }
+
         // 4, 0, 3, 0, 4, 0, 3, 0 (tile index)
 
         if(b.deformTime <= 0f) {

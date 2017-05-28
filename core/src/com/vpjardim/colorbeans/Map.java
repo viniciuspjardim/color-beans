@@ -152,6 +152,11 @@ public class Map implements TargetBase {
                 boolean gravityFallAnim = map.anim.gravityFall();
                 map.anim.deform();
 
+                if(map.trashSound == TRASH_SOUND_YES) {
+                    G.game.assets.get("audio/trash.ogg", Sound.class).play();
+                    map.trashSound = TRASH_SOUND_PLAYING;
+                }
+
                 if(gravityFallAnim) return;
 
                 map.afterGravityFallTimer -= G.delta;
@@ -176,7 +181,9 @@ public class Map implements TargetBase {
             }
 
             @Override
-            public void exit(Map map) {}
+            public void exit(Map map) {
+                map.trashSound = TRASH_SOUND_NO;
+            }
         },
 
         /**
@@ -332,6 +339,7 @@ public class Map implements TargetBase {
                 map.shuffleColAcceleration(0.8f);
                 map.colAcceleration[map.b.length/2] = map.gravityFallAcceleration * 0.8f;
                 map.anim.gameOver();
+                G.game.assets.get("audio/lostfall.ogg", Sound.class).play();
             }
 
             @Override
@@ -385,6 +393,10 @@ public class Map implements TargetBase {
      * kind of back stage that is not shown to the player. 10 default
      */
     public static final int OUT_ROW = 10;
+
+    public static final int TRASH_SOUND_NO = 1;
+    public static final int TRASH_SOUND_YES = 2;
+    public static final int TRASH_SOUND_PLAYING = 3;
 
     /** Chain power from 1 to 24+. Ref: https://puyonexus.com/wiki/Chain_Power_Table */
     public static final int[] chainPowerTable = {
@@ -627,6 +639,8 @@ public class Map implements TargetBase {
     /** A third of {@link #deleteWait} */
     public float delWait3 = deleteWait / 3f;
 
+    public int trashSound = TRASH_SOUND_NO;
+
     // <===== End of default times, timers and other speed control variables ======
 
     public Map(MapManager manager) {
@@ -680,6 +694,7 @@ public class Map implements TargetBase {
         vPlayMoveWait = speedArr[1];
         vPlayMoveWait2 = speedArr[1];
         vPlayMoveTimer = speedArr[1];
+        trashSound = TRASH_SOUND_NO;
         pb.recycle();
         pb.init();
     }
