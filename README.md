@@ -32,9 +32,9 @@ Object Form.
 Please use this Work for personal or learning purpose only. Do not sell,
 publish or redistribute any Object Form or Object Form derivation of
 this project. Do not sell, publish or redistribute the assets or source
-code, including derivations in GitHub`*`, other site or media.
+code, including derivations, in GitHub*, other site or media.
 
-> `*` You are allowed to fork this repo and work at your fork, send pull
+> \* You are allowed to fork this repo and work at your fork, send pull
 requests and report issues here in GitHub only.
 
 Disclaimer of Warranty. Unless required by applicable law or agreed to
