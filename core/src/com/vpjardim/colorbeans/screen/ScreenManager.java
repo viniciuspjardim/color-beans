@@ -40,7 +40,7 @@ public class ScreenManager {
 
         // #debugCode
         // Warn frames longer than a max time; set frames a constant time
-        // for debug propose: DELTA_SLOW, DELTA_NORMAL, DELTA_FAST
+        // for debug propose: DELTA_0_25X, DELTA_1X, DELTA_4X
         if(G.game.dbg.delta == Dbg.DELTA_REAL) {
 
             int fps = Math.round(1f / Gdx.graphics.getRawDeltaTime());
@@ -48,12 +48,16 @@ public class ScreenManager {
             if(G.game.dbg.lagWarn && fps < 50)
                 Dbg.inf("LagWarn", fps + " fps");
         }
-        else if(G.game.dbg.delta == Dbg.DELTA_SLOW)
-            G.delta = 0.004f;    // 250 fps
-        else if(G.game.dbg.delta == Dbg.DELTA_NORMAL)
-            G.delta = 0.016667f; //  60 fps
-        else if(G.game.dbg.delta == Dbg.DELTA_FAST)
-            G.delta = 0.032f;    //  31 fps
+        else if(G.game.dbg.delta == Dbg.DELTA_0_25X)
+            G.delta = 0.0041667f; // 240 fps
+        else if(G.game.dbg.delta == Dbg.DELTA_0_5X)
+            G.delta = 0.0083333f; // 120 fps
+        else if(G.game.dbg.delta == Dbg.DELTA_1X)
+            G.delta = 0.0166667f; //  60 fps
+        else if(G.game.dbg.delta == Dbg.DELTA_2X)
+            G.delta = 0.0333333f; //  30 fps
+        else if(G.game.dbg.delta == Dbg.DELTA_4X)
+            G.delta = 0.0666667f; //  15 fps
 
         transition.update(G.delta);
 

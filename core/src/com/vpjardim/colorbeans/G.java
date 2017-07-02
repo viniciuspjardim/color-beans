@@ -48,7 +48,7 @@ import java.text.NumberFormat;
  */
 public class G extends Game {
 
-    // Todo small memory leak even in debugPG variant. Update Proguard File to remove log methods
+    // Todo small memory leak even in debugPG variant
     // Todo one map player blocks falls first then the others when if the game is restarted
     // Todo touch and drag in Android crashes app when using controller
     // Todo negative score sometimes after first match in campaign
@@ -99,11 +99,12 @@ public class G extends Game {
         // dbg.map1shape = 2;
         // dbg.campStart = 6;
         // dbg.campEnd = 7;
-        // dbg.delta = Dbg.DELTA_NORMAL;
+        // dbg.delta = Dbg.DELTA_4X;
         // dbg.fps = true;
         // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
+        // dbg.aiTraining = new int[] {1, 3, 0, 0};
         // dbg.on();
 
         screens = new ScreenManager();

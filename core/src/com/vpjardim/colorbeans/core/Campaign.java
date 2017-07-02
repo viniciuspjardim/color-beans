@@ -7,7 +7,6 @@ package com.vpjardim.colorbeans.core;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.ai.Ai1;
 import com.vpjardim.colorbeans.ai.ai3.Ai3;
 
 /**
@@ -113,7 +112,7 @@ public class Campaign extends MapManager {
 
         // #DebugCode the content is needed, just the if is debug
         if(!G.game.dbg.aiDisableMap1) {
-            aiMap.ai = new Ai1();
+            aiMap.ai = new Ai3();
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }
 
@@ -134,9 +133,9 @@ public class Campaign extends MapManager {
         if(mapIndex == 0) {
 
             Map p = maps.get(0);
-            p.scoreSum += p.score;
 
-            G.game.score.addRow(p.name, p.score, p.scoreSum, p.matchTimer);
+            G.game.score.addRow(ScoreTable.GMODE_CAMPAIGN, p.name, true, p.score, p.scoreSum,
+                    p.matchTimer);
 
             stageIndex++;
             if(stageIndex >= mapCfgs.size) {

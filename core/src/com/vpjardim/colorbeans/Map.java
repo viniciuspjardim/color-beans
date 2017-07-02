@@ -364,8 +364,17 @@ public class Map implements TargetBase {
             public void enter(Map map) {
                 // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = DONE");
+
+                map.matchTimerSum += map.matchTimer;
+
                 if(map.gameWin) {
+                    map.winsCount++;
+                    map.scoreSum += map.score;
                     Dbg.inf(Dbg.tagO(map), "game win\n");
+                }
+                if(map.lost) {
+                    map.lostCount++;
+                    Dbg.inf(Dbg.tagO(map), "game lost\n");
                 }
             }
 
@@ -504,11 +513,17 @@ public class Map implements TargetBase {
 
     // ====== Score control variables =====>
 
-    /** Score number from the current match */
-    public int score;
+    /** Counts how many matches this map won */
+    public int winsCount;
+
+    /** Counts how many matches this map lost */
+    public int lostCount;
 
     /** Score for all matches  played in sequence */
     public int scoreSum;
+
+    /** Score number from the current match */
+    public int score;
 
     /** Score string to show in the GUI */
     public String scoreStr;
@@ -558,6 +573,8 @@ public class Map implements TargetBase {
     /** Match time. Only non paused time is computed */
     public float matchTimer = 0f;
 
+    public float matchTimerSum = 0f;
+
     /** Time at the current speed */
     public float speedTimer = 0f;
 
@@ -577,7 +594,7 @@ public class Map implements TargetBase {
     public float gravityFallAcceleration = 80f;
 
     /** Used to make each column of blocks fall at random speed (for better visual) */
-    public float colAcceleration[];
+    public float[] colAcceleration;
 
     /**
      * Default time to wait before insert the player blocks. The player can use this time to do his
@@ -653,11 +670,10 @@ public class Map implements TargetBase {
         pb = new PlayerBlocks(this);
         le = new Array<>();
         lc = new IntMap<>();
-
         colorBonusArr = new boolean[Block.CLR_N];
-        scoreStr = "0";
-
         colAcceleration = new float[N_COL];
+
+        scoreStr = "0";
 
         // Fill map with empty blocks
         for(int i = 0; i < b.length; i++) {
@@ -667,11 +683,20 @@ public class Map implements TargetBase {
         }
     }
 
-    public void recycle() {
+    public void recycle() { recycle(false); }
 
-        // Todo review this whole method because some variables might not being recyclerecycled
+    public void recycle(boolean keepCampaignData) {
+
+        // Todo review this whole method because some variables might not being recycled
 
         Dbg.dbg(Dbg.tagO(this), "recycle() method call");
+
+        // Todo fix blocks starts falling first in a map then in the other
+        // manager;
+        // index;
+        // name = "";
+        // state;
+        // anim;
 
         for(int i = 0; i < b.length; i++) {
             for(int j = 0; j < b[i].length; j++) {
@@ -679,24 +704,66 @@ public class Map implements TargetBase {
             }
         }
 
-        // Todo fix blocks starts falling first in a map then in the other
-        blockChanged = true;
-        trashBlocksToAdd = 0;
+        pb.recycle();
+        pb.init();
+
+        // input;
+        // ai;
+        // le;
+        // lc;
+        // deleteSize = 4;
+
         blocksDeleted = 0;
-        scoredBlocks = 0;
-        gameOver = false;
-        gameWin = false;
+
+        // maxTrashOnce = N_COL * 5;
+
+        if(!keepCampaignData) {
+            winsCount = 0;
+            lostCount = 0;
+            scoreSum = 0;
+            matchTimerSum = 0f;
+        }
         score = 0;
         scoreStr = "0";
-        speedIndex = 0;
+        scoredBlocks = 0;
+
+        // chainPowerCount;
+        // colorBonusArr;
+        // groupBonus;
+
+        // pause = false;
+        gameOver = false;
+        gameWin = false;
+        // lost = false;
+        blockChanged = true;
+        trashBlocksToAdd = 0;
+        // trashBlocksTurn = true;
+
         matchTimer = 0f;
         speedTimer = 0f;
+        // speedArr;
+        speedIndex = 0;
+
+        // vPlayMoveMultip = 8f;
+        // gravityFallAcceleration = 80f;
+        // colAcceleration;
+        // beforeInsertWait = 0.2f;
+        // afterGravityFallWait = 0.23f;
+        // afterGravityFallTimer = afterGravityFallWait;
+        // beforePlayerFallWait = 0.025f;
+        // rPlayMoveWait = 0.1f;
+        // rPlayMoveTimer = 0f;
+        // hPlayMoveWait = 0.1f;
+        // hPlayMoveTimer = 0f;
+
         vPlayMoveWait = speedArr[1];
         vPlayMoveWait2 = speedArr[1];
         vPlayMoveTimer = speedArr[1];
+
+        // deleteWait = 0.5f;
+        // delWait3 = deleteWait / 3f;
+
         trashSound = TRASH_SOUND_NO;
-        pb.recycle();
-        pb.init();
     }
 
     @Override

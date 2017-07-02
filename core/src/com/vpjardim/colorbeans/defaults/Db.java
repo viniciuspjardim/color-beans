@@ -28,8 +28,6 @@ import com.vpjardim.colorbeans.input.Profile;
  */
 public class Db {
 
-    // Todo add function to save and load this properties in a file
-
     public final transient Color[]  screenBgColor;
 
     public final transient Cfg.Game campGame     = new Cfg.Game();

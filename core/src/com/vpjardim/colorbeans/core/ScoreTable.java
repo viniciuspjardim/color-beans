@@ -18,10 +18,13 @@ import java.util.Comparator;
  */
 public class ScoreTable {
 
-    public static final int GMODE_CAMPAIGN = 1;
-    public static final int GMODE_TRAINING = 2;
+    // Todo create a match id and to link multiple players to one match
+    // This way it is possible to see multiple opponents score in one match
 
-    private final static Comparator compare = new Comparator<ScoreTable.Row>() {
+    public static final int GMODE_CAMPAIGN  = 1;
+    public static final int GMODE_TRAINING  = 2;
+
+    private static final Comparator compare = new Comparator<ScoreTable.Row>() {
         @Override
         public int compare(ScoreTable.Row r1, ScoreTable.Row r2) {
             return r2.score - r1.score;
@@ -35,24 +38,21 @@ public class ScoreTable {
     public static class Row {
 
         public int gameMode;
-
         public String nick;
+        public boolean win;
         public int score;
         public int scoreSum;
-        public int stars;
         public float time;
-
-        /** True if has an opponent */
-        public boolean hasOpp;
-        public String oppNick;
-        public int oppScore;
-        public int oppDificulty;
     }
 
-    public void addRow(String nick, int score, int scoreSum, float time) {
+    public void addRow(int gameMode, String nick, boolean win, int score, int scoreSum,
+            float time) {
 
         ScoreTable.Row row = new ScoreTable.Row();
+
+        row.gameMode = gameMode;
         row.nick = nick;
+        row.win = win;
         row.score = score;
         row.scoreSum = scoreSum;
         row.time = time;

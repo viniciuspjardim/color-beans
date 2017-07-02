@@ -132,5 +132,14 @@ public class MapRender {
 
         tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB1), 0);
         G.game.batch.draw(tile, nextPx, nextPy - size, size, size);
+
+        // ==== Draw wins =====
+        font.draw(G.game.batch, Integer.toString(m.winsCount), nextPx, nextPy - size * 1.25f);
+
+        // ==== Draw draw score sum =====
+        font.draw(G.game.batch, Integer.toString(m.scoreSum), nextPx, nextPy - size * 2.25f);
+
+        // ==== Draw draw match timer =====
+        font.draw(G.game.batch, Integer.toString((int)m.matchTimer), nextPx, nextPy - size * 3.25f);
     }
 }

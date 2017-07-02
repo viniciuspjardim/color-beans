@@ -143,7 +143,7 @@ public abstract class MapManager {
             // If auto restart is on and animations finished: restart the game
             if(autoRestart) {
                 for(Map m : maps) {
-                    m.recycle(); // Todo remove and test. It's done in MState
+                    m.recycle(true); // Todo remove and test. It's done in MState
                     m.state.changeState(Map.MState.GRAVITY_FALL);
 
                     pause(m.index, paused);

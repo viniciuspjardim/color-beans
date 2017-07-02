@@ -16,10 +16,12 @@ import com.badlogic.gdx.Gdx;
 public class Dbg {
 
     // Used to change game speed
-    public static final int DELTA_REAL   = 1;
-    public static final int DELTA_SLOW   = 2;
-    public static final int DELTA_NORMAL = 3;
-    public static final int DELTA_FAST   = 4;
+    public static final int DELTA_REAL  = 1;
+    public static final int DELTA_0_25X = 2;
+    public static final int DELTA_0_5X  = 3;
+    public static final int DELTA_1X    = 4;
+    public static final int DELTA_2X    = 5;
+    public static final int DELTA_4X    = 6;
 
     public int delta;
     public boolean fps;
@@ -34,6 +36,7 @@ public class Dbg {
     public int campEnd;
     public boolean aiPlayerCamp;
     public boolean aiDisableMap1;
+    public int[] aiTraining;
 
     public Dbg() { off(); }
 
@@ -51,6 +54,7 @@ public class Dbg {
         campEnd       = Integer.MAX_VALUE;
         aiPlayerCamp  = false;
         aiDisableMap1 = false;
+        aiTraining    = null;
 
         Gdx.app.setLogLevel(logLevel);
     }
