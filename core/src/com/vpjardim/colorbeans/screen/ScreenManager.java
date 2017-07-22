@@ -20,7 +20,7 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public class ScreenManager {
 
-    public static boolean showStudioScreen = false;
+    public static boolean showStudioScreen = true;
 
     private FPSLogger fps;
     private TweenManager transition;

@@ -41,7 +41,6 @@ public class StudioScreen extends ScreenBase {
 
         G.game.assets.get("audio/studio.ogg", Music.class).play();
 
-        Tween.setCombinedAttributesLimit(4);
 
         transition = new TweenManager();
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());

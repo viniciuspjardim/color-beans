@@ -8,33 +8,33 @@
         bttYellow: {
             up: "game/b_yellow_up",
             down: "game/b_yellow_down",
-            font: dimbo
+            font: dimbo_brown
         },
         bttGreen: {
             up: "game/b_green_up",
             down: "game/b_green_down",
-            font: dimbo
+            font: dimbo_green
         },
         bttBlue: {
             up: "game/b_blue_up",
             down: "game/b_blue_down",
-            font: dimbo
+            font: dimbo_purple
         },
         bttRed: {
             up: "game/b_red_up",
             down: "game/b_red_down",
-            font: dimbo
+            font: dimbo_dbrown
         },
         bttGray: {
             up: "game/b_gray_up",
             down: "game/b_gray_down",
-            font: dimbo
+            font: dimbo_gray
         }
     },
 
     com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
         tField: {
-            font: dimbo,
+            font: dimbo_white,
             fontColor: white
         }
     },
@@ -46,14 +46,15 @@
     com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
         labelMenu: {
             background: "game/ribbon_red",
-            font: dimbo
-        }
-    },
-
-    com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+            font: dimbo_white
+        },
         labelDef: {
             font: roboto,
             fontColor: white
+        },
+        labelGTitle: {
+            background: "game/ribbon_red",
+            font: dimbo_gtitle,
         }
     }
 }

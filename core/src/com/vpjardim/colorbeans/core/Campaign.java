@@ -7,7 +7,7 @@ package com.vpjardim.colorbeans.core;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.ai.ai3.Ai3;
+import com.vpjardim.colorbeans.ai.Ai1;
 
 /**
  * @author Vinícius Jardim
@@ -94,7 +94,7 @@ public class Campaign extends MapManager {
 
         // #debugCode
         if(G.game.dbg.aiPlayerCamp) {
-            playerMap.ai = new Ai3();
+            playerMap.ai = new Ai1();
             playerMap.ai.init(playerMap, G.game.data.ai7);
             G.game.input.removeTarget(playerMap);
         }
@@ -112,7 +112,8 @@ public class Campaign extends MapManager {
 
         // #DebugCode the content is needed, just the if is debug
         if(!G.game.dbg.aiDisableMap1) {
-            aiMap.ai = new Ai3();
+            // Todo Ai3 seams laggy in android. Debug
+            aiMap.ai = new Ai1();
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }
 

@@ -33,26 +33,13 @@ public abstract class MapManager {
 
         // Calculating side size
 
-        // Margin of 2% of the screen width
-        float marginX = G.width * (2f / 100f);
-        // Margin of 2% of the screen height
-        float marginY = G.height * (2f / 100f);
-        // Used margin
-        float margin = Math.min(marginX, marginY);
-
-        float totalMarginX = margin * (maps.size + 1);
-        float mapsX = G.width - totalMarginX;
-        float sideX = mapsX / ((Map.N_COL + 1.1f) * maps.size); // 1.1 is the next block space
-
-        float totalMarginY = margin * 2;
-        float mapsY = G.height - totalMarginY;
-        float sideY = mapsY / Map.N_ROW;
+        float sideX = G.width / (((Map.N_COL + 2f) * maps.size) + 1);
+        float sideY = G.height / Map.N_ROW;
 
         float side = Math.min(sideX, sideY);
 
-        // 1.1 is the next block space
-        float totalX = totalMarginX + (side * (Map.N_COL + 1.1f) * maps.size);
-        float totalY = totalMarginY + side * Map.N_ROW;
+        float totalX = (side * (Map.N_COL + 2f) * maps.size) + side;
+        float totalY = side * Map.N_ROW;
 
         // Updating size and positions
         for(int i = 0; i < render.size; i++) {
@@ -60,12 +47,9 @@ public abstract class MapManager {
             MapRender r = render.get(i);
 
             r.size = side;
-
-                                                            // The next block space
-            r.px = margin + (side * Map.N_COL + margin) * i + (side * 1.1f * (i + 1))
+            r.px = (side * Map.N_COL) * i + (side * 2f * (i + 1))
                    + (G.width - totalX) / 2f;
-
-            r.py = -margin + (G.height + totalY) / 2f;
+            r.py = (G.height + totalY) / 2f;
         }
     }
 

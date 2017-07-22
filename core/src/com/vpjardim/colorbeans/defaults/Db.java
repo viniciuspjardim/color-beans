@@ -114,7 +114,7 @@ public class Db {
         // Training mode player fall speed default options
         mapT1.moveTime = new float[] {0, 0.30f, 15, 0.26f, 15, 0.22f, 15, 0.18f, 15, 0.16f};
         mapT2.moveTime = new float[] {
-                0, 0.50f, 15, 0.40f, 15, 0.32f, 15, 0.16f,
+                 0, 0.50f, 15, 0.40f, 15, 0.32f, 15, 0.16f,
                 15, 0.32f, 15, 0.24f, 15, 0.18f, 15, 0.12f,
                 15, 0.18f, 15, 0.16f, 15, 0.14f, 15, 0.10f,
                 15, 0.14f, 15, 0.12f, 15, 0.11f, 15, 0.08f,

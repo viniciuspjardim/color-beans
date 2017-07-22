@@ -12,10 +12,12 @@ import com.vpjardim.colorbeans.G;
  */
 public class Style {
 
+    public int fontSizeVSmall;
     public int fontSizeSmall;
     public int fontSizeMedium;
     public int fontSizeBig;
     public int fontSizeVBig;
+    public int fontSizeXBig;
 
     public float padSmall;
     public float padMedium;
@@ -32,10 +34,12 @@ public class Style {
 
     public void setDefaults() {
 
+        fontSizeVSmall = 8;
         fontSizeSmall  = 12;
         fontSizeMedium = 16;
         fontSizeBig    = 24;
         fontSizeVBig   = 32;
+        fontSizeXBig   = 40;
 
         padSmall       = 6;
         padMedium      = 12;
@@ -43,16 +47,18 @@ public class Style {
         padVBig        = 26;
 
         buttWidth      = 180;
-        ribbonWidth    = 360;
+        ribbonWidth    = 420;
         ribbonHeight   = 128;
     }
 
     public void scale(float scale) {
 
+        fontSizeVSmall = Math.round(fontSizeVSmall * scale);
         fontSizeSmall  = Math.round(fontSizeSmall * scale);
         fontSizeMedium = Math.round(fontSizeMedium * scale);
         fontSizeBig    = Math.round(fontSizeBig * scale);
         fontSizeVBig   = Math.round(fontSizeVBig * scale);
+        fontSizeXBig   = Math.round(fontSizeXBig * scale);
 
         padSmall       = padSmall * scale;
         padMedium      = padMedium * scale;
@@ -60,7 +66,7 @@ public class Style {
         padVBig        = padVBig * scale;
 
         buttWidth      = buttWidth * scale;
-        ribbonWidth = ribbonWidth * scale;
+        ribbonWidth    = ribbonWidth * scale;
 
         if(G.res == G.RES_MEDIUM)
             ribbonHeight = 256;

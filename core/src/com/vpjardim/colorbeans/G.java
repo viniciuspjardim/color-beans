@@ -20,6 +20,8 @@ import com.vpjardim.colorbeans.screen.ScreenManager;
 
 import java.text.NumberFormat;
 
+import aurelienribon.tweenengine.Tween;
+
 /**
  * Game class
  *
@@ -52,6 +54,8 @@ public class G extends Game {
     // Todo one map player blocks falls first then the others when if the game is restarted
     // Todo touch and drag in Android crashes app when using controller
     // Todo negative score sometimes after first match in campaign
+    // Todo music ideas
+    // restart music on map win, music fade in/out, add win/lost sound effects, pause music on pause
 
     // Game resolution
     public static final int RES_SMALL  = 1;
@@ -86,6 +90,7 @@ public class G extends Game {
         // Most things are loaded in the LoadingScreen class. See explanation there.
 
         game = (G)Gdx.app.getApplicationListener();
+        Tween.setCombinedAttributesLimit(5);
 
         G.width = Gdx.graphics.getWidth();
         G.height = Gdx.graphics.getHeight();

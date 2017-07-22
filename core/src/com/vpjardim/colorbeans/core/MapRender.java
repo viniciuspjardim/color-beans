@@ -20,7 +20,13 @@ import com.vpjardim.colorbeans.Map;
  */
 public class MapRender {
 
+    // Todo add shadow in the map left edge
+    // Todo Add win/lost camera transition and statistics layer
+
     public static final IntMap<String> COLORS = new IntMap<>();
+    // Todo make the rand field non static
+    public static final int[] rand = new int[53];
+    public static int randIndex = 0;
 
     static {
         COLORS.put(1, "beans/red");
@@ -32,6 +38,10 @@ public class MapRender {
         COLORS.put(7, "beans/orange");
         COLORS.put(8, "beans/magenta");
         COLORS.put(9, "beans/transparent");
+
+        for(int i = 0; i < rand.length; i++) {
+            rand[i] = MathUtils.random(1, 9);
+        }
     }
 
     public Map m;
@@ -52,31 +62,32 @@ public class MapRender {
     /** Size in pixels of each block (equals the diameter) */
     public float size;
 
-    public GlyphLayout textLayout = new GlyphLayout();
-
-    public void renderShapes() {
-
-        G.game.sr.setColor(bgColor);
-        G.game.sr.rect(px, py, size * m.N_COL, -size * m.N_ROW);
-
-        nextPx = px - size * 1.1f;
-        nextPy = py - size;
-
-        G.game.sr.rect(nextPx, nextPy + size, size, - size * 2);
-    }
+    public GlyphLayout tl = new GlyphLayout();
 
     public void renderBatch() {
 
         TextureAtlas.AtlasRegion tile;
-        BitmapFont font = G.game.assets.get("dimbo.ttf", BitmapFont.class);
 
-        float padding = size * 0.1f;
+        // ===== Draw map bricks =====
+        tile = G.game.atlas.findRegion("beans/bricks", 6);
 
-        font.draw(G.game.batch, m.scoreStr, px + padding, py - padding);
+        G.game.batch.setColor(new Color(0x888888ff));
 
-        textLayout.setText(font, m.name);
-        float w = textLayout.width;
-        font.draw(G.game.batch, m.name, px - w + (size * m.b.length) - padding, py - padding);
+        for(int i = 0; i < m.b.length; i++) {
+
+            for(int j = m.OUT_ROW; j < m.b[i].length; j++) {
+
+                G.game.batch.draw(
+                        tile,
+                        px + (size * i),
+                        py + (j +1 - m.OUT_ROW) * - size,
+                        size,
+                        size
+                );
+            }
+        }
+
+        G.game.batch.setColor(new Color(0xffffffff));
 
         // ===== Draw map blocks =====
         for(int i = 0; i < m.b.length; i++) {
@@ -100,7 +111,6 @@ public class MapRender {
         }
 
         // ===== Draw player blocks =====
-
         tile = G.game.atlas.findRegion(COLORS.get(m.pb.b1.color), m.pb.b1.tile);
 
         float b1X = px + (m.pb.b1x + m.pb.b1.px) * size;
@@ -122,24 +132,104 @@ public class MapRender {
         );
         // Todo review ang and size2 it's a weird code
 
-        // ==== Draw next blocks =====
+        // ==== Draw border =====
+        //G.game.batch.setColor(new Color(0xd0d0d0ff));
+        randIndex = 0;
 
-        nextPx = px - size * 1.1f;
+        for(int i = -2; i < m.b.length +1; i++) {
+
+            if(i >= 0 && i < m.b.length) continue;
+
+            for(int j = m.OUT_ROW; j < m.b[0].length; j++) {
+
+                tile = G.game.atlas.findRegion("beans/bricks", rand[randIndex]);
+
+                G.game.batch.draw(
+                        tile,
+                        px + (size * i),
+                        py + (j +1 - m.OUT_ROW) * - size,
+                        size,
+                        size
+                );
+
+                if(randIndex < rand.length -1) randIndex++;
+                else randIndex = 0;
+            }
+        }
+        G.game.batch.setColor(new Color(0xffffffff));
+
+        // ==== Draw next blocks =====
+        nextPx = px - size;
         nextPy = py - size;
 
-        tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB2), 0);
-        G.game.batch.draw(tile, nextPx, nextPy, size, size);
+        tile = G.game.atlas.findRegion("beans/bricks", 2);
 
-        tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB1), 0);
+        G.game.batch.setColor(new Color(0x606060ff));
+        G.game.batch.draw(tile, nextPx, nextPy - size, size, size);
+        G.game.batch.draw(tile, nextPx, nextPy - size * 2, size, size);
+        G.game.batch.setColor(new Color(0xffffffff));
+
+        tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB2), 0);
         G.game.batch.draw(tile, nextPx, nextPy - size, size, size);
 
+        tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB1), 0);
+        G.game.batch.draw(tile, nextPx, nextPy - size * 2, size, size);
+
+        BitmapFont font1 = G.game.assets.get("dimbo_white.ttf", BitmapFont.class);
+        BitmapFont font2 = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
+
+        float padd = G.style.fontSizeVSmall;
+
+        // ==== Draw score =====
+        font1.draw(G.game.batch, m.scoreStr, px + padd, py - padd);
+
+        // ==== Init var =====
+        String txt;
+        float w;
+
+        // ==== Draw player name =====
+        txt = m.name;
+        tl.setText(font1, txt);
+        w = tl.width;
+        font1.draw(G.game.batch, txt, px - w + (size * m.b.length) - padd, py - padd);
+
+        // ==== Draw next text =====
+        txt = "Next";
+        tl.setText(font2, txt);
+        w = tl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - padd, py - tl.height - padd);
+
         // ==== Draw wins =====
-        font.draw(G.game.batch, Integer.toString(m.winsCount), nextPx, nextPy - size * 1.25f);
+        txt = "Wins";
+        tl.setText(font2, txt);
+        w = tl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - padd, nextPy - size * 3);
+
+        txt = Integer.toString(m.winsCount);
+        tl.setText(font1, txt);
+        w = tl.width;
+        font1.draw(G.game.batch, txt, nextPx - w + size - padd, nextPy - size * 3 - tl.height - padd);
 
         // ==== Draw draw score sum =====
-        font.draw(G.game.batch, Integer.toString(m.scoreSum), nextPx, nextPy - size * 2.25f);
+        txt = "Acc";
+        tl.setText(font2, txt);
+        w = tl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - padd, nextPy - size * 5);
+
+        txt = Integer.toString(m.scoreSum);
+        tl.setText(font1, txt);
+        w = tl.width;
+        font1.draw(G.game.batch, txt, nextPx - w + size - padd, nextPy - size * 5 - tl.height - padd);
 
         // ==== Draw draw match timer =====
-        font.draw(G.game.batch, Integer.toString((int)m.matchTimer), nextPx, nextPy - size * 3.25f);
+        txt = "Time";
+        tl.setText(font2, txt);
+        w = tl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - padd, nextPy - size * 7);
+
+        txt = Integer.toString((int)m.matchTimer);
+        tl.setText(font1, txt);
+        w = tl.width;
+        font1.draw(G.game.batch, txt, nextPx - w + size - padd, nextPy - size * 7 - tl.height - padd);
     }
 }

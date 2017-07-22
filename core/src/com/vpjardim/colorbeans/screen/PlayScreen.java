@@ -16,10 +16,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.animation.CamAccessor;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.input.TouchInput2;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
 
 /**
  * @author Vinícius Jardim
@@ -37,6 +40,7 @@ public class PlayScreen extends ScreenBase {
     private Stage stage;
     private Table table;
     private Color hlColor = new Color(0x2a4350ff);
+    private TweenManager transition;
 
     public PlayScreen(MapManager man) {
         manageInput = false;
@@ -47,6 +51,17 @@ public class PlayScreen extends ScreenBase {
     public void show() {
 
         super.show();
+
+        bgColor = new Color(0x101010ff);
+
+        transition = new TweenManager();
+        Tween.registerAccessor(OrthographicCamera.class, new CamAccessor());
+
+        Tween.set(cam, CamAccessor.POSITION).target(G.width / 1.5f, G.height / 2f).start(transition);
+        Tween.to(cam, CamAccessor.POSITION, 1.75f).target(G.width / 2f, G.height / 2f).start(transition);
+
+        Tween.set(cam, CamAccessor.ZOOM).target(1.2f).start(transition);
+        Tween.to(cam, CamAccessor.ZOOM, 1.75f).target(1f).start(transition);
 
         menuCam = new OrthographicCamera();
         menuViewport = new ScreenViewport(menuCam);
@@ -98,6 +113,7 @@ public class PlayScreen extends ScreenBase {
     public void render(float delta) {
 
         super.render(delta);
+        transition.update(delta);
 
         manager.winLost();
 
@@ -107,7 +123,6 @@ public class PlayScreen extends ScreenBase {
         G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
         for(MapRender r : manager.render) {
             r.m.update();
-            r.renderShapes();
             if(r.m.input instanceof TouchInput2) {
 
                 input = (TouchInput2) r.m.input;

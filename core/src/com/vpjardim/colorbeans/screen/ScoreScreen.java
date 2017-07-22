@@ -20,6 +20,8 @@ import com.vpjardim.colorbeans.core.ScoreTable;
  */
 public class ScoreScreen extends ScreenBase {
 
+    // Todo finish score screen
+
     private Stage stage;
     private Table table;
     private TextButton backButt;

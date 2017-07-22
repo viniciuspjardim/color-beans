@@ -4,18 +4,18 @@
 
 package com.vpjardim.colorbeans.animation;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import aurelienribon.tweenengine.TweenAccessor;
+
 /**
  * @author Vinícius Jardim
  * 01/11/2015
  */
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
-import aurelienribon.tweenengine.TweenAccessor;
-
 public class SpriteAccessor implements TweenAccessor<Sprite> {
 
-    public static final int ALPHA = 0;
-    public static final int COLORS = 1;
+    public static final int ALPHA    = 0;
+    public static final int COLORS   = 1;
+    public static final int POSITION = 2;
 
     @Override
     public int getValues(Sprite target, int tweenType, float[] returnValues) {
@@ -30,6 +30,10 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
                 returnValues[2] = target.getColor().b;
                 returnValues[3] = target.getColor().a;
                 return 4;
+            case POSITION:
+                returnValues[0] = target.getX();
+                returnValues[1] = target.getY();
+                return 2;
             default:
                 return -1;
         }
@@ -47,11 +51,10 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
                         newValues[0]);
                 break;
             case COLORS:
-                target.setColor(
-                        newValues[0],
-                        newValues[1],
-                        newValues[2],
-                        newValues[3]);
+                target.setColor(newValues[0], newValues[1], newValues[2], newValues[3]);
+                break;
+            case POSITION:
+                target.setPosition(newValues[0], newValues[1]);
                 break;
             default:
                 break;

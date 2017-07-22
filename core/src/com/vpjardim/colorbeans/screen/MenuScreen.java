@@ -5,6 +5,8 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,6 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.animation.SpriteAccessor;
+import com.vpjardim.colorbeans.core.MapRender;
+
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
+import aurelienribon.tweenengine.equations.Linear;
 
 /**
  * @author Vinícius Jardim
@@ -20,12 +28,16 @@ import com.vpjardim.colorbeans.G;
  */
 public class MenuScreen extends ScreenBase {
 
+    // Todo finish ribbon and falling beans animation
+
     public static final int ACT_PLAY     = 10;
     public static final int ACT_TRAINING = 11;
     public static final int ACT_SCORE    = 12;
     public static final int ACT_CONFIG   = 13;
 
     private Stage stage;
+    private Sprite[] beans = new Sprite[10];
+    private TweenManager transition;
 
     public MenuScreen() {
         manageInput = false;
@@ -37,6 +49,19 @@ public class MenuScreen extends ScreenBase {
         super.show();
 
         bgColor = G.game.data.bgColor();
+
+        transition = new TweenManager();
+        Tween.registerAccessor(Sprite.class, new SpriteAccessor());
+
+        for(int i = 0; i < beans.length; i++) {
+            beans[i] = G.game.atlas.createSprite(MapRender.COLORS.get(MathUtils.random(1, 5)));
+            beans[i].setPosition(MathUtils.random(G.width), MathUtils.random(G.height, G.height * 2f));
+
+            Tween.to(beans[i], SpriteAccessor.POSITION, 10).
+                    targetRelative(0, - G.game.height * 2f - 128).
+                    ease(Linear.INOUT).
+                    repeat(Tween.INFINITY, 1).start(transition);
+        }
 
         stage = new Stage(viewport, G.game.batch);
         G.game.input.addProcessor(stage);
@@ -95,15 +120,15 @@ public class MenuScreen extends ScreenBase {
         });
 
         Label.LabelStyle labelStyle =
-                G.game.skin.get("labelMenu", Label.LabelStyle.class);
+                G.game.skin.get("labelGTitle", Label.LabelStyle.class);
 
         Label label = new Label("Color Beans", labelStyle);
         label.setAlignment(Align.center);
 
         float bttW = G.style.buttWidth;
-        float padM = G.style.padMedium;
+        float padS = G.style.padSmall;
 
-        table.defaults().width(bttW).pad(padM);
+        table.defaults().width(bttW).pad(padS);
 
         outerT.add();
         outerT.add(table);
@@ -119,7 +144,7 @@ public class MenuScreen extends ScreenBase {
         table.row();
         table.add(optionsButt);
         table.row();
-        table.add(exitButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
+        table.add(exitButt).width(bttW).pad(G.style.padMedium, padS, padS, padS);
 
         stage.addActor(outerT);
         table.setDebug(G.game.dbg.uiTable); // #debugCode
@@ -128,6 +153,14 @@ public class MenuScreen extends ScreenBase {
     @Override
     public void render(float delta) {
         super.render(delta);
+        transition.update(delta);
+
+        G.game.batch.begin();
+        for(int i = 0; i < beans.length; i++) {
+            beans[i].draw(G.game.batch, 0.15f);
+        }
+        G.game.batch.end();
+
         stage.act(delta);
         stage.draw();
     }
