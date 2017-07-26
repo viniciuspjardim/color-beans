@@ -28,7 +28,7 @@ import aurelienribon.tweenengine.equations.Linear;
  */
 public class MenuScreen extends ScreenBase {
 
-    // Todo finish ribbon and falling beans animation
+    // Todo finish falling beans animation
 
     public static final int ACT_PLAY     = 10;
     public static final int ACT_TRAINING = 11;
@@ -38,6 +38,8 @@ public class MenuScreen extends ScreenBase {
     private Stage stage;
     private Sprite[] beans = new Sprite[10];
     private TweenManager transition;
+    private Table table;
+    private Label label;
 
     public MenuScreen() {
         manageInput = false;
@@ -67,7 +69,7 @@ public class MenuScreen extends ScreenBase {
         G.game.input.addProcessor(stage);
 
         Table outerT = new Table(G.game.skin);
-        Table table = new Table(G.game.skin);
+        table = new Table(G.game.skin);
 
         outerT.setFillParent(true);
         table.setBackground("tbg");
@@ -122,9 +124,6 @@ public class MenuScreen extends ScreenBase {
         Label.LabelStyle labelStyle =
                 G.game.skin.get("labelGTitle", Label.LabelStyle.class);
 
-        Label label = new Label("Color Beans", labelStyle);
-        label.setAlignment(Align.center);
-
         float bttW = G.style.buttWidth;
         float padS = G.style.padSmall;
 
@@ -134,7 +133,7 @@ public class MenuScreen extends ScreenBase {
         outerT.add(table);
         outerT.add();
 
-        table.add(label).width(G.style.ribbonWidth).height(G.style.ribbonHeight);
+        table.add().width(G.style.ribbonWidth).height(G.style.ribbonHeight * 0.88f).pad(0, padS, padS, padS);
         table.row();
         table.add(playButt);
         table.row();
@@ -145,6 +144,10 @@ public class MenuScreen extends ScreenBase {
         table.add(optionsButt);
         table.row();
         table.add(exitButt).width(bttW).pad(G.style.padMedium, padS, padS, padS);
+        table.getMaxWidth();
+
+        label = new Label("Color Beans", labelStyle);
+        label.setAlignment(Align.center);
 
         stage.addActor(outerT);
         table.setDebug(G.game.dbg.uiTable); // #debugCode
@@ -163,6 +166,13 @@ public class MenuScreen extends ScreenBase {
 
         stage.act(delta);
         stage.draw();
+
+        label.setSize(table.getWidth() + G.style.ribbonSide * 2 - G.style.menuBgPad * 2, G.style.ribbonHeight);
+        label.setPosition(table.getX() + G.style.menuBgPad - G.style.ribbonSide, G.height -label.getHeight() - table.getY() - table.getHeight() * 0.04f);
+
+        G.game.batch.begin();
+        label.draw(G.game.batch, 1f);
+        G.game.batch.end();
     }
 
     @Override

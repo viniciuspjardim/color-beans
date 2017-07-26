@@ -4,698 +4,719 @@ size: 1024,1024
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
+beans/bgb
+  rotate: false
+  xy: 2, 862
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+beans/bgb
+  rotate: false
+  xy: 2, 730
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+beans/bgb
+  rotate: false
+  xy: 134, 862
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
 beans/blue
   rotate: false
-  xy: 2, 794
+  xy: 2, 598
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 0
 beans/blue
   rotate: false
-  xy: 2, 662
+  xy: 134, 730
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 beans/blue
   rotate: false
-  xy: 134, 794
+  xy: 266, 862
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 beans/blue
   rotate: false
-  xy: 2, 530
+  xy: 2, 466
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 beans/blue
   rotate: false
-  xy: 134, 662
+  xy: 134, 598
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 beans/blue
   rotate: false
-  xy: 266, 794
+  xy: 266, 730
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 10
 beans/blue
   rotate: false
-  xy: 2, 398
+  xy: 398, 862
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 11
 beans/blue
   rotate: false
-  xy: 134, 530
+  xy: 2, 334
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 100
 beans/blue
   rotate: false
-  xy: 266, 662
+  xy: 134, 466
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 101
 beans/blue
   rotate: false
-  xy: 398, 794
+  xy: 266, 598
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 110
 beans/blue
   rotate: false
-  xy: 2, 266
+  xy: 398, 730
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 111
 beans/blue
   rotate: false
-  xy: 134, 398
+  xy: 530, 862
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1000
 beans/blue
   rotate: false
-  xy: 266, 530
+  xy: 2, 202
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1001
 beans/blue
   rotate: false
-  xy: 398, 662
+  xy: 134, 334
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1010
 beans/blue
   rotate: false
-  xy: 530, 794
+  xy: 266, 466
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1011
 beans/blue
   rotate: false
-  xy: 2, 134
+  xy: 398, 598
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1100
 beans/blue
   rotate: false
-  xy: 134, 266
+  xy: 530, 730
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1101
 beans/blue
   rotate: false
-  xy: 266, 398
+  xy: 662, 862
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1110
 beans/blue
   rotate: false
-  xy: 398, 530
+  xy: 2, 70
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1111
-beans/bricks
+beans/brick
   rotate: false
-  xy: 530, 662
+  xy: 134, 202
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
-beans/bricks
+beans/brick
   rotate: false
-  xy: 662, 794
+  xy: 266, 334
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
-beans/bricks
+beans/brick
   rotate: false
-  xy: 2, 2
+  xy: 398, 466
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
-beans/bricks
+beans/brick
   rotate: false
-  xy: 134, 134
+  xy: 530, 598
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
-beans/bricks
+beans/brick
   rotate: false
-  xy: 266, 266
+  xy: 662, 730
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 5
-beans/bricks
+beans/brick
   rotate: false
-  xy: 398, 398
+  xy: 794, 862
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 6
-beans/bricks
+beans/brick
   rotate: false
-  xy: 530, 530
+  xy: 134, 70
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 7
-beans/bricks
+beans/brick
   rotate: false
-  xy: 662, 662
+  xy: 266, 202
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 8
-beans/bricks
+beans/brick
   rotate: false
-  xy: 794, 794
+  xy: 398, 334
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 9
+beans/brick
+  rotate: false
+  xy: 530, 466
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 10
+beans/brick
+  rotate: false
+  xy: 662, 598
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 11
+beans/brick
+  rotate: false
+  xy: 794, 730
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 12
+beans/bshadow
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+beans/bshadow
+  rotate: false
+  xy: 926, 926
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+beans/bshadow
+  rotate: false
+  xy: 70, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 beans/dblue
   rotate: false
-  xy: 134, 2
+  xy: 266, 70
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 0
 beans/dblue
   rotate: false
-  xy: 266, 134
+  xy: 398, 202
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 beans/dblue
   rotate: false
-  xy: 398, 266
+  xy: 530, 334
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 beans/dblue
   rotate: false
-  xy: 530, 398
+  xy: 662, 466
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 beans/dblue
   rotate: false
-  xy: 662, 530
+  xy: 794, 598
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 beans/dblue
   rotate: false
-  xy: 794, 662
+  xy: 398, 70
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 10
 beans/dblue
   rotate: false
-  xy: 266, 2
+  xy: 530, 202
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 11
 beans/dblue
   rotate: false
-  xy: 398, 134
+  xy: 662, 334
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 100
 beans/dblue
   rotate: false
-  xy: 530, 266
+  xy: 794, 466
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 101
 beans/dblue
   rotate: false
-  xy: 662, 398
+  xy: 530, 70
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 110
 beans/dblue
   rotate: false
-  xy: 794, 530
+  xy: 662, 202
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 111
 beans/dblue
   rotate: false
-  xy: 398, 2
+  xy: 794, 334
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1000
 beans/dblue
   rotate: false
-  xy: 530, 134
+  xy: 662, 70
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1001
 beans/dblue
   rotate: false
-  xy: 662, 266
+  xy: 794, 202
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1010
 beans/dblue
   rotate: false
-  xy: 794, 398
+  xy: 794, 70
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1011
-beans/dblue
-  rotate: false
-  xy: 530, 2
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 1100
-beans/dblue
-  rotate: false
-  xy: 662, 134
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 1101
-beans/dblue
-  rotate: false
-  xy: 794, 266
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 1110
-beans/dblue
-  rotate: false
-  xy: 662, 2
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 1111
-beans/green
-  rotate: false
-  xy: 794, 134
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 0
-beans/green
-  rotate: false
-  xy: 794, 2
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 1
 
 pack_m2.png
 size: 1024,1024
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
-beans/green
+beans/dblue
   rotate: false
   xy: 2, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
-beans/green
+  index: 1100
+beans/dblue
   rotate: false
   xy: 2, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
-beans/green
+  index: 1101
+beans/dblue
   rotate: false
   xy: 134, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
-beans/green
+  index: 1110
+beans/dblue
   rotate: false
   xy: 2, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 10
+  index: 1111
 beans/green
   rotate: false
   xy: 134, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 11
+  index: 0
 beans/green
   rotate: false
   xy: 266, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 100
+  index: 1
 beans/green
   rotate: false
   xy: 2, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 101
+  index: 2
 beans/green
   rotate: false
   xy: 134, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 110
+  index: 3
 beans/green
   rotate: false
   xy: 266, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 111
+  index: 4
 beans/green
   rotate: false
   xy: 398, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1000
+  index: 10
 beans/green
   rotate: false
   xy: 2, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1001
+  index: 11
 beans/green
   rotate: false
   xy: 134, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1010
+  index: 100
 beans/green
   rotate: false
   xy: 266, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1011
+  index: 101
 beans/green
   rotate: false
   xy: 398, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1100
+  index: 110
 beans/green
   rotate: false
   xy: 530, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1101
+  index: 111
 beans/green
   rotate: false
   xy: 2, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1110
+  index: 1000
 beans/green
   rotate: false
   xy: 134, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1111
-beans/magenta
+  index: 1001
+beans/green
   rotate: false
   xy: 266, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 0
-beans/magenta
+  index: 1010
+beans/green
   rotate: false
   xy: 398, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1
-beans/magenta
+  index: 1011
+beans/green
   rotate: false
   xy: 530, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
-beans/magenta
+  index: 1100
+beans/green
   rotate: false
   xy: 662, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
-beans/magenta
+  index: 1101
+beans/green
   rotate: false
   xy: 2, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
-beans/magenta
+  index: 1110
+beans/green
   rotate: false
   xy: 134, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 10
+  index: 1111
 beans/magenta
   rotate: false
   xy: 266, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 11
+  index: 0
 beans/magenta
   rotate: false
   xy: 398, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 100
+  index: 1
 beans/magenta
   rotate: false
   xy: 530, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 101
+  index: 2
 beans/magenta
   rotate: false
   xy: 662, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 110
+  index: 3
 beans/magenta
   rotate: false
   xy: 794, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 111
+  index: 4
 beans/magenta
   rotate: false
   xy: 134, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1000
+  index: 10
 beans/magenta
   rotate: false
   xy: 266, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1001
+  index: 11
 beans/magenta
   rotate: false
   xy: 398, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1010
+  index: 100
 beans/magenta
   rotate: false
   xy: 530, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1011
+  index: 101
 beans/magenta
   rotate: false
   xy: 662, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1100
+  index: 110
 beans/magenta
   rotate: false
   xy: 794, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1101
+  index: 111
 beans/magenta
   rotate: false
   xy: 266, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1110
+  index: 1000
 beans/magenta
   rotate: false
   xy: 398, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1111
-beans/orange
+  index: 1001
+beans/magenta
   rotate: false
   xy: 530, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 0
-beans/orange
+  index: 1010
+beans/magenta
   rotate: false
   xy: 662, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1
-beans/orange
+  index: 1011
+beans/magenta
   rotate: false
   xy: 794, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
-beans/orange
+  index: 1100
+beans/magenta
   rotate: false
   xy: 398, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
-beans/orange
+  index: 1101
+beans/magenta
   rotate: false
   xy: 530, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
-beans/orange
+  index: 1110
+beans/magenta
   rotate: false
   xy: 662, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 10
+  index: 1111
 beans/orange
   rotate: false
   xy: 794, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 11
+  index: 0
 beans/orange
   rotate: false
   xy: 530, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 100
+  index: 1
 beans/orange
   rotate: false
   xy: 662, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 101
+  index: 2
 beans/orange
   rotate: false
   xy: 794, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 110
+  index: 3
 beans/orange
   rotate: false
   xy: 662, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 111
+  index: 4
 beans/orange
   rotate: false
   xy: 794, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1000
+  index: 10
 beans/orange
   rotate: false
   xy: 794, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1001
+  index: 11
 
 pack_m3.png
 size: 1024,1024
@@ -708,464 +729,506 @@ beans/orange
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1010
+  index: 100
 beans/orange
   rotate: false
   xy: 2, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1011
+  index: 101
 beans/orange
   rotate: false
   xy: 134, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1100
+  index: 110
 beans/orange
   rotate: false
   xy: 2, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1101
+  index: 111
 beans/orange
   rotate: false
   xy: 134, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1110
+  index: 1000
 beans/orange
   rotate: false
   xy: 266, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1111
-beans/purple
+  index: 1001
+beans/orange
   rotate: false
   xy: 2, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 0
-beans/purple
+  index: 1010
+beans/orange
   rotate: false
   xy: 134, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1
-beans/purple
+  index: 1011
+beans/orange
   rotate: false
   xy: 266, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
-beans/purple
+  index: 1100
+beans/orange
   rotate: false
   xy: 398, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
-beans/purple
+  index: 1101
+beans/orange
   rotate: false
   xy: 2, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
-beans/purple
+  index: 1110
+beans/orange
   rotate: false
   xy: 134, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 10
+  index: 1111
 beans/purple
   rotate: false
   xy: 266, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 11
+  index: 0
 beans/purple
   rotate: false
   xy: 398, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 100
+  index: 1
 beans/purple
   rotate: false
   xy: 530, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 101
+  index: 2
 beans/purple
   rotate: false
   xy: 2, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 110
+  index: 3
 beans/purple
   rotate: false
   xy: 134, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 111
+  index: 4
 beans/purple
   rotate: false
   xy: 266, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1000
+  index: 10
 beans/purple
   rotate: false
   xy: 398, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1001
+  index: 11
 beans/purple
   rotate: false
   xy: 530, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1010
+  index: 100
 beans/purple
   rotate: false
   xy: 662, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1011
+  index: 101
 beans/purple
   rotate: false
   xy: 2, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1100
+  index: 110
 beans/purple
   rotate: false
   xy: 134, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1101
+  index: 111
 beans/purple
   rotate: false
   xy: 266, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1110
+  index: 1000
 beans/purple
   rotate: false
   xy: 398, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1111
-beans/red
+  index: 1001
+beans/purple
   rotate: false
   xy: 530, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 0
-beans/red
+  index: 1010
+beans/purple
   rotate: false
   xy: 662, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1
-beans/red
+  index: 1011
+beans/purple
   rotate: false
   xy: 794, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
-beans/red
+  index: 1100
+beans/purple
   rotate: false
   xy: 134, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
-beans/red
+  index: 1101
+beans/purple
   rotate: false
   xy: 266, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
-beans/red
+  index: 1110
+beans/purple
   rotate: false
   xy: 398, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 10
+  index: 1111
 beans/red
   rotate: false
   xy: 530, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 11
+  index: 0
 beans/red
   rotate: false
   xy: 662, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 100
+  index: 1
 beans/red
   rotate: false
   xy: 794, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 101
+  index: 2
 beans/red
   rotate: false
   xy: 266, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 110
+  index: 3
 beans/red
   rotate: false
   xy: 398, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 111
+  index: 4
 beans/red
   rotate: false
   xy: 530, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1000
+  index: 10
 beans/red
   rotate: false
   xy: 662, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1001
+  index: 11
 beans/red
   rotate: false
   xy: 794, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1010
+  index: 100
 beans/red
   rotate: false
   xy: 398, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1011
+  index: 101
 beans/red
   rotate: false
   xy: 530, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1100
+  index: 110
 beans/red
   rotate: false
   xy: 662, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1101
+  index: 111
 beans/red
   rotate: false
   xy: 794, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1110
+  index: 1000
 beans/red
   rotate: false
   xy: 530, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
+  index: 1001
+beans/red
+  rotate: false
+  xy: 662, 134
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1010
+beans/red
+  rotate: false
+  xy: 794, 266
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1011
+beans/red
+  rotate: false
+  xy: 662, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1100
+beans/red
+  rotate: false
+  xy: 794, 134
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1101
+beans/red
+  rotate: false
+  xy: 794, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1110
+
+pack_m4.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+beans/red
+  rotate: false
+  xy: 2, 794
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
   index: 1111
 beans/transparent
   rotate: false
-  xy: 662, 134
+  xy: 2, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 0
 beans/transparent
   rotate: false
-  xy: 794, 266
+  xy: 134, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 beans/transparent
   rotate: false
-  xy: 662, 2
+  xy: 2, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 beans/yellow
   rotate: false
-  xy: 794, 134
+  xy: 134, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 0
 beans/yellow
   rotate: false
-  xy: 794, 2
+  xy: 266, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
-
-pack_m4.png
-size: 1024,512
-format: RGBA8888
-filter: MipMapLinearNearest,Linear
-repeat: none
 beans/yellow
   rotate: false
-  xy: 2, 266
+  xy: 2, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 beans/yellow
   rotate: false
-  xy: 2, 134
+  xy: 134, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 beans/yellow
   rotate: false
-  xy: 134, 266
+  xy: 266, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 beans/yellow
   rotate: false
-  xy: 2, 2
+  xy: 398, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 10
 beans/yellow
   rotate: false
-  xy: 134, 134
+  xy: 2, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 11
 beans/yellow
   rotate: false
-  xy: 266, 266
+  xy: 134, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 100
 beans/yellow
   rotate: false
-  xy: 134, 2
+  xy: 266, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 101
 beans/yellow
   rotate: false
-  xy: 266, 134
+  xy: 398, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 110
 beans/yellow
   rotate: false
-  xy: 398, 266
+  xy: 530, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 111
 beans/yellow
   rotate: false
-  xy: 266, 2
+  xy: 2, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1000
 beans/yellow
   rotate: false
-  xy: 398, 134
+  xy: 134, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1001
 beans/yellow
   rotate: false
-  xy: 530, 266
+  xy: 266, 398
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1010
 beans/yellow
   rotate: false
-  xy: 398, 2
+  xy: 398, 530
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1011
 beans/yellow
   rotate: false
-  xy: 530, 134
+  xy: 530, 662
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1100
 beans/yellow
   rotate: false
-  xy: 662, 266
+  xy: 662, 794
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1101
 beans/yellow
   rotate: false
-  xy: 530, 2
+  xy: 2, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1110
 beans/yellow
   rotate: false
-  xy: 662, 134
+  xy: 134, 134
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -1180,8 +1243,8 @@ game/b_blue_down
   rotate: false
   xy: 381, 533
   size: 128, 128
-  split: 63, 64, 55, 64
-  pad: 19, 21, 29, 42
+  split: 62, 62, 52, 64
+  pad: 20, 22, 30, 42
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1189,8 +1252,8 @@ game/b_blue_up
   rotate: false
   xy: 381, 403
   size: 128, 128
-  split: 63, 64, 47, 72
-  pad: 19, 21, 21, 50
+  split: 62, 62, 46, 72
+  pad: 20, 22, 22, 50
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1198,8 +1261,8 @@ game/b_gray_down
   rotate: false
   xy: 890, 522
   size: 128, 128
-  split: 63, 64, 55, 64
-  pad: 19, 21, 29, 42
+  split: 62, 62, 52, 64
+  pad: 20, 22, 30, 42
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1207,8 +1270,8 @@ game/b_gray_up
   rotate: false
   xy: 890, 392
   size: 128, 128
-  split: 63, 64, 47, 72
-  pad: 19, 21, 21, 50
+  split: 62, 62, 46, 72
+  pad: 20, 22, 22, 50
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1216,8 +1279,8 @@ game/b_green_down
   rotate: false
   xy: 514, 273
   size: 128, 128
-  split: 63, 64, 55, 64
-  pad: 19, 21, 29, 42
+  split: 62, 62, 52, 64
+  pad: 20, 22, 30, 42
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1225,8 +1288,8 @@ game/b_green_up
   rotate: false
   xy: 644, 273
   size: 128, 128
-  split: 63, 64, 47, 72
-  pad: 19, 21, 21, 50
+  split: 62, 62, 46, 72
+  pad: 20, 22, 22, 50
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1234,8 +1297,8 @@ game/b_red_down
   rotate: false
   xy: 774, 262
   size: 128, 128
-  split: 63, 64, 55, 64
-  pad: 19, 21, 29, 42
+  split: 62, 62, 52, 64
+  pad: 20, 22, 30, 42
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1243,8 +1306,8 @@ game/b_red_up
   rotate: false
   xy: 514, 143
   size: 128, 128
-  split: 63, 64, 47, 72
-  pad: 19, 21, 21, 50
+  split: 62, 62, 46, 72
+  pad: 20, 22, 22, 50
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1252,8 +1315,8 @@ game/b_yellow_down
   rotate: false
   xy: 644, 143
   size: 128, 128
-  split: 63, 64, 55, 64
-  pad: 19, 21, 29, 42
+  split: 62, 62, 52, 64
+  pad: 20, 22, 30, 42
   orig: 128, 128
   offset: 0, 0
   index: -1
@@ -1261,18 +1324,11 @@ game/b_yellow_up
   rotate: false
   xy: 514, 13
   size: 128, 128
-  split: 63, 64, 47, 72
-  pad: 19, 21, 21, 50
+  split: 62, 62, 46, 72
+  pad: 20, 22, 22, 50
   orig: 128, 128
   offset: 0, 0
   index: -1
-game/bgb
-  rotate: false
-  xy: 895, 771
-  size: 104, 128
-  orig: 128, 128
-  offset: 16, 0
-  index: 2
 game/c_shade
   rotate: false
   xy: 644, 13
@@ -1331,7 +1387,7 @@ game/keyboard_small
   index: 2
 game/number_bg
   rotate: false
-  xy: 895, 709
+  xy: 895, 839
   size: 60, 60
   orig: 64, 64
   offset: 2, 1
@@ -1376,68 +1432,54 @@ size: 1024,256
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
-game/bgb
-  rotate: false
-  xy: 2, 2
-  size: 128, 112
-  orig: 128, 128
-  offset: 0, 0
-  index: 1
-game/bgb
-  rotate: false
-  xy: 132, 18
-  size: 128, 96
-  orig: 128, 128
-  offset: 0, 0
-  index: 3
 game/c_shade
   rotate: false
-  xy: 2, 116
+  xy: 2, 2
   size: 128, 128
   orig: 512, 352
   offset: 4, 147
   index: 4
 game/c_shade
   rotate: false
-  xy: 132, 116
+  xy: 132, 2
   size: 128, 128
   orig: 512, 352
   offset: 191, 96
   index: 5
 game/c_shade
   rotate: false
-  xy: 262, 116
+  xy: 262, 2
   size: 128, 128
   orig: 512, 352
   offset: 333, 195
   index: 6
 game/c_shade
   rotate: false
-  xy: 392, 116
+  xy: 392, 2
   size: 128, 128
   orig: 512, 352
   offset: 380, 147
   index: 7
 game/c_shade
   rotate: false
-  xy: 522, 116
+  xy: 522, 2
   size: 128, 128
   orig: 512, 352
   offset: 333, 100
   index: 8
 game/c_shade
   rotate: false
-  xy: 652, 116
+  xy: 652, 2
   size: 128, 128
   orig: 512, 352
   offset: 286, 147
   index: 9
 game/tbg_yellow
   rotate: false
-  xy: 782, 116
+  xy: 782, 2
   size: 128, 128
-  split: 43, 43, 40, 47
-  pad: 25, 25, 21, 30
+  split: 56, 56, 48, 56
+  pad: 27, 27, 24, 36
   orig: 128, 128
   offset: 0, 0
   index: -1

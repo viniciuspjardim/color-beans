@@ -25,8 +25,11 @@ public class Style {
     public float padVBig;
 
     public float buttWidth;
+
     public float ribbonWidth;
     public float ribbonHeight;
+    public float ribbonSide;
+    public float menuBgPad;
 
     public Style() {
         setDefaults();
@@ -47,8 +50,11 @@ public class Style {
         padVBig        = 26;
 
         buttWidth      = 180;
-        ribbonWidth    = 420;
+
+        ribbonWidth    = 294;
         ribbonHeight   = 128;
+        ribbonSide     = 84;
+        menuBgPad      = 3.5f;
     }
 
     public void scale(float scale) {
@@ -68,7 +74,10 @@ public class Style {
         buttWidth      = buttWidth * scale;
         ribbonWidth    = ribbonWidth * scale;
 
-        if(G.res == G.RES_MEDIUM)
+        if(G.res == G.RES_MEDIUM) {
             ribbonHeight = 256;
+            ribbonSide = 168;
+            menuBgPad = 7;
+        }
     }
 }

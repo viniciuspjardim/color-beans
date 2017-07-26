@@ -50,12 +50,17 @@ import aurelienribon.tweenengine.Tween;
  */
 public class G extends Game {
 
+    // Todo android very laggy: 25fps with 2 maps, 17 with 4 maps
     // Todo small memory leak even in debugPG variant
     // Todo one map player blocks falls first then the others when if the game is restarted
     // Todo touch and drag in Android crashes app when using controller
+    // Todo capture android back button event: go to menu when in PlayScreen
     // Todo negative score sometimes after first match in campaign
-    // Todo music ideas
-    // restart music on map win, music fade in/out, add win/lost sound effects, pause music on pause
+    // Todo restart music on map win, music fade in/out, add win/lost sound effects, pause (...)
+    // music on game paused
+    // Todo fix art: choose better color for bricks, create text shade and text dialog balloon (...)
+    // 9patch, fix trash blocks image glitches and give it a gray semitransparent color
+    // Todo Add win/lost camera transition and statistics layer
 
     // Game resolution
     public static final int RES_SMALL  = 1;
@@ -104,7 +109,7 @@ public class G extends Game {
         // dbg.map1shape = 2;
         // dbg.campStart = 6;
         // dbg.campEnd = 7;
-        // dbg.delta = Dbg.DELTA_4X;
+        // dbg.delta = Dbg.DELTA_1X;
         // dbg.fps = true;
         // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;

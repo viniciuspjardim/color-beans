@@ -53,7 +53,29 @@ public class Db {
     public final transient Cfg.Ai ai6 = new Cfg.Ai();
     public final transient Cfg.Ai ai7 = new Cfg.Ai();
 
-    // Non final transient fields ->
+    /** Chain power from 1 to 24+. Ref: https://puyonexus.com/wiki/Chain_Power_Table */
+    public final transient int[] chainPowerTable = {
+            0, 8, 16, 32, 64, 128, 256, 512, 999 // Puyo Puyo
+            // 0, 8, 16, 32, 64, 96, 128, 160,   // Puyo Puyo Tsu
+            // 192, 224, 256, 288, 320, 352,
+            // 384, 416, 448, 480, 512, 544,
+            // 576, 608, 640, 672
+    };
+
+    /** Color bonus from 1 to 8. Ref: https://puyonexus.com/wiki/Scoring */
+    public final transient int [] colorBonusTable = {
+            0, 3, 6, 12, 24               // classic
+            // 0, 2, 4, 8, 16, 20, 24, 28 // fever
+    };
+
+    /** Group bonus from 4 to 11+. Ref: https://puyonexus.com/wiki/Scoring */
+    public final transient int[] groupBonusTable = {
+            0, 2, 3, 4, 5, 6, 7, 10   // classic
+            // 0, 1, 2, 3, 4, 5, 6, 8 // fever
+    };
+
+
+    // Non 'final transient' fields ->
 
     public Array<Cfg.Player> players = new Array<>();
 
@@ -267,6 +289,27 @@ public class Db {
 
         // Current training mode player fall speed
         mapT = mapT1;
+    }
+
+    public int getChainPower(int val) {
+        val--;
+        if(val < 0) return 0;
+        if(val >= chainPowerTable.length) return chainPowerTable[chainPowerTable.length -1];
+        return chainPowerTable[val];
+    }
+
+    public int getColorBonus(int val) {
+        val--;
+        if(val < 0) return 0;
+        if(val >= colorBonusTable.length) return colorBonusTable[colorBonusTable.length -1];
+        return colorBonusTable[val];
+    }
+
+    public int getGroupBonus(int val) {
+        val -= 4;
+        if(val < 0) return 0;
+        if(val >= groupBonusTable.length) return groupBonusTable[groupBonusTable.length -1];
+        return groupBonusTable[val];
     }
 
     public static boolean save(Db data) {

@@ -20,7 +20,7 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public class ScreenManager {
 
-    public static boolean showStudioScreen = true;
+    public static boolean showStudioScreen = false;
 
     private FPSLogger fps;
     private TweenManager transition;
@@ -71,9 +71,9 @@ public class ScreenManager {
         if(!G.loading && G.game.dbg.fps) {
             G.game.batch.setProjectionMatrix(currScreen.cam.combined);
             G.game.batch.begin();
-            BitmapFont font = G.game.assets.get("dimbo.ttf", BitmapFont.class);
+            BitmapFont font = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
             font.draw(G.game.batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
-                    G.width - 60, G.height - G.game.style.fontSizeMedium);
+                    G.width * 0.85f, G.height - G.game.style.fontSizeMedium);
             G.game.batch.end();
         }
 

@@ -407,48 +407,6 @@ public class Map implements TargetBase {
     public static final int TRASH_SOUND_YES = 2;
     public static final int TRASH_SOUND_PLAYING = 3;
 
-    /** Chain power from 1 to 24+. Ref: https://puyonexus.com/wiki/Chain_Power_Table */
-    public static final int[] chainPowerTable = {
-            0, 8, 16, 32, 64, 128, 256, 512, 999 // Puyo Puyo
-            // 0, 8, 16, 32, 64, 96, 128, 160,   // Puyo Puyo Tsu
-            // 192, 224, 256, 288, 320, 352,
-            // 384, 416, 448, 480, 512, 544,
-            // 576, 608, 640, 672
-    };
-
-    /** Color bonus from 1 to 8. Ref: https://puyonexus.com/wiki/Scoring */
-    public static final int [] colorBonusTable = {
-            0, 3, 6, 12, 24               // classic
-            // 0, 2, 4, 8, 16, 20, 24, 28 // fever
-    };
-
-    /** Group bonus from 4 to 11+. Ref: https://puyonexus.com/wiki/Scoring */
-    public static final int[] groupBonusTable = {
-            0, 2, 3, 4, 5, 6, 7, 10   // classic
-            // 0, 1, 2, 3, 4, 5, 6, 8 // fever
-    };
-
-    public static int getChainPower(int val) {
-        val--;
-        if(val < 0) return 0;
-        if(val >= chainPowerTable.length) return chainPowerTable[chainPowerTable.length -1];
-        return chainPowerTable[val];
-    }
-
-    public static int getColorBonus(int val) {
-        val--;
-        if(val < 0) return 0;
-        if(val >= colorBonusTable.length) return colorBonusTable[colorBonusTable.length -1];
-        return colorBonusTable[val];
-    }
-
-    public static int getGroupBonus(int val) {
-        val -= 4;
-        if(val < 0) return 0;
-        if(val >= groupBonusTable.length) return groupBonusTable[groupBonusTable.length -1];
-        return groupBonusTable[val];
-    }
-
     // <===== End of static members ======
 
     /** Reference holding the MapManager object */
@@ -606,7 +564,7 @@ public class Map implements TargetBase {
      * Default time to wait before changing from the {@link Map.MState#GRAVITY_FALL GRAVITY_FALL}
      * state to the next state
      */
-    public float afterGravityFallWait = 0.23f;
+    public float afterGravityFallWait = 0.34f;
 
     /**
      * Remaining time to wait before changing from the {@link Map.MState#GRAVITY_FALL GRAVITY_FALL}
@@ -1056,8 +1014,8 @@ public class Map implements TargetBase {
         }
 
         int a = block * 10;
-        int b = + Map.getChainPower(chainPowerCount)
-                + Map.getColorBonus(colorBonusCount)
+        int b = + G.game.data.getChainPower(chainPowerCount)
+                + G.game.data.getColorBonus(colorBonusCount)
                 + groupBonus;
 
         // #debugCode
@@ -1120,7 +1078,7 @@ public class Map implements TargetBase {
         for(IntMap.Entry<Integer> entry : lc.entries()) {
 
             // Group bonus: add to groupBonus the value of group bonus table
-            if (entry.value > 4) groupBonus += Map.getGroupBonus(entry.value);
+            if (entry.value > 4) groupBonus += G.game.data.getGroupBonus(entry.value);
         }
     }
 
