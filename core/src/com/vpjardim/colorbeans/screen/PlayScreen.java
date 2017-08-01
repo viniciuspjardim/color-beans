@@ -4,9 +4,14 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -36,6 +41,8 @@ public class PlayScreen extends ScreenBase {
 
     public MapManager manager;
 
+    private FrameBuffer fb;
+    private Sprite bgSprite;
     private OrthographicCamera menuCam;
     private Viewport menuViewport;
     private Stage stage;
@@ -140,6 +147,10 @@ public class PlayScreen extends ScreenBase {
 
         G.game.batch.setProjectionMatrix(cam.combined);
         G.game.batch.begin();
+
+        // Draw cached background
+        bgSprite.draw(G.game.batch);
+        // Draw beans and other stuff
         for(MapRender r : manager.render) {
             r.renderBatch();
         }
@@ -199,9 +210,49 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void resize(int width, int height) {
+
         super.resize(width, height);
-        manager.resize();
+
         menuViewport.update(width, height, true);
+        manager.resize();
+
+        updateCache();
+    }
+
+    /**
+     * Caches the game background to avoid loss of frame rate (especially in Android). The
+     * background is drawn only when the screen is resized
+     */
+    public void updateCache() {
+
+        // When the app is minimized the size of the window is 0x0 px and FrameBuffer would throw an
+        // exception if it's constructed. Because of this the cache is not updated
+        if(G.width == 0 || G.height == 0) return;
+
+        G.game.batch.setProjectionMatrix(cam.combined);
+
+        // Dispose because framebuffer and sprite will be recreated
+        if(bgSprite != null) bgSprite.getTexture().dispose();
+        if(fb != null) fb.dispose();
+
+        // Create a framebuffer with the new size
+        fb = new FrameBuffer(Pixmap.Format.RGBA8888, G.width, G.height, false);
+
+        fb.begin();
+
+        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        G.game.batch.begin();
+        for(MapRender r : manager.render) {
+            r.cacheBg();
+        }
+        G.game.batch.end();
+
+        fb.end();
+
+        bgSprite = new Sprite(fb.getColorBufferTexture());
+        bgSprite.flip(false, true);
     }
 
     @Override
@@ -218,6 +269,8 @@ public class PlayScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
+        if(bgSprite != null) bgSprite.getTexture().dispose();
+        if(fb != null) fb.dispose();
         G.game.input.removeProcessor(stage);
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();

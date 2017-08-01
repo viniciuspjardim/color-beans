@@ -17,11 +17,13 @@ public class Dbg {
 
     // Used to change game speed
     public static final int DELTA_REAL  = 1;
-    public static final int DELTA_0_25X = 2;
-    public static final int DELTA_0_5X  = 3;
-    public static final int DELTA_1X    = 4;
-    public static final int DELTA_2X    = 5;
-    public static final int DELTA_4X    = 6;
+    public static final int DELTA_0_02X = 2;
+    public static final int DELTA_0_1X  = 3;
+    public static final int DELTA_0_25X = 4;
+    public static final int DELTA_0_5X  = 5;
+    public static final int DELTA_1X    = 6;
+    public static final int DELTA_2X    = 7;
+    public static final int DELTA_4X    = 8;
 
     public int delta;
     public boolean fps;

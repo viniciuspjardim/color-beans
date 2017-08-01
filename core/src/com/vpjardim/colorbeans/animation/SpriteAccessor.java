@@ -5,7 +5,6 @@
 package com.vpjardim.colorbeans.animation;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import aurelienribon.tweenengine.TweenAccessor;
 
 /**

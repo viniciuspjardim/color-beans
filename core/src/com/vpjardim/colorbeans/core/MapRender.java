@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.IntMap;
 import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
@@ -18,20 +17,6 @@ import com.vpjardim.colorbeans.Map;
  * 02/09/2016
  */
 public class MapRender {
-
-    public static final IntMap<String> COLORS = new IntMap<>();
-
-    static {
-        COLORS.put(1, "beans/red");
-        COLORS.put(2, "beans/blue");
-        COLORS.put(3, "beans/green");
-        COLORS.put(4, "beans/yellow");
-        COLORS.put(5, "beans/purple");
-        COLORS.put(6, "beans/dblue");
-        COLORS.put(7, "beans/orange");
-        COLORS.put(8, "beans/magenta");
-        COLORS.put(9, "beans/transparent");
-    }
 
     public Map m;
 
@@ -61,17 +46,16 @@ public class MapRender {
         }
     }
 
-    public void renderBatch() {
+    public void cacheBg() {
 
         TextureAtlas.AtlasRegion tile;
 
-        // ===== Draw map bricks =====
-
+        // ===== Draw map dark bg bricks =====
         randIndex = 0;
 
         for(int i = 0; i < m.b.length; i++) {
 
-            for(int j = m.OUT_ROW; j < m.b[i].length; j++) {
+            for(int j = m.OUT_ROW; j < m.b[i].length + 1; j++) {
 
                 tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 3 + 10);
 
@@ -102,57 +86,14 @@ public class MapRender {
             G.game.batch.draw(tile, px, py - size / 2f - (size * i), size / 2f, size / 2f);
         }
 
-        // ===== Draw map blocks =====
-        for(int i = 0; i < m.b.length; i++) {
-
-            for(int j = m.OUT_ROW; j < m.b[i].length; j++) {
-
-                Block block = m.b[i][j];
-
-                if(!m.b[i][j].visible) continue;
-
-                tile = G.game.atlas.findRegion(COLORS.get(block.color), block.tile);
-
-                G.game.batch.draw(
-                        tile,
-                        px + (size * i),
-                        py + (j +1 - m.OUT_ROW - block.py) * - size,
-                        size,
-                        size
-                );
-            }
-        }
-
-        // ===== Draw player blocks =====
-        tile = G.game.atlas.findRegion(COLORS.get(m.pb.b1.color), m.pb.b1.tile);
-
-        float b1X = px + (m.pb.b1x + m.pb.b1.px) * size;
-        float b1Y = py + (m.pb.b1y +1 - m.OUT_ROW - m.pb.b1.py) * - size;
-        float ang = -(m.pb.rotationAnim - 0.5f) / 4f * 2f * MathUtils.PI;
-
-        G.game.batch.draw(tile, b1X, b1Y, size, size);
-
-        tile = G.game.atlas.findRegion(COLORS.get(m.pb.b2.color), m.pb.b2.tile);
-
-        float size2 = size * 0.7071f; // 1/sqrt(2) == 0.7071
-
-        G.game.batch.draw(
-                tile,
-                b1X + (size2 * MathUtils.cos(ang) - size2 * MathUtils.sin(ang)),
-                b1Y + (size2 * MathUtils.sin(ang) + size2 * MathUtils.cos(ang)),
-                size,
-                size
-        );
-        // Todo review ang and size2 it's a weird code
-
-        // ==== Draw border =====
+        // ==== Draw side border: light bricks =====
         randIndex = 0;
 
         for(int i = -2; i < m.b.length +1; i++) {
 
-            if(i >= 0 && i < m.b.length) continue;
-
             for(int j = m.OUT_ROW; j < m.b[0].length; j++) {
+
+                if(i >= 0 && i < m.b.length) continue;
 
                 tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 9 + 1);
 
@@ -168,6 +109,96 @@ public class MapRender {
                 else randIndex = 0;
             }
         }
+    }
+
+    public void renderBatch() {
+
+        TextureAtlas.AtlasRegion tile;
+
+        // ===== Draw map blocks =====
+        for(int i = 0; i < m.b.length; i++) {
+
+            for(int j = m.OUT_ROW; j < m.b[i].length; j++) {
+
+                Block block = m.b[i][j];
+
+                if(!m.b[i][j].visible) continue;
+
+                tile = G.game.data.BEANS_REG.get(block.getRegionKey());
+
+                G.game.batch.draw(
+                        tile,
+                        px + (size * i),
+                        py + (j +1 - m.OUT_ROW - block.py) * - size,
+                        size,
+                        size
+                );
+            }
+        }
+
+        randIndex = 0;
+
+        // ===== Draw player blocks =====
+        tile = G.game.data.BEANS_REG.get(m.pb.b1.getRegionKey());
+
+        float b1X = px + (m.pb.b1x + m.pb.b1.px) * size;
+        float b1Y = py + (m.pb.b1y +1 - m.OUT_ROW - m.pb.b1.py) * - size;
+        float ang = -(m.pb.rotationAnim - 0.5f) / 4f * 2f * MathUtils.PI;
+
+        G.game.batch.draw(tile, b1X, b1Y, size, size);
+
+        tile = G.game.data.BEANS_REG.get(m.pb.b2.getRegionKey());
+
+        float size2 = size * 0.7071f; // 1/sqrt(2) == 0.7071
+
+        G.game.batch.draw(
+                tile,
+                b1X + (size2 * MathUtils.cos(ang) - size2 * MathUtils.sin(ang)),
+                b1Y + (size2 * MathUtils.sin(ang) + size2 * MathUtils.cos(ang)),
+                size,
+                size
+        );
+        // Todo review ang and size2 it's a weird code
+
+        // ==== Draw map ceil and flor that shakes with the beans ====
+        for(int i = -2; i < m.b.length + 1; i++) {
+
+            tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 9 + 1);
+
+            G.game.batch.draw(
+                    tile,
+                    px + (size * i),
+                    py,
+                    size,
+                    size
+            );
+
+            if(randIndex < rand.length -1) randIndex++;
+            else randIndex = 0;
+        }
+
+        for(int i = -2; i < m.b.length + 1; i++) {
+
+            tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 9 + 1);
+
+            float beansPy;
+
+            if(i >=0 && i < m.b.length && (m.colShakeTimer[i] != 0f || m.isInState(Map.MState.OVER)))
+                beansPy = m.b[i][Map.N_ROW + Map.OUT_ROW -1].py * size;
+            else
+                beansPy = 0f;
+
+            G.game.batch.draw(
+                    tile,
+                    px + (size * i),
+                    py + (m.b[0].length +1 - m.OUT_ROW) * - size + beansPy,
+                    size,
+                    size
+            );
+
+            if(randIndex < rand.length -1) randIndex++;
+            else randIndex = 0;
+        }
 
         // ==== Draw next blocks =====
         nextPx = px - size;
@@ -178,23 +209,22 @@ public class MapRender {
         G.game.batch.draw(tile, nextPx, nextPy - size, size, size);
         G.game.batch.draw(tile, nextPx, nextPy - size * 2, size, size);
 
-        tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB2), 0);
+        tile = G.game.data.BEANS_REG.get(m.pb.nextB2 * 10000);
         G.game.batch.draw(tile, nextPx, nextPy - size, size, size);
 
-        tile = G.game.atlas.findRegion(COLORS.get(m.pb.nextB1), 0);
+        tile = G.game.data.BEANS_REG.get(m.pb.nextB1 * 10000);
         G.game.batch.draw(tile, nextPx, nextPy - size * 2, size, size);
 
-        BitmapFont font1 = G.game.assets.get("dimbo_white.ttf", BitmapFont.class);
-        BitmapFont font2 = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
-
+        // ==== Init var =====
         float pad = G.style.fontSizeVSmall;
+        String txt;
+        float w;
+
+        BitmapFont font1 = G.game.data.font1;
+        BitmapFont font2 = G.game.data.font2;
 
         // ==== Draw score =====
         font1.draw(G.game.batch, m.scoreStr, px + pad, py - pad);
-
-        // ==== Init var =====
-        String txt;
-        float w;
 
         // ==== Draw player name =====
         txt = m.name;

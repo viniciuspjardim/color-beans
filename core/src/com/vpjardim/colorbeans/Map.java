@@ -151,8 +151,9 @@ public class Map implements TargetBase {
                 // Waiting animation to end
                 boolean gravityFallAnim = map.anim.gravityFall();
                 map.anim.deform();
+                map.anim.shake();
 
-                if(map.trashSound == TRASH_SOUND_YES) {
+                if(map.trashSound == TRASH_SOUND_REQUESTED) {
                     G.game.assets.get("audio/trash.ogg", Sound.class).play();
                     map.trashSound = TRASH_SOUND_PLAYING;
                 }
@@ -404,7 +405,7 @@ public class Map implements TargetBase {
     public static final int OUT_ROW = 10;
 
     public static final int TRASH_SOUND_NO = 1;
-    public static final int TRASH_SOUND_YES = 2;
+    public static final int TRASH_SOUND_REQUESTED = 2;
     public static final int TRASH_SOUND_PLAYING = 3;
 
     // <===== End of static members ======
@@ -518,6 +519,8 @@ public class Map implements TargetBase {
     /** Number of trash blocks to add when it's {@link #trashBlocksTurn} */
     private int trashBlocksToAdd = 0;
 
+    public float trashShakePower;
+
     /**
      * {@link #trashBlocksToAdd} has a limit in per turn: {@link #maxTrashOnce}. When this limit is
      * reached the player will have one turn then more trash blocks can be added
@@ -551,8 +554,11 @@ public class Map implements TargetBase {
     /** Acceleration of the gravity fall blocks in rows per second squared: 80 default */
     public float gravityFallAcceleration = 80f;
 
-    /** Used to make each column of blocks fall at random speed (for better visual) */
+    /** Used to make each column of blocks fall at random speed (for prettier animation) */
     public float[] colAcceleration;
+
+    /** Used to make each column of blocks shake when trash blocks fall down */
+    public float[] colShakeTimer;
 
     /**
      * Default time to wait before insert the player blocks. The player can use this time to do his
@@ -630,6 +636,7 @@ public class Map implements TargetBase {
         lc = new IntMap<>();
         colorBonusArr = new boolean[Block.CLR_N];
         colAcceleration = new float[N_COL];
+        colShakeTimer = new float[N_COL];
 
         scoreStr = "0";
 
@@ -695,6 +702,7 @@ public class Map implements TargetBase {
         // lost = false;
         blockChanged = true;
         trashBlocksToAdd = 0;
+        // trashShakePower
         // trashBlocksTurn = true;
 
         matchTimer = 0f;
@@ -705,6 +713,11 @@ public class Map implements TargetBase {
         // vPlayMoveMultip = 8f;
         // gravityFallAcceleration = 80f;
         // colAcceleration;
+
+        for(int i = 0; i < colShakeTimer.length; i++) {
+            colShakeTimer[i] = 0f;
+        }
+
         // beforeInsertWait = 0.2f;
         // afterGravityFallWait = 0.23f;
         // afterGravityFallTimer = afterGravityFallWait;
@@ -769,8 +782,8 @@ public class Map implements TargetBase {
                         b[col][row + nEmpty] = b[col][row];
                         b[col][row] = swap;
 
-                        b[col][row + nEmpty].tile = 0;
-                        fixSideLinks(col, row);
+                        removeSideLinks(col, row + nEmpty);
+                        removeSideLinks(col, row);
                         blockChanged = true;
                     }
                 }
@@ -985,14 +998,24 @@ public class Map implements TargetBase {
         block.tile = tile;
     }
 
-    /** Removes the side links with the current block because it will start to fall */
-    private void fixSideLinks(int col, int row) {
-        // Right block, left link
-        if(col + 1 < b.length && b[col + 1][row].tile % 10 == 1)
-            b[col + 1][row].tile -= 1;
+    /** Removes the side links with the current block because it will move */
+    public void removeSideLinks(int col, int row) {
+
         // Left block, right link
         if(col - 1 >= 0 && b[col - 1][row].tile / 100 % 10 == 1)
             b[col - 1][row].tile -= 100;
+
+        // Center block left link
+        if(b[col][row].tile % 10 == 1)
+            b[col][row].tile -= 1;
+
+        // Center block right link
+        if(b[col][row].tile / 100 % 10 == 1)
+            b[col][row].tile -= 100;
+
+        // Right block, left link
+        if(col + 1 < b.length && b[col + 1][row].tile % 10 == 1)
+            b[col + 1][row].tile -= 1;
     }
 
     /**
@@ -1117,6 +1140,7 @@ public class Map implements TargetBase {
 
         int toAdd = Math.min(trashBlocksToAdd, maxTrashOnce);
         trashBlocksToAdd -= toAdd;
+        trashShakePower = (toAdd / maxTrashOnce) * 0.15f + 0.1f;
 
         // row OUT_ROW -1 -> 0
         for(int row = OUT_ROW -1; row >= 0; row--) {
@@ -1509,6 +1533,14 @@ public class Map implements TargetBase {
             pb.b1.setColor(4);
             pb.b2.setColor(5);
             pb.b1y = 8 + OUT_ROW;
+        }
+        // Filled by all colors. Only 3 rows free at the top.
+        else if(shape == 11) {
+            for(int col = 0; col < b.length; col++) {
+                for(int row = OUT_ROW + 3; row < b[col].length; row++) {
+                    b[col][row].setColor(MathUtils.random(Block.CLR_A, Block.CLR_N));
+                }
+            }
         }
     }
 

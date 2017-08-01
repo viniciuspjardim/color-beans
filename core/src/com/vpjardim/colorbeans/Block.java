@@ -144,6 +144,8 @@ public class Block {
         py = gravityFallEnd - gravityFallStart;
     }
 
+    public int getRegionKey() { return color * 10000 + tile; }
+
     /**
      * Needs to be called before render when the map is loaded from a serialized source. This
      * because some references and objects are not serialized and it needs to be setup

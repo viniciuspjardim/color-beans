@@ -112,7 +112,7 @@ public class Campaign extends MapManager {
 
         // #DebugCode the content is needed, just the if is debug
         if(!G.game.dbg.aiDisableMap1) {
-            // Todo Ai3 seams laggy in android. Debug (probably rendering, not Ai3)
+            // Todo Ai3 seams laggy in android. Debug (probably rendering too slow, not Ai3)
             aiMap.ai = new Ai1();
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }

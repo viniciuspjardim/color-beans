@@ -227,8 +227,9 @@ public class LoadingScreen extends ScreenBase {
             font = G.game.assets.get("dimbo_gray.ttf", BitmapFont.class);
             G.game.skin.add("dimbo_gray", font);
 
-
             G.game.skin.load(Gdx.files.internal("img/skin.json"));
+
+            G.game.data.initAfterLoading();
 
             G.loading = false;
         }

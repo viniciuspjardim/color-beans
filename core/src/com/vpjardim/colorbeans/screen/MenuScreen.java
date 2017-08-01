@@ -16,8 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.animation.SpriteAccessor;
-import com.vpjardim.colorbeans.core.MapRender;
-
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Linear;
@@ -56,7 +54,7 @@ public class MenuScreen extends ScreenBase {
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 
         for(int i = 0; i < beans.length; i++) {
-            beans[i] = G.game.atlas.createSprite(MapRender.COLORS.get(MathUtils.random(1, 5)));
+            beans[i] = G.game.atlas.createSprite(G.game.data.COLORS.get(MathUtils.random(1, 5)));
             beans[i].setPosition(MathUtils.random(G.width), MathUtils.random(G.height, G.height * 2f));
 
             Tween.to(beans[i], SpriteAccessor.POSITION, 10).

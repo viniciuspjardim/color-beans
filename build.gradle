@@ -18,7 +18,7 @@ allprojects {
     ext {
         appName = "Color Beans"
         gdxVersion = '1.9.7-SNAPSHOT'
-        aiVersion = '1.8.0'
+        aiVersion = '1.8.2-SNAPSHOT'
     }
 
     repositories {

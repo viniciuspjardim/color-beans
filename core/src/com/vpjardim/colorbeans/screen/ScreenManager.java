@@ -48,6 +48,10 @@ public class ScreenManager {
             if(G.game.dbg.lagWarn && fps < 50)
                 Dbg.inf("LagWarn", fps + " fps");
         }
+        else if(G.game.dbg.delta == Dbg.DELTA_0_02X)
+            G.delta = 0.0003333f; // 3000 fps
+        else if(G.game.dbg.delta == Dbg.DELTA_0_1X)
+            G.delta = 0.0016667f; // 600 fps
         else if(G.game.dbg.delta == Dbg.DELTA_0_25X)
             G.delta = 0.0041667f; // 240 fps
         else if(G.game.dbg.delta == Dbg.DELTA_0_5X)

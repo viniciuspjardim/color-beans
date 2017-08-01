@@ -34,12 +34,12 @@ public abstract class MapManager {
         // Calculating side size
 
         float sideX = G.width / (((Map.N_COL + 2f) * maps.size) + 1);
-        float sideY = G.height / Map.N_ROW;
+        float sideY = G.height / (Map.N_ROW + 1);
 
         float side = Math.min(sideX, sideY);
 
         float totalX = (side * (Map.N_COL + 2f) * maps.size) + side;
-        float totalY = side * Map.N_ROW;
+        float totalY = (side * Map.N_ROW) + side;
 
         // Updating size and positions
         for(int i = 0; i < render.size; i++) {
@@ -49,7 +49,7 @@ public abstract class MapManager {
             r.size = side;
             r.px = (side * Map.N_COL) * i + (side * 2f * (i + 1))
                    + (G.width - totalX) / 2f;
-            r.py = (G.height + totalY) / 2f;
+            r.py = (G.height + totalY) / 2f - side / 2f;
         }
     }
 

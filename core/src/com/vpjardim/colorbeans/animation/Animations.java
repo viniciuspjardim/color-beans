@@ -26,24 +26,28 @@ public class Animations {
         boolean animating = false;
 
         for(int i = 0; i < m.b.length; i++) {
+            // Skipping columns that are already in the deform or shake animation
+            if(m.colShakeTimer[i] != 0) continue;
+
             for(int j =  0; j < m.b[i].length; j++) {
-                animating = animating | blockGravityFall(m.b[i][j], i);
+                animating = animating | blockGravityFall(m.b[i][j], i, j);
             }
         }
 
         return animating;
     }
 
-    private boolean blockGravityFall(Block b, int col) {
+    private boolean blockGravityFall(Block b, int col, int row) {
 
-        if(b.py == 0f) return false;
+        if(b.py == 0f || b.isEmpty()) return false;
 
         boolean animating = true;
 
         b.moveTime += G.delta;
 
         // position = 1/2 * a * t^2
-        float shift = 0.5f * (m.gravityFallAcceleration + m.colAcceleration[col]) * b.moveTime * b.moveTime;
+        float shift = 0.5f * (m.gravityFallAcceleration + m.colAcceleration[col])
+                * b.moveTime * b.moveTime;
 
         // Initial py - shift. The block on the matrix on Map
         // has already felt (it`s on the bottom), but on the screen
@@ -51,9 +55,17 @@ public class Animations {
         b.py = b.moveY - shift;
 
         if(b.py <= 0f) {
+
             animating = false;
             b.recycleFall();
             b.deformTime = m.afterGravityFallWait;
+
+            // Sound quite after trashBlocksTurn, which is not trashBlocksTurn anymore
+            if(b.isTrash() && !m.trashBlocksTurn) {
+                // If it's not playing the sound, request it
+                if(m.trashSound == Map.TRASH_SOUND_NO) m.trashSound = Map.TRASH_SOUND_REQUESTED;
+                if(m.colShakeTimer[col] == 0f) m.colShakeTimer[col] = m.afterGravityFallWait;
+            }
         }
 
         return animating;
@@ -75,7 +87,7 @@ public class Animations {
 
     private boolean blockDeform(Block b) {
 
-        if(b.deformTime == 0f) return false;
+        if(b.deformTime == 0f || b.isEmpty()) return false;
 
         boolean animating = true;
 
@@ -83,14 +95,9 @@ public class Animations {
 
         b.deformTime -= G.delta;
 
-        // Todo why it's working only when is not on trashBlocksTurn?
-        if(b.color == Block.CLR_T && !m.trashBlocksTurn && m.trashSound == Map.TRASH_SOUND_NO) {
-            m.trashSound = Map.TRASH_SOUND_YES;
-        }
-
         // 4, 0, 3, 0, 4, 0, 3, 0 (tile index)
 
-        if(b.deformTime <= 0f) {
+       if(b.deformTime <= 0f) {
             animating = false;
             b.deformTime = 0f;
             b.tile = 0;
@@ -115,6 +122,56 @@ public class Animations {
         }
         else if(b.deformTime <= deformTime) {
             b.tile = 4;
+        }
+
+        return animating;
+    }
+
+    /** @return true if it's animating - animation not finished yet */
+    public boolean shake() {
+
+        boolean animating = false;
+
+        for(int i = 0; i < m.b.length; i++) {
+            animating = animating | colShake(i);
+        }
+
+        return animating;
+    }
+
+    private boolean colShake(int col) {
+
+        if(m.colShakeTimer[col] == 0f) return false;
+
+        boolean animating = true;
+        m.colShakeTimer[col] -= G.delta;
+        float time = m.colShakeTimer[col] / m.afterGravityFallWait;
+
+        for(int row = 0; row < m.b[col].length; row++) {
+
+            if(m.b[col][row].isEmpty()) continue;
+
+            m.removeSideLinks(col, row);
+
+            if(m.colShakeTimer[col] <= 0f) {
+                m.colShakeTimer[col] = 0f;
+                m.b[col][row].py = 0f;
+                animating = false;
+            }
+            else if(time < 1f/6f)
+                m.b[col][row].py = - 0.06f + 0.06f * ((-time +1f/6f) * 6f); // from -0.06 to 0 = 0.06
+            else if(time < 2f/6f)
+                m.b[col][row].py = + 0.15f - 0.21f * ((-time +2f/6f) * 6f); // from 0.15 to -0.06 = -0.21
+            else if(time < 3f/6f)
+                m.b[col][row].py = - 0.3f  + 0.45f * ((-time +3f/6f) * 6f); // from -0.3 to 0.15 = 0.45
+            else if(time < 4f/6f)
+                m.b[col][row].py = + 0.75f - 1.05f * ((-time +4f/6f) * 6f); // from 0.75 to -0.3 = -1.05
+            else if(time < 5f/6f)
+                m.b[col][row].py = - 1f    + 1.75f * ((-time +5f/6f) * 6f); // from -1 to 0.75 = 1.75
+            else if(time < 1f)
+                m.b[col][row].py = + 0f    - 1f    * ((-time +1f   ) * 6f); // from 0 to -1 = -1
+
+            m.b[col][row].py *= m.trashShakePower;
         }
 
         return animating;
@@ -269,7 +326,7 @@ public class Animations {
 
         for(int i = 0; i < m.b.length; i++) {
             for(int j =  0; j < m.b[i].length; j++) {
-                m.b[i][j].tile = 0;
+                m.removeSideLinks(i, j);
                 animating = animating | blockGameOver(m.b[i][j], i);
             }
         }
@@ -278,8 +335,6 @@ public class Animations {
     }
 
     private boolean blockGameOver(Block b, int col) {
-
-        if(b.isEmpty()) return false;
 
         boolean animating = true;
 
