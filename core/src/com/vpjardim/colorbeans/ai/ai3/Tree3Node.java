@@ -15,8 +15,8 @@ import com.vpjardim.colorbeans.core.Dbg;
  * 30/04/2016
  */
 public class Tree3Node implements Pool.Poolable {
-
-    public static Pool<Tree3Node> pool = new Pool<Tree3Node>(8450) {
+    
+    public static Pool<Tree3Node> pool = new Pool<Tree3Node>(676) {
         @Override
         protected Tree3Node newObject() {
             return new Tree3Node();

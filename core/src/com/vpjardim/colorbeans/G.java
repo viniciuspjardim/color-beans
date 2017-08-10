@@ -109,7 +109,7 @@ public class G extends Game {
         // dbg.map1shape = 11;
         // dbg.campStart = 6;
         // dbg.campEnd = 7;
-        // dbg.delta = Dbg.DELTA_0_25X;
+        // dbg.delta = Dbg.DELTA_1X;
         // dbg.fps = true;
         // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;

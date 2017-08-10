@@ -5,8 +5,6 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,10 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
-import com.vpjardim.colorbeans.animation.SpriteAccessor;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
-import aurelienribon.tweenengine.equations.Linear;
+import com.vpjardim.colorbeans.animation.MenuBeans;
 
 /**
  * @author Vinícius Jardim
@@ -34,8 +29,7 @@ public class MenuScreen extends ScreenBase {
     public static final int ACT_CONFIG   = 13;
 
     private Stage stage;
-    private Sprite[] beans = new Sprite[10];
-    private TweenManager transition;
+    private MenuBeans beansAnim;
     private Table table;
     private Label label;
 
@@ -50,20 +44,8 @@ public class MenuScreen extends ScreenBase {
 
         bgColor = G.game.data.bgColor();
 
-        transition = new TweenManager();
-        Tween.registerAccessor(Sprite.class, new SpriteAccessor());
-
-        for(int i = 0; i < beans.length; i++) {
-            beans[i] = G.game.atlas.createSprite(G.game.data.COLORS.get(MathUtils.random(1, 5)));
-            beans[i].setPosition(MathUtils.random(G.width), MathUtils.random(G.height, G.height * 2f));
-
-            Tween.to(beans[i], SpriteAccessor.POSITION, 10).
-                    targetRelative(0, - G.game.height * 2f - 128).
-                    ease(Linear.INOUT).
-                    repeat(Tween.INFINITY, 1).start(transition);
-        }
-
         stage = new Stage(viewport, G.game.batch);
+        beansAnim = new MenuBeans();
         G.game.input.addProcessor(stage);
 
         Table outerT = new Table(G.game.skin);
@@ -154,12 +136,10 @@ public class MenuScreen extends ScreenBase {
     @Override
     public void render(float delta) {
         super.render(delta);
-        transition.update(delta);
+        beansAnim.update();
 
         G.game.batch.begin();
-        for(int i = 0; i < beans.length; i++) {
-            beans[i].draw(G.game.batch, 0.15f);
-        }
+        beansAnim.render();
         G.game.batch.end();
 
         stage.act(delta);
@@ -171,6 +151,12 @@ public class MenuScreen extends ScreenBase {
         G.game.batch.begin();
         label.draw(G.game.batch, 1f);
         G.game.batch.end();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        beansAnim.resize();
     }
 
     @Override
