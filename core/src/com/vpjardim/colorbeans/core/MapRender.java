@@ -38,7 +38,7 @@ public class MapRender {
     public final int[] rand = new int[105];
     public int randIndex = 0;
 
-    public GlyphLayout tl = new GlyphLayout();
+    public GlyphLayout gl = new GlyphLayout();
 
     public MapRender() {
         for(int i = 0; i < rand.length; i++) {
@@ -228,47 +228,47 @@ public class MapRender {
 
         // ==== Draw player name =====
         txt = m.name;
-        tl.setText(font1, txt);
-        w = tl.width;
+        gl.setText(font1, txt);
+        w = gl.width;
         font1.draw(G.game.batch, txt, px - w + (size * m.b.length) - pad, py - pad);
 
         // ==== Draw next text =====
         txt = "Next";
-        tl.setText(font2, txt);
-        w = tl.width;
-        font2.draw(G.game.batch, txt, nextPx - w + size - pad, py - tl.height - pad);
+        gl.setText(font2, txt);
+        w = gl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - pad, py - gl.height - pad);
 
         // ==== Draw wins =====
         txt = "Wins";
-        tl.setText(font2, txt);
-        w = tl.width;
+        gl.setText(font2, txt);
+        w = gl.width;
         font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 3);
 
         txt = Integer.toString(m.winsCount);
-        tl.setText(font1, txt);
-        w = tl.width;
-        font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 3 - tl.height - pad);
+        gl.setText(font1, txt);
+        w = gl.width;
+        font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 3 - gl.height - pad);
 
         // ==== Draw draw score sum =====
         txt = "Acc";
-        tl.setText(font2, txt);
-        w = tl.width;
+        gl.setText(font2, txt);
+        w = gl.width;
         font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 5);
 
         txt = Integer.toString(m.scoreSum);
-        tl.setText(font1, txt);
-        w = tl.width;
-        font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 5 - tl.height - pad);
+        gl.setText(font1, txt);
+        w = gl.width;
+        font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 5 - gl.height - pad);
 
         // ==== Draw draw match timer =====
         txt = "Time";
-        tl.setText(font2, txt);
-        w = tl.width;
+        gl.setText(font2, txt);
+        w = gl.width;
         font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 7);
 
         txt = Integer.toString((int)m.matchTimer);
-        tl.setText(font1, txt);
-        w = tl.width;
-        font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 7 - tl.height - pad);
+        gl.setText(font1, txt);
+        w = gl.width;
+        font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 7 - gl.height - pad);
     }
 }

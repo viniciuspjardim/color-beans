@@ -6,6 +6,7 @@ package com.vpjardim.colorbeans.views;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
@@ -20,12 +21,14 @@ import com.vpjardim.colorbeans.input.TargetBase;
  */
 
 public class InputActor extends Actor implements TargetBase {
+
     public static final int CONTROLLER = 1;
     public static final int KEYBOARD   = 2;
 
     private Array<TextureAtlas.AtlasRegion> bodies;
     private TextureAtlas.AtlasRegion body;
     private TextureAtlas.AtlasRegion numberBg;
+    private GlyphLayout gl = new GlyphLayout();
     private Profile profile;
     private int number;
     private float time = 0f;
@@ -62,6 +65,7 @@ public class InputActor extends Actor implements TargetBase {
 
         batch.draw(body, x, y, width, height);
 
+        // Draw the input number id
         if(number > 0) {
 
             float scaleX = width / body.originalWidth;
@@ -74,10 +78,14 @@ public class InputActor extends Actor implements TargetBase {
             batch.draw(numberBg, x + offsetX, y + offsetY, 0, 0, numberBg.packedWidth,
                     numberBg.packedHeight, scaleX, scaleY, 0);
 
-            BitmapFont font = G.game.assets.get("roboto.ttf", BitmapFont.class);
+            BitmapFont font = G.game.data.font3;
+            String txt = Integer.toString(number);
+            gl.setText(font, txt);
 
-            font.draw(batch, Integer.toString(number), x + offsetX + 10 * scaleX,
-                    y + offsetY + 22 * scaleY);
+            final float fontX = x + offsetX + (numberBg.packedWidth * scaleX - gl.width) / 2f;
+            final float fontY = y + offsetY + (numberBg.packedHeight * scaleY + gl.height) / 2f;
+
+            font.draw(batch, txt, fontX, fontY);
         }
 
         if(time > 0f)

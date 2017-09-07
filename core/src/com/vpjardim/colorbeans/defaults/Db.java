@@ -37,6 +37,7 @@ public class Db {
     public transient IntMap<TextureAtlas.AtlasRegion> BEANS_REG = new IntMap<>();
     public transient BitmapFont font1;
     public transient BitmapFont font2;
+    public transient BitmapFont font3;
 
     // Initialized inside the constructor ->
 
@@ -328,6 +329,7 @@ public class Db {
 
         font1 = G.game.assets.get("dimbo_white.ttf", BitmapFont.class);
         font2 = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
+        font3 = G.game.assets.get("roboto.ttf", BitmapFont.class);
 
         for(int i = 0; i < ri.length; i++) {
             BEANS_REG.put(1 * 10000 + ri[i], G.game.atlas.findRegion("beans/red",         ri[i]));

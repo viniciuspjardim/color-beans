@@ -65,7 +65,7 @@ public class ConfigScreen extends ScreenBase {
         Table inputT   = new Table(G.game.skin);
 
         titleT.setFillParent(true);
-        // titleT.setBackground("tbg");
+        titleT.setBackground("tbg");
 
         // #debugCode
         titleT.setDebug(G.game.dbg.uiTable);
@@ -79,7 +79,6 @@ public class ConfigScreen extends ScreenBase {
         Label.LabelStyle labelStyle =
                 G.game.skin.get("labelDef", Label.LabelStyle.class);
 
-        Label titleL = new Label("Options", labelStyle);
         Label gameL  = new Label("Type the players name:", labelStyle);
         Label videoL = new Label("Content 2", labelStyle);
         Label inputL = new Label("Content 3", labelStyle);
@@ -213,7 +212,6 @@ public class ConfigScreen extends ScreenBase {
         float bttW = G.style.buttWidth;
         float padM = G.style.padMedium;
 
-        titleL.setAlignment(Align.center);
         gameL.setAlignment(Align.topLeft);
         videoL.setAlignment(Align.topLeft);
         inputL.setAlignment(Align.topLeft);
@@ -224,7 +222,6 @@ public class ConfigScreen extends ScreenBase {
         tabT.defaults().minWidth(bttW);
 
         // ==== Assembling from outer to inner components ====
-        titleT.add(titleL);
         titleT.row();
         titleT.add(contentT).expand().fill();
         titleT.row();
@@ -259,6 +256,7 @@ public class ConfigScreen extends ScreenBase {
 
         int count = 1;
 
+        // Loop through inputs and show edit keys button for each one
         for(int i = 0; i < G.game.input.getInputs().size; i++) {
 
             final InputBase input = G.game.input.getInputs().get(i);
