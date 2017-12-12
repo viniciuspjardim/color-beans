@@ -53,13 +53,12 @@ public class G extends Game {
     // Todo android very laggy: 25fps with 2 maps, 17 with 4 maps
     // Todo small memory leak even in debugPG variant
     // Todo one map player blocks falls first then the others when if the game is restarted
-    // Todo touch and drag in Android crashes app when using controller
+    // Todo touch and drag in Android crashes app when using controller (maybe fixed)
     // Todo capture android back button event: go to menu when in PlayScreen
     // Todo negative score sometimes after first match in campaign
     // Todo restart music on map win, music fade in/out, add win/lost sound effects, pause (...)
     // music on game paused
-    // Todo fix art: choose better color for bricks, create text shade and text dialog balloon (...)
-    // 9patch, fix trash blocks image glitches and give it a gray semitransparent color
+    // Todo fix art: create text shade and text dialog balloon 9patch
     // Todo Add win/lost camera transition and statistics layer
 
     // Game resolution
@@ -105,13 +104,13 @@ public class G extends Game {
 
         // #debugCode
         // dbg.uiTable = true;
-        // dbg.map0shape = 11;
+        // dbg.map0shape = 3;
         // dbg.map1shape = 11;
-        // dbg.campStart = 6;
+        // dbg.campStart = 4;
         // dbg.campEnd = 7;
         // dbg.delta = Dbg.DELTA_1X;
         // dbg.fps = true;
-        // dbg.logLevel = Application.LOG_DEBUG;
+        // dbg.logLevel = Application.LOG_INFO;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
         // dbg.aiTraining = new int[] {1, 3, 0, 0};

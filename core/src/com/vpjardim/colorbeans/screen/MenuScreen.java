@@ -33,10 +33,6 @@ public class MenuScreen extends ScreenBase {
     private Table table;
     private Label label;
 
-    public MenuScreen() {
-        manageInput = false;
-    }
-
     @Override
     public void show() {
 

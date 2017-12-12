@@ -15,7 +15,8 @@ import com.vpjardim.colorbeans.core.Dbg;
  */
 public class TouchInput2 extends GestureDetector.GestureAdapter implements InputBase {
 
-    public Map map;
+    private TargetBase target;
+    private Map map;
 
     private boolean horizontalEvent = false;
     private boolean verticalEvent = false;
@@ -47,10 +48,14 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
     @Override
     public void setTarget(TargetBase target) {
+
+        this.target = target;
+
         if(target instanceof Map) {
             map = (Map) target;
             div = new float[map.N_COL + 1];
         }
+        else map = null;
     }
 
     @Override
@@ -83,9 +88,9 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     @Override
     public int getAxisYOld() { return verticalOld; }
 
-    public void move() {
+    private void move() {
 
-        if(map.isInState(Map.MState.PLAYER_FALL)) {
+        if(map != null && map.isInState(Map.MState.PLAYER_FALL)) {
 
             int deltaH = moveCurr - map.pb.b1x;
 
@@ -95,10 +100,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
                 vertical = 0;
             }
         }
-        else {
-
-            vertical = 0;
-        }
+        else vertical = 0;
     }
 
     @Override
@@ -108,17 +110,17 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
         Dbg.dbg(Dbg.tag(this), "tap -> x = " + x + "; y = " + y + "; count = " + count +
                 "; button = " + button);
 
-        if(map == null) return false;
+        if(target == null) return false;
 
         if(y < G.height * 0.2f) {
-            map.buttonStart(true);
+            target.buttonStart(true);
             return false;
         }
 
         if(x > G.width / 2f)
-            map.button1(true);
+            target.button1(true);
         else
-            map.button3(true);
+            target.button3(true);
 
         // Returns false because the stage need this event on the PlayScreen
         // Todo ControllerInput or other input might have the same problem
@@ -128,13 +130,15 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
 
+        if(map == null) return false;
+
         // #debugCode
         Dbg.print(Dbg.tag(this) + ": pan ->   x = " + x + ";  y = " + y + "; dTouchX = " + deltaX +
                 "; dTouchY = " + deltaY);
 
+        // Resetting values
         if(!hPanning && !vPanning) {
             move = false;
-            // draw = false;
             hPanning = false;
             vPanning = false;
             touchX = x;
@@ -151,13 +155,10 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
         findCurrent();
 
         if(vertical == 0 && Math.abs(deltaX) >= Math.abs(deltaY) * 0.8) {
-
             hPanning = true;
             horizontalEvent = true;
 
-
             move = true;
-
         }
         else if(horizontal == 0 && !hPanning && deltaY > 0) {
             vPanning = true;
@@ -167,8 +168,6 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
             vertical = 1;
         }
 
-        if(Math.abs(dTouchX) > width / map.N_COL / 2) verticalClean();
-
         // #debugCode
         Dbg.print(Dbg.tag(this) + ": pan2 -> tx = " + touchX + "; ty = " + touchY +
                 "; dTouchX = " + this.dTouchX + "; dTouchY = " + this.dTouchY);
@@ -176,35 +175,19 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
         return false;
     }
 
-    public void updateDiv() {
+    private void updateDiv() {
 
         float colWidth = width / map.N_COL;
-        float touchCurr = dTouchX + touchX;
         float x = touchX - (moveStart * colWidth) - colWidth / 2f;
         div[0] = x;
         div[div.length -1] = x + width;
 
         for(int i = 1; i < div.length -1; i++) {
             div[i] = x + i * colWidth;
-            // float dist = div[i] + colWidth / 2 - touchCurr;
-            // float perc = dist / width;
-            // float inv = 1f * Math.signum(perc) - perc;
-            // float pad = colWidth * inv;
-            // // #debugCode
-            // Dbg.print(Dbg.tag(this, false) + ": i = " + i + " =====");
-            // Dbg.print(Dbg.tag(this, false) + ": div[i] = " + div[i]);
-            // Dbg.print(Dbg.tag(this, false) + ": dist = " + dist);
-            // Dbg.print(Dbg.tag(this, false) + ": perc = " + perc);
-            // Dbg.print(Dbg.tag(this, false) + ": inv = " + inv);
-            // Dbg.print(Dbg.tag(this, false) + ": pad = " + pad);
-            // div[i] += pad;
-            // // #debugCode
-            // Dbg.print(Dbg.tag(this, false) + ": pan2 -> tx = " + touchX + "; ty = " + touchY +
-            //         "; dTouchX = " + this.dTouchX + "; dTouchY = " + this.dTouchY);
         }
     }
 
-    public void findCurrent() {
+    private void findCurrent() {
 
         float touchCurr = dTouchX + touchX;
 

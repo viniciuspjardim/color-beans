@@ -8,10 +8,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -49,6 +50,8 @@ public class PlayScreen extends ScreenBase {
     private Table table;
     private Color hlColor = new Color(0x2a4350ff);
     private TweenManager transition;
+
+    private TouchInput2 touchInput2;
 
     public PlayScreen(MapManager man) {
         manageInput = false;
@@ -115,6 +118,13 @@ public class PlayScreen extends ScreenBase {
         table.setDebug(G.game.dbg.uiTable); // #debugCode
 
         manager.init();
+
+        for(MapRender r : manager.render) {
+            if(r.m.input instanceof TouchInput2) {
+                touchInput2 = (TouchInput2) r.m.input;
+                break;
+            }
+        }
     }
 
     @Override
@@ -125,25 +135,9 @@ public class PlayScreen extends ScreenBase {
 
         manager.winLost();
 
-        TouchInput2 input = null;
-
-        G.game.sr.setProjectionMatrix(cam.combined);
-        G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
         for(MapRender r : manager.render) {
             r.m.update();
-            if(r.m.input instanceof TouchInput2) {
-
-                input = (TouchInput2) r.m.input;
-                if(input.draw) {
-                    G.game.sr.setColor(hlColor);
-                    // Draw map highlight
-                    G.game.sr.rect(
-                            input.moveCurr * r.size + r.px, r.py,
-                            r.size, r.m.N_ROW * -r.size);
-                }
-            }
         }
-        G.game.sr.end();
 
         G.game.batch.setProjectionMatrix(cam.combined);
         G.game.batch.begin();
@@ -164,31 +158,32 @@ public class PlayScreen extends ScreenBase {
         else
             table.setVisible(false);
 
-        if(input != null && input.draw) {
+        // If it has a TouchInput2 draw the box and the arrow of the input
+        if(touchInput2 != null && touchInput2.draw) {
 
             G.game.sr.setProjectionMatrix(cam.combined);
             G.game.sr.setAutoShapeType(true);
             G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
 
             float yShift = 80;
-            float x = input.div[input.moveCurr];
-            float dx = input.div[input.moveCurr + 1] - x;
+            float x = touchInput2.div[touchInput2.moveCurr];
+            float dx = touchInput2.div[touchInput2.moveCurr + 1] - x;
 
             G.game.sr.setColor(Color.ORANGE);
             // Draw subdivision highlight
             G.game.sr.rect(
-                    x, G.height - input.touchY + yShift,
+                    x, G.height - touchInput2.touchY + yShift,
                     dx, 150);
 
             G.game.sr.set(ShapeRenderer.ShapeType.Line);
 
             G.game.sr.setColor(Color.RED);
             // Draw input subdivisions
-            for(int i = 0; i < input.div.length -1; i++) {
-                x = input.div[i];
-                dx = input.div[i + 1] - x;
+            for(int i = 0; i < touchInput2.div.length -1; i++) {
+                x = touchInput2.div[i];
+                dx = touchInput2.div[i + 1] - x;
                 G.game.sr.rect(
-                        x, G.height - input.touchY + yShift,
+                        x, G.height - touchInput2.touchY + yShift,
                         dx, 150);
             }
 
@@ -197,9 +192,9 @@ public class PlayScreen extends ScreenBase {
 
             // Draw touch triangle
             G.game.sr.triangle(
-                    input.touchX + input.dTouchX, G.height - input.touchY + 1.3f * yShift,
-                    input.touchX + input.dTouchX - 50, G.height - input.touchY - 15,
-                    input.touchX + input.dTouchX + 50, G.height - input.touchY - 15);
+                    touchInput2.touchX + touchInput2.dTouchX, G.height - touchInput2.touchY + 1.3f * yShift,
+                    touchInput2.touchX + touchInput2.dTouchX - 50, G.height - touchInput2.touchY - 15,
+                    touchInput2.touchX + touchInput2.dTouchX + 50, G.height - touchInput2.touchY - 15);
 
             G.game.sr.end();
         }
@@ -236,7 +231,11 @@ public class PlayScreen extends ScreenBase {
         if(fb != null) fb.dispose();
 
         // Create a framebuffer with the new size
-        fb = new FrameBuffer(Pixmap.Format.RGBA8888, G.width, G.height, false);
+        GLFrameBuffer.FrameBufferBuilder fbb = new GLFrameBuffer.FrameBufferBuilder(
+                G.width, G.height);
+
+        fbb.addColorTextureAttachment(GL30.GL_RGBA8, GL30.GL_RGBA, GL30.GL_UNSIGNED_BYTE);
+        fb = fbb.build();
 
         fb.begin();
 

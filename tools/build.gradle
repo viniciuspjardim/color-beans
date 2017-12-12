@@ -1,4 +1,4 @@
-apply plugin: 'java'
+apply plugin: "java"
 
 dependencies {
 
@@ -9,5 +9,5 @@ dependencies {
     compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
     compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-    compile group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
+    compile group: "org.imgscalr", name: "imgscalr-lib", version: "4.2"
 }

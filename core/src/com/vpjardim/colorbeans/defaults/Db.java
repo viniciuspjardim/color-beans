@@ -105,6 +105,10 @@ public class Db {
 
     public Cfg.Map mapT  = null;
 
+    public int escBt = 0;
+
+    public int printScreenBt = 0;
+
     /** Init constants (default values) */
     public Db() {
 
@@ -322,6 +326,10 @@ public class Db {
 
         // Current training mode player fall speed
         mapT = mapT1;
+
+        escBt = Keys.ESCAPE;
+
+        printScreenBt = Keys.F1;
     }
 
     /** Variables that cannot be initialized in the constructor because depends on loading screen */

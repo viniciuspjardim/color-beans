@@ -37,9 +37,7 @@ public class LoadingScreen extends ScreenBase {
     private int frameCount = 0;
     private String atlasStr;
 
-    public LoadingScreen() {
-        manageInput = false;
-    }
+    public LoadingScreen() { manageInput = false; }
 
     @Override
     public void show() {

@@ -46,6 +46,9 @@ public class CreditsScreen extends ScreenBase {
     }
 
     @Override
+    public void buttonEsc(boolean isDown) { action = ScreenBase.ACT_NEXT; }
+
+    @Override
     public void buttonStart(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 
     @Override

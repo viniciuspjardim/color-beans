@@ -26,10 +26,6 @@ public class ScoreScreen extends ScreenBase {
     private Table table;
     private TextButton backButt;
 
-    public ScoreScreen() {
-        manageInput = false;
-    }
-
     @Override
     public void show() {
 
@@ -98,4 +94,7 @@ public class ScoreScreen extends ScreenBase {
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }
+
+    @Override
+    public void buttonEsc(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 }

@@ -1,12 +1,13 @@
 buildscript {
     repositories {
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         mavenLocal()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath "com.android.tools.build:gradle:2.3.3"
     }
 }
 
@@ -14,18 +15,19 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '0.1.5'
+    version = "0.1.5"
     ext {
         appName = "Color Beans"
-        gdxVersion = '1.9.7-SNAPSHOT'
-        aiVersion = '1.8.2-SNAPSHOT'
+        gdxVersion = "1.9.8"
+        aiVersion = "1.8.2-SNAPSHOT"
     }
 
     repositories {
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         mavenLocal()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        jcenter()
     }
 }
 
@@ -65,7 +67,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
 
-        compile fileTree(dir: '../libs', include: '*.jar')
+        compile fileTree(dir: "../libs", include: "*.jar")
     }
 }
 
@@ -78,7 +80,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
-        compile fileTree(dir: '../libs', include: '*.jar')
+        compile fileTree(dir: "../libs", include: "*.jar")
     }
 }
 

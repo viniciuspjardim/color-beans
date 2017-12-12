@@ -9,9 +9,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
@@ -27,6 +32,7 @@ public class ScreenBase implements Screen, TargetBase {
     protected int action;
     protected OrthographicCamera cam;
     protected Viewport viewport;
+    // Todo review usage of this field, when false it disable esc and print screen buttons
     protected boolean manageInput = true;
 
     protected Color bgColor;
@@ -66,6 +72,19 @@ public class ScreenBase implements Screen, TargetBase {
         time += delta;
     }
 
+    public void printScreen() {
+
+        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(),
+                Gdx.graphics.getBackBufferHeight(), true);
+
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(),
+                Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+
+        BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
+        PixmapIO.writePNG(Gdx.files.external("print.png"), pixmap);
+        pixmap.dispose();
+    }
+
     @Override
     public void resize(int width, int height) { viewport.update(width, height, true); }
 
@@ -85,7 +104,18 @@ public class ScreenBase implements Screen, TargetBase {
     public void setInput(InputBase input) {}
 
     @Override
-    public void keyPressed(int key) {}
+    public void keyPressed(int key) {
+
+        Dbg.inf(Dbg.tag(this), "Key = " + key);
+
+        if(key == G.game.data.escBt) buttonEsc(true);
+
+        else if(key == G.game.data.printScreenBt) buttonPrintScreen(true);
+    }
+
+    public void buttonEsc(boolean isDown) {}
+
+    public void buttonPrintScreen(boolean isDown) { printScreen(); }
 
     @Override
     public void buttonStart(boolean isDown) {}
