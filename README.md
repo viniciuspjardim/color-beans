@@ -10,11 +10,36 @@ score.
 
 This game is a clone of Dr. Robotnik's Mean Bean Machine (called Puyo
 Puyo in Japan), but it does not use any assets or code from the original
-game. It is for learning purpose only.
+game. This is for learning and showcase purpose only.
+
+## About
+
+This game is made using libGDX framework and it's cross-platform. It
+should run on Windows, Linux, macOS, Android, iOS and WebGL enabled
+browsers. Currently it's only tested on Windows and Android
+environments.
+
+###### Features
+
+* High resolution sprites
+* Supports for different screen sizes and screen rotation
+* Up to 4 local players in split screen mode
+* Multiple players using the same keyboard
+* Support for gamepads
+* Campaign mode where the player duels the AI
+* Stages of different difficulties
 
 For more details on the game mechanics, watch videos of the Dr.
 Robotnik's Mean Bean Machine game or read the source code documentation,
 for example, the [Map](core/src/com/vpjardim/colorbeans/Map.java) class.
+
+> The game is in a pre alpha stage. Do not expect a finished product.
+
+## Gallery
+
+<img src="https://user-images.githubusercontent.com/1520962/33919110-a7d3c6be-df95-11e7-9406-cbc02060e6e0.png" width="640" height="360">
+
+<img src="https://user-images.githubusercontent.com/1520962/33919127-bb563276-df95-11e7-947f-e1fa1cd5fcb5.png" width="360" height="640">
 
 ## License
 
@@ -32,12 +57,13 @@ Object Form.
 Please use this Work for personal or learning purpose only. Do not sell,
 publish or redistribute any Object Form or Object Form derivation of
 this project. Do not sell, publish or redistribute the assets or source
-code, including derivations, in GitHub*, other site or media.
+code, including derivations in other site or media.
 
-> \* You are allowed to fork this repo and work at your fork, send pull
+> You are allowed to fork this repo and work at your fork, send pull
 requests and report issues here in GitHub only.
 
-Disclaimer of Warranty. Unless required by applicable law or agreed to
+###### Disclaimer of Warranty
+Unless required by applicable law or agreed to
 in writing, Licensor provides the Work on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
 including, without limitation, any warranties or conditions of TITLE,
