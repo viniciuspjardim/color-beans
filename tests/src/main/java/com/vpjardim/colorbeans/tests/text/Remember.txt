@@ -15,12 +15,21 @@ Before a release commit
    organization, .gitignore files)
  - Choose the release build variant
  - Run tests
- - See git differences
  - Clean the project
+ - See git differences
  - Compile and test execution on Windows, Linux, Android
- - Pack the game in .jar and .apk and copy the packed files to history folder
+ - Pack the Desktop version .jar and move the packed files to history folder
+ - Pack the Android app in .apk (release and debug variants) and move the packed files to history
+   folder
+     - Rename the apk files to include the version number
+ - Keep folders app?\build\outputs\ 'logs' and 'mapping' because these files are used to debug the
+   release build
+     - Save these two folders in the history folder and rename it to include the version number
  - Test .jar and .apk on Windows/Linux and Android
- - Keep proguard file Todo find which file has the translation of obfuscated to real methods name
- - commit
+ - Commit: git commit -a -m ""
  - add tag: git tag -a vX.X.X -m "version X.X.X"
- - Increment versions on /build.gradle and /android/build.gradle (versionCode, versionName)
+ - git push origin master
+ - Increment versions on /build.gradle (version) and /android/build.gradle (versionCode, versionName)
+ - Commit new version: git commit -a -m "Prepared for next development iteration"
+ - git push origin master
+ - Optional: delete the app\build\, build\ and captures\ folders

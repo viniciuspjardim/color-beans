@@ -28,7 +28,6 @@ public class ScoreScreen extends ScreenBase {
 
     @Override
     public void show() {
-
         super.show();
 
         bgColor = G.game.data.bgColor();

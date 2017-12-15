@@ -80,14 +80,14 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
         if(target == null) return false;
 
         if(y < G.height * 0.2f) {
-            target.buttonStart(true);
+            target.btStartDown();
             return false;
         }
 
         if(x > G.width / 2f)
-            target.button1(true);
+            target.bt1Down();
         else
-            target.button3(true);
+            target.bt3Down();
 
         // Returns false because the stage need this event on the PlayScreen
         // Todo ControllerInput or other input might have the same problem

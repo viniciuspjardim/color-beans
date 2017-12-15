@@ -84,9 +84,9 @@ public class AiInput implements InputBase {
 
             if(deltaR != 0) {
                 // Rotate counterclockwise
-                if(deltaR == 3) map.button3(true);
+                if(deltaR == 3) map.bt3Down();
                 // Rotate clockwise
-                else map.button1(true);
+                else map.bt1Down();
             }
 
             if(deltaH == 0 && deltaR == 0 && fastFall) vertical = 1;

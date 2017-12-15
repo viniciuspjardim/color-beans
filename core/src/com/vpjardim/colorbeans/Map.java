@@ -1288,37 +1288,55 @@ public class Map implements TargetBase {
     }
 
     @Override
-    public void keyPressed(int key) {}
+    public void keyDown(int key) {}
 
     @Override
-    public void buttonStart(boolean isDown) {
-        if(isDown && !isInState(MState.OVER) && !isInState(MState.DONE))
+    public void btStartDown() {
+        if(!isInState(MState.OVER) && !isInState(MState.DONE))
             manager.pause(index, !pause);
     }
 
     @Override
-    public void button1(boolean isDown) {
-        if(!pause && isInState(MState.PLAYER_FALL)&& isDown && rPlayMoveTimer <= 0f)
+    public void bt1Down() {
+        if(!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
-    public void button2(boolean isDown) {
-        if(!pause && isInState(MState.PLAYER_FALL) && isDown && rPlayMoveTimer <= 0f)
+    public void bt2Down() {
+        if(!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
-    public void button3(boolean isDown) {
-        if(!pause && isInState(MState.PLAYER_FALL) && isDown && rPlayMoveTimer <= 0f)
+    public void bt3Down() {
+        if(!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 
     @Override
-    public void button4(boolean isDown) {
-        if(!pause && isInState(MState.PLAYER_FALL) && isDown && rPlayMoveTimer <= 0f)
+    public void bt4Down() {
+        if(!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
+
+    @Override
+    public void keyUp(int key) {}
+
+    @Override
+    public void btStartUp() {}
+
+    @Override
+    public void bt1Up() {}
+
+    @Override
+    public void bt2Up() {}
+
+    @Override
+    public void bt3Up() {}
+
+    @Override
+    public void bt4Up() {}
 
     @Override
     public String toString() {

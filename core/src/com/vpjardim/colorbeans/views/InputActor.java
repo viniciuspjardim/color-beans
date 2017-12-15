@@ -19,7 +19,6 @@ import com.vpjardim.colorbeans.input.TargetBase;
  * @author Vinícius Jardim
  * 2017/05/08
  */
-
 public class InputActor extends Actor implements TargetBase {
 
     public static final int CONTROLLER = 1;
@@ -31,7 +30,6 @@ public class InputActor extends Actor implements TargetBase {
     private GlyphLayout gl = new GlyphLayout();
     private Profile profile;
     private int number;
-    private float time = 0f;
 
     public InputActor(int type, Profile profile) {
 
@@ -48,7 +46,6 @@ public class InputActor extends Actor implements TargetBase {
         body = bodies.first();
         setSize(body.originalWidth, body.originalHeight);
         number = 0;
-        time = 0f;
     }
 
     public void setNumber(int number) {
@@ -75,8 +72,8 @@ public class InputActor extends Actor implements TargetBase {
             float offsetY = (body.originalHeight - numberBg.packedHeight) * scaleY;
 
             // Todo why offset in the draw method not working?
-            batch.draw(numberBg, x + offsetX, y + offsetY, 0, 0, numberBg.packedWidth,
-                    numberBg.packedHeight, scaleX, scaleY, 0);
+            batch.draw(numberBg, x + offsetX, y + offsetY, 0, 0,
+                    numberBg.packedWidth, numberBg.packedHeight, scaleX, scaleY, 0);
 
             BitmapFont font = G.game.data.font3;
             String txt = Integer.toString(number);
@@ -87,39 +84,52 @@ public class InputActor extends Actor implements TargetBase {
 
             font.draw(batch, txt, fontX, fontY);
         }
-
-        if(time > 0f)
-            time -= G.delta;
-        else {
-            body = bodies.first();
-            time = 0f;
-        }
     }
 
     @Override
     public void setInput(InputBase input) {}
 
     @Override
-    public void keyPressed(int key) {
+    public void keyDown(int key) {
 
-        if(profile == null || profile.hasKey(key)) {
+        if(profile == null || profile.hasKey(key))
             body = bodies.get(1);
-            time = 0.25f;
-        }
     }
 
     @Override
-    public void buttonStart(boolean isDown) {}
+    public void keyUp(int key) {
+
+        if(profile == null || profile.hasKey(key))
+            body = bodies.first();
+    }
 
     @Override
-    public void button1(boolean isDown) {}
+    public void btStartDown() {}
 
     @Override
-    public void button2(boolean isDown) {}
+    public void bt1Down() {}
 
     @Override
-    public void button3(boolean isDown) {}
+    public void bt2Down() {}
 
     @Override
-    public void button4(boolean isDown) {}
+    public void bt3Down() {}
+
+    @Override
+    public void bt4Down() {}
+
+    @Override
+    public void btStartUp() {}
+
+    @Override
+    public void bt1Up() {}
+
+    @Override
+    public void bt2Up() {}
+
+    @Override
+    public void bt3Up() {}
+
+    @Override
+    public void bt4Up() {}
 }

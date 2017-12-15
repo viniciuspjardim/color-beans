@@ -81,26 +81,58 @@ public class ControllerInput implements InputBase, ControllerListener {
 
         if(target == null) return true;
 
-        target.keyPressed(buttonIndex);
+        target.keyDown(buttonIndex);
 
         if(buttonIndex == p.start) {
-            target.buttonStart(true);
+            target.btStartDown();
         }
         // Up button
         else if(buttonIndex == p.button1) {
-            target.button1(true);
+            target.bt1Down();
         }
         // Right button
         else if(buttonIndex == p.button2) {
-            target.button2(true);
+            target.bt2Down();
         }
         // Down button
         else if(buttonIndex == p.button3) {
-            target.button3(true);
+            target.bt3Down();
         }
         // Left
         else if(buttonIndex == p.button4) {
-            target.button4(true);
+            target.bt4Down();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean buttonUp(Controller controller, int buttonIndex) {
+
+        // #debugCode
+        Dbg.dbg(Dbg.tag(this), "btUp -> buttonIndex = " + buttonIndex);
+
+        if(target == null) return true;
+
+        target.keyUp(buttonIndex);
+
+        if(buttonIndex == p.start) {
+            target.btStartUp();
+        }
+        // Up button
+        else if(buttonIndex == p.button1) {
+            target.bt1Up();
+        }
+        // Right button
+        else if(buttonIndex == p.button2) {
+            target.bt2Up();
+        }
+        // Down button
+        else if(buttonIndex == p.button3) {
+            target.bt3Up();
+        }
+        // Left
+        else if(buttonIndex == p.button4) {
+            target.bt4Up();
         }
         return true;
     }
@@ -113,7 +145,8 @@ public class ControllerInput implements InputBase, ControllerListener {
 
         int val = Math.round(value);
 
-        if(target != null && val != 0) target.keyPressed(Profile.UNDEFINED);
+        if(target != null && val != 0) target.keyDown(Profile.UNDEFINED);
+        if(target != null && val == 0) target.keyUp(Profile.UNDEFINED);
 
         // Axis 0 (horizontal): -1 left; 1 right
         if(axisIndex == 0) {
@@ -137,11 +170,6 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public void disconnected(Controller controller) {}
-
-    @Override
-    public boolean buttonUp(Controller controller, int buttonIndex) {
-        return true;
-    }
 
     @Override
     public boolean povMoved(Controller controller, int povIndex, PovDirection value) {

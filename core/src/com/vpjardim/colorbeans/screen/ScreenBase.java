@@ -104,9 +104,9 @@ public class ScreenBase implements Screen, TargetBase {
     public void setInput(InputBase input) {}
 
     @Override
-    public void keyPressed(int key) {
+    public void keyDown(int key) {
 
-        Dbg.inf(Dbg.tag(this), "Key = " + key);
+        Dbg.inf(Dbg.tag(this), "key = " + key);
 
         if(key == G.game.data.escBt) buttonEsc(true);
 
@@ -118,17 +118,35 @@ public class ScreenBase implements Screen, TargetBase {
     public void buttonPrintScreen(boolean isDown) { printScreen(); }
 
     @Override
-    public void buttonStart(boolean isDown) {}
+    public void btStartDown() {}
 
     @Override
-    public void button1(boolean isDown) {}
+    public void bt1Down() {}
 
     @Override
-    public void button2(boolean isDown) {}
+    public void bt2Down() {}
 
     @Override
-    public void button3(boolean isDown) {}
+    public void bt3Down() {}
 
     @Override
-    public void button4(boolean isDown) {}
+    public void bt4Down() {}
+
+    @Override
+    public void keyUp(int key) {}
+
+    @Override
+    public void btStartUp() {}
+
+    @Override
+    public void bt1Up() {}
+
+    @Override
+    public void bt2Up() {}
+
+    @Override
+    public void bt3Up() {}
+
+    @Override
+    public void bt4Up() {}
 }

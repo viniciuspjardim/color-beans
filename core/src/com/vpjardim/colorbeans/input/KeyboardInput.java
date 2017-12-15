@@ -6,6 +6,7 @@ package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
@@ -76,32 +77,35 @@ public class KeyboardInput implements InputBase, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
 
+        // #debugCode
+        Dbg.dbg(Dbg.tag(this), "keyDown -> keycode = " + keycode);
+
         if(target == null) return false;
 
-        target.keyPressed(keycode);
+        target.keyDown(keycode);
 
         // Return true when the key down event is handled
         // false if it's not so others input processors may
         // handle it
 
         if(keycode == p.start) {
-            target.buttonStart(true);
+            target.btStartDown();
             return true;
         }
         else if(keycode == p.button1) {
-            target.button1(true);
+            target.bt1Down();
             return true;
         }
         else if(keycode == p.button2) {
-            target.button2(true);
+            target.bt2Down();
             return true;
         }
         else if(keycode == p.button3) {
-            target.button3(true);
+            target.bt3Down();
             return true;
         }
         else if(keycode == p.button4) {
-            target.button4(true);
+            target.bt4Down();
             return true;
         }
 
@@ -110,6 +114,39 @@ public class KeyboardInput implements InputBase, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+
+        // #debugCode
+        Dbg.dbg(Dbg.tag(this), "keyUp -> keycode = " + keycode);
+
+        if(target == null) return false;
+
+        target.keyUp(keycode);
+
+        // Return true when the key down event is handled
+        // false if it's not so others input processors may
+        // handle it
+
+        if(keycode == p.start) {
+            target.btStartUp();
+            return true;
+        }
+        else if(keycode == p.button1) {
+            target.bt1Up();
+            return true;
+        }
+        else if(keycode == p.button2) {
+            target.bt2Up();
+            return true;
+        }
+        else if(keycode == p.button3) {
+            target.bt3Up();
+            return true;
+        }
+        else if(keycode == p.button4) {
+            target.bt4Up();
+            return true;
+        }
+
         return false;
     }
 

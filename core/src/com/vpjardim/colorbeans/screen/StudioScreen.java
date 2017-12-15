@@ -153,17 +153,17 @@ public class StudioScreen extends ScreenBase {
     public void buttonEsc(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void buttonStart(boolean isDown) { action = ScreenBase.ACT_NEXT; }
+    public void btStartDown() { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void button1(boolean isDown) { action = ScreenBase.ACT_NEXT; }
+    public void bt1Down() { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void button2(boolean isDown) { action = ScreenBase.ACT_NEXT; }
+    public void bt2Down() { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void button3(boolean isDown) { action = ScreenBase.ACT_NEXT; }
+    public void bt3Down() { action = ScreenBase.ACT_NEXT; }
 
     @Override
-    public void button4(boolean isDown) { action = ScreenBase.ACT_NEXT; }
+    public void bt4Down() { action = ScreenBase.ACT_NEXT; }
 }

@@ -113,14 +113,14 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
         if(target == null) return false;
 
         if(y < G.height * 0.2f) {
-            target.buttonStart(true);
+            target.btStartDown();
             return false;
         }
 
         if(x > G.width / 2f)
-            target.button1(true);
+            target.bt1Down();
         else
-            target.button3(true);
+            target.bt3Down();
 
         // Returns false because the stage need this event on the PlayScreen
         // Todo ControllerInput or other input might have the same problem
@@ -130,11 +130,11 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
 
-        if(map == null) return false;
-
         // #debugCode
-        Dbg.print(Dbg.tag(this) + ": pan ->   x = " + x + ";  y = " + y + "; dTouchX = " + deltaX +
-                "; dTouchY = " + deltaY);
+        Dbg.print(Dbg.tag(this) + ": pan ->   x = " + x + ";  y = " + y + "; dTouchX = " +
+                deltaX + "; dTouchY = " + deltaY);
+
+        if(map == null) return false;
 
         // Resetting values
         if(!hPanning && !vPanning) {
