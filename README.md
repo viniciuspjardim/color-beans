@@ -10,11 +10,11 @@ score.
 
 This game is a clone of Dr. Robotnik's Mean Bean Machine (called Puyo
 Puyo in Japan), but it does not use any assets or code from the original
-game. This is for learn and showcase purpose only.
+game. This project is for learn and showcase purpose only.
 
 ## About
 
-This game is made using libGDX framework and it's cross-platform. It
+This game is made using the libGDX framework and it's cross-platform. It
 should run on Windows, Linux, macOS, Android, iOS and WebGL enabled
 browsers. Currently it's only tested on Windows and Android
 environments.
@@ -22,18 +22,19 @@ environments.
 ###### Features
 
 * High resolution sprites
-* Supports for different screen sizes and screen rotation
+* Support for different screen sizes and screen rotation
 * Up to 4 local players in split screen mode
 * Multiple players using the same keyboard
 * Support for gamepads
+* Custom touch input for mobile devices
 * Campaign mode where the player duels the AI
-* Stages of different difficulties
+* Stages of different difficulties in campaign mode
 
-For more details on the game mechanics, watch videos of the Dr.
+For more details about the game mechanics, watch videos of the Dr.
 Robotnik's Mean Bean Machine game or read the source code documentation,
 for example, the [Map](core/src/com/vpjardim/colorbeans/Map.java) class.
 
-> Color Beans is in pre alpha stage. Do not expect a finished product.
+> Color Beans is in pre alpha stage. Do not expect a finished game.
 
 ## Gallery
 
