@@ -39,15 +39,16 @@ public class ScreenManager {
         G.delta = Gdx.graphics.getDeltaTime();
 
         // #debugCode
-        // Warn frames longer than a max time; set frames a constant time
-        // for debug propose: DELTA_0_25X, DELTA_1X, DELTA_4X
+        // Warn frames longer than a max time
         if(G.game.dbg.delta == Dbg.DELTA_REAL) {
 
             int fps = Math.round(1f / Gdx.graphics.getRawDeltaTime());
 
-            if(G.game.dbg.lagWarn && fps < 50)
+            if(G.game.dbg.lagWarn && fps < 50) {
                 Dbg.inf("LagWarn", fps + " fps");
+            }
         }
+        // Set frames a constant time for debug propose
         else if(G.game.dbg.delta == Dbg.DELTA_0_02X)
             G.delta = 0.0003333f; // 3000 fps
         else if(G.game.dbg.delta == Dbg.DELTA_0_1X)
@@ -78,6 +79,15 @@ public class ScreenManager {
             BitmapFont font = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
             font.draw(G.game.batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
                     G.width * 0.85f, G.height - G.game.style.fontSizeMedium);
+
+            if(G.game.dbg.fpsStat) {
+                // Elapsed time in seconds
+                double elapsedTime = ((double)(System.nanoTime() - G.game.startTime)) * 1e-9;
+                double avg = Gdx.graphics.getFrameId() / elapsedTime;
+                font.draw(G.game.batch, Math.round(avg) + " avg",
+                        G.width * 0.85f, G.height - 3f * G.game.style.fontSizeMedium);
+            }
+
             G.game.batch.end();
         }
 

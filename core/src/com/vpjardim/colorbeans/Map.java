@@ -1050,7 +1050,7 @@ public class Map implements TargetBase {
         int ab = a * b;
 
         // #debugCode
-        if(ab > 0) Dbg.inf(Dbg.tagO(this), "scoreCalc() score = " + score);
+        if(ab > 0) Dbg.dbg(Dbg.tagO(this), "scoreCalc() score = " + score);
 
         score += ab;
 

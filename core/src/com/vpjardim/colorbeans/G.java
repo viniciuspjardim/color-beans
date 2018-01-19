@@ -52,14 +52,19 @@ public class G extends Game {
 
     // Todo android very laggy: 25fps with 2 maps, 17 with 4 maps
     // Todo small memory leak even in debugPG variant
-    // Todo one map player blocks falls first then the others when if the game is restarted
+    // Todo one map player blocks falls first then the others when if the game is restarted (...)
+    // (maybe fixed)
     // Todo touch and drag in Android crashes app when using controller (maybe fixed)
     // Todo capture android back button event: go to menu when in PlayScreen
-    // Todo negative score sometimes after first match in campaign
+    // Todo negative score sometimes after first match in campaign (maybe fixed)
+    // Todo black screen after minimizing and restoring on full screen mode
     // Todo restart music on map win, music fade in/out, add win/lost sound effects, pause (...)
     // music on game paused
     // Todo fix art: create text shade and text dialog balloon 9patch
     // Todo Add win/lost camera transition and statistics layer
+    // Todo fix game over animation: top blocks might render as if they were linked to (...)
+    // offscreen blocks
+    // Todo "Next" text is rendered behind the next block bg
 
     // Game resolution
     public static final int RES_SMALL  = 1;
@@ -84,6 +89,7 @@ public class G extends Game {
     public Skin skin;
     public ScoreTable score;
     public NumberFormat intFmt;
+    public long startTime;
 
     // #debugCode
     public Dbg dbg;
@@ -92,6 +98,8 @@ public class G extends Game {
     public void create() {
 
         // Most things are loaded in the LoadingScreen class. See explanation there.
+
+        startTime = System.nanoTime();
 
         game = (G)Gdx.app.getApplicationListener();
         Tween.setCombinedAttributesLimit(5);
@@ -104,16 +112,16 @@ public class G extends Game {
 
         // #debugCode
         // dbg.uiTable = true;
-        // dbg.map0shape = 3;
-        // dbg.map1shape = 11;
+        // dbg.mapShape = new int[] {6, 6, 6, 6};
         // dbg.campStart = 4;
         // dbg.campEnd = 7;
         // dbg.delta = Dbg.DELTA_1X;
         // dbg.fps = true;
+        // dbg.fpsStat = true;
         // dbg.logLevel = Application.LOG_INFO;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
-        // dbg.aiTraining = new int[] {1, 3, 0, 0};
+        // dbg.aiTraining = new int[] {3, 1, 3, 1};
         // dbg.on();
 
         screens = new ScreenManager();

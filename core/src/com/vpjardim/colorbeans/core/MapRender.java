@@ -46,6 +46,10 @@ public class MapRender {
         }
     }
 
+    /**
+     * Used to draw only once the elements that don't change during the match (or if the screen is
+     * resized)
+     */
     public void cacheBg() {
 
         TextureAtlas.AtlasRegion tile;
@@ -109,6 +113,47 @@ public class MapRender {
                 else randIndex = 0;
             }
         }
+
+        nextPx = px - size;
+        nextPy = py - size;
+
+        // ==== Init var =====
+        float pad = G.style.fontSizeVSmall;
+        String txt;
+        float w;
+
+        BitmapFont font1 = G.game.data.font1;
+        BitmapFont font2 = G.game.data.font2;
+
+        // ==== Draw player name =====
+        txt = m.name;
+        gl.setText(font1, txt);
+        w = gl.width;
+        font1.draw(G.game.batch, txt, px - w + (size * m.b.length) - pad, py - pad);
+
+        // ==== Draw next text =====
+        txt = "Next";
+        gl.setText(font2, txt);
+        w = gl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - pad, py - gl.height - pad);
+
+        // ==== Draw wins text =====
+        txt = "Wins";
+        gl.setText(font2, txt);
+        w = gl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 3);
+
+        // ==== Draw draw score sum =====
+        txt = "Acc";
+        gl.setText(font2, txt);
+        w = gl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 5);
+
+        // ==== Draw draw match timer =====
+        txt = "Time";
+        gl.setText(font2, txt);
+        w = gl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 7);
     }
 
     public void renderBatch() {
@@ -149,6 +194,7 @@ public class MapRender {
 
         tile = G.game.data.BEANS_REG.get(m.pb.b2.getRegionKey());
 
+        // Todo review ang and size2 it's a weird code
         float size2 = size * 0.7071f; // 1/sqrt(2) == 0.7071
 
         G.game.batch.draw(
@@ -158,7 +204,6 @@ public class MapRender {
                 size,
                 size
         );
-        // Todo review ang and size2 it's a weird code
 
         // ==== Draw map ceil and flor that shakes with the beans ====
         for(int i = -2; i < m.b.length + 1; i++) {
@@ -221,51 +266,23 @@ public class MapRender {
         float w;
 
         BitmapFont font1 = G.game.data.font1;
-        BitmapFont font2 = G.game.data.font2;
 
         // ==== Draw score =====
         font1.draw(G.game.batch, m.scoreStr, px + pad, py - pad);
 
-        // ==== Draw player name =====
-        txt = m.name;
-        gl.setText(font1, txt);
-        w = gl.width;
-        font1.draw(G.game.batch, txt, px - w + (size * m.b.length) - pad, py - pad);
-
-        // ==== Draw next text =====
-        txt = "Next";
-        gl.setText(font2, txt);
-        w = gl.width;
-        font2.draw(G.game.batch, txt, nextPx - w + size - pad, py - gl.height - pad);
-
         // ==== Draw wins =====
-        txt = "Wins";
-        gl.setText(font2, txt);
-        w = gl.width;
-        font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 3);
-
         txt = Integer.toString(m.winsCount);
         gl.setText(font1, txt);
         w = gl.width;
         font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 3 - gl.height - pad);
 
         // ==== Draw draw score sum =====
-        txt = "Acc";
-        gl.setText(font2, txt);
-        w = gl.width;
-        font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 5);
-
         txt = Integer.toString(m.scoreSum);
         gl.setText(font1, txt);
         w = gl.width;
         font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 5 - gl.height - pad);
 
         // ==== Draw draw match timer =====
-        txt = "Time";
-        gl.setText(font2, txt);
-        w = gl.width;
-        font2.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 7);
-
         txt = Integer.toString((int)m.matchTimer);
         gl.setText(font1, txt);
         w = gl.width;

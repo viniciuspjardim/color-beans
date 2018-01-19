@@ -1,0 +1,59 @@
+================================================
+File to keep some comments about some tests **
+================================================
+
+
+======== Test 2 - 2018/01/11 ========
+* Testing Ai3 x Ai1 *
+
+= 2.1 (2 maps) =
+A - Ai3 | wins = 60 | acc = 587.080
+B - Ai1 | wins = 19 | acc = 197.060
+
+= 2.2 (4 maps} =
+A - Ai3 | wins = 1 | acc = 216.420
+B - Ai1 | wins = 1 | acc = 216.480
+C - Ai3 | wins = 1 | acc =  22.920
+D - Ai1 | wins = 0 | acc =       0
+
+* Screenshots in colorbeans_files\img
+
+* Bug on 4 maps test. When 1 or 2 maps lose, trash blocks some times are missing. Probably sending
+the trash blocks to the maps that already lost. Maybe this is the cause why test 2.2 had only 3
+matches in 8 hours
+
+= Test parameters =
+8 hours, windowed mode, win10 dell note, vsync on, 2 games executions at the same time
+
+= DBG parameters =
+dbg.fps = true;
+dbg.fpsStat = true;
+dbg.logLevel = Application.LOG_INFO;
+dbg.aiTraining = new int[] {3, 1, 3, 1};
+dbg.on();
+
+
+======== Test 1 - 2018/01/11 ========
+* Testing if caching background improves the frame rate *
+
+1.1.1 | no cache                     | fps = 170 | fps avg = 180
+1.1.2 | no cache                     | fps = 160 | fps avg = 181
+
+1.2.1 | caching only bg              | fps = 244 | fps avg = 262
+1.2.2 | caching only bg              | fps = 247 | fps avg = 260
+1.2.3 | caching only bg              | fps = 219 | fps avg = 237
+1.2.4 | caching only bg              | fps = 241 | fps avg = 246 | 35.9% faster
+
+1.3.1 | bg & unchanged blocks cashed | fps = ??? | fps avg = ??? | ????% faster
+
+
+= Test parameters =
+1 minute, 4 maps, paused, windowed mode, maximized, win10 dell note, vsync off
+
+= DBG parameters =
+dbg.mapShape = new int[] {6, 6, 6, 6};
+dbg.fps = true;
+dbg.fpsStat = true;
+dbg.logLevel = Application.LOG_INFO;
+dbg.aiTraining = new int[] {0, 1, 1, 1};
+dbg.on();

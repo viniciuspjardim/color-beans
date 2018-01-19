@@ -55,6 +55,10 @@ public class Training extends MapManager {
                     G.game.input.removeTarget(m);
                 }
             }
+
+            // #debugCode
+            if(G.game.dbg.mapShape != null)
+                m.debugShape(G.game.dbg.mapShape[i]);
         }
 
         G.game.input.linkAll();

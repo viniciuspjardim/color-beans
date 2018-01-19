@@ -135,11 +135,12 @@ public abstract class MapManager {
                 winnerMap = null;
 
                 // #debugCode
-                if(maps.size > 0)
-                    maps.get(0).debugShape(G.game.dbg.map0shape);
-                // #debugCode
-                if(maps.size > 1)
-                    maps.get(1).debugShape(G.game.dbg.map1shape);
+                if(G.game.dbg.mapShape != null) {
+                    for(int i = 0; i < maps.size; i++) {
+                        Map m = maps.get(i);
+                        m.debugShape(G.game.dbg.mapShape[i]);
+                    }
+                }
             }
         }
     }

@@ -117,14 +117,13 @@ public class Campaign extends MapManager {
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }
 
-        G.game.input.linkAll();
+        // #debugCode
+        if(G.game.dbg.mapShape != null) {
+            playerMap.debugShape(G.game.dbg.mapShape[0]);
+            aiMap.debugShape(G.game.dbg.mapShape[1]);
+        }
 
-        // #debugCode
-        if(maps.size > 0)
-            maps.get(0).debugShape(G.game.dbg.map0shape);
-        // #debugCode
-        if(maps.size > 1)
-            maps.get(1).debugShape(G.game.dbg.map1shape);
+        G.game.input.linkAll();
     }
 
     @Override

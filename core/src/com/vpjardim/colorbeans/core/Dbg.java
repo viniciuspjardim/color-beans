@@ -29,11 +29,11 @@ public class Dbg {
     public boolean fps;
     public boolean fpsText;
     public boolean lagWarn;
+    public boolean fpsStat;
     /** LOG_NONE = []; LOG_ERROR [error]; LOG_INFO [error, log]; LOG_DEBUG [error, log, debug] */
     public int logLevel;
     public boolean uiTable;
-    public int map0shape;
-    public int map1shape;
+    public int[] mapShape;
     public int campStart;
     public int campEnd;
     public boolean aiPlayerCamp;
@@ -48,10 +48,10 @@ public class Dbg {
         fps           = false;
         fpsText       = false;
         lagWarn       = false;
+        fpsStat       = false;
         logLevel      = Application.LOG_NONE;
+        mapShape      = null;
         uiTable       = false;
-        map0shape     = 0;
-        map1shape     = 0;
         campStart     = 0;
         campEnd       = Integer.MAX_VALUE;
         aiPlayerCamp  = false;
