@@ -5,6 +5,7 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -108,7 +109,7 @@ public class ScreenBase implements Screen, TargetBase {
 
         Dbg.inf(Dbg.tag(this), "key = " + key);
 
-        if(key == G.game.data.escBt) buttonEsc(true);
+        if(key == G.game.data.escBt || key == Input.Keys.BACK) buttonEsc(true);
 
         else if(key == G.game.data.printScreenBt) buttonPrintScreen(true);
     }

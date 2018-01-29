@@ -7,7 +7,6 @@ package com.vpjardim.colorbeans.tests;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.AiMap;
 import com.vpjardim.colorbeans.ai.Moves;
 import com.vpjardim.colorbeans.ai.ai3.Tree3;
@@ -15,6 +14,7 @@ import com.vpjardim.colorbeans.ai.ai3.Tree3Node;
 import com.vpjardim.colorbeans.ai.ai4.Ai4;
 import com.vpjardim.colorbeans.ai.ai4.Uct;
 import com.vpjardim.colorbeans.ai.ai4.UctNode;
+import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.tests.treeview.RunnableTV;
 import com.vpjardim.colorbeans.tests.treeview.TVNode;
 import com.vpjardim.colorbeans.tests.treeview.TreeView;
@@ -27,7 +27,7 @@ public class Test {
 
     public static void main(String[] args){
         Test t = new Test();
-        t.test12();
+        t.test9();
     }
 
     public void test12() {
@@ -89,7 +89,7 @@ public class Test {
         }
 
         // Iterating throw the UCT algorithm: it adds new nodes search tree
-        while(uct.totalIter <= 100000) {
+        while(uct.totalIter <= 10000) {
 
             // If not debugging, make tree build process slower so we can watch. Comment if
             // debugging
@@ -180,6 +180,7 @@ public class Test {
         // https://www.youtube.com/watch?v=a-1b3IA2ujA
         System.out.println("Base video: https://www.youtube.com/watch?v=a-1b3IA2ujA\n");
 
+        Db db = new Db();
         int score;
         int block;
         int a, b;
@@ -191,7 +192,7 @@ public class Test {
         // Chain 1
         block = 4;
         a = block * 10;
-        b = Map.getChainPower(1) + Map.getColorBonus(1) + Map.getGroupBonus(block);
+        b = db.getChainPower(1) + db.getColorBonus(1) + db.getGroupBonus(block);
         if(b < 1) b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
@@ -199,7 +200,7 @@ public class Test {
         // Chain 2
         block = 4;
         a = block * 10;
-        b = Map.getChainPower(2) + Map.getColorBonus(1) + Map.getGroupBonus(block);
+        b = db.getChainPower(2) + db.getColorBonus(1) + db.getGroupBonus(block);
         if(b < 1) b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
@@ -213,7 +214,7 @@ public class Test {
         block = 8;
         a = block * 10;
         // Group bonus 0 because no group has more then 4 blocks
-        b = Map.getChainPower(1) + Map.getColorBonus(2) + Map.getGroupBonus(0);
+        b = db.getChainPower(1) + db.getColorBonus(2) + db.getGroupBonus(0);
         if(b < 1) b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
@@ -221,7 +222,7 @@ public class Test {
         // Chain 2
         block = 5;
         a = block * 10;
-        b = Map.getChainPower(2) + Map.getColorBonus(1) + Map.getGroupBonus(block);
+        b = db.getChainPower(2) + db.getColorBonus(1) + db.getGroupBonus(block);
         if(b < 1) b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
@@ -234,7 +235,7 @@ public class Test {
         // Chain 1
         block = 7;
         a = block * 10;
-        b = Map.getChainPower(1) + Map.getColorBonus(1) + Map.getGroupBonus(block);
+        b = db.getChainPower(1) + db.getColorBonus(1) + db.getGroupBonus(block);
         if(b < 1) b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
@@ -243,7 +244,7 @@ public class Test {
         block = 9;
         a = block * 10;
         // Only has one group with more then 4 blocks (5 blocks in this case)
-        b = Map.getChainPower(2) + Map.getColorBonus(2) + Map.getGroupBonus(5);
+        b = db.getChainPower(2) + db.getColorBonus(2) + db.getGroupBonus(5);
         if(b < 1) b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);

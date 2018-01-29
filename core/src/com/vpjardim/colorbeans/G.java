@@ -102,6 +102,7 @@ public class G extends Game {
         startTime = System.nanoTime();
 
         game = (G)Gdx.app.getApplicationListener();
+        Gdx.input.setCatchBackKey(true);
         Tween.setCombinedAttributesLimit(5);
 
         G.width = Gdx.graphics.getWidth();
@@ -113,12 +114,12 @@ public class G extends Game {
         // #debugCode
         // dbg.uiTable = true;
         // dbg.mapShape = new int[] {6, 6, 6, 6};
-        // dbg.campStart = 4;
+        // dbg.campStart = 7;
         // dbg.campEnd = 7;
         // dbg.delta = Dbg.DELTA_1X;
         // dbg.fps = true;
         // dbg.fpsStat = true;
-        // dbg.logLevel = Application.LOG_INFO;
+        // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
         // dbg.aiTraining = new int[] {3, 1, 3, 1};

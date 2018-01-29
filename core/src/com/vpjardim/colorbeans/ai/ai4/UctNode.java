@@ -202,7 +202,7 @@ public class UctNode implements Pool.Poolable, DebugNode {
         // 1022 It's a score that throws 70 trash block (10 rows) to the adversary +-
         // based on a 7x15 map. But the adversary could lose with less (or need more) trash block.
         // So this need to be update while opponents change it's state
-        // Obs: negative values are illegal moves or lost moves, so they are terminal states
+        // Obs: negative values are illegal moves or lost moves, so they are also terminal states
         return value < 0 || value >= 1022;
     }
 
@@ -257,11 +257,10 @@ public class UctNode implements Pool.Poolable, DebugNode {
         clear();
     }
 
-    // DebugNode implementation #debugCode
+    // DebugNode interface methods implementation #debugCode
 
     @Override
     public int getMove() {
-
         return Moves.getMove(color1, color2, position, rotation);
     }
 

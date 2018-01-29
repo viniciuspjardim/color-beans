@@ -26,12 +26,15 @@ public class InputManager {
     private InputMultiplexer multiplex;
 
     private ControllerConnection ctrlConn;
+    private SpecialButtons specialButtons;
 
     public InputManager() {
 
         inputs = new Array<>();
         targets = new Array<>();
         ctrlConn = new ControllerConnection();
+        specialButtons = new SpecialButtons();
+
         // Manage controller connections and disconnections
         Controllers.addListener(ctrlConn);
 
@@ -43,9 +46,15 @@ public class InputManager {
         return inputs;
     }
 
+    public Array<TargetBase> getTargets() {
+        return targets;
+    }
+
     public void loadInputs() {
 
         inputsClear();
+
+        multiplex.addProcessor(specialButtons);
 
         // Initially attempts to assign controllers to the targets
         for(int i = 0; i < Controllers.getControllers().size; i++) {

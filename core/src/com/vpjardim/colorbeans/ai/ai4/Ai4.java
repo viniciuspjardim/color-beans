@@ -84,7 +84,6 @@ public class Ai4 implements AiBase {
         prevState = m.getState();
     }
 
-
     public static ScoreFormula formula1 = new ScoreFormula() {
 
         @Override

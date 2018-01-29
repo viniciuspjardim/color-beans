@@ -4,6 +4,8 @@
 
 package com.vpjardim.colorbeans.tests;
 
+import com.badlogic.gdx.graphics.Color;
+
 /**
  * @author Vinícius Jardim
  * 11/08/2016
@@ -43,5 +45,22 @@ public class Utils {
 
         //Print Maximum available memory
         System.out.println("Max Memory:" + runtime.maxMemory() / mb);
+    }
+
+    public static Color intToColor(int color) {
+
+        switch(color) {
+            case 1: return Color.RED;
+            case 2: return Color.BLUE;
+            case 3: return Color.GREEN;
+            case 4: return Color.YELLOW;
+            case 5: return Color.PURPLE;
+            case 6: return Color.WHITE;
+            case 7: return Color.WHITE;
+            case 8: return Color.WHITE;
+            case 9: return Color.GRAY;
+        }
+
+        return Color.WHITE;
     }
 }

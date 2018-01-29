@@ -22,6 +22,7 @@ import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.ai.AiMap;
 import com.vpjardim.colorbeans.ai.DebugNode;
 import com.vpjardim.colorbeans.ai.Moves;
+import com.vpjardim.colorbeans.tests.Utils;
 
 /**
  * @author Vinícius Jardim
@@ -304,7 +305,7 @@ public class MainScreen<T extends DebugNode> implements Screen {
                     continue;
                 }
 
-                // sr.setColor(Block.intToColor(b[i][j]));
+                sr.setColor(Utils.intToColor(b[i][j]));
                 sr.circle(
                         px + (side * i),
                         py - (side * (j -outRow)),
