@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.net;
@@ -9,7 +9,7 @@ import com.esotericsoftware.kryonet.EndPoint;
 
 /**
  * @author Vinícius Jardim
- * 21/11/2015
+ * 2015/11/21
  */
 public class Net {
 

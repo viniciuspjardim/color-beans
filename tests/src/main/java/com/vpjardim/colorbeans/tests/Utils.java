@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.tests;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 
 /**
  * @author Vinícius Jardim
- * 11/08/2016
+ * 2016/08/11
  */
 public class Utils {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.ai;
@@ -13,7 +13,7 @@ import com.vpjardim.colorbeans.core.Cfg;
 
 /**
  * @author Vinícius Jardim
- * 09/04/2016
+ * 2016/04/09
  */
 public class Ai1 extends AiCommon {
 

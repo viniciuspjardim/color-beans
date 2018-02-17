@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.core;
@@ -11,7 +11,7 @@ import com.vpjardim.colorbeans.Map;
 
 /**
  * @author Vinícius Jardim
- * 02/09/2016
+ * 2016/09/02
  */
 public abstract class MapManager {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.defaults;
@@ -8,7 +8,7 @@ import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
- * 04/01/2017
+ * 2017/01/04
  */
 public class Style {
 

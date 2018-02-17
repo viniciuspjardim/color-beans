@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.input;
@@ -17,7 +17,7 @@ import static com.badlogic.gdx.Gdx.input;
 
 /**
  * @author Vinícius Jardim
- * 05/12/2015
+ * 2015/12/05
  */
 public class InputManager {
 

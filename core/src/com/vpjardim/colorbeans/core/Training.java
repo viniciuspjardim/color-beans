@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.core;
@@ -12,7 +12,7 @@ import com.vpjardim.colorbeans.ai.ai3.Ai3;
 
 /**
  * @author Vinícius Jardim
- * 06/11/2016
+ * 2016/11/06
  */
 public class Training extends MapManager {
 

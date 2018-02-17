@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans;
@@ -46,7 +46,7 @@ import aurelienribon.tweenengine.Tween;
  *    0
  *
  * @author Vinícius Jardim
- * 21/03/2015
+ * 2015/03/21
  */
 public class G extends Game {
 
@@ -118,7 +118,7 @@ public class G extends Game {
         // dbg.campEnd = 7;
         // dbg.delta = Dbg.DELTA_1X;
         // dbg.fps = true;
-        // dbg.fpsStat = true;
+        //dbg.fpsStat = true;
         // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;

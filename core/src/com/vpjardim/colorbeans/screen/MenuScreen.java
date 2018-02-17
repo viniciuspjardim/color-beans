@@ -1,10 +1,11 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,7 +18,7 @@ import com.vpjardim.colorbeans.animation.MenuBeans;
 
 /**
  * @author Vinícius Jardim
- * 06/12/2015
+ * 2015/12/06
  */
 public class MenuScreen extends ScreenBase {
 
@@ -32,6 +33,7 @@ public class MenuScreen extends ScreenBase {
     private MenuBeans beansAnim;
     private Table table;
     private Label label;
+    private TextureAtlas.AtlasRegion titleRegion;
 
     @Override
     public void show() {
@@ -122,8 +124,9 @@ public class MenuScreen extends ScreenBase {
         table.add(exitButt).width(bttW).pad(G.style.padMedium, padS, padS, padS);
         table.getMaxWidth();
 
-        label = new Label("Color Beans", labelStyle);
+        label = new Label(" ", labelStyle);
         label.setAlignment(Align.center);
+        titleRegion = G.game.atlas.findRegion("game/title");
 
         stage.addActor(outerT);
         table.setDebug(G.game.dbg.uiTable); // #debugCode
@@ -146,6 +149,14 @@ public class MenuScreen extends ScreenBase {
 
         G.game.batch.begin();
         label.draw(G.game.batch, 1f);
+        // Todo fix position
+        G.game.batch.draw(
+                titleRegion,
+                table.getX() + 50,
+                G.height - titleRegion.originalHeight - table.getY() - table.getHeight() * 0.04f -50,
+                titleRegion.originalWidth,
+                titleRegion.originalHeight
+        );
         G.game.batch.end();
     }
 

@@ -1,18 +1,15 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.tests.treeview;
 
-/**
- * @author Vinícius Jardim
- * 03/08/2016
- */
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Created by vinicius on 15/02/15.
+ * @author Vinícius Jardim
+ * 2016/08/03
  */
 public class Camera {
 

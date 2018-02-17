@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.input;
@@ -10,7 +10,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
- * 15/07/2015
+ * 2015/07/15
  */
 public class KeyboardInput implements InputBase, InputProcessor {
 

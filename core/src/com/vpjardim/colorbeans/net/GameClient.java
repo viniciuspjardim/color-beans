@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.net;
@@ -12,7 +12,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
- * 12/11/2015
+ * 2015/11/12
  */
 public class GameClient {
 

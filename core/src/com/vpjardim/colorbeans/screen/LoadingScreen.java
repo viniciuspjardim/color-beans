@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.screen;
@@ -30,7 +30,7 @@ import java.text.NumberFormat;
  * Just a black screen waiting load to be done
  *
  * @author Vinícius Jardim
- * 10/06/2016
+ * 2016/06/10
  */
 public class LoadingScreen extends ScreenBase {
 

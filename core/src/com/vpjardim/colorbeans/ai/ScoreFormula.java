@@ -1,12 +1,12 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.ai;
 
 /**
  * @author Vinícius Jardim
- * 06/06/2016
+ * 2016/06/06
  */
 public interface ScoreFormula {
 

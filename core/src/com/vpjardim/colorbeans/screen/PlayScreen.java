@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.screen;
@@ -33,7 +33,7 @@ import aurelienribon.tweenengine.TweenManager;
 
 /**
  * @author Vinícius Jardim
- * 02/09/2016
+ * 2016/09/02
  */
 public class PlayScreen extends ScreenBase {
 

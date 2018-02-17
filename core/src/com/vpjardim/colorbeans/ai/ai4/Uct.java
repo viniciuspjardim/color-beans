@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.ai.ai4;
@@ -11,7 +11,7 @@ import com.vpjardim.colorbeans.ai.ScoreFormula;
 
 /**
  * @author Vinícius Jardim
- * 29/07/2016
+ * 2016/07/29
  */
 public class Uct {
 

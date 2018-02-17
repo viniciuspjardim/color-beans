@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.animation;
@@ -10,7 +10,7 @@ import aurelienribon.tweenengine.TweenAccessor;
 
 /**
  * @author Vinícius Jardim
- * 01/11/2015
+ * 2015/11/01
  */
 public class SpriteAccessor implements TweenAccessor<Sprite> {
 

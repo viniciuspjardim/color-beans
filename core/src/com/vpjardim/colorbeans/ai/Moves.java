@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.ai;
@@ -9,7 +9,7 @@ import com.vpjardim.colorbeans.Block;
 
 /**
  * @author Vinícius Jardim
- * 02/05/2016
+ * 2016/05/02
  */
 public class Moves {
 

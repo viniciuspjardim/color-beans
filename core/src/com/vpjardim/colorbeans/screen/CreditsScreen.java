@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.screen;
@@ -12,7 +12,7 @@ import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
- * 13/12/2016
+ * 2016/12/13
  */
 public class CreditsScreen extends ScreenBase {
 

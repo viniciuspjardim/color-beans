@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.tests;
@@ -18,7 +18,7 @@ import com.vpjardim.colorbeans.net.GameClient;
 
 /**
  * @author Vinícius Jardim
- * 25/08/2016
+ * 2016/08/25
  */
 public class ClientTest extends Game implements Screen {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.tools;
@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 
 /**
  * @author Vinícius Jardim
- * 13/06/2016
+ * 2016/06/13
  */
 public class PackIcons {
 

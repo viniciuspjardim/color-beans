@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.core;
@@ -14,7 +14,7 @@ import java.util.Comparator;
 
 /**
  * @author Vinícius Jardim
- * 03/09/2016
+ * 2016/09/03
  */
 public class ScoreTable {
 

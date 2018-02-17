@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.ai.ai3;
@@ -12,7 +12,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
- * 30/04/2016
+ * 2016/04/30
  */
 public class Tree3Node implements Pool.Poolable {
     

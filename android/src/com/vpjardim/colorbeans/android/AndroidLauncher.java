@@ -1,10 +1,9 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.android;
 
-import android.R;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,7 @@ import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
- * 21/03/2015
+ * 2015/03/21
  */
 public class AndroidLauncher extends AndroidApplication {
 
@@ -53,7 +52,7 @@ public class AndroidLauncher extends AndroidApplication {
             newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         }
 
-        System.out.println(R.attr.uiOptions + "; " + newUiOptions);
+        System.out.println(android.R.attr.uiOptions + "; " + newUiOptions);
 
         getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }

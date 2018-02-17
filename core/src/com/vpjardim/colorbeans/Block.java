@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans;
@@ -13,7 +13,7 @@ package com.vpjardim.colorbeans;
  * chain has a unique number stored in {@link #label} field.
  *
  * @author Vinícius Jardim
- * 21/03/2015
+ * 2015/03/21
  */
 public class Block {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.input;
@@ -9,7 +9,7 @@ package com.vpjardim.colorbeans.input;
  * interface telling what actions needs to be done on each input event
  *
  * @author Vinícius Jardim
- * 01/11/2015
+ * 2015/11/01
  */
 public interface TargetBase {
 

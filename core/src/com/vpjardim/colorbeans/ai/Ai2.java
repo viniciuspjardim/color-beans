@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.ai;
@@ -16,7 +16,7 @@ import com.vpjardim.colorbeans.input.InputBase;
  * Todo too slow, not usable
  *
  * @author Vinícius Jardim
- * 29/04/2016
+ * 2016/04/29
  */
 public class Ai2 implements AiBase {
 

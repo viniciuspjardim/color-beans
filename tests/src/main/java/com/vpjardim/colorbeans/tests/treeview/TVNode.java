@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.tests.treeview;
@@ -14,7 +14,7 @@ import com.vpjardim.colorbeans.ai.DebugNode;
 
 /**
  * @author Vinícius Jardim
- * 03/08/2016
+ * 2016/08/03
  */
 public class TVNode<T extends DebugNode> {
 

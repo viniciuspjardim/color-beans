@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.ai;
@@ -11,7 +11,7 @@ import com.vpjardim.colorbeans.input.TargetBase;
 
 /**
  * @author Vinícius Jardim
- * 31/03/2016
+ * 2016/03/31
  */
 public class AiInput implements InputBase {
 

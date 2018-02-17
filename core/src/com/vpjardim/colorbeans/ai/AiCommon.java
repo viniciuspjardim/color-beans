@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
+ */
+
 package com.vpjardim.colorbeans.ai;
 
 import com.badlogic.gdx.math.MathUtils;
@@ -9,7 +13,6 @@ import com.vpjardim.colorbeans.input.InputBase;
  * @author Vinícius Jardim
  * 2017/03/29
  */
-
 public abstract class AiCommon implements AiBase {
 
     // Todo fix bug that looks like ai 6 (campaign) fake doubt and down key is messing with it

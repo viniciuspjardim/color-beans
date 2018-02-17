@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Vinícius Petrocione Jardim
+ * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
  */
 
 package com.vpjardim.colorbeans.tests;
@@ -21,6 +21,7 @@ import com.vpjardim.colorbeans.tests.treeview.TreeView;
 
 /**
  * @author Vinícius Jardim
+ * 2016/03/02
  */
 
 public class Test {
