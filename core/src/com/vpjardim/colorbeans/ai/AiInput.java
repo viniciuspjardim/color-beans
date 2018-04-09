@@ -127,6 +127,6 @@ public class AiInput implements InputBase {
         verticalOld = 0;
 
         if(map == null) hMove = 0;
-        else hMove = map.N_COL / 2;
+        else hMove = Map.N_COL / 2;
     }
 }

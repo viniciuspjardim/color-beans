@@ -36,7 +36,7 @@ public class Ai4 implements AiBase {
     @Override
     public void init(Map map, Cfg.Ai cfg) {
         m = map;
-        uctTree = new Uct(m.N_COL);
+        uctTree = new Uct(Map.N_COL);
 
         input = new AiInput();
         input.setTarget(m);
@@ -61,7 +61,7 @@ public class Ai4 implements AiBase {
                 int color1 = m.pb.b2.color; // upper block
                 int color2 = m.pb.b1.color; // lower block
 
-                uctTree.initProcess(AiMap.getByteBlocks(null, m.b), m.deleteSize, m.OUT_ROW,
+                uctTree.initProcess(AiMap.getByteBlocks(null, m.b), m.deleteSize, Map.OUT_ROW,
                         formula1, color1, color2);
             }
 

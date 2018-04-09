@@ -78,14 +78,14 @@ public class ScreenManager {
             G.game.batch.begin();
             BitmapFont font = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
             font.draw(G.game.batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
-                    G.width * 0.85f, G.height - G.game.style.fontSizeMedium);
+                    G.width * 0.85f, G.height - G.style.fontSizeMedium);
 
             if(G.game.dbg.fpsStat) {
                 // Elapsed time in seconds
                 double elapsedTime = ((double)(System.nanoTime() - G.game.startTime)) * 1e-9;
                 double avg = Gdx.graphics.getFrameId() / elapsedTime;
                 font.draw(G.game.batch, Math.round(avg) + " avg",
-                        G.width * 0.85f, G.height - 3f * G.game.style.fontSizeMedium);
+                        G.width * 0.85f, G.height - 3f * G.style.fontSizeMedium);
             }
 
             G.game.batch.end();

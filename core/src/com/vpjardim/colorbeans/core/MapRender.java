@@ -59,14 +59,14 @@ public class MapRender {
 
         for(int i = 0; i < m.b.length; i++) {
 
-            for(int j = m.OUT_ROW; j < m.b[i].length + 1; j++) {
+            for(int j = Map.OUT_ROW; j < m.b[i].length + 1; j++) {
 
                 tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 3 + 10);
 
                 G.game.batch.draw(
                         tile,
                         px + (size * i),
-                        py + (j +1 - m.OUT_ROW) * - size,
+                        py + (j +1 - Map.OUT_ROW) * - size,
                         size,
                         size
                 );
@@ -95,7 +95,7 @@ public class MapRender {
 
         for(int i = -2; i < m.b.length +1; i++) {
 
-            for(int j = m.OUT_ROW; j < m.b[0].length; j++) {
+            for(int j = Map.OUT_ROW; j < m.b[0].length; j++) {
 
                 if(i >= 0 && i < m.b.length) continue;
 
@@ -104,7 +104,7 @@ public class MapRender {
                 G.game.batch.draw(
                         tile,
                         px + (size * i),
-                        py + (j +1 - m.OUT_ROW) * - size,
+                        py + (j +1 - Map.OUT_ROW) * - size,
                         size,
                         size
                 );
@@ -163,7 +163,7 @@ public class MapRender {
         // ===== Draw map blocks =====
         for(int i = 0; i < m.b.length; i++) {
 
-            for(int j = m.OUT_ROW; j < m.b[i].length; j++) {
+            for(int j = Map.OUT_ROW; j < m.b[i].length; j++) {
 
                 Block block = m.b[i][j];
 
@@ -174,7 +174,7 @@ public class MapRender {
                 G.game.batch.draw(
                         tile,
                         px + (size * i),
-                        py + (j +1 - m.OUT_ROW - block.py) * - size,
+                        py + (j +1 - Map.OUT_ROW - block.py) * - size,
                         size,
                         size
                 );
@@ -187,7 +187,7 @@ public class MapRender {
         tile = G.game.data.BEANS_REG.get(m.pb.b1.getRegionKey());
 
         float b1X = px + (m.pb.b1x + m.pb.b1.px) * size;
-        float b1Y = py + (m.pb.b1y +1 - m.OUT_ROW - m.pb.b1.py) * - size;
+        float b1Y = py + (m.pb.b1y +1 - Map.OUT_ROW - m.pb.b1.py) * - size;
         float ang = -(m.pb.rotationAnim - 0.5f) / 4f * 2f * MathUtils.PI;
 
         G.game.batch.draw(tile, b1X, b1Y, size, size);
@@ -236,7 +236,7 @@ public class MapRender {
             G.game.batch.draw(
                     tile,
                     px + (size * i),
-                    py + (m.b[0].length +1 - m.OUT_ROW) * - size + beansPy,
+                    py + (m.b[0].length +1 - Map.OUT_ROW) * - size + beansPy,
                     size,
                     size
             );

@@ -53,7 +53,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
         if(target instanceof Map) {
             map = (Map) target;
-            div = new float[map.N_COL + 1];
+            div = new float[Map.N_COL + 1];
         }
         else map = null;
     }
@@ -177,7 +177,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
     private void updateDiv() {
 
-        float colWidth = width / map.N_COL;
+        float colWidth = width / Map.N_COL;
         float x = touchX - (moveStart * colWidth) - colWidth / 2f;
         div[0] = x;
         div[div.length -1] = x + width;
@@ -197,7 +197,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
                 return;
             }
         }
-        moveCurr = map.N_COL - 1;
+        moveCurr = Map.N_COL - 1;
     }
 
     @Override

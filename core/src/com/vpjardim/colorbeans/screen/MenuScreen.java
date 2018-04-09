@@ -149,14 +149,12 @@ public class MenuScreen extends ScreenBase {
 
         G.game.batch.begin();
         label.draw(G.game.batch, 1f);
-        // Todo fix position
-        G.game.batch.draw(
-                titleRegion,
-                table.getX() + 50,
-                G.height - titleRegion.originalHeight - table.getY() - table.getHeight() * 0.04f -50,
-                titleRegion.originalWidth,
-                titleRegion.originalHeight
-        );
+
+        final float titleX = table.getX() + table.getWidth() / 2f - titleRegion.originalWidth / 2f;
+        final float titleY = label.getY() + 0.64f * label.getHeight() - titleRegion.originalHeight / 2f;
+
+        G.game.batch.draw(titleRegion, titleX, titleY, titleRegion.originalWidth,
+                titleRegion.originalHeight);
         G.game.batch.end();
     }
 

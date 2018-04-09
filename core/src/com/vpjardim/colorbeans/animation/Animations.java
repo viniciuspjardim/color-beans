@@ -345,7 +345,7 @@ public class Animations {
                 b.moveTime;
         b.py = -shift;
 
-        if(b.py <= -m.N_ROW) {
+        if(b.py <= -Map.N_ROW) {
 
             animating = false;
             //b.recycleFall();

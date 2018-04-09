@@ -120,7 +120,7 @@ public abstract class AiCommon implements AiBase {
     protected void fakeDoubt() {
 
         // Amount fallen until this frame: from 0 (top) to 1 (floor)
-        float fallAmount = (float)Math.max(m.pb.b1y +1 - m.OUT_ROW, 0) / (float)m.N_ROW;
+        float fallAmount = (float)Math.max(m.pb.b1y +1 - Map.OUT_ROW, 0) / (float) Map.N_ROW;
 
         float slowFallMax = 1 - downKeyRand;
         downKey = fallAmount > slowFallMax && bestMoveDefined;

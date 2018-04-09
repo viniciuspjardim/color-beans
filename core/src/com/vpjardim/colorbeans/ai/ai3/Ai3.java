@@ -33,7 +33,7 @@ public class Ai3 extends AiCommon {
     @Override
     public void init(Map map, Cfg.Ai cfg) {
         super.init(map, cfg);
-        tree = new Tree3(m.N_COL);
+        tree = new Tree3(Map.N_COL);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Ai3 extends AiCommon {
         int nColor2 = m.pb.nextB1;
 
         tree.initProcess(AiMap.getByteBlocks(null, m.b),
-                m.deleteSize, m.OUT_ROW, formula1, color1, color2, nColor1, nColor2);
+                m.deleteSize, Map.OUT_ROW, formula1, color1, color2, nColor1, nColor2);
     }
 
     @Override

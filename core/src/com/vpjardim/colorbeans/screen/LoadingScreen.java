@@ -36,6 +36,7 @@ public class LoadingScreen extends ScreenBase {
 
     private int frameCount = 0;
     private String atlasStr;
+    private final Color BAR_COLOR = new Color(0x4048ccff);
 
     public LoadingScreen() { manageInput = false; }
 
@@ -45,14 +46,14 @@ public class LoadingScreen extends ScreenBase {
         G.loading = true;
     }
 
-    public void loadStuff() {
+    private void loadStuff() {
 
-        G.game.scale = G.game.height / 720f;
-        if(G.height >= 1080) G.game.res = G.RES_MEDIUM;
-        else G.game.res = G.RES_SMALL;
+        G.scale = G.height / 720f;
+        if(G.height >= 1080) G.res = G.RES_MEDIUM;
+        else G.res = G.RES_SMALL;
 
         G.style.setDefaults();
-        G.style.scale(G.game.scale);
+        G.style.scale(G.scale);
 
         G.game.assets = new AssetManager();
 
@@ -145,7 +146,6 @@ public class LoadingScreen extends ScreenBase {
         G.game.data   = Db.load();
         G.game.input  = new InputManager();
         G.game.batch  = new SpriteBatch();
-        G.game.sr     = new ShapeRenderer();
         G.game.score  = ScoreTable.load();
         G.game.intFmt = NumberFormat.getInstance();
 
@@ -183,7 +183,30 @@ public class LoadingScreen extends ScreenBase {
         // Only start loading after the first frame to avoid a white screen blink at the startup.
         // Spite using AssetManager, that load things at a nonblocking method (other thread),
         // it takes a while, sufficient to cause white screen on the game startup.
-        if(frameCount == 1) loadStuff();
+        if(frameCount == 1) {
+            loadStuff();
+            G.game.sr = new ShapeRenderer();
+        }
+
+        // If loading has started but not finished draw progress bar
+        if(frameCount > 1 && !G.game.assets.update()) {
+
+            final int width = (int)(Math.min(0.8f * G.height, 0.8 * G.width));
+            final int height = 20;
+            final int x = (int)(G.width / 2f - width / 2f);
+            final int y = (int)(0.3f * G.height);
+            final int progress = (int)(width * G.game.assets.getProgress());
+
+            G.game.sr.setColor(BAR_COLOR);
+            G.game.sr.setProjectionMatrix(cam.combined);
+            G.game.sr.begin(ShapeRenderer.ShapeType.Line);
+            G.game.sr.rect(x, y, width, height);
+            G.game.sr.end();
+
+            G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
+            G.game.sr.rect(x + 5, y + 6, progress  - 11,  height - 11);
+            G.game.sr.end();
+        }
 
         // If stuff has done loading, init some vars and go to the next screen
         if(frameCount > 1 && G.game.assets.update()) {

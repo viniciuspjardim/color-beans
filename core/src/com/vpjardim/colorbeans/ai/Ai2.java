@@ -30,7 +30,7 @@ public class Ai2 implements AiBase {
     public void init(Map map, Cfg.Ai cfg) {
         m = map;
         moves = new Moves();
-        moves.init(m.N_COL);
+        moves.init(Map.N_COL);
 
         input = new AiInput();
         input.setTarget(m);
@@ -54,7 +54,7 @@ public class Ai2 implements AiBase {
                 if(root != null) Tree3Node.pool.free(root);
 
                 root = Tree3Node.pool.obtain();
-                root.init(AiMap.getByteBlocks(root.aiMap.b, m.b), m.deleteSize, m.OUT_ROW);
+                root.init(AiMap.getByteBlocks(root.aiMap.b, m.b), m.deleteSize, Map.OUT_ROW);
 
                 int color1 = m.pb.b2.color; // upper block
                 int color2 = m.pb.b1.color; // lower block

@@ -113,9 +113,7 @@ public class PlayerBlocks {
         int deltaX = mapCol - b1x;
         int deltaY = mapRow - b1y;
 
-        if(!m.isEmpty(b2x + deltaX, b2y + deltaY)) return true;
-
-        return false;
+        return !m.isEmpty(b2x + deltaX, b2y + deltaY);
     }
 
     public boolean moveHorizontal(int value) {

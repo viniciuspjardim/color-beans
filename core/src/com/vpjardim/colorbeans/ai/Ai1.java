@@ -50,7 +50,7 @@ public class Ai1 extends AiCommon {
 
             moves.setMove(movesArr.get(i));
 
-            aiMap.init(AiMap.getByteBlocks(aiMap.b, m.b), m.deleteSize, m.OUT_ROW);
+            aiMap.init(AiMap.getByteBlocks(aiMap.b, m.b), m.deleteSize, Map.OUT_ROW);
 
             float result = aiMap.process(color1, color2, moves.position, moves.rotation);
             float score;
