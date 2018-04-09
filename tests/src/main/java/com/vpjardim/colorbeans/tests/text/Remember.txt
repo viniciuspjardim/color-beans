@@ -29,6 +29,7 @@ Before a release commit
  - Commit: git commit -a -m ""
  - add tag: git tag -a vX.X.X -m "version X.X.X"
  - git push origin master
+ - git push --tags
  - Increment versions on /build.gradle (version) and /android/build.gradle (versionCode, versionName)
  - Commit new version: git commit -a -m "Prepared for next development iteration"
  - git push origin master
