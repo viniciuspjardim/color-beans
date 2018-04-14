@@ -53,13 +53,13 @@ public class G extends Game {
     // Todo android very laggy: 25fps with 2 maps, 17 with 4 maps
     // Todo small memory leak even in debugPG variant
     // Todo one map player blocks falls first then the others when if the game is restarted (...)
-    // (maybe fixed)
+    // It happen to the loser map when the winner wins pressing down key
     // Todo touch and drag in Android crashes app when using controller (maybe fixed)
     // Todo capture android back button event: go to menu when in PlayScreen
     // Todo negative score sometimes after first match in campaign (maybe fixed)
     // Todo black screen after minimizing and restoring on full screen mode
     // Todo restart music on map win, music fade in/out, add win/lost sound effects, pause (...)
-    // music on game paused
+    // music on game paused, music2 volume seems lower then music2
     // Todo fix art: create text shade and text dialog balloon 9patch
     // Todo Add win/lost camera transition and statistics layer
     // Todo fix game over animation: top blocks might render as if they were linked to (...)
