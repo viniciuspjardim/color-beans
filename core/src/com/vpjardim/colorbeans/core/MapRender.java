@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.RandomXS128;
 import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
@@ -35,16 +36,11 @@ public class MapRender {
     /** Size in pixels of each block (equals the diameter) */
     public float size;
 
-    public final int[] rand = new int[105];
-    public int randIndex = 0;
-
     public GlyphLayout gl = new GlyphLayout();
 
-    public MapRender() {
-        for(int i = 0; i < rand.length; i++) {
-            rand[i] = MathUtils.random(1, 12);
-        }
-    }
+    private RandomXS128 rand = new RandomXS128();
+    private long seed0 = rand.getState(0);
+    private long seed1 = rand.getState(1);
 
     /**
      * Used to draw only once the elements that don't change during the match (or if the screen is
@@ -53,15 +49,15 @@ public class MapRender {
     public void cacheBg() {
 
         TextureAtlas.AtlasRegion tile;
+        rand.setState(seed0, seed1);
 
         // ===== Draw map dark bg bricks =====
-        randIndex = 0;
 
         for(int i = 0; i < m.b.length; i++) {
 
             for(int j = Map.OUT_ROW; j < m.b[i].length + 1; j++) {
 
-                tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 3 + 10);
+                tile = G.game.atlas.findRegion("beans/brick", rand() % 3 + 10);
 
                 G.game.batch.draw(
                         tile,
@@ -70,9 +66,6 @@ public class MapRender {
                         size,
                         size
                 );
-
-                if(randIndex < rand.length -1) randIndex++;
-                else randIndex = 0;
             }
         }
 
@@ -91,7 +84,6 @@ public class MapRender {
         }
 
         // ==== Draw side border: light bricks =====
-        randIndex = 0;
 
         for(int i = -2; i < m.b.length +1; i++) {
 
@@ -99,7 +91,7 @@ public class MapRender {
 
                 if(i >= 0 && i < m.b.length) continue;
 
-                tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 9 + 1);
+                tile = G.game.atlas.findRegion("beans/brick", rand() % 9 + 1);
 
                 G.game.batch.draw(
                         tile,
@@ -108,9 +100,6 @@ public class MapRender {
                         size,
                         size
                 );
-
-                if(randIndex < rand.length -1) randIndex++;
-                else randIndex = 0;
             }
         }
 
@@ -122,14 +111,7 @@ public class MapRender {
         String txt;
         float w;
 
-        BitmapFont font1 = G.game.data.font1;
         BitmapFont font2 = G.game.data.font2;
-
-        // ==== Draw player name =====
-        txt = m.name;
-        gl.setText(font1, txt);
-        w = gl.width;
-        font1.draw(G.game.batch, txt, px - w + (size * m.b.length) - pad, py - pad);
 
         // ==== Draw next text =====
         txt = "Next";
@@ -181,8 +163,6 @@ public class MapRender {
             }
         }
 
-        randIndex = 0;
-
         // ===== Draw player blocks =====
         tile = G.game.data.BEANS_REG.get(m.pb.b1.getRegionKey());
 
@@ -206,9 +186,11 @@ public class MapRender {
         );
 
         // ==== Draw map ceil and flor that shakes with the beans ====
+        rand.setState(seed0, seed1);
+
         for(int i = -2; i < m.b.length + 1; i++) {
 
-            tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 9 + 1);
+            tile = G.game.atlas.findRegion("beans/brick", rand() % 9 + 1);
 
             G.game.batch.draw(
                     tile,
@@ -217,14 +199,11 @@ public class MapRender {
                     size,
                     size
             );
-
-            if(randIndex < rand.length -1) randIndex++;
-            else randIndex = 0;
         }
 
         for(int i = -2; i < m.b.length + 1; i++) {
 
-            tile = G.game.atlas.findRegion("beans/brick", rand[randIndex] % 9 + 1);
+            tile = G.game.atlas.findRegion("beans/brick", rand() % 9 + 1);
 
             float beansPy;
 
@@ -240,9 +219,6 @@ public class MapRender {
                     size,
                     size
             );
-
-            if(randIndex < rand.length -1) randIndex++;
-            else randIndex = 0;
         }
 
         // ==== Draw next blocks =====
@@ -267,6 +243,12 @@ public class MapRender {
 
         BitmapFont font1 = G.game.data.font1;
 
+        // ==== Draw player name =====
+        txt = m.name;
+        gl.setText(font1, txt);
+        w = gl.width;
+        font1.draw(G.game.batch, txt, px - w + (size * m.b.length) - pad, py - pad);
+
         // ==== Draw score =====
         font1.draw(G.game.batch, m.scoreStr, px + pad, py - pad);
 
@@ -288,4 +270,6 @@ public class MapRender {
         w = gl.width;
         font1.draw(G.game.batch, txt, nextPx - w + size - pad, nextPy - size * 7 - gl.height - pad);
     }
+
+    private int rand() { return (Math.abs(rand.nextInt()) % 12) + 1; }
 }

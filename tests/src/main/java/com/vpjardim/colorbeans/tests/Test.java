@@ -15,6 +15,8 @@ import com.vpjardim.colorbeans.ai.ai4.Ai4;
 import com.vpjardim.colorbeans.ai.ai4.Uct;
 import com.vpjardim.colorbeans.ai.ai4.UctNode;
 import com.vpjardim.colorbeans.defaults.Db;
+import com.vpjardim.colorbeans.events.DefaultHandler;
+import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.tests.treeview.RunnableTV;
 import com.vpjardim.colorbeans.tests.treeview.TVNode;
 import com.vpjardim.colorbeans.tests.treeview.TreeView;
@@ -28,7 +30,46 @@ public class Test {
 
     public static void main(String[] args){
         Test t = new Test();
-        t.test9();
+        t.test13();
+    }
+
+    public void test13() {
+
+        // ==== Adding listeners ====
+
+        DefaultHandler defaultHandler = new DefaultHandler();
+
+        defaultHandler.addEventListener("PAUSE",
+                e -> System.out.println("PAUSE handler <Stop Music>: " + e.getAttribute())
+        );
+
+        defaultHandler.addEventListener("PAUSE",
+                e -> System.out.println("PAUSE handler <Stop Animation>: " + e.getAttribute())
+        );
+
+        defaultHandler.addEventListener("MAP_LOST",
+                e -> System.out.println("MAP_LOST handler <Show Menu>: " + e.getAttribute())
+        );
+
+        // ==== Adding Events ====
+
+        defaultHandler.addEvent("MAP_LOST", () -> "Map 2 lost");
+
+        defaultHandler.addEvent("MAP_LOST", () -> "Map 3 lost");
+
+        defaultHandler.addEvent("PAUSE", () -> "Game Paused");
+
+        // No effect: event without listener ====
+        defaultHandler.addEvent("FOO", () -> "FOO event type. Event 1");
+
+        // With effect: add listener then add event
+        EventListener eListener = e -> System.out.println("FOO handler <1>: " + e.getAttribute());
+        defaultHandler.addEventListener("FOO", eListener);
+        defaultHandler.addEvent("FOO", () -> "FOO event type. Event 2");
+
+        // No effect: remove listener then add event
+        defaultHandler.removeEventListener("FOO", eListener);
+        defaultHandler.addEvent("FOO", () -> "FOO event type. Event 3");
     }
 
     public void test12() {
