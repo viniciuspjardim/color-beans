@@ -5,9 +5,10 @@ buildscript {
         mavenLocal()
         mavenCentral()
         jcenter()
+        google()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:2.3.3"
+        classpath "com.android.tools.build:gradle:3.1.1"
     }
 }
 
@@ -28,6 +29,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
         jcenter()
+        google()
     }
 }
 
@@ -35,11 +37,12 @@ project(":desktop") {
     apply plugin: "java"
 
     dependencies {
-        compile project(":core")
+        implementation project(":core")
 
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$gdxVersion"
+        // Todo implementation not working for freetype, check if fixed later
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
 }
@@ -50,9 +53,10 @@ project(":android") {
     configurations { natives }
 
     dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
+        implementation project(":core")
+        implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
+        // Todo implementation not working for freetype, check if fixed later
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
@@ -67,7 +71,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
 
-        compile fileTree(dir: "../libs", include: "*.jar")
+        implementation fileTree(dir: "../libs", include: "*.jar")
     }
 }
 
@@ -75,12 +79,13 @@ project(":core") {
     apply plugin: "java"
 
     dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        // Todo implementation not working for freetype, check if fixed later
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
-        compile fileTree(dir: "../libs", include: "*.jar")
+        implementation fileTree(dir: "../libs", include: "*.jar")
     }
 }
 
