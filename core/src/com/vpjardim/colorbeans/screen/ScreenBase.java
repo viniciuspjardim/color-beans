@@ -5,7 +5,6 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
-import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
@@ -49,6 +47,20 @@ public class ScreenBase implements Screen, TargetBase {
         return action != ACT_RUNNING;
     }
 
+    public void printScreen() {
+
+        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0,
+                Gdx.graphics.getBackBufferWidth(),
+                Gdx.graphics.getBackBufferHeight(), true);
+
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(),
+                Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+
+        BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
+        PixmapIO.writePNG(Gdx.files.external("print.png"), pixmap);
+        pixmap.dispose();
+    }
+
     @Override
     public void show() {
         cam = new OrthographicCamera();
@@ -73,24 +85,8 @@ public class ScreenBase implements Screen, TargetBase {
         time += delta;
     }
 
-    public void printScreen() {
-
-        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(),
-                Gdx.graphics.getBackBufferHeight(), true);
-
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(),
-                Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
-
-        BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
-        PixmapIO.writePNG(Gdx.files.external("print.png"), pixmap);
-        pixmap.dispose();
-    }
-
     @Override
     public void resize(int width, int height) { viewport.update(width, height, true); }
-
-    @Override
-    public void hide() {}
 
     @Override
     public void pause() {}
@@ -99,24 +95,16 @@ public class ScreenBase implements Screen, TargetBase {
     public void resume() {}
 
     @Override
+    public void hide() {}
+
+    @Override
     public void dispose() { G.game.input.targetsClear(); }
 
     @Override
     public void setInput(InputBase input) {}
 
     @Override
-    public void keyDown(int key) {
-
-        Dbg.inf(Dbg.tag(this), "key = " + key);
-
-        if(key == G.game.data.escBt || key == Input.Keys.BACK) buttonEsc(true);
-
-        else if(key == G.game.data.printScreenBt) buttonPrintScreen(true);
-    }
-
-    public void buttonEsc(boolean isDown) {}
-
-    public void buttonPrintScreen(boolean isDown) { printScreen(); }
+    public void keyDown(int key) { }
 
     @Override
     public void btStartDown() {}

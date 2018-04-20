@@ -257,29 +257,27 @@ public class Db {
 
         p = new Profile();
         kbProfs.add(p);
-
         p.up      = Keys.W;
         p.right   = Keys.D;
         p.down    = Keys.S;
         p.left    = Keys.A;
         p.start   = Keys.SPACE;
-        p.button1 = Profile.UNDEFINED;
-        p.button2 = Keys.G;
-        p.button3 = Keys.V;
-        p.button4 = Profile.UNDEFINED;
+        p.button1 = Keys.G;
+        p.button2 = Keys.H;
+        p.button3 = Keys.B;
+        p.button4 = Keys.V;
 
         p = new Profile();
         kbProfs.add(p);
-
         p.up      = Keys.UP;
         p.right   = Keys.RIGHT;
         p.down    = Keys.DOWN;
         p.left    = Keys.LEFT;
         p.start   = Keys.NUMPAD_0;
-        p.button1 = Profile.UNDEFINED;
+        p.button1 = Keys.NUMPAD_5;
         p.button2 = Keys.NUMPAD_6;
         p.button3 = Keys.NUMPAD_2;
-        p.button4 = Profile.UNDEFINED;
+        p.button4 = Keys.NUMPAD_1;
 
         // Controller key profiles
 
@@ -287,7 +285,6 @@ public class Db {
 
             p = new Profile();
             ctrlProfs.add(p);
-
             p.start   = 197;
             p.button1 = 188;
             p.button2 = 189;
@@ -296,7 +293,6 @@ public class Db {
 
             p = new Profile();
             ctrlProfs.add(p);
-
             p.start   = 197;
             p.button1 = 188;
             p.button2 = 189;
@@ -307,7 +303,6 @@ public class Db {
 
             p = new Profile();
             ctrlProfs.add(p);
-
             p.start   = 9;
             p.button1 = 0;
             p.button2 = 1;
@@ -316,7 +311,6 @@ public class Db {
 
             p = new Profile();
             ctrlProfs.add(p);
-
             p.start   = 9;
             p.button1 = 0;
             p.button2 = 1;
@@ -377,6 +371,7 @@ public class Db {
 
         try {
             Json json = new Json();
+            json.setUsePrototypes(false);
 
             String jsonTxt = json.prettyPrint(data);
             FileHandle file = Gdx.files.local("state/cfg.json");

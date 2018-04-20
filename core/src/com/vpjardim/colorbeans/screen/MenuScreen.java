@@ -5,6 +5,7 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,6 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.animation.MenuBeans;
+import com.vpjardim.colorbeans.events.Event;
+import com.vpjardim.colorbeans.events.EventHandler;
+import com.vpjardim.colorbeans.events.EventListener;
 
 /**
  * @author Vinícius Jardim
@@ -34,11 +38,23 @@ public class MenuScreen extends ScreenBase {
     private Table table;
     private Label label;
     private TextureAtlas.AtlasRegion titleRegion;
+    private EventListener specialKeyDown;
 
     @Override
     public void show() {
 
         super.show();
+
+        specialKeyDown = (Event e) -> {
+            int key = (Integer) e.getAttribute();
+
+            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+                Gdx.app.exit();
+            else if(key == G.game.data.printScreenBt)
+                printScreen();
+        };
+
+        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         bgColor = G.game.data.bgColor();
 
@@ -168,6 +184,7 @@ public class MenuScreen extends ScreenBase {
     public void dispose() {
         super.dispose();
         G.game.input.removeProcessor(stage);
+        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }

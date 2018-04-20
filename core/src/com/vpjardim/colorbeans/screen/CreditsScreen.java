@@ -4,11 +4,15 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.events.Event;
+import com.vpjardim.colorbeans.events.EventHandler;
+import com.vpjardim.colorbeans.events.EventListener;
 
 /**
  * @author Vinícius Jardim
@@ -17,11 +21,24 @@ import com.vpjardim.colorbeans.G;
 public class CreditsScreen extends ScreenBase {
 
     private Stage stage;
+    private EventListener specialKeyDown;
 
     @Override
     public void show() {
 
         super.show();
+
+        specialKeyDown = (Event e) -> {
+            int key = (Integer) e.getAttribute();
+            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+                action = ACT_NEXT;
+            else if(key == G.game.data.printScreenBt)
+                printScreen();
+        };
+
+        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
+
+        bgColor = G.game.data.bgColor();
 
         stage = new Stage(viewport, G.game.batch);
         Table table = new Table(G.game.skin);
@@ -46,7 +63,12 @@ public class CreditsScreen extends ScreenBase {
     }
 
     @Override
-    public void buttonEsc(boolean isDown) { action = ScreenBase.ACT_NEXT; }
+    public void dispose() {
+        super.dispose();
+        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
+        // Only dispose what does not come from game.assets. Do not dispose skin.
+        stage.dispose();
+    }
 
     @Override
     public void btStartDown() { action = ScreenBase.ACT_NEXT; }

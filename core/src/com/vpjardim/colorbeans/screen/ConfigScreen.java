@@ -4,6 +4,7 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,6 +23,9 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.defaults.Db;
+import com.vpjardim.colorbeans.events.Event;
+import com.vpjardim.colorbeans.events.EventHandler;
+import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.ControllerInput;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.KeyboardInput;
@@ -45,11 +49,24 @@ public class ConfigScreen extends ScreenBase {
     private TextField player3;
     private TextField player4;
 
+    private EventListener specialKeyDown;
+
     public ConfigScreen() { manageInput = false; }
 
     @Override
     public void show() {
+
         super.show();
+
+        specialKeyDown = (Event e) -> {
+            int key = (Integer) e.getAttribute();
+            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+                action = ACT_NEXT;
+            else if(key == G.game.data.printScreenBt)
+                printScreen();
+        };
+
+        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         bgColor = G.game.data.bgColor();
 
@@ -83,13 +100,12 @@ public class ConfigScreen extends ScreenBase {
         Label videoL = new Label("Content 2", labelStyle);
         Label inputL = new Label("Content 3", labelStyle);
 
-        // Text fields
-        final Array<Cfg.Player> pls = G.game.data.players;
-
         player1 = new TextField("", G.game.skin, "tField");
         player2 = new TextField("", G.game.skin, "tField");
         player3 = new TextField("", G.game.skin, "tField");
         player4 = new TextField("", G.game.skin, "tField");
+
+        final Array<Cfg.Player> pls = G.game.data.players;
 
         if(pls.size >= 1)
             player1.setText(pls.get(0).name);
@@ -135,35 +151,6 @@ public class ConfigScreen extends ScreenBase {
         backBtt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                pls.clear();
-
-                if(!player1.getText().equals(""))
-                    pls.add(new Cfg.Player(player1.getText()));
-                else
-                    pls.add(new Cfg.Player("Player"));
-
-                if(!player2.getText().equals(""))
-                    pls.add(new Cfg.Player(player2.getText()));
-                if(!player3.getText().equals(""))
-                    pls.add(new Cfg.Player(player3.getText()));
-                if(!player4.getText().equals(""))
-                    pls.add(new Cfg.Player(player4.getText()));
-
-                G.game.data.kbProfs.clear();
-                G.game.data.ctrlProfs.clear();
-
-                for(int i = 0; i < G.game.input.getInputs().size; i++) {
-
-                    final InputBase input = G.game.input.getInputs().get(i);
-
-                    if(input instanceof ControllerInput)
-                        G.game.data.ctrlProfs.add(input.getProfile());
-                    else if(input instanceof KeyboardInput)
-                        G.game.data.kbProfs.add(input.getProfile());
-                }
-
-                Db.save(G.game.data);
-
                 action = ScreenBase.ACT_NEXT;
             }
         });
@@ -315,9 +302,45 @@ public class ConfigScreen extends ScreenBase {
     }
 
     @Override
+    public void hide() {
+
+        final Array<Cfg.Player> pls = G.game.data.players;
+
+        pls.clear();
+
+        if(!player1.getText().equals(""))
+            pls.add(new Cfg.Player(player1.getText()));
+        else
+            pls.add(new Cfg.Player("Player"));
+
+        if(!player2.getText().equals(""))
+            pls.add(new Cfg.Player(player2.getText()));
+        if(!player3.getText().equals(""))
+            pls.add(new Cfg.Player(player3.getText()));
+        if(!player4.getText().equals(""))
+            pls.add(new Cfg.Player(player4.getText()));
+
+        G.game.data.kbProfs.clear();
+        G.game.data.ctrlProfs.clear();
+
+        for(int i = 0; i < G.game.input.getInputs().size; i++) {
+
+            final InputBase input = G.game.input.getInputs().get(i);
+
+            if(input instanceof ControllerInput)
+                G.game.data.ctrlProfs.add(input.getProfile());
+            else if(input instanceof KeyboardInput)
+                G.game.data.kbProfs.add(input.getProfile());
+        }
+
+        Db.save(G.game.data);
+    }
+
+    @Override
     public void dispose() {
         super.dispose();
         G.game.input.removeProcessor(stage);
+        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }

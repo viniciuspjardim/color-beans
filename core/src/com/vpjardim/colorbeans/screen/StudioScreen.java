@@ -4,12 +4,16 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.animation.SpriteAccessor;
 import com.vpjardim.colorbeans.core.Dbg;
+import com.vpjardim.colorbeans.events.Event;
+import com.vpjardim.colorbeans.events.EventHandler;
+import com.vpjardim.colorbeans.events.EventListener;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
@@ -22,6 +26,7 @@ public class StudioScreen extends ScreenBase {
 
     private Sprite studioLogo;
     private Sprite studioText;
+    private EventListener specialKeyDown;
 
     // Colors for blink sprite
     float bcr = 1f;
@@ -35,6 +40,16 @@ public class StudioScreen extends ScreenBase {
     public void show() {
 
         super.show();
+
+        specialKeyDown = (Event e) -> {
+            int key = (Integer) e.getAttribute();
+            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+                action = ACT_NEXT;
+            else if(key == G.game.data.printScreenBt)
+                printScreen();
+        };
+
+        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         studioLogo = G.game.atlas.createSprite("studio/studio_logo");
         studioText = G.game.atlas.createSprite("studio/studio_text");
@@ -147,10 +162,8 @@ public class StudioScreen extends ScreenBase {
     public void dispose() {
         super.dispose();
         G.game.assets.get("audio/studio.ogg", Music.class).stop();
+        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
     }
-
-    @Override
-    public void buttonEsc(boolean isDown) { action = ScreenBase.ACT_NEXT; }
 
     @Override
     public void btStartDown() { action = ScreenBase.ACT_NEXT; }

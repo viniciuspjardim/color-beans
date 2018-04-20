@@ -39,15 +39,15 @@ public class Test {
 
         DefaultHandler defaultHandler = new DefaultHandler();
 
-        defaultHandler.addEventListener("PAUSE",
+        defaultHandler.addListener("PAUSE",
                 e -> System.out.println("PAUSE handler <Stop Music>: " + e.getAttribute())
         );
 
-        defaultHandler.addEventListener("PAUSE",
+        defaultHandler.addListener("PAUSE",
                 e -> System.out.println("PAUSE handler <Stop Animation>: " + e.getAttribute())
         );
 
-        defaultHandler.addEventListener("MAP_LOST",
+        defaultHandler.addListener("MAP_LOST",
                 e -> System.out.println("MAP_LOST handler <Show Menu>: " + e.getAttribute())
         );
 
@@ -64,11 +64,11 @@ public class Test {
 
         // With effect: add listener then add event
         EventListener eListener = e -> System.out.println("FOO handler <1>: " + e.getAttribute());
-        defaultHandler.addEventListener("FOO", eListener);
+        defaultHandler.addListener("FOO", eListener);
         defaultHandler.addEvent("FOO", () -> "FOO event type. Event 2");
 
         // No effect: remove listener then add event
-        defaultHandler.removeEventListener("FOO", eListener);
+        defaultHandler.removeListener("FOO", eListener);
         defaultHandler.addEvent("FOO", () -> "FOO event type. Event 3");
     }
 

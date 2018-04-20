@@ -5,6 +5,7 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,6 +27,9 @@ import com.vpjardim.colorbeans.animation.CamAccessor;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.core.ScoreTable;
+import com.vpjardim.colorbeans.events.Event;
+import com.vpjardim.colorbeans.events.EventHandler;
+import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.TouchInput2;
 
 import aurelienribon.tweenengine.Tween;
@@ -50,6 +54,7 @@ public class PlayScreen extends ScreenBase {
     private Table table;
     private Color hlColor = new Color(0x2a4350ff);
     private TweenManager transition;
+    private EventListener specialKeyDown;
 
     private TouchInput2 touchInput2;
 
@@ -62,6 +67,16 @@ public class PlayScreen extends ScreenBase {
     public void show() {
 
         super.show();
+
+        specialKeyDown = (Event e) -> {
+            int key = (Integer) e.getAttribute();
+            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+                manager.maps.first().btStartDown();
+            else if(key == G.game.data.printScreenBt)
+                printScreen();
+        };
+
+        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         bgColor = new Color(0x101010ff);
 
@@ -271,6 +286,7 @@ public class PlayScreen extends ScreenBase {
         if(bgSprite != null) bgSprite.getTexture().dispose();
         if(fb != null) fb.dispose();
         G.game.input.removeProcessor(stage);
+        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }

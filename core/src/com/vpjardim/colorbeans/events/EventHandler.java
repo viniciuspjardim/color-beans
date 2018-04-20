@@ -9,7 +9,11 @@ package com.vpjardim.colorbeans.events;
  * 2018/04/14
  */
 public interface EventHandler {
-    void addEventListener(String type, EventListener eListener);
-    void removeEventListener(String type, EventListener eListener);
+
+    /** Returns default EventHandler instance */
+    static EventHandler getHandler() { return DefaultHandler.defaultHandler; }
+
+    void addListener(String type, EventListener eListener);
+    void removeListener(String type, EventListener eListener);
     void addEvent(String type, Event e);
 }
