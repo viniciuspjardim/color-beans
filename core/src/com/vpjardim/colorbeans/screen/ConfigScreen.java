@@ -126,11 +126,6 @@ public class ConfigScreen extends ScreenBase {
         final TextButton inputButt = new TextButton("Input",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
-        // ==== Groups ====
-        // HorizontalGroup layoutGroup = new HorizontalGroup();
-        // layoutGroup.addActor(gameButt);
-        // layoutGroup.addActor(videoButt);
-
         // Let only one tab button be checked at a time
         ButtonGroup logicGroup = new ButtonGroup();
         logicGroup.setMinCheckCount(1);
