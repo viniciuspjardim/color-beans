@@ -24,5 +24,6 @@ public class Net {
         kryo.register(byte[].class);
         kryo.register(byte[][].class);
         kryo.register(NetData.class);
+        kryo.register(ControllerData.class);
     }
 }

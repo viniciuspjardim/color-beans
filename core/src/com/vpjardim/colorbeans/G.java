@@ -65,6 +65,9 @@ public class G extends Game {
     // Todo fix game over animation: top blocks might render as if they were linked to (...)
     // offscreen blocks
     // Todo "Next" text is rendered behind the next block bg
+    // Todo do not render blocks in the out rows
+    // Todo Android back button crashes app in LoadingScreen
+    // Todo create a semi transparent black bg and to use in front of the beans in MenuScreen
 
     // Game resolution
     public static final int RES_SMALL  = 1;

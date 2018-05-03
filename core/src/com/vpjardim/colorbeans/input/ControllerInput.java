@@ -37,9 +37,7 @@ public class ControllerInput implements InputBase, ControllerListener {
     public void setTarget(TargetBase target) { this.target = target; }
 
     @Override
-    public void setProfile(Profile profile) {
-        p = profile;
-    }
+    public void setProfile(Profile profile) { p = profile; }
 
     @Override
     public Profile getProfile() { return p; }

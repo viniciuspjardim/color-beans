@@ -100,16 +100,16 @@ public class ScreenManager {
 
             // Switch to the next screen based on the current screen
             // and the screen action
-            if(currScreen instanceof LoadingScreen)
+            if(currScreen instanceof LoadingScreen) {
                 if(showStudioScreen)
                     G.game.setScreen(new StudioScreen());
                 else
                     G.game.setScreen(new MenuScreen());
+            }
             else if(currScreen instanceof StudioScreen)
                 G.game.setScreen(new MenuScreen());
 
             else if(currScreen instanceof MenuScreen) {
-
                 if(currScreen.action == MenuScreen.ACT_PLAY)
                     G.game.setScreen(new PlayScreen(new Campaign()));
                 else if(currScreen.action == MenuScreen.ACT_TRAINING)
@@ -119,22 +119,25 @@ public class ScreenManager {
                 else if(currScreen.action == MenuScreen.ACT_CONFIG)
                     G.game.setScreen(new ConfigScreen());
             }
-
             else if(currScreen instanceof ScoreScreen)
                 G.game.setScreen(new MenuScreen());
 
-            else if(currScreen instanceof ConfigScreen)
-                G.game.setScreen(new MenuScreen());
-
+            else if(currScreen instanceof ConfigScreen) {
+                if(currScreen.action == ConfigScreen.ACT_MENU)
+                    G.game.setScreen(new MenuScreen());
+                else if(currScreen.action == ConfigScreen.ACT_NET_INPUT)
+                    G.game.setScreen(new NetInputScreen());
+            }
             else if(currScreen instanceof PlayScreen) {
                 if(currScreen.action == PlayScreen.ACT_MENU)
                     G.game.setScreen(new MenuScreen());
                 else if(currScreen.action == PlayScreen.ACT_CREDITS)
                     G.game.setScreen(new CreditsScreen());
             }
-            else if(currScreen instanceof CreditsScreen) {
+            else if(currScreen instanceof CreditsScreen)
                 G.game.setScreen(new MenuScreen());
-            }
+            else if(currScreen instanceof NetInputScreen)
+                G.game.setScreen(new ConfigScreen());
         }
     }
 }

@@ -42,6 +42,9 @@ public class ConfigScreen extends ScreenBase {
     // Todo fix fps going from 60 to 30 after changing to windowed mode
     // Todo finish config screen
 
+    public static final int ACT_MENU       = 10;
+    public static final int ACT_NET_INPUT  = 11;
+
     private Stage stage;
 
     private TextField player1;
@@ -125,6 +128,8 @@ public class ConfigScreen extends ScreenBase {
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
         final TextButton inputButt = new TextButton("Input",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
+        final TextButton netInputBtt = new TextButton("Net Input",
+                G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
 
         // Let only one tab button be checked at a time
         ButtonGroup logicGroup = new ButtonGroup();
@@ -146,7 +151,14 @@ public class ConfigScreen extends ScreenBase {
         backBtt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                action = ScreenBase.ACT_NEXT;
+                action = ACT_MENU;
+            }
+        });
+
+        netInputBtt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action = ACT_NET_INPUT;
             }
         });
 
@@ -232,6 +244,9 @@ public class ConfigScreen extends ScreenBase {
 
         final ControllerActor controllerActor = new ControllerActor();
         inputT.add(controllerActor); //.expand().fill();
+        inputT.row();
+
+        inputT.add(netInputBtt);
         inputT.row();
 
         G.game.input.targetsClear();
