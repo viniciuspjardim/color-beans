@@ -8,7 +8,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
@@ -36,7 +35,7 @@ public class InputManager {
         specialButtons = new SpecialButtons();
 
         // Manage controller connections and disconnections
-        Controllers.addListener(ctrlConn);
+        // Controllers.addListener(ctrlConn);
 
         multiplex = new InputMultiplexer();
         input.setInputProcessor(multiplex);
@@ -57,7 +56,7 @@ public class InputManager {
         multiplex.addProcessor(specialButtons);
 
         // Initially attempts to assign controllers to the targets
-        for(int i = 0; i < Controllers.getControllers().size; i++) {
+        /* for(int i = 0; i < Controllers.getControllers().size; i++) {
 
             ControllerInput input = new ControllerInput();
 
@@ -69,7 +68,7 @@ public class InputManager {
             input.gdxController.addListener(input);
 
             inputs.add(input);
-        }
+        }*/
 
         // On Mobile devices:
         // When there is no more controllers try to assign touch input to android device

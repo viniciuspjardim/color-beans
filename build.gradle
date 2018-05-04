@@ -19,11 +19,12 @@ allprojects {
     version = "0.1.7"
     ext {
         appName = "Color Beans"
-        gdxVersion = "1.9.9-SNAPSHOT"
+        gdxVersion = "1.9.5.rpi-SNAPSHOT"
         aiVersion = "1.8.2-SNAPSHOT"
     }
 
     repositories {
+        maven { url "http://repository.abstracthorizon.org/maven2/abstracthorizon.snapshot/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         mavenLocal()
@@ -39,9 +40,15 @@ project(":desktop") {
     dependencies {
         implementation project(":core")
 
-        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        implementation "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$gdxVersion"
+
+
+
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-backend-jogamp:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
         // Todo implementation not working for freetype, check if fixed later
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
