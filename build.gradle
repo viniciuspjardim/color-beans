@@ -36,14 +36,22 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
+    configurations { myConfig }
+
     dependencies {
         implementation project(":core")
 
         implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$gdxVersion"
-        // Todo implementation not working for freetype, check if fixed later
-        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+
+        myConfig project(":core")
+
+        myConfig "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        myConfig "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        myConfig "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$gdxVersion"
+        myConfig "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
 }
 
@@ -56,8 +64,6 @@ project(":android") {
         implementation project(":core")
         implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
-        // Todo implementation not working for freetype, check if fixed later
-        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
@@ -82,8 +88,7 @@ project(":core") {
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        // Todo implementation not working for freetype, check if fixed later
-        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
         implementation fileTree(dir: "../libs", include: "*.jar")
     }

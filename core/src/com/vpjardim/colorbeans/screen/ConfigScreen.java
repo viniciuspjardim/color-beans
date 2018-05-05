@@ -64,7 +64,7 @@ public class ConfigScreen extends ScreenBase {
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
             if(key == G.game.data.escBt || key == Input.Keys.BACK)
-                action = ACT_NEXT;
+                action = ACT_MENU;
             else if(key == G.game.data.printScreenBt)
                 printScreen();
         };

@@ -30,7 +30,7 @@ public class Test {
 
     public static void main(String[] args){
         Test t = new Test();
-        t.test13();
+        t.test9();
     }
 
     public void test13() {
