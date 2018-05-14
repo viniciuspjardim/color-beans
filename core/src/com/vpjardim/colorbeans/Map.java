@@ -1252,9 +1252,10 @@ public class Map implements TargetBase {
 
             input.update();
 
-            int horizontal = input.getAxisX();
-            int vertical   = input.getAxisY();
-            int verticalOld = input.getAxisYOld();
+            boolean rightKey = input.getKey(InputBase.RIGHT_KEY);
+            boolean leftKey = input.getKey(InputBase.LEFT_KEY);
+            boolean downKey = input.getKey(InputBase.DOWN_KEY);
+            boolean downKeyOld = input.getKeyOld(InputBase.DOWN_KEY);
 
             // ==== Rotation move timing control ====
             if(rPlayMoveTimer > 0f) {
@@ -1265,22 +1266,29 @@ public class Map implements TargetBase {
             if(hPlayMoveTimer > 0f) {
                 hPlayMoveTimer -= G.delta;
             }
-            if(horizontal != 0 && hPlayMoveTimer <= 0f) {
-                pb.moveHorizontal(horizontal);
+            if(rightKey && hPlayMoveTimer <= 0f) {
+                pb.moveHorizontal(1);
+                hPlayMoveTimer += hPlayMoveWait;
+            }
+            if(leftKey && hPlayMoveTimer <= 0f) {
+                pb.moveHorizontal(-1);
                 hPlayMoveTimer += hPlayMoveWait;
             }
 
             // ==== Vertical move timing control ====
-            if(vertical == 1) {
+
+            // Down key is down
+            if(downKey) {
                 vPlayMoveWait2 = vPlayMoveWait / vPlayMoveMultip;
             }
-            else if(vertical == 0 && verticalOld == 1) {
+            // Down key released
+            else if(downKeyOld == InputBase.DOWN && downKey == InputBase.UP) {
                 vPlayMoveWait2 = vPlayMoveWait;
                 vPlayMoveTimer = vPlayMoveWait;
             }
 
-            // Start pressing the down button right now
-            if(verticalOld == 0 && vertical == 1) {
+            // Down key pressed
+            if(downKeyOld == InputBase.UP && downKey == InputBase.DOWN) {
                 // Do not wait to start falling faster
                 vPlayMoveTimer = 0.0001f;
             }

@@ -17,19 +17,24 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
     private TargetBase target;
     private Map map;
+    private int id;
 
-    private boolean horizontalEvent = false;
-    private boolean verticalEvent = false;
+    /**
+     * Current binary state of all keys: 1 down, 0 up.
+     * Each bit is one key. From the least significant bit to the most the key, the order is up,
+     * right, down, left, start, bt1, bt2, bt3 and bt4 keys
+     */
+    private short keyMap = 0;
 
-    /** -1 left; 1 right */
-    private int horizontal = 0;
-    /** -1 up; 1 down */
-    private int vertical = 0;
+    /**
+     * Previous binary state of all keys: 1 down, 0 up.
+     * Each bit is one key. From the least significant bit to the most the key, the order is up,
+     * right, down, left, start, bt1, bt2, bt3 and bt4 keys
+     */
+    private short keyMapOld = 0;
 
-    /** -1 left; 1 right */
-    private int horizontalOld = 0;
-    /** -1 up; 1 down */
-    private int verticalOld = 0;
+    /** 1 to the keys that had an event after last update */
+    private short event = 0;
 
     public int width = 400;
     public float[] div;
@@ -45,6 +50,17 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     public float touchY = 0f;
     public float dTouchX = 0f;
     public float dTouchY = 0f;
+
+    /** Change the state of the given key to the isDown value */
+    public void keyEvent(int key, boolean isDown) {
+
+        // If the key is already in the given isDown state, do nothing
+        if(InputBase.getKeyMapKey(keyMap, key) == isDown) return;
+
+        keyMapOld = InputBase.setKeyMapKey(keyMapOld, key, !isDown);
+        keyMap = InputBase.setKeyMapKey(keyMap, key, isDown);
+        event = InputBase.setKeyMapKey(event, key, true);
+    }
 
     @Override
     public void setTarget(TargetBase target) {
@@ -62,49 +78,76 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
     public void setProfile(Profile profile) {}
 
     @Override
+    public void setId(int id) { this.id = id; }
+
+    @Override
     public Profile getProfile() { return null; }
 
     @Override
+    public int getId() { return id; }
+
+    @Override
     public void update() {
+        // #debugCode
+        Dbg.dbg(Dbg.tag(this), "Update");
 
-        if(!horizontalEvent) { horizontalOld = horizontal; }
-        if(!verticalEvent) { verticalOld = vertical; }
+        // These flowing 2 lines changes keyMapOld only the bits that had no events in the last
+        // update. This is done because keyMapOld needs to stay one update before keyMap.
+        keyMapOld = keyMap;
+        keyMapOld = (short)(keyMapOld ^ event);
+        // Clear event bits
+        event = 0;
 
-        horizontalEvent = false;
-        verticalEvent = false;
+        if(map != null && map.isInState(Map.MState.PLAYER_FALL ) && move)
+            move();
 
-        if(move) move();
+        // #debugCode
+        Dbg.dbg(Dbg.tag(this), InputBase.keyMapToString(keyMapOld, keyMap));
     }
 
     @Override
-    public int getAxisX() { return horizontal; }
+    public boolean getKey(int key) {
+        return InputBase.getKeyMapKey(keyMap, key);
+    }
 
     @Override
-    public int getAxisY() { return vertical; }
+    public boolean getKeyOld(int key) {
+        return InputBase.getKeyMapKey(keyMapOld, key);
+    }
 
     @Override
-    public int getAxisXOld() { return horizontalOld; }
+    public short getKeyMap() { return keyMap; }
 
     @Override
-    public int getAxisYOld() { return verticalOld; }
+    public short getKeyMapOld() { return keyMapOld; }
 
     private void move() {
 
-        if(map != null && map.isInState(Map.MState.PLAYER_FALL)) {
+        // Horizontal delta
+        int deltaH = moveCurr - map.pb.b1x;
 
-            int deltaH = moveCurr - map.pb.b1x;
-
-            if(deltaH == 0) horizontal = 0;
-            else {
-                horizontal = deltaH / Math.abs(deltaH);
-                vertical = 0;
-            }
+        // Needs to move right
+        if(deltaH > 0) {
+            keyEvent(InputBase.RIGHT_KEY, InputBase.DOWN);
+            keyEvent(InputBase.LEFT_KEY, InputBase.UP);
         }
-        else vertical = 0;
+        // Needs to move left
+        else if(deltaH < 0) {
+            keyEvent(InputBase.LEFT_KEY, InputBase.DOWN);
+            keyEvent(InputBase.RIGHT_KEY, InputBase.UP);
+        }
+        // No move
+        else {
+            keyEvent(InputBase.RIGHT_KEY, InputBase.UP);
+            keyEvent(InputBase.LEFT_KEY, InputBase.UP);
+        }
     }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+
+        // Todo tap represents a touch down and touch up event. Currently we are only (...)
+        // triggering the key down event
 
         // #debugCode
         Dbg.dbg(Dbg.tag(this), "tap -> x = " + x + "; y = " + y + "; count = " + count +
@@ -112,18 +155,23 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
         if(target == null) return false;
 
+        // Aways returns false because the stage need this event on the PlayScreen
+
         if(y < G.height * 0.2f) {
+            keyEvent(InputBase.START_KEY, InputBase.DOWN);
             target.btStartDown();
             return false;
         }
 
-        if(x > G.width / 2f)
+        if(x > G.width / 2f) {
+            keyEvent(InputBase.BUTTON1_KEY, InputBase.DOWN);
             target.bt1Down();
-        else
+        }
+        else {
+            keyEvent(InputBase.BUTTON3_KEY, InputBase.DOWN);
             target.bt3Down();
+        }
 
-        // Returns false because the stage need this event on the PlayScreen
-        // Todo ControllerInput or other input might have the same problem
         return false;
     }
 
@@ -136,7 +184,7 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
         if(map == null) return false;
 
-        // Resetting values
+        // If not panning, resetting values
         if(!hPanning && !vPanning) {
             move = false;
             hPanning = false;
@@ -154,23 +202,57 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
         updateDiv();
         findCurrent();
 
-        if(vertical == 0 && Math.abs(deltaX) >= Math.abs(deltaY) * 0.8) {
-            hPanning = true;
-            horizontalEvent = true;
+        boolean vertical = InputBase.getKeyMapKey(keyMap, InputBase.UP_KEY) ||
+                InputBase.getKeyMapKey(keyMap, InputBase.DOWN_KEY);
 
+        boolean horizontal = InputBase.getKeyMapKey(keyMap, InputBase.RIGHT_KEY) ||
+                InputBase.getKeyMapKey(keyMap, InputBase.LEFT_KEY);
+
+        if(!vertical && Math.abs(deltaX) >= Math.abs(deltaY) * 0.8) {
+            hPanning = true;
             move = true;
         }
-        else if(horizontal == 0 && !hPanning && deltaY > 0) {
+        else if(!horizontal && !hPanning && deltaY > 0) {
             vPanning = true;
-            verticalEvent = true;
-
-            verticalOld = vertical;
-            vertical = 1;
+            keyEvent(InputBase.DOWN_KEY, InputBase.DOWN);
         }
 
         // #debugCode
         Dbg.dbg(Dbg.tag(this), "pan2 -> tx = " + touchX + "; ty = " + touchY +
                 "; dTouchX = " + this.dTouchX + "; dTouchY = " + this.dTouchY);
+
+        return false;
+    }
+
+    @Override
+    public boolean panStop (float x, float y, int pointer, int button) {
+
+        // #debugCode
+        Dbg.dbg(Dbg.tag(this), "panStop -> x = " + x + "; y = " + y);
+
+        keyEvent(InputBase.UP_KEY, InputBase.UP);
+        // target.btUpUp();
+
+        keyEvent(InputBase.RIGHT_KEY, InputBase.UP);
+        // target.btRightUp();
+
+        keyEvent(InputBase.DOWN_KEY, InputBase.UP);
+        // target.btDownUp();
+
+        keyEvent(InputBase.LEFT_KEY, InputBase.UP);
+        // target.btLeftUp();
+
+        hPanning = false;
+        vPanning = false;
+        move = false;
+        draw = false;
+        moveCurr = 0;
+        moveStart = 0;
+
+        touchX = 0f;
+        touchY = 0f;
+        dTouchX = 0f;
+        dTouchY = 0f;
 
         return false;
     }
@@ -198,39 +280,5 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
             }
         }
         moveCurr = Map.N_COL - 1;
-    }
-
-    @Override
-    public boolean panStop (float x, float y, int pointer, int button) {
-
-        // #debugCode
-        Dbg.dbg(Dbg.tag(this), "panStop -> x = " + x + "; y = " + y);
-
-        horizontalEvent = true;
-        horizontalOld = horizontal;
-        horizontal = 0;
-
-        hPanning = false;
-        vPanning = false;
-        move = false;
-        draw = false;
-        moveCurr = 0;
-        moveStart = 0;
-
-        touchX = 0f;
-        touchY = 0f;
-        dTouchX = 0f;
-        dTouchY = 0f;
-
-        verticalClean();
-        return false;
-    }
-
-    public void verticalClean() {
-        if(vertical == 1) {
-            verticalEvent = true;
-            verticalOld = vertical;
-            vertical = 0;
-        }
     }
 }

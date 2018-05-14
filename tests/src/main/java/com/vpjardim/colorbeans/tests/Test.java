@@ -17,6 +17,7 @@ import com.vpjardim.colorbeans.ai.ai4.UctNode;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.events.DefaultHandler;
 import com.vpjardim.colorbeans.events.EventListener;
+import com.vpjardim.colorbeans.net.ControllerData;
 import com.vpjardim.colorbeans.tests.treeview.RunnableTV;
 import com.vpjardim.colorbeans.tests.treeview.TVNode;
 import com.vpjardim.colorbeans.tests.treeview.TreeView;
@@ -30,7 +31,32 @@ public class Test {
 
     public static void main(String[] args){
         Test t = new Test();
-        t.test9();
+        t.test14();
+    }
+
+    public void test14() {
+        ControllerData controller = new ControllerData();
+
+        controller.keyMap = 0b111110000000111;
+
+        controller.setKeyMap(4, true);
+        System.out.println(String.format("%15s", Integer.toBinaryString(
+                controller.keyMap & 0xFFFF)).replace(' ', '0'));
+
+        controller.setKeyMap(0, false);
+        System.out.println(String.format("%15s", Integer.toBinaryString(
+                controller.keyMap & 0xFFFF)).replace(' ', '0'));
+
+        controller.setKeyMap(14, false);
+        System.out.println(String.format("%15s", Integer.toBinaryString(
+                controller.keyMap & 0xFFFF)).replace(' ', '0'));
+
+        System.out.println(controller.isKeyMapDown(0));
+        System.out.println(controller.isKeyMapDown(1));
+        System.out.println(controller.isKeyMapDown(3));
+        System.out.println(controller.isKeyMapDown(4));
+        System.out.println(controller.isKeyMapDown(13));
+        System.out.println(controller.isKeyMapDown(14));
     }
 
     public void test13() {

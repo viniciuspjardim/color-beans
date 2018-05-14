@@ -6,6 +6,7 @@ package com.vpjardim.colorbeans;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.vpjardim.colorbeans.core.Dbg;
+import com.vpjardim.colorbeans.input.InputBase;
 
 /**
  * @author Vinícius Jardim
@@ -224,17 +225,17 @@ public class PlayerBlocks {
         m.b[b1x][b1y].setColor(b1.color);
         m.b[b2x][b2y].setColor(b2.color);
 
-        boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
+        boolean downKey = m.input != null && m.input.getKey(InputBase.DOWN_KEY);
 
         // Triggers b1 deform animation
         boolean b1Collide = !m.isEmpty(b1x, b1y + 1);
-        if(downKeyPressed && b1Collide) {
+        if(downKey && b1Collide) {
             m.b[b1x][b1y].deformTime = m.afterGravityFallWait;
         }
 
         // Triggers b2 deform animation
         boolean b2Collide = !m.isEmpty(b2x, b2y + 1);
-        if(downKeyPressed && b2Collide) {
+        if(downKey && b2Collide) {
             m.b[b2x][b2y].deformTime = m.afterGravityFallWait;
         }
     }
@@ -242,7 +243,7 @@ public class PlayerBlocks {
     public void playerFallCalc() {
 
         m.vPlayMoveTimer -= G.delta;
-        boolean downKeyPressed = m.input != null && m.input.getAxisY() == 1;
+        boolean downKey = m.input != null && m.input.getKey(InputBase.DOWN_KEY);
 
         if(m.vPlayMoveTimer <= 0f) {
 
@@ -256,7 +257,7 @@ public class PlayerBlocks {
             }
             // Wait some time before insert the player blocks.
             // The player can use this time to do his last moves
-            else if(!downKeyPressed && m.vPlayMoveTimer >= -m.beforeInsertWait) {
+            else if(!downKey && m.vPlayMoveTimer >= -m.beforeInsertWait) {
 
             }
             else {

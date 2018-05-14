@@ -68,6 +68,10 @@ public class ControllerServer extends Server {
 
         private TargetBase target;
         public Profile p;
+        private int id;
+
+        private short keyMap = 0;
+        private short keyMapOld = 0;
 
         @Override
         public void setTarget(TargetBase target) { this.target = target; }
@@ -76,28 +80,35 @@ public class ControllerServer extends Server {
         public void setProfile(Profile profile) { p = profile; }
 
         @Override
+        public void setId(int id) { this.id = id; }
+
+        @Override
         public Profile getProfile() { return p; }
+
+        /** Returns the local id of this controller. It might be different from the remote id */
+        @Override
+        public int getId() { return id; }
 
         @Override
         public void update() { }
 
         @Override
-        public int getAxisX() {
+        public boolean getKey(int key) {
+            return false;
+        }
+
+        @Override
+        public boolean getKeyOld(int key) {
+            return false;
+        }
+
+        @Override
+        public short getKeyMap() {
             return 0;
         }
 
         @Override
-        public int getAxisY() {
-            return 0;
-        }
-
-        @Override
-        public int getAxisXOld() {
-            return 0;
-        }
-
-        @Override
-        public int getAxisYOld() {
+        public short getKeyMapOld() {
             return 0;
         }
 

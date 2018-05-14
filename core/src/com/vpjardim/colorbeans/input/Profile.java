@@ -5,33 +5,43 @@
 package com.vpjardim.colorbeans.input;
 
 /**
+ * Stores input implementation key codes. Then these keys can be mapped to internal key codes
+ * For example:
+ * Keyboard key A (key code 29 in desktop). If A is assigned in game as the UP key, it will be
+ * represented internally as with the key code 0.
+ *
  * @author Vinícius Jardim
  * 2017/04/30
  */
-
 public class Profile {
 
     public static final int UNDEFINED = -1;
 
-    // Directional movements
+    /** Up key. Internal code = 0 */
     public int up;
+
+    /** Right key. Internal code = 1 */
     public int right;
+
+    /** Down key. Internal code = 2 */
     public int down;
+
+    /** Left key. Internal code = 3 */
     public int left;
 
-    /** Start, play, pause button */
+    /** Start, play, pause button. Internal code = 4 */
     public int start;
 
-    /** Button 1 (Up): clock wise rotation movement */
+    /** Button 1 (Up): clock wise rotation movement. Internal code = 5 */
     public int button1;
 
-    /** Button 2 (Right): clock wise rotation movement */
+    /** Button 2 (Right): clock wise rotation movement. Internal code = 6 */
     public int button2;
 
-    /** Button 3 (Down): counter clock wise rotation movement */
+    /** Button 3 (Down): counter clock wise rotation movement. Internal code = 7 */
     public int button3;
 
-    /** Button 4 (Left): counter clock wise rotation movement */
+    /** Button 4 (Left): counter clock wise rotation movement. Internal code = 8 */
     public int button4;
 
     public Profile(int... keys) {
