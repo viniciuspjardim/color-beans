@@ -70,7 +70,7 @@ public class ControllerClient implements TargetBase {
     @Override
     public void keyDown(int key) {
         ControllerData data = new ControllerData();
-        data.key = key;
+        data.key = (byte)key;
         data.keyDown = true;
 
         if(connection != null)

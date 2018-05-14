@@ -14,9 +14,9 @@ task run(dependsOn: classes, type: JavaExec) {
 }
 
 task dist(type: Jar) {
-    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.getClassesDir())
     from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
+    from {configurations.myConfig.collect { it.isDirectory() ? it : zipTree(it) }}
     from files(project.assetsDir)
  
     manifest {

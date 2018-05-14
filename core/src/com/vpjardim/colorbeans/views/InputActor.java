@@ -21,6 +21,8 @@ import com.vpjardim.colorbeans.input.TargetBase;
  */
 public class InputActor extends Actor implements TargetBase {
 
+    // Todo fix bug where keyboard key events make the controller InputActor to animate
+
     public static final int CONTROLLER = 1;
     public static final int KEYBOARD   = 2;
 

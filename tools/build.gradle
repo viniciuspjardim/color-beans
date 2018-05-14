@@ -1,12 +1,12 @@
 apply plugin: "java"
 
 dependencies {
-
     implementation project(":core")
+
     implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
     implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    // Todo implementation not working for freetype, check if fixed later
-    compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
     implementation group: "org.imgscalr", name: "imgscalr-lib", version: "4.2"
 }

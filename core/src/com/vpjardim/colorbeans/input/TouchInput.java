@@ -14,6 +14,8 @@ import com.vpjardim.colorbeans.core.Dbg;
  */
 public class TouchInput extends GestureDetector.GestureAdapter implements InputBase {
 
+    // Todo fix or delete this class. It is not working anymore
+
     // Todo redo this class logic for better control
     // so when the finger stops moving the player blocks stops moving to
     // following a shape like this
@@ -23,6 +25,10 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     // Todo slide up to pause and menu options
 
     private TargetBase target;
+    private int id;
+
+    private short keyMap = 0;
+    private short keyMapOld = 0;
 
     private boolean horizontalEvent = false;
     private boolean verticalEvent = false;
@@ -44,7 +50,13 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     public void setProfile(Profile profile) {}
 
     @Override
+    public void setId(int id) { this.id = id; }
+
+    @Override
     public Profile getProfile() { return null; }
+
+    @Override
+    public int getId() { return id; }
 
     @Override
     public void update() {
@@ -57,16 +69,33 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     }
 
     @Override
-    public int getAxisX() { return horizontal; }
+    public boolean getKey(int key) {
+        return false;
+    }
 
     @Override
-    public int getAxisY() { return vertical; }
+    public boolean getKeyOld(int key) {
+        return false;
+    }
 
     @Override
-    public int getAxisXOld() { return horizontalOld; }
+    public short getKeyMap() {
+        return 0;
+    }
 
     @Override
-    public int getAxisYOld() { return verticalOld; }
+    public short getKeyMapOld() {
+        return 0;
+    }
+
+    // @Override
+    // public int getAxisX() { return horizontal; }
+    // @Override
+    // public int getAxisY() { return vertical; }
+    // @Override
+    // public int getAxisXOld() { return horizontalOld; }
+    // @Override
+    // public int getAxisYOld() { return verticalOld; }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
