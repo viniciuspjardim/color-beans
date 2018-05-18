@@ -23,8 +23,10 @@ public class InputActor extends Actor implements TargetBase {
 
     // Todo fix bug where keyboard key events make the controller InputActor to animate
 
-    public static final int CONTROLLER = 1;
-    public static final int KEYBOARD   = 2;
+    public static final int CONTROLLER     = 1;
+    public static final int KEYBOARD       = 2;
+    public static final int TOUCH          = 3;
+    public static final int NET_CONTROLLER = 4;
 
     private Array<TextureAtlas.AtlasRegion> bodies;
     private TextureAtlas.AtlasRegion body;
@@ -39,6 +41,10 @@ public class InputActor extends Actor implements TargetBase {
             bodies = G.game.atlas.findRegions("game/controller_small");
         else if (type == KEYBOARD)
             bodies = G.game.atlas.findRegions("game/keyboard_small");
+        else if (type == TOUCH)
+            bodies = G.game.atlas.findRegions("game/phone_small");
+        else if (type == NET_CONTROLLER)
+            bodies = G.game.atlas.findRegions("game/wifi_small");
         else
             throw new IllegalArgumentException("invalid type");
 
@@ -59,8 +65,8 @@ public class InputActor extends Actor implements TargetBase {
 
         float x = getX();
         float y = getY();
-        float width = body.originalWidth;
-        float height = body.originalHeight;
+        float width = body.packedWidth;
+        float height = body.packedHeight;
 
         batch.draw(body, x, y, width, height);
 

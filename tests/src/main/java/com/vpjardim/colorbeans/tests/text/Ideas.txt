@@ -26,6 +26,9 @@
       4 of mean bean machine)
  - Network gaming
  - Achievements
+ - A twins stage in campaign mode: the player is on the center and there are 2 opponents performing
+   the same moves (with the same blocks). Their game goes different when player throws trash blocks
+   in one of them
 
 Done
  - Scoring

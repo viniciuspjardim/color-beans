@@ -23,6 +23,7 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.input.InputManager;
+import com.vpjardim.colorbeans.net.ControllerServer;
 
 import java.text.NumberFormat;
 
@@ -150,6 +151,9 @@ public class LoadingScreen extends ScreenBase {
         G.game.intFmt = NumberFormat.getInstance();
 
         G.game.input.loadInputs();
+
+        G.game.server = new ControllerServer();
+        G.game.server.init();
 
         if(G.res == G.RES_MEDIUM) atlasStr = "img/pack_m.atlas"; // Medium size sprites
         else atlasStr = "img/pack_s.atlas";                      // Small size sprites

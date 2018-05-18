@@ -49,8 +49,15 @@ public class NetInputScreen extends ScreenBase {
     }
 
     @Override
+    public void render(float delta) {
+        super.render(delta);
+        controllerClient.update();
+    }
+
+    @Override
     public void dispose() {
         super.dispose();
+        controllerClient.disconnect();
         EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
     }
 }

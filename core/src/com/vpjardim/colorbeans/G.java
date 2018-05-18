@@ -16,6 +16,7 @@ import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
+import com.vpjardim.colorbeans.net.ControllerServer;
 import com.vpjardim.colorbeans.screen.ScreenManager;
 
 import java.text.NumberFormat;
@@ -93,6 +94,7 @@ public class G extends Game {
     public ScoreTable score;
     public NumberFormat intFmt;
     public long startTime;
+    public ControllerServer server;
 
     // #debugCode
     public Dbg dbg;

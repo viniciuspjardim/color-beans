@@ -88,6 +88,10 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
         return 0;
     }
 
+
+    @Override
+    public short getEvent() { return 0; }
+
     // @Override
     // public int getAxisX() { return horizontal; }
     // @Override

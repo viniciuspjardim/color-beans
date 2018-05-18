@@ -66,18 +66,12 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public void update() {
-        // #debugCode
-        Dbg.dbg(Dbg.tag(this), "Update");
-
         // These flowing 2 lines changes keyMapOld only the bits that had no events in the last
         // update. This is done because keyMapOld needs to stay one update before keyMap.
         keyMapOld = keyMap;
         keyMapOld = (short)(keyMapOld ^ event);
         // Clear event bits
         event = 0;
-
-        // #debugCode
-        Dbg.dbg(Dbg.tag(this), InputBase.keyMapToString(keyMapOld, keyMap));
     }
 
     @Override
@@ -95,6 +89,9 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public short getKeyMapOld() { return keyMapOld; }
+
+    @Override
+    public short getEvent() { return event; }
 
     @Override
     public boolean buttonDown(Controller controller, int keycode) {

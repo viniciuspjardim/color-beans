@@ -97,6 +97,10 @@ public class InputManager {
         }
     }
 
+    public void addInput(InputBase input) { inputs.add(input); }
+
+    public void removeInput(InputBase input) { inputs.removeValue(input, true); }
+
     public void addTarget(TargetBase target) {
         targets.add(target);
     }

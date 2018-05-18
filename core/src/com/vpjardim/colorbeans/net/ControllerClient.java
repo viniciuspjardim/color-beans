@@ -55,7 +55,7 @@ public class ControllerClient implements TargetBase {
             });
 
             new Thread(client, "Client").start();
-            client.connect(5000, "192.168.1.110", Net.tcpPort, Net.udpPort);
+            client.connect(5000, "192.168.1.20", Net.tcpPort, Net.udpPort);
 
             Dbg.print("==== Client start ====");
         }
@@ -64,96 +64,77 @@ public class ControllerClient implements TargetBase {
         }
     }
 
+    public void disconnect() {
+        if(connection != null) {
+            connection.close();
+            connection = null;
+        }
+    }
+
     @Override
     public void setInput(InputBase input) { this.input = input; }
 
-    @Override
-    public void keyDown(int key) {
+    private boolean sendUdp(int key, boolean isDown) {
+
+        if(connection == null) return false;
+
         ControllerData data = new ControllerData();
+        data.keyMap = input.getKeyMap();
+        data.keyMapOld = input.getKeyMapOld();
         data.key = (byte)key;
-        data.keyDown = true;
+        data.keyDown = isDown;
 
-        if(connection != null)
-            connection.sendUDP(data);
+        connection.sendUDP(data);
+
+        return true;
+    }
+
+    public void update() {
+
+        input.update();
+
+        // #debugCode
+        // Dbg.print(InputBase.keyMapToString(
+        //         input.getKeyMapOld(), input.getKeyMap(), input.getEvent()));
+
+        if(input.getKeyMap() != input.getKeyMapOld()) {
+            sendUdp(-1, false);
+        }
     }
 
     @Override
-    public void btStartDown() {
-        ControllerData data = new ControllerData();
-        data.key = 10;
-        data.keyDown = true;
-
-        if(connection != null)
-            connection.sendUDP(data);
-    }
+    public void keyDown(int key) { }
 
     @Override
-    public void bt1Down() {
-        ControllerData data = new ControllerData();
-        data.key = 1;
-        data.keyDown = true;
-
-        if(connection != null)
-            connection.sendUDP(data);
-    }
+    public void btStartDown() { sendUdp(InputBase.START_KEY, true); }
 
     @Override
-    public void bt2Down() {
-        ControllerData data = new ControllerData();
-        data.key = 2;
-        data.keyDown = true;
-
-        if(connection != null)
-            connection.sendUDP(data);
-    }
+    public void bt1Down() { sendUdp(InputBase.BUTTON1_KEY, true); }
 
     @Override
-    public void bt3Down() {
-        ControllerData data = new ControllerData();
-        data.key = 3;
-        data.keyDown = true;
-
-        if(connection != null)
-            connection.sendUDP(data);
-    }
+    public void bt2Down() { sendUdp(InputBase.BUTTON2_KEY, true); }
 
     @Override
-    public void bt4Down() {
-        ControllerData data = new ControllerData();
-        data.key = 4;
-        data.keyDown = true;
-
-        if(connection != null)
-            connection.sendUDP(data);
-    }
+    public void bt3Down() { sendUdp(InputBase.BUTTON3_KEY, true); }
 
     @Override
-    public void keyUp(int key) {
-
-    }
+    public void bt4Down() { sendUdp(InputBase.BUTTON4_KEY, true); }
 
     @Override
-    public void btStartUp() {
-
-    }
+    public void keyUp(int key) { }
 
     @Override
-    public void bt1Up() {
-
-    }
+    public void btStartUp() { sendUdp(InputBase.START_KEY, false); }
 
     @Override
-    public void bt2Up() {
-
-    }
+    public void bt1Up() { sendUdp(InputBase.BUTTON1_KEY, false); }
 
     @Override
-    public void bt3Up() {
-
-    }
+    public void bt2Up() { sendUdp(InputBase.BUTTON2_KEY, false); }
 
     @Override
-    public void bt4Up() {
+    public void bt3Up() { sendUdp(InputBase.BUTTON3_KEY, false); }
 
-    }
+    @Override
+    public void bt4Up() { sendUdp(InputBase.BUTTON4_KEY, false); }
 }

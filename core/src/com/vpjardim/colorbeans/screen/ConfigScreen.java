@@ -30,6 +30,8 @@ import com.vpjardim.colorbeans.input.ControllerInput;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.KeyboardInput;
 import com.vpjardim.colorbeans.input.Profile;
+import com.vpjardim.colorbeans.input.TouchInput2;
+import com.vpjardim.colorbeans.net.NetController;
 import com.vpjardim.colorbeans.views.ControllerActor;
 import com.vpjardim.colorbeans.views.InputActor;
 
@@ -259,12 +261,18 @@ public class ConfigScreen extends ScreenBase {
             final InputBase input = G.game.input.getInputs().get(i);
             final InputActor inputActor;
 
+            // inputActor = new InputActor(count, input.getProfile());
+
             if(input instanceof ControllerInput)
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
             else if(input instanceof KeyboardInput)
                 inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
+            else if(input instanceof TouchInput2)
+                inputActor = new InputActor(InputActor.TOUCH, null);
+            else if(input instanceof NetController)
+                inputActor = new InputActor(InputActor.NET_CONTROLLER, null);
             else
-                continue;
+                inputActor = new InputActor(InputActor.CONTROLLER, null);
 
             inputActor.setNumber(count);
             inputT.add(inputActor);

@@ -88,9 +88,6 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
     @Override
     public void update() {
-        // #debugCode
-        Dbg.dbg(Dbg.tag(this), "Update");
-
         // These flowing 2 lines changes keyMapOld only the bits that had no events in the last
         // update. This is done because keyMapOld needs to stay one update before keyMap.
         keyMapOld = keyMap;
@@ -100,9 +97,6 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
         if(map != null && map.isInState(Map.MState.PLAYER_FALL ) && move)
             move();
-
-        // #debugCode
-        Dbg.dbg(Dbg.tag(this), InputBase.keyMapToString(keyMapOld, keyMap));
     }
 
     @Override
@@ -120,6 +114,9 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
     @Override
     public short getKeyMapOld() { return keyMapOld; }
+
+    @Override
+    public short getEvent() { return event; }
 
     private void move() {
 

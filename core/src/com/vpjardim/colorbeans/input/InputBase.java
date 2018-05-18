@@ -34,7 +34,7 @@ public interface InputBase {
     }
 
     // #debugCode
-    static String keyMapToString(short keyMapOld, short keyMap) {
+    static String keyMapToString(short keyMapOld, short keyMap, short events) {
 
         String str = "\n                      4321SLDRU\n";
 
@@ -45,8 +45,13 @@ public interface InputBase {
 
         str += "       keyMap = ";
 
-        str += String.format("%15s", Integer.toBinaryString(
+        str += String.format("%15s\n", Integer.toBinaryString(
                 keyMap & 0xFFFF)).replace(' ', '0');
+
+        str += "       events = ";
+
+        str += String.format("%15s\n", Integer.toBinaryString(
+                events & 0xFFFF)).replace(' ', '0');
 
         return str;
     }
@@ -63,8 +68,10 @@ public interface InputBase {
     boolean getKey(int key);
     /** Returns the previous state of the requested key: down (true), up (false) */
     boolean getKeyOld(int key);
-    /** Returns the current state of all keys: down (bit 1), up (bit 0) */
+    /** Returns the current state of all keys: down (bit val 1), else 0 */
     short getKeyMap();
-    /** Returns the previous state of all keys: down (bit 1), up (bit 0) */
+    /** Returns the previous state of all keys: down (bit val 1), else 0 */
     short getKeyMapOld();
+    /** Returns which keys had an event in last update cycle: event (bit val 1), else 0 */
+    short getEvent();
 }

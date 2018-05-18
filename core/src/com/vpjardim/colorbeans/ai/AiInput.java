@@ -5,7 +5,6 @@
 package com.vpjardim.colorbeans.ai;
 
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.Profile;
 import com.vpjardim.colorbeans.input.TargetBase;
@@ -73,9 +72,6 @@ public class AiInput implements InputBase {
 
     @Override
     public void update() {
-        // #debugCode
-        Dbg.dbg(Dbg.tag(this), "Update");
-
         // These flowing 2 lines changes keyMapOld only the bits that had no events in the last
         // update. This is done because keyMapOld needs to stay one update before keyMap.
         keyMapOld = keyMap;
@@ -85,9 +81,6 @@ public class AiInput implements InputBase {
 
         if(map != null && map.isInState(Map.MState.PLAYER_FALL) && move)
             move();
-
-        // #debugCode
-        Dbg.dbg(Dbg.tag(this), InputBase.keyMapToString(keyMapOld, keyMap));
     }
 
     @Override
@@ -105,6 +98,9 @@ public class AiInput implements InputBase {
 
     @Override
     public short getKeyMapOld() { return keyMapOld; }
+
+    @Override
+    public short getEvent() { return event; }
 
     public void move() {
 

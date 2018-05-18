@@ -1262,7 +1262,7 @@ filter: MipMapLinearNearest,Linear
 repeat: none
 game/b_blue_down
   rotate: false
-  xy: 381, 533
+  xy: 516, 892
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -1271,7 +1271,7 @@ game/b_blue_down
   index: -1
 game/b_blue_up
   rotate: false
-  xy: 381, 403
+  xy: 646, 892
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -1280,7 +1280,7 @@ game/b_blue_up
   index: -1
 game/b_gray_down
   rotate: false
-  xy: 890, 522
+  xy: 776, 892
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -1289,7 +1289,7 @@ game/b_gray_down
   index: -1
 game/b_gray_up
   rotate: false
-  xy: 890, 392
+  xy: 860, 513
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -1298,7 +1298,7 @@ game/b_gray_up
   index: -1
 game/b_green_down
   rotate: false
-  xy: 514, 273
+  xy: 889, 207
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -1307,7 +1307,7 @@ game/b_green_down
   index: -1
 game/b_green_up
   rotate: false
-  xy: 644, 273
+  xy: 889, 77
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -1316,7 +1316,7 @@ game/b_green_up
   index: -1
 game/b_red_down
   rotate: false
-  xy: 774, 262
+  xy: 635, 29
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -1325,7 +1325,7 @@ game/b_red_down
   index: -1
 game/b_red_up
   rotate: false
-  xy: 514, 143
+  xy: 2, 44
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -1334,88 +1334,51 @@ game/b_red_up
   index: -1
 game/b_yellow_down
   rotate: false
-  xy: 644, 143
+  xy: 132, 44
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
   orig: 128, 128
   offset: 0, 0
   index: -1
-game/b_yellow_up
-  rotate: false
-  xy: 514, 13
-  size: 128, 128
-  split: 62, 62, 46, 72
-  pad: 20, 22, 22, 50
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-game/c_shade
-  rotate: false
-  xy: 644, 13
-  size: 128, 128
-  orig: 512, 352
-  offset: 51, 195
-  index: 1
-game/c_shade
-  rotate: false
-  xy: 774, 132
-  size: 128, 128
-  orig: 512, 352
-  offset: 98, 147
-  index: 2
-game/c_shade
-  rotate: false
-  xy: 774, 2
-  size: 128, 128
-  orig: 512, 352
-  offset: 51, 100
-  index: 3
 game/controller
   rotate: false
-  xy: 2, 663
+  xy: 2, 672
   size: 512, 348
   orig: 512, 352
   offset: 0, 4
   index: -1
 game/controller_small
   rotate: false
-  xy: 2, 238
+  xy: 381, 355
   size: 256, 174
   orig: 256, 176
   offset: 0, 0
   index: 1
 game/controller_small
   rotate: false
-  xy: 2, 62
+  xy: 639, 337
   size: 256, 174
   orig: 256, 176
   offset: 0, 0
   index: 2
 game/keyboard_small
   rotate: false
-  xy: 260, 217
+  xy: 381, 2
   size: 252, 173
   orig: 256, 176
   offset: 2, 3
   index: 1
-game/keyboard_small
-  rotate: false
-  xy: 260, 42
-  size: 252, 173
-  orig: 256, 176
-  offset: 2, 3
-  index: 2
 game/number_bg
   rotate: false
-  xy: 895, 839
+  xy: 895, 830
   size: 60, 60
   orig: 64, 64
   offset: 2, 1
   index: -1
 game/ribbon_green
   rotate: false
-  xy: 516, 652
+  xy: 516, 643
   size: 377, 247
   split: 168, 169, 7, 190
   pad: 168, 169, 11, 82
@@ -1424,7 +1387,7 @@ game/ribbon_green
   index: -1
 game/ribbon_purple
   rotate: false
-  xy: 2, 414
+  xy: 2, 423
   size: 377, 247
   split: 168, 169, 7, 190
   pad: 168, 169, 11, 82
@@ -1433,7 +1396,7 @@ game/ribbon_purple
   index: -1
 game/ribbon_red
   rotate: false
-  xy: 511, 403
+  xy: 2, 174
   size: 377, 247
   split: 168, 169, 7, 190
   pad: 168, 169, 11, 82
@@ -1442,20 +1405,64 @@ game/ribbon_red
   index: -1
 game/title
   rotate: false
-  xy: 516, 901
+  xy: 381, 531
   size: 477, 110
   orig: 479, 112
   offset: 1, 1
   index: -1
+game/wifi_small
+  rotate: false
+  xy: 381, 177
+  size: 252, 176
+  orig: 256, 176
+  offset: 2, 0
+  index: 1
+game/wifi_small
+  rotate: false
+  xy: 635, 159
+  size: 252, 176
+  orig: 256, 176
+  offset: 2, 0
+  index: 2
 
 pack_m6.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
-game/c_shade
+game/b_yellow_up
   rotate: false
   xy: 2, 2
+  size: 128, 128
+  split: 62, 62, 46, 72
+  pad: 20, 22, 22, 50
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+game/c_shade
+  rotate: false
+  xy: 256, 177
+  size: 128, 128
+  orig: 512, 352
+  offset: 51, 195
+  index: 1
+game/c_shade
+  rotate: false
+  xy: 510, 352
+  size: 128, 128
+  orig: 512, 352
+  offset: 98, 147
+  index: 2
+game/c_shade
+  rotate: false
+  xy: 640, 352
+  size: 128, 128
+  orig: 512, 352
+  offset: 51, 100
+  index: 3
+game/c_shade
+  rotate: false
+  xy: 770, 352
   size: 128, 128
   orig: 512, 352
   offset: 4, 147
@@ -1469,35 +1476,56 @@ game/c_shade
   index: 5
 game/c_shade
   rotate: false
-  xy: 262, 2
+  xy: 386, 177
   size: 128, 128
   orig: 512, 352
   offset: 333, 195
   index: 6
 game/c_shade
   rotate: false
-  xy: 392, 2
+  xy: 262, 47
   size: 128, 128
   orig: 512, 352
   offset: 380, 147
   index: 7
 game/c_shade
   rotate: false
-  xy: 522, 2
+  xy: 392, 47
   size: 128, 128
   orig: 512, 352
   offset: 333, 100
   index: 8
 game/c_shade
   rotate: false
-  xy: 652, 2
+  xy: 516, 222
   size: 128, 128
   orig: 512, 352
   offset: 286, 147
   index: 9
+game/keyboard_small
+  rotate: false
+  xy: 2, 307
+  size: 252, 173
+  orig: 256, 176
+  offset: 2, 3
+  index: 2
+game/phone_small
+  rotate: false
+  xy: 2, 132
+  size: 252, 173
+  orig: 256, 176
+  offset: 2, 3
+  index: 1
+game/phone_small
+  rotate: false
+  xy: 256, 307
+  size: 252, 173
+  orig: 256, 176
+  offset: 2, 3
+  index: 2
 game/tbg_yellow
   rotate: false
-  xy: 782, 2
+  xy: 646, 222
   size: 128, 128
   split: 56, 56, 48, 56
   pad: 27, 27, 24, 36
