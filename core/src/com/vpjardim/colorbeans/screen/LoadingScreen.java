@@ -162,6 +162,7 @@ public class LoadingScreen extends ScreenBase {
         G.game.assets.load("audio/studio.ogg", Music.class);
         G.game.assets.load("audio/music1.ogg", Music.class);
         G.game.assets.load("audio/music2.ogg", Music.class);
+        G.game.assets.load("audio/music3.ogg", Music.class);
         G.game.assets.load("audio/chain_11.ogg", Sound.class);
         G.game.assets.load("audio/chain_12.ogg", Sound.class);
         G.game.assets.load("audio/chain_13.ogg", Sound.class);
