@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
@@ -53,6 +54,8 @@ public class CreditsScreen extends ScreenBase {
 
         stage.addActor(table);
         table.setDebug(G.game.dbg.uiTable); // #debugCode
+
+        G.game.audio.playMusic(Audio.MUSIC3, true);
     }
 
     @Override
@@ -60,6 +63,11 @@ public class CreditsScreen extends ScreenBase {
         super.render(delta);
         stage.act(delta);
         stage.draw();
+    }
+
+    @Override
+    public void hide() {
+        G.game.audio.stopMusic();
     }
 
     @Override

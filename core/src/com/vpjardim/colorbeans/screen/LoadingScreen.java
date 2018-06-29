@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.input.InputManager;
@@ -148,6 +149,7 @@ public class LoadingScreen extends ScreenBase {
         G.game.input  = new InputManager();
         G.game.batch  = new SpriteBatch();
         G.game.score  = ScoreTable.load();
+        G.game.audio  = new Audio();
         G.game.intFmt = NumberFormat.getInstance();
 
         G.game.input.loadInputs();

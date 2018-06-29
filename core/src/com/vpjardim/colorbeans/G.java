@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
@@ -92,6 +93,7 @@ public class G extends Game {
     public TextureAtlas atlas;
     public Skin skin;
     public ScoreTable score;
+    public Audio audio;
     public NumberFormat intFmt;
     public long startTime;
     public ControllerServer server;
