@@ -26,6 +26,7 @@ import aurelienribon.tweenengine.Tween;
 
 /**
  * Game class
+ * <pre>
  *
  * libGDX coordinate system
  *
@@ -46,6 +47,7 @@ import aurelienribon.tweenengine.Tween;
  *   |A  .  .  .  .|
  * 0 |x  >  .  .  .|
  *    0
+ * </pre>
  *
  * @author Vinícius Jardim
  * 2015/03/21
