@@ -52,9 +52,12 @@ public class PlayScreen extends ScreenBase {
     private Viewport menuViewport;
     private Stage stage;
     private Table table;
+    private boolean menuVisible;
     private Color hlColor = new Color(0x2a4350ff);
     private TweenManager transition;
     private EventListener specialKeyDown;
+    // # debugCode
+    private EventListener debugInput;
 
     private TouchInput2 touchInput2;
 
@@ -68,15 +71,29 @@ public class PlayScreen extends ScreenBase {
 
         super.show();
 
+        // Special key event
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if(key == G.game.data.escBt || key == Input.Keys.BACK)
-                manager.maps.first().btStartDown();
+            if(key == G.game.data.escBt || key == Input.Keys.BACK) {
+                if(menuVisible) {
+                    manager.maps.first().btStartDown();
+                }
+                menuVisible = true;
+            }
             else if(key == G.game.data.printScreenBt)
                 printScreen();
         };
 
+        // Tap event
+        debugInput = (Event e) -> {
+            if(manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
+                menuVisible = false;
+            else if(manager.pauseStatus == MapManager.PAUSED_ALL && !menuVisible && !G.game.dbg.on)
+                menuVisible = true;
+        };
+
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.getHandler().addListener("DebugInput.tap", debugInput);
 
         bgColor = new Color(0x101010ff);
 
@@ -97,6 +114,7 @@ public class PlayScreen extends ScreenBase {
 
         table = new Table(G.game.skin);
         table.setFillParent(true);
+        menuVisible = true;
 
         G.game.assets.get("audio/music1.ogg", Music.class).setVolume(0.5f);
         G.game.assets.get("audio/music1.ogg", Music.class).setLooping(true);
@@ -110,6 +128,7 @@ public class PlayScreen extends ScreenBase {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 manager.pause(0, false);
+                menuVisible = true;
             }
         });
 
@@ -168,7 +187,7 @@ public class PlayScreen extends ScreenBase {
         stage.act(delta);
         stage.draw();
 
-        if(manager.pauseStatus == MapManager.PAUSED_ALL)
+        if(manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
             table.setVisible(true);
         else
             table.setVisible(false);
@@ -287,6 +306,7 @@ public class PlayScreen extends ScreenBase {
         if(fb != null) fb.dispose();
         G.game.input.removeProcessor(stage);
         EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.getHandler().removeListener("DebugInput.tap", debugInput);
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }

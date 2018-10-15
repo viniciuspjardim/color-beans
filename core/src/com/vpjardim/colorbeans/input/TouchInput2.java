@@ -11,7 +11,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
- * 10/02/2017
+ * 2017/02/10
  */
 public class TouchInput2 extends GestureDetector.GestureAdapter implements InputBase {
 
@@ -154,11 +154,11 @@ public class TouchInput2 extends GestureDetector.GestureAdapter implements Input
 
         // Aways returns false because the stage need this event on the PlayScreen
 
-        if(y < G.height * 0.2f) {
-            keyEvent(InputBase.START_KEY, InputBase.DOWN);
-            target.btStartDown();
-            return false;
-        }
+        // if(y < G.height * 0.2f) {
+        //     keyEvent(InputBase.START_KEY, InputBase.DOWN);
+        //     target.btStartDown();
+        //     return false;
+        // }
 
         if(x > G.width / 2f) {
             keyEvent(InputBase.BUTTON1_KEY, InputBase.DOWN);

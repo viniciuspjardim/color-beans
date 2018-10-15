@@ -29,6 +29,7 @@ android {
     }
 
     defaultConfig {
+        signingConfig signingConfigs.AndroidKey
         applicationId "com.gmail.vpjardimdev.colorbeans"
         minSdkVersion 16
         targetSdkVersion 28

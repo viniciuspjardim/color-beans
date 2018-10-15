@@ -27,6 +27,7 @@ public class InputManager {
 
     private ControllerConnection ctrlConn;
     private SpecialButtons specialButtons;
+    private DebugInput debugInput;
 
     public InputManager() {
 
@@ -34,6 +35,8 @@ public class InputManager {
         targets = new Array<>();
         ctrlConn = new ControllerConnection();
         specialButtons = new SpecialButtons();
+        // #debugCode
+        debugInput = new DebugInput();
 
         // Manage controller connections and disconnections
         Controllers.addListener(ctrlConn);
@@ -55,6 +58,7 @@ public class InputManager {
         inputsClear();
 
         multiplex.addProcessor(specialButtons);
+        multiplex.addProcessor(new GestureDetector(debugInput));
 
         // Initially attempts to assign controllers to the targets
         for(int i = 0; i < Controllers.getControllers().size; i++) {

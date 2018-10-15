@@ -161,6 +161,7 @@ public class G extends Game {
         batch.dispose();
         sr.dispose();
         atlas.dispose();
+        server.stop();
         // Skin is disposed when assets is disposed
     }
 }

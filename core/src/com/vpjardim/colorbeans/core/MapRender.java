@@ -4,6 +4,8 @@
 
 package com.vpjardim.colorbeans.core;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -12,6 +14,10 @@ import com.badlogic.gdx.math.RandomXS128;
 import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
+import com.vpjardim.colorbeans.events.Event;
+import com.vpjardim.colorbeans.events.EventHandler;
+import com.vpjardim.colorbeans.events.EventListener;
+import com.vpjardim.colorbeans.input.DebugInput;
 
 /**
  * @author Vinícius Jardim
@@ -41,6 +47,48 @@ public class MapRender {
     private RandomXS128 rand = new RandomXS128();
     private long seed0 = rand.getState(0);
     private long seed1 = rand.getState(1);
+
+    // # debugCode
+    private EventListener debugInput;
+
+    public MapRender() {
+
+        if(!G.game.dbg.on) return;
+
+        // Tap event listener: changes block color on tap event when debugging
+        debugInput = (Event e) -> {
+
+            // On android, only change beans color when it's paused
+            boolean changeColor = m != null && (
+                    (Gdx.app.getType() == Application.ApplicationType.Android && m.pause) ||
+                    Gdx.app.getType() == Application.ApplicationType.Desktop
+            );
+
+            if(changeColor) {
+
+                DebugInput.Data evData = (DebugInput.Data) e.getAttribute();
+                evData.y = G.height - evData.y;
+
+                int bTapX = (int)((evData.x - px) / size);
+                int bTapY = (int)((evData.y - (G.height - py)) / size);
+                bTapY = Map.OUT_ROW + Map.N_ROW - bTapY - 1;
+
+                // Dbg.dbg(Dbg.tag(this), "tap button = " + evData.button);
+                // Dbg.dbg(Dbg.tag(this), "tap => x = " + bTapX + "; y = " + bTapY);
+
+                if(bTapX >= 0 && bTapX < Map.N_COL && bTapY >= 0 && bTapY < Map.N_ROW + Map.OUT_ROW) {
+                    Block b = m.b[bTapX][bTapY];
+                    int color = b.color + (evData.button == 0 ? 1 : -1);
+                    if(color > Block.CLR_T || color == 0) b.setEmpty();
+                    else if(color < 0) b.setColor(Block.CLR_T);
+                    else b.setColor(color);
+                }
+            }
+        };
+
+        // Todo remove listener when object disposed
+        EventHandler.getHandler().addListener("DebugInput.tap", debugInput);
+    }
 
     /**
      * Used to draw only once the elements that don't change during the match (or if the screen is

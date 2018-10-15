@@ -15,6 +15,8 @@ import com.badlogic.gdx.Gdx;
  */
 public class Dbg {
 
+    public boolean on = false;
+
     // Used to change game speed
     public static final int DELTA_REAL  = 1;
     public static final int DELTA_0_02X = 2;
@@ -44,6 +46,8 @@ public class Dbg {
 
     public void off() {
 
+        on = false;
+
         delta         = DELTA_REAL;
         fps           = false;
         fpsText       = false;
@@ -61,7 +65,10 @@ public class Dbg {
         Gdx.app.setLogLevel(logLevel);
     }
 
-    public void on() { Gdx.app.setLogLevel(logLevel); }
+    public void on() {
+        on = true;
+        Gdx.app.setLogLevel(logLevel);
+    }
 
     public static void print(String str) { System.out.println(str); }
 
