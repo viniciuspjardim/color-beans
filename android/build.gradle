@@ -1,12 +1,14 @@
 android {
 
-    def keyPropFile = file("D:/Dropbox/Vinicius/seguranca/AndroidKey.properties")
+    // Using AndroidKeys env var to keep the path of the file that contain the data for the Android
+    // Keys
+    def keyPropFile = file("$System.env.AndroidKeys/AndroidKey.properties")
     def keyProp = new Properties()
     keyProp.load(new FileInputStream(keyPropFile))
 
     signingConfigs {
         AndroidKey {
-            storeFile file(keyProp["storeFile"])
+            storeFile file("$System.env.AndroidKeys/${keyProp['storeFile']}")
             storePassword keyProp["storePassword"]
             keyAlias keyProp["keyAlias"]
             keyPassword keyProp["keyPassword"]
@@ -25,7 +27,6 @@ android {
             assets.srcDirs = ["assets"]
             jniLibs.srcDirs = ["libs"]
         }
-
     }
 
     defaultConfig {
@@ -43,6 +44,7 @@ android {
             debuggable true
             applicationIdSuffix ".debug"
         }
+        // Todo seams that build variants that invoke proguard are not working anymore. Fix it
         // Debug with ProGuard enabled
         debugPG {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-project.txt"
