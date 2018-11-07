@@ -150,7 +150,7 @@ public class StudioScreen extends ScreenBase {
         );
         studioText.setPosition(
                 (width - studioText.getWidth()) / 2f,
-                (height - studioText.getHeight()) / 2f - (studioLogo.getHeight() / 2.9f * spriteScale)
+                G.flipY(height * 0.67f, studioText.getHeight(), spriteScale)
         );
 
         // #debugCode

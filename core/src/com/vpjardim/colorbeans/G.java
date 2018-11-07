@@ -138,6 +138,25 @@ public class G extends Game {
         screens.create();
     }
 
+    /**
+     * Convert Y down (0 = top left corner) to Y up (0 = bottom left corner) and vice-versa.
+     * All the game logic should use Y down and this method should be called when giving Y to a
+     * libGDX draw method.
+     * @param y coordinate to be flipped
+     * @return flipped coordinate
+     */
+    public static float flipY(float y) {
+        return G.height - 1 - y;
+    }
+
+    public static float flipY(float y, float height) {
+        return G.height - 1 - y - height;
+    }
+
+    public static float flipY(float y, float height, float scale) {
+        return G.height - 1 - y - (height * (scale + 1f)/2f);
+    }
+
     @Override
     public void render() { screens.render(); }
 
