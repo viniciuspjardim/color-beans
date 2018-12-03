@@ -122,7 +122,7 @@ public class G extends Game {
 
         // #debugCode
         // dbg.uiTable = true;
-        // dbg.mapShape = new int[] {3, 0, 0, 0};
+        // dbg.mapShape = new int[] {11, 11, 11, 11};
         // dbg.campStart = 7;
         // dbg.campEnd = 7;
         // dbg.delta = Dbg.DELTA_1X;
@@ -131,7 +131,7 @@ public class G extends Game {
         // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
-        // dbg.aiTraining = new int[] {3, 1, 3, 1};
+        // dbg.aiTraining = new int[] {3, 3, 3, 3};
         // dbg.on();
 
         screens = new ScreenManager();
