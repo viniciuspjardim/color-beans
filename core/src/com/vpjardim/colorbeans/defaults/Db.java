@@ -94,6 +94,8 @@ public class Db {
 
     public Array<Cfg.Player> players = new Array<>();
 
+    public String netServerIP = "";
+
     /** The keyboard profiles are used to enable 2 or more players play in the same keyboard */
     public Array<Profile> kbProfs = new Array<>();
 

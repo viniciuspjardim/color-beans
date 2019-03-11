@@ -45,7 +45,7 @@ public class NetInputScreen extends ScreenBase {
         G.game.input.addTarget(controllerClient);
         G.game.input.linkAll();
 
-        controllerClient.init();
+        controllerClient.init(G.game.data.netServerIP);
     }
 
     @Override

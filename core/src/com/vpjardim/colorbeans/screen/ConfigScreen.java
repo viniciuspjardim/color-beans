@@ -30,7 +30,7 @@ import com.vpjardim.colorbeans.input.ControllerInput;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.KeyboardInput;
 import com.vpjardim.colorbeans.input.Profile;
-import com.vpjardim.colorbeans.input.TouchInput2;
+import com.vpjardim.colorbeans.input.TouchInput;
 import com.vpjardim.colorbeans.net.NetController;
 import com.vpjardim.colorbeans.views.ControllerActor;
 import com.vpjardim.colorbeans.views.InputActor;
@@ -53,6 +53,7 @@ public class ConfigScreen extends ScreenBase {
     private TextField player2;
     private TextField player3;
     private TextField player4;
+    private TextField netServerIP;
 
     private EventListener specialKeyDown;
 
@@ -104,11 +105,13 @@ public class ConfigScreen extends ScreenBase {
         Label gameL  = new Label("Type the players name:", labelStyle);
         Label videoL = new Label("Content 2", labelStyle);
         Label inputL = new Label("Content 3", labelStyle);
+        Label serverIPL = new Label("IP", labelStyle);
 
         player1 = new TextField("", G.game.skin, "tField");
         player2 = new TextField("", G.game.skin, "tField");
         player3 = new TextField("", G.game.skin, "tField");
         player4 = new TextField("", G.game.skin, "tField");
+        netServerIP = new TextField("123", G.game.skin, "tField");
 
         final Array<Cfg.Player> pls = G.game.data.players;
 
@@ -120,6 +123,8 @@ public class ConfigScreen extends ScreenBase {
             player3.setText(pls.get(2).name);
         if(pls.size >= 4)
             player4.setText(pls.get(3).name);
+
+        netServerIP.setText(G.game.data.netServerIP);
 
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",
@@ -160,6 +165,7 @@ public class ConfigScreen extends ScreenBase {
         netInputBtt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                G.game.data.netServerIP = netServerIP.getText();
                 action = ACT_NET_INPUT;
             }
         });
@@ -248,6 +254,8 @@ public class ConfigScreen extends ScreenBase {
         inputT.add(controllerActor); //.expand().fill();
         inputT.row();
 
+        // inputT.add(serverIPL);
+        inputT.add(netServerIP);
         inputT.add(netInputBtt);
         inputT.row();
 
@@ -267,7 +275,7 @@ public class ConfigScreen extends ScreenBase {
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
             else if(input instanceof KeyboardInput)
                 inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
-            else if(input instanceof TouchInput2)
+            else if(input instanceof TouchInput)
                 inputActor = new InputActor(InputActor.TOUCH, null);
             else if(input instanceof NetController)
                 inputActor = new InputActor(InputActor.NET_CONTROLLER, null);
@@ -337,6 +345,8 @@ public class ConfigScreen extends ScreenBase {
             pls.add(new Cfg.Player(player3.getText()));
         if(!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
+
+        G.game.data.netServerIP = netServerIP.getText();
 
         G.game.data.kbProfs.clear();
         G.game.data.ctrlProfs.clear();

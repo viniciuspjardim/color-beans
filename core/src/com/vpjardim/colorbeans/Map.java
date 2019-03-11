@@ -1286,6 +1286,9 @@ public class Map implements TargetBase {
                 vPlayMoveWait2 = vPlayMoveWait;
                 vPlayMoveTimer = vPlayMoveWait;
             }
+            else {
+                vPlayMoveWait2 = vPlayMoveWait;
+            }
 
             // Down key pressed
             if(downKeyOld == InputBase.UP && downKey == InputBase.DOWN) {

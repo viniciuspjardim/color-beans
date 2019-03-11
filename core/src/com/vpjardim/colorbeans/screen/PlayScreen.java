@@ -30,7 +30,7 @@ import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
-import com.vpjardim.colorbeans.input.TouchInput2;
+import com.vpjardim.colorbeans.input.TouchInput;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
@@ -59,7 +59,7 @@ public class PlayScreen extends ScreenBase {
     // # debugCode
     private EventListener debugInput;
 
-    private TouchInput2 touchInput2;
+    private TouchInput touchInput;
 
     public PlayScreen(MapManager man) {
         manageInput = false;
@@ -154,8 +154,8 @@ public class PlayScreen extends ScreenBase {
         manager.init();
 
         for(MapRender r : manager.render) {
-            if(r.m.input instanceof TouchInput2) {
-                touchInput2 = (TouchInput2) r.m.input;
+            if(r.m.input instanceof TouchInput) {
+                touchInput = (TouchInput) r.m.input;
                 break;
             }
         }
@@ -192,32 +192,32 @@ public class PlayScreen extends ScreenBase {
         else
             table.setVisible(false);
 
-        // If it has a TouchInput2 draw the box and the arrow of the input
-        if(touchInput2 != null && touchInput2.draw) {
+        // If it has a TouchInput draw the box and the arrow of the input
+        if(touchInput != null && touchInput.draw) {
 
             G.game.sr.setProjectionMatrix(cam.combined);
             G.game.sr.setAutoShapeType(true);
             G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
 
             float yShift = 80;
-            float x = touchInput2.div[touchInput2.moveCurr];
-            float dx = touchInput2.div[touchInput2.moveCurr + 1] - x;
+            float x = touchInput.div[touchInput.moveCurr];
+            float dx = touchInput.div[touchInput.moveCurr + 1] - x;
 
             G.game.sr.setColor(Color.ORANGE);
             // Draw subdivision highlight
             G.game.sr.rect(
-                    x, G.height - touchInput2.touchY + yShift,
+                    x, G.height - touchInput.touchY + yShift,
                     dx, 150);
 
             G.game.sr.set(ShapeRenderer.ShapeType.Line);
 
             G.game.sr.setColor(Color.RED);
             // Draw input subdivisions
-            for(int i = 0; i < touchInput2.div.length -1; i++) {
-                x = touchInput2.div[i];
-                dx = touchInput2.div[i + 1] - x;
+            for(int i = 0; i < touchInput.div.length -1; i++) {
+                x = touchInput.div[i];
+                dx = touchInput.div[i + 1] - x;
                 G.game.sr.rect(
-                        x, G.height - touchInput2.touchY + yShift,
+                        x, G.height - touchInput.touchY + yShift,
                         dx, 150);
             }
 
@@ -226,9 +226,9 @@ public class PlayScreen extends ScreenBase {
 
             // Draw touch triangle
             G.game.sr.triangle(
-                    touchInput2.touchX + touchInput2.dTouchX, G.height - touchInput2.touchY + 1.3f * yShift,
-                    touchInput2.touchX + touchInput2.dTouchX - 50, G.height - touchInput2.touchY - 15,
-                    touchInput2.touchX + touchInput2.dTouchX + 50, G.height - touchInput2.touchY - 15);
+                    touchInput.touchX + touchInput.dTouchX, G.height - touchInput.touchY + 1.3f * yShift,
+                    touchInput.touchX + touchInput.dTouchX - 50, G.height - touchInput.touchY - 15,
+                    touchInput.touchX + touchInput.dTouchX + 50, G.height - touchInput.touchY - 15);
 
             G.game.sr.end();
         }

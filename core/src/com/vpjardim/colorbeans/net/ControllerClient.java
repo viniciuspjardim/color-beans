@@ -21,16 +21,17 @@ public class ControllerClient implements TargetBase {
     private Client client;
     private InputBase input;
     private Connection connection;
+    private boolean zeroSent = false;
 
     public static void main(String[] args) {
 
         Log.set(Log.LEVEL_NONE);
 
         ControllerClient c = new ControllerClient();
-        c.init();
+        c.init("192.168.1.110");
     }
 
-    public void init() {
+    public void init(String ip) {
 
         try {
             client = new Client();
@@ -55,7 +56,7 @@ public class ControllerClient implements TargetBase {
             });
 
             new Thread(client, "Client").start();
-            client.connect(5000, "192.168.1.20", Net.tcpPort, Net.udpPort);
+            client.connect(5000, ip, Net.tcpPort, Net.udpPort);
 
             Dbg.print("==== Client start ====");
         }
@@ -93,12 +94,22 @@ public class ControllerClient implements TargetBase {
 
         input.update();
 
-        // #debugCode
-        // Dbg.print(InputBase.keyMapToString(
-        //         input.getKeyMapOld(), input.getKeyMap(), input.getEvent()));
-
         if(input.getKeyMap() != input.getKeyMapOld()) {
             sendUdp(-1, false);
+            zeroSent = false;
+
+            // #debugCode
+            Dbg.print(InputBase.keyMapToString(
+                    input.getKeyMapOld(), input.getKeyMap(), input.getEvent()));
+        }
+        // Send all zero keys when all keys are released
+        else if(!zeroSent) {
+            sendUdp(-1, false);
+            zeroSent = true;
+
+            // #debugCode
+            Dbg.print(InputBase.keyMapToString(
+                    input.getKeyMapOld(), input.getKeyMap(), input.getEvent()));
         }
     }
 

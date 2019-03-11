@@ -11,6 +11,7 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Dbg;
+import com.vpjardim.colorbeans.input.InputBase;
 
 /**
  * @author Vinícius Jardim
@@ -55,6 +56,9 @@ public class ControllerServer extends Server {
                         else if(data.key == -1) {
                             controller.keyMap = data.keyMap;
                             controller.keyMapOld = data.keyMapOld;
+
+                            Dbg.print(InputBase.keyMapToString(
+                                    controller.keyMapOld, controller.keyMap, (short)0));
                         }
                     }
                 }

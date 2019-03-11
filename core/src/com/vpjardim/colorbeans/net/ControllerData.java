@@ -36,24 +36,4 @@ public class ControllerData {
      * right, down, left, start, bt1, bt2, bt3 and bt4 keys
      */
     public short keyMapOld;
-
-    // Todo remove methods below. Use the InputBase methods instead
-
-    public void setKeyMap(int bit, boolean isDown) {
-        if(isDown) keyMap = (short)(keyMap |  (1 << bit));
-        else       keyMap = (short)(keyMap & ~(1 << bit));
-    }
-
-    public void setKeyMapOld(int bit, boolean isDown) {
-        if(isDown) keyMapOld = (short)(keyMapOld |  (1 << bit));
-        else       keyMapOld = (short)(keyMapOld & ~(1 << bit));
-    }
-
-    public boolean isKeyMapDown(int bit) {
-        return ((keyMap >> bit) & 1) == 1 ? true : false;
-    }
-
-    public boolean isKeyMapOldDown(int bit) {
-        return ((keyMapOld >> bit) & 1) == 1 ? true : false;
-    }
 }

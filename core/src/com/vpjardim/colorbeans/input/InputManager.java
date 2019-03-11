@@ -79,7 +79,7 @@ public class InputManager {
         // When there is no more controllers try to assign touch input to android device
         if(Gdx.app.getType() == Application.ApplicationType.Android) {
 
-            TouchInput2 input = new TouchInput2();
+            TouchInput input = new TouchInput();
             multiplex.addProcessor(new GestureDetector(input));
 
             inputs.add(input);

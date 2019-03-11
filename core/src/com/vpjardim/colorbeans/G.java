@@ -125,7 +125,7 @@ public class G extends Game {
         // dbg.mapShape = new int[] {11, 11, 11, 11};
         // dbg.campStart = 7;
         // dbg.campEnd = 7;
-        // dbg.delta = Dbg.DELTA_1X;
+        // dbg.delta = Dbg.DELTA_0_5X;
         // dbg.fps = true;
         // dbg.fpsStat = true;
         // dbg.logLevel = Application.LOG_DEBUG;

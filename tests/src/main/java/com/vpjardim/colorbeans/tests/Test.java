@@ -39,24 +39,24 @@ public class Test {
 
         controller.keyMap = 0b111110000000111;
 
-        controller.setKeyMap(4, true);
+        // controller.setKeyMap(4, true);
         System.out.println(String.format("%15s", Integer.toBinaryString(
                 controller.keyMap & 0xFFFF)).replace(' ', '0'));
 
-        controller.setKeyMap(0, false);
+        // controller.setKeyMap(0, false);
         System.out.println(String.format("%15s", Integer.toBinaryString(
                 controller.keyMap & 0xFFFF)).replace(' ', '0'));
 
-        controller.setKeyMap(14, false);
+        // controller.setKeyMap(14, false);
         System.out.println(String.format("%15s", Integer.toBinaryString(
                 controller.keyMap & 0xFFFF)).replace(' ', '0'));
 
-        System.out.println(controller.isKeyMapDown(0));
-        System.out.println(controller.isKeyMapDown(1));
-        System.out.println(controller.isKeyMapDown(3));
-        System.out.println(controller.isKeyMapDown(4));
-        System.out.println(controller.isKeyMapDown(13));
-        System.out.println(controller.isKeyMapDown(14));
+        // System.out.println(controller.isKeyMapDown(0));
+        // System.out.println(controller.isKeyMapDown(1));
+        // System.out.println(controller.isKeyMapDown(3));
+        // System.out.println(controller.isKeyMapDown(4));
+        // System.out.println(controller.isKeyMapDown(13));
+        // System.out.println(controller.isKeyMapDown(14));
     }
 
     public void test13() {

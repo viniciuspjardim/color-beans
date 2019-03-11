@@ -27,6 +27,7 @@ environments.
 * Multiple players using the same keyboard
 * Support for gamepads
 * Custom touch input for mobile devices
+* Use your cellphone as a controller to desktop and vice versa (Network controller)
 * Campaign mode where the player duels the AI
 * Stages of different difficulties in campaign mode
 
