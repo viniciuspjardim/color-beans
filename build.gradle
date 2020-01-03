@@ -19,8 +19,8 @@ allprojects {
     version = "0.1.8"
     ext {
         appName = "Color Beans"
-        gdxVersion = "1.9.10-SNAPSHOT"
-        aiVersion = "1.8.2-SNAPSHOT"
+        gdxVersion = "1.9.10"
+        aiVersion = "1.8.2"
     }
 
     repositories {

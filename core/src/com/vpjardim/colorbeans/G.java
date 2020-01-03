@@ -58,9 +58,6 @@ public class G extends Game {
     // Todo small memory leak even in debugPG variant
     // Todo one map player blocks falls first then the others when if the game is restarted (...)
     // It happen to the loser map when the winner wins pressing down key
-    // Todo touch and drag in Android crashes app when using controller (maybe fixed)
-    // Todo capture android back button event: go to menu when in PlayScreen
-    // Todo negative score sometimes after first match in campaign (maybe fixed)
     // Todo black screen after minimizing and restoring on full screen mode
     // Todo restart music on map win, music fade in/out, add win/lost sound effects, pause (...)
     // music on game paused, music2 volume seems lower then music2
@@ -72,6 +69,12 @@ public class G extends Game {
     // Todo do not render blocks in the out rows
     // Todo Android back button crashes app in LoadingScreen
     // Todo create a semi transparent black bg and to use in front of the beans in MenuScreen
+
+    // Todo negative score sometimes after first match in campaign (maybe fixed)
+
+    // Todo touch and drag in Android crashes app when using controller (fixed)
+    // Todo capture android back button event: go to menu when in PlayScreen (done)
+
 
     // Game resolution
     public static final int RES_SMALL  = 1;

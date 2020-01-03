@@ -14,7 +14,19 @@ import com.vpjardim.colorbeans.G;
  */
 public class DesktopLauncher {
 
-    public static void main(String[] arg) {
+    public static void main(String[] args) {
+
+        boolean fullScreen = true;
+        boolean useVsync = true;
+
+        for(int i = 0; i < args.length; i++) {
+            if(args[i].equals("-window")) {
+                fullScreen = false;
+            }
+            else if(args[i].equals("-vsyncOff")) {
+                useVsync = false;
+            }
+        }
 
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
@@ -23,8 +35,11 @@ public class DesktopLauncher {
         config.setWindowedMode(1280, 720);
         config.setTitle("Color Beans");
         config.setWindowSizeLimits(480, 320, 3840, 2160);
-        config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-        // config.useVsync(false);
+        config.useVsync(useVsync);
+
+        if(fullScreen) {
+            config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+        }
 
         new Lwjgl3Application(new G(), config);
     }
