@@ -40,13 +40,11 @@ public class InputProc implements InputProcessor, GestureDetector.GestureListene
         return false;
     }
 
-    // Zoom in e zoom out com a roda do mouse
     @Override
-    public boolean scrolled(int amount) {
-
+    public boolean scrolled(float amountX, float amountY) {
         // Ajusta o multiplicador (do zoom) 10% para mais ou menos por movimento
         // na roda do mouse
-        double multi = (amount * -0.3) + 1.0;
+        double multi = (amountY * -0.3) + 1.0;
 
         TreeView.get().cam.zoom *= multi;
         return false;

@@ -244,7 +244,5 @@ public class KeyboardInput implements InputBase, InputProcessor {
     }
 
     @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
+    public boolean scrolled(float amountX, float amountY) { return false; }
 }

@@ -26,6 +26,7 @@ public class Dbg {
     public static final int DELTA_1X    = 6;
     public static final int DELTA_2X    = 7;
     public static final int DELTA_4X    = 8;
+    public static final int DELTA_8X    = 9;
 
     public int delta;
     public boolean fps;

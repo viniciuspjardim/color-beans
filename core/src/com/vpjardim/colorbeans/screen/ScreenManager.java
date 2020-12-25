@@ -63,6 +63,8 @@ public class ScreenManager {
             G.delta = 0.0333333f; //  30 fps
         else if(G.game.dbg.delta == Dbg.DELTA_4X)
             G.delta = 0.0666667f; //  15 fps
+        else if(G.game.dbg.delta == Dbg.DELTA_8X)
+            G.delta = 0.1333333f; //  7.5 fps
 
         transition.update(G.delta);
 
