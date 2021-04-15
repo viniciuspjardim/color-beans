@@ -23,7 +23,7 @@ task debug(dependsOn: classes, type: JavaExec) {
 }
 
 task dist(type: Jar) {
-    from files(sourceSets.main.output.getClassesDir())
+    from files(sourceSets.main.output.getClassesDirs())
     from files(sourceSets.main.output.resourcesDir)
     from {configurations.myConfig.collect { it.isDirectory() ? it : zipTree(it) }}
     from files(project.assetsDir)

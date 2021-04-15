@@ -8,7 +8,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:3.2.1"
+        classpath 'com.android.tools.build:gradle:4.1.3'
     }
 }
 
@@ -19,7 +19,8 @@ allprojects {
     version = "0.1.8"
     ext {
         appName = "Color Beans"
-        gdxVersion = "1.9.12"
+        gdxVersion = "1.9.14"
+        controllerVersion = "1.9.13"
         aiVersion = "1.8.2"
     }
 
@@ -43,14 +44,14 @@ project(":desktop") {
 
         implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        implementation "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$controllerVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
 
         myConfig project(":core")
 
         myConfig "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         myConfig "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        myConfig "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$gdxVersion"
+        myConfig "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$controllerVersion"
         myConfig "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
 }
@@ -64,7 +65,7 @@ project(":android") {
         implementation project(":core")
 
         implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-controllers-android:$controllerVersion"
 
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
@@ -87,7 +88,7 @@ project(":core") {
 
     dependencies {
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-controllers:$controllerVersion"
         implementation "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 

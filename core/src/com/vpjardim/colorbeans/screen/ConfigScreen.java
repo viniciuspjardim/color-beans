@@ -49,6 +49,9 @@ public class ConfigScreen extends ScreenBase {
 
     private Stage stage;
 
+    private Table inputT;
+    private boolean dirtInputT = false;
+
     private TextField player1;
     private TextField player2;
     private TextField player3;
@@ -85,7 +88,7 @@ public class ConfigScreen extends ScreenBase {
         Table tabT     = new Table(G.game.skin);
         Table gameT    = new Table(G.game.skin);
         Table videoT   = new Table(G.game.skin);
-        Table inputT   = new Table(G.game.skin);
+        inputT         = new Table(G.game.skin);
 
         titleT.setFillParent(true);
         titleT.setBackground("tbg");
@@ -135,8 +138,6 @@ public class ConfigScreen extends ScreenBase {
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
         final TextButton inputButt = new TextButton("Input",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
-        final TextButton netInputBtt = new TextButton("Net Input",
-                G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
 
         // Let only one tab button be checked at a time
         ButtonGroup logicGroup = new ButtonGroup();
@@ -159,14 +160,6 @@ public class ConfigScreen extends ScreenBase {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 action = ACT_MENU;
-            }
-        });
-
-        netInputBtt.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                G.game.data.netServerIP = netServerIP.getText();
-                action = ACT_NET_INPUT;
             }
         });
 
@@ -250,26 +243,45 @@ public class ConfigScreen extends ScreenBase {
 
         videoT.add(videoL).expand().fill();
 
+        inputLoop();
+
+        stage.addActor(titleT);
+        titleT.setDebug(G.game.dbg.uiTable); // #debugCode
+    }
+
+    private void inputLoop() {
+
+        dirtInputT = false;
+        inputT.clearChildren();
+
+        G.game.input.targetsClear();
+
         final ControllerActor controllerActor = new ControllerActor();
         inputT.add(controllerActor); //.expand().fill();
         inputT.row();
+
+        final TextButton netInputBtt = new TextButton("Net Input",
+                G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
+
+        netInputBtt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                G.game.data.netServerIP = netServerIP.getText();
+                action = ACT_NET_INPUT;
+            }
+        });
 
         // inputT.add(serverIPL);
         inputT.add(netServerIP);
         inputT.add(netInputBtt);
         inputT.row();
 
-        G.game.input.targetsClear();
-
-        int count = 1;
-
         // Loop through inputs and show edit keys button for each one
         for(int i = 0; i < G.game.input.getInputs().size; i++) {
 
+            final int index = i;
             final InputBase input = G.game.input.getInputs().get(i);
             final InputActor inputActor;
-
-            // inputActor = new InputActor(count, input.getProfile());
 
             if(input instanceof ControllerInput)
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
@@ -282,11 +294,18 @@ public class ConfigScreen extends ScreenBase {
             else
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
 
-            inputActor.setNumber(count);
+            Dbg.inf(Dbg.tagO(this), input.getId() + "");
+            inputActor.setNumber(input.getId());
             inputT.add(inputActor);
             G.game.input.addTarget(inputActor);
 
-            final TextButton setBtt = new TextButton("Edit keys",
+            final TextButton setBtt = new TextButton("Edit",
+                    G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
+
+            final TextButton upBtt = new TextButton("Up",
+                    G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
+
+            final TextButton downBtt = new TextButton("Down",
                     G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
 
             setBtt.addListener(new ClickListener() {
@@ -308,21 +327,39 @@ public class ConfigScreen extends ScreenBase {
                 }
             });
 
+            upBtt.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    G.game.input.moveInput(index, -1);
+                    dirtInputT = true;
+
+                }
+            });
+
+            downBtt.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    G.game.input.moveInput(index, 1);
+                    dirtInputT = true;
+                }
+            });
+
             inputT.add(setBtt);
+            inputT.add(upBtt);
+            inputT.add(downBtt);
 
             inputT.row();
-            count++;
         }
 
         G.game.input.linkAll();
-
-        stage.addActor(titleT);
-        titleT.setDebug(G.game.dbg.uiTable); // #debugCode
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+        if(dirtInputT) {
+            inputLoop();
+        }
         stage.act(delta);
         stage.draw();
     }

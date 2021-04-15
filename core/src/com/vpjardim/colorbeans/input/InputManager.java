@@ -29,6 +29,8 @@ public class InputManager {
     private SpecialButtons specialButtons;
     private DebugInput debugInput;
 
+    private int maxId = 1;
+
     public InputManager() {
 
         inputs = new Array<>();
@@ -71,6 +73,7 @@ public class InputManager {
 
             input.gdxController = Controllers.getControllers().get(i);
             input.gdxController.addListener(input);
+            input.setId(maxId++);
 
             inputs.add(input);
         }
@@ -81,6 +84,7 @@ public class InputManager {
 
             TouchInput input = new TouchInput();
             multiplex.addProcessor(new GestureDetector(input));
+            input.setId(maxId++);
 
             inputs.add(input);
         }
@@ -95,6 +99,7 @@ public class InputManager {
                 KeyboardInput input = new KeyboardInput();
                 input.setProfile(G.game.data.kbProfs.get(i));
                 multiplex.addProcessor(input);
+                input.setId(maxId++);
 
                 inputs.add(input);
             }
@@ -111,6 +116,16 @@ public class InputManager {
 
     public void removeTarget(TargetBase target) {
         targets.removeValue(target, true);
+    }
+
+    public void moveInput(int index, int value) {
+        if(value != 1 && value != -1) return;
+        if(index < 0 || index >= inputs.size) return;
+
+        int neighborIndex = index + value;
+        if(neighborIndex < 0 || neighborIndex >= inputs.size) return;
+
+        inputs.swap(index, neighborIndex);
     }
 
     public void linkAll() {
