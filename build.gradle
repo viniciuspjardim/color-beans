@@ -19,7 +19,7 @@ allprojects {
     version = "0.1.8"
     ext {
         appName = "Color Beans"
-        gdxVersion = "1.9.14"
+        gdxVersion = "1.10.0"
         controllerVersion = "1.9.13"
         aiVersion = "1.8.2"
     }

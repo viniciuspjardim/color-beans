@@ -115,7 +115,7 @@ public class ControllerInput implements InputBase, ControllerListener {
     public boolean buttonDown(Controller controller, int keycode) {
 
         // #debugCode
-        Dbg.dbg(Dbg.tag(this), "btDown -> keycode = " + keycode);
+        Dbg.dbg(Dbg.tag(this), "buttonDown -> keycode = " + keycode);
 
         if (target == null)
             return true;
@@ -148,7 +148,7 @@ public class ControllerInput implements InputBase, ControllerListener {
     public boolean buttonUp(Controller controller, int keycode) {
 
         // #debugCode
-        Dbg.dbg(Dbg.tag(this), "btUp -> keycode = " + keycode);
+        Dbg.dbg(Dbg.tag(this), "buttonUp -> keycode = " + keycode);
 
         if (target == null)
             return true;
@@ -186,7 +186,7 @@ public class ControllerInput implements InputBase, ControllerListener {
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
 
         // #debugCode
-        Dbg.dbg(Dbg.tag(this), "axMove -> axisIndex = " + axisIndex + "; value = " + value);
+        Dbg.dbg(Dbg.tag(this), "axisMoved -> axisIndex = " + axisIndex + "; value = " + value);
 
         int val = Math.round(value);
 
@@ -250,16 +250,19 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public boolean povMoved(Controller controller, int povIndex, PovDirection value) {
+        Dbg.dbg(Dbg.tag(this), "povMoved -> povIndex = " + povIndex + "; value = " + value);
         return true;
     }
 
     @Override
     public boolean xSliderMoved(Controller controller, int sliderIndex, boolean value) {
+        Dbg.dbg(Dbg.tag(this), "xSliderMoved -> sliderIndex = " + sliderIndex);
         return true;
     }
 
     @Override
     public boolean ySliderMoved(Controller controller, int sliderIndex, boolean value) {
+        Dbg.dbg(Dbg.tag(this), "ySliderMoved -> sliderIndex = " + sliderIndex);
         return true;
     }
 
