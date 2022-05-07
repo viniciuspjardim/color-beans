@@ -5,13 +5,14 @@
 package com.vpjardim.colorbeans.input;
 
 /**
- * Stores input implementation key codes. Then these keys can be mapped to internal key codes
+ * Stores input implementation key codes. Then these keys can be mapped to
+ * internal key codes
  * For example:
- * Keyboard key A (key code 29 in desktop). If A is assigned in game as the UP key, it will be
- * represented internally as with the key code 0.
+ * Keyboard key A (key code 29 in desktop). If A is assigned in game as the UP
+ * key, it will be represented internally as with the key code 0.
  *
  * @author Vinícius Jardim
- * 2017/04/30
+ *         2017/04/30
  */
 public class Profile {
 
@@ -46,12 +47,12 @@ public class Profile {
 
     public Profile(int... keys) {
 
-        if(keys != null && keys.length == 9) {
-            up      = keys[0];
-            right   = keys[1];
-            down    = keys[2];
-            left    = keys[3];
-            start   = keys[4];
+        if (keys != null && keys.length == 9) {
+            up = keys[0];
+            right = keys[1];
+            down = keys[2];
+            left = keys[3];
+            start = keys[4];
             button1 = keys[5];
             button2 = keys[6];
             button3 = keys[7];
@@ -60,11 +61,11 @@ public class Profile {
     }
 
     public Profile() {
-        up      = UNDEFINED;
-        right   = UNDEFINED;
-        down    = UNDEFINED;
-        left    = UNDEFINED;
-        start   = UNDEFINED;
+        up = UNDEFINED;
+        right = UNDEFINED;
+        down = UNDEFINED;
+        left = UNDEFINED;
+        start = UNDEFINED;
         button1 = UNDEFINED;
         button2 = UNDEFINED;
         button3 = UNDEFINED;

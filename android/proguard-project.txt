@@ -73,7 +73,7 @@
     public static void dbg(...);
 }
 
-# Todo find why it's not working without this line
+# TODO: find why it's not working without this line
 # This prevent obfuscation in all gdx package because it was throwing class not found exception
 -keep class com.badlogic.gdx.** {*;}
 

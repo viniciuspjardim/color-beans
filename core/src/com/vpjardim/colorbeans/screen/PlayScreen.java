@@ -37,12 +37,12 @@ import aurelienribon.tweenengine.TweenManager;
 
 /**
  * @author Vinícius Jardim
- * 2016/09/02
+ *         2016/09/02
  */
 public class PlayScreen extends ScreenBase {
 
-    public static final int ACT_MENU     = 10;
-    public static final int ACT_CREDITS  = 11;
+    public static final int ACT_MENU = 10;
+    public static final int ACT_CREDITS = 11;
 
     public MapManager manager;
 
@@ -53,7 +53,6 @@ public class PlayScreen extends ScreenBase {
     private Stage stage;
     private Table table;
     private boolean menuVisible;
-    private Color hlColor = new Color(0x2a4350ff);
     private TweenManager transition;
     private EventListener specialKeyDown;
     // # debugCode
@@ -74,21 +73,20 @@ public class PlayScreen extends ScreenBase {
         // Special key event
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if(key == G.game.data.escBt || key == Input.Keys.BACK) {
-                if(menuVisible) {
+            if (key == G.game.data.escBt || key == Input.Keys.BACK) {
+                if (menuVisible) {
                     manager.maps.first().btStartDown();
                 }
                 menuVisible = true;
-            }
-            else if(key == G.game.data.printScreenBt)
+            } else if (key == G.game.data.printScreenBt)
                 printScreen();
         };
 
         // Tap event
         debugInput = (Event e) -> {
-            if(manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
+            if (manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
                 menuVisible = false;
-            else if(manager.pauseStatus == MapManager.PAUSED_ALL && !menuVisible && !G.game.dbg.on)
+            else if (manager.pauseStatus == MapManager.PAUSED_ALL && !menuVisible && !G.game.dbg.on)
                 menuVisible = true;
         };
 
@@ -153,8 +151,8 @@ public class PlayScreen extends ScreenBase {
 
         manager.init();
 
-        for(MapRender r : manager.render) {
-            if(r.m.input instanceof TouchInput) {
+        for (MapRender r : manager.render) {
+            if (r.m.input instanceof TouchInput) {
                 touchInput = (TouchInput) r.m.input;
                 break;
             }
@@ -169,7 +167,7 @@ public class PlayScreen extends ScreenBase {
 
         manager.winLost();
 
-        for(MapRender r : manager.render) {
+        for (MapRender r : manager.render) {
             r.m.update();
         }
 
@@ -179,7 +177,7 @@ public class PlayScreen extends ScreenBase {
         // Draw cached background
         bgSprite.draw(G.game.batch);
         // Draw beans and other stuff
-        for(MapRender r : manager.render) {
+        for (MapRender r : manager.render) {
             r.renderBatch();
         }
         G.game.batch.end();
@@ -187,13 +185,13 @@ public class PlayScreen extends ScreenBase {
         stage.act(delta);
         stage.draw();
 
-        if(manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
+        if (manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
             table.setVisible(true);
         else
             table.setVisible(false);
 
         // If it has a TouchInput draw the box and the arrow of the input
-        if(touchInput != null && touchInput.draw) {
+        if (touchInput != null && touchInput.draw) {
 
             G.game.sr.setProjectionMatrix(cam.combined);
             G.game.sr.setAutoShapeType(true);
@@ -213,7 +211,7 @@ public class PlayScreen extends ScreenBase {
 
             G.game.sr.setColor(Color.RED);
             // Draw input subdivisions
-            for(int i = 0; i < touchInput.div.length -1; i++) {
+            for (int i = 0; i < touchInput.div.length - 1; i++) {
                 x = touchInput.div[i];
                 dx = touchInput.div[i + 1] - x;
                 G.game.sr.rect(
@@ -233,7 +231,7 @@ public class PlayScreen extends ScreenBase {
             G.game.sr.end();
         }
 
-        if(manager.gameStatus == MapManager.GAME_ZEROED)
+        if (manager.gameStatus == MapManager.GAME_ZEROED)
             action = ACT_CREDITS;
     }
 
@@ -249,20 +247,24 @@ public class PlayScreen extends ScreenBase {
     }
 
     /**
-     * Caches the game background to avoid loss of frame rate (especially in Android). The
-     * background is drawn only when the screen is resized
+     * Caches the game background to avoid loss of frame rate (especially in
+     * Android). The background is drawn only when the screen is resized
      */
     public void updateCache() {
 
-        // When the app is minimized the size of the window is 0x0 px and FrameBuffer would throw an
-        // exception if it's constructed. Because of this the cache is not updated
-        if(G.width == 0 || G.height == 0) return;
+        // When the app is minimized the size of the window is 0x0 px and FrameBuffer
+        // would throw an exception if it's constructed. Because of this the cache is
+        // not updated
+        if (G.width == 0 || G.height == 0)
+            return;
 
         G.game.batch.setProjectionMatrix(cam.combined);
 
         // Dispose because framebuffer and sprite will be recreated
-        if(bgSprite != null) bgSprite.getTexture().dispose();
-        if(fb != null) fb.dispose();
+        if (bgSprite != null)
+            bgSprite.getTexture().dispose();
+        if (fb != null)
+            fb.dispose();
 
         // Create a framebuffer with the new size
         GLFrameBuffer.FrameBufferBuilder fbb = new GLFrameBuffer.FrameBufferBuilder(
@@ -277,7 +279,7 @@ public class PlayScreen extends ScreenBase {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         G.game.batch.begin();
-        for(MapRender r : manager.render) {
+        for (MapRender r : manager.render) {
             r.cacheBg();
         }
         G.game.batch.end();
@@ -302,11 +304,17 @@ public class PlayScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
-        if(bgSprite != null) bgSprite.getTexture().dispose();
-        if(fb != null) fb.dispose();
+
+        if (bgSprite != null)
+            bgSprite.getTexture().dispose();
+
+        if (fb != null)
+            fb.dispose();
+
         G.game.input.removeProcessor(stage);
         EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
         EventHandler.getHandler().removeListener("DebugInput.tap", debugInput);
+
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }

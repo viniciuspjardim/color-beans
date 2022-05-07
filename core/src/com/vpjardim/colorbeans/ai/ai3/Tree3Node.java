@@ -12,10 +12,10 @@ import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
- * 2016/04/30
+ *         2016/04/30
  */
 public class Tree3Node implements Pool.Poolable {
-    
+
     public static Pool<Tree3Node> pool = new Pool<Tree3Node>(676) {
         @Override
         protected Tree3Node newObject() {
@@ -52,15 +52,15 @@ public class Tree3Node implements Pool.Poolable {
     }
 
     private void init() {
-        parent     = null;
-        score      = AiMap.MOVE_ILLEGAL;
-        scoreSum   =  0;
-        bCIndex    = -1;
-        bCScoreSum =  0;
-        color1     = -1;
-        color2     = -1;
-        position   = -1;
-        rotation   = -1;
+        parent = null;
+        score = AiMap.MOVE_ILLEGAL;
+        scoreSum = 0;
+        bCIndex = -1;
+        bCScoreSum = 0;
+        color1 = -1;
+        color2 = -1;
+        position = -1;
+        rotation = -1;
     }
 
     public void init(Tree3Node parent, int color1, int color2, int position, int rotation) {
@@ -86,7 +86,7 @@ public class Tree3Node implements Pool.Poolable {
         float result = aiMap.process(color1, color2, position, rotation);
 
         // If less the zero is a illegal or lost move
-        if(result < 0f)
+        if (result < 0f)
             scoreSum = result;
         else {
             score = formula.calc(aiMap);
@@ -95,13 +95,13 @@ public class Tree3Node implements Pool.Poolable {
 
         // Updating the best child cache for the parent node if this child node
         // has the higher score by now
-        if(scoreSum > parent.bCScoreSum) {
+        if (scoreSum > parent.bCScoreSum) {
             parent.bCScoreSum = scoreSum;
-            parent.bCIndex = parent.children.size -1;
+            parent.bCIndex = parent.children.size - 1;
         }
 
         // #debugCode
-        if(Ai3.debug) {
+        if (Ai3.debug) {
             Dbg.print("scoreSum = " + scoreSum);
         }
     }
@@ -122,13 +122,13 @@ public class Tree3Node implements Pool.Poolable {
     @Override
     public void reset() {
 
-        for(int i = 0; i < children.size; i++) {
+        for (int i = 0; i < children.size; i++) {
             Tree3Node.pool.free(children.get(i));
         }
 
         children.clear();
 
-        if(aiMap != null) {
+        if (aiMap != null) {
             AiMap.pool.free(aiMap);
             aiMap = null;
         }
@@ -139,7 +139,7 @@ public class Tree3Node implements Pool.Poolable {
     // #debugCode
     public void print() {
         System.out.print("<" + scoreSum);
-        for(int i = 0; i < children.size; i++) {
+        for (int i = 0; i < children.size; i++) {
             children.get(i).print();
         }
         System.out.print(">");

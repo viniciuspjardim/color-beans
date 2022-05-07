@@ -17,7 +17,7 @@ import com.vpjardim.colorbeans.events.EventListener;
 
 /**
  * @author Vinícius Jardim
- * 2016/12/13
+ *         2016/12/13
  */
 public class CreditsScreen extends ScreenBase {
 
@@ -31,9 +31,9 @@ public class CreditsScreen extends ScreenBase {
 
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+            if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 action = ACT_NEXT;
-            else if(key == G.game.data.printScreenBt)
+            else if (key == G.game.data.printScreenBt)
                 printScreen();
         };
 
@@ -45,8 +45,7 @@ public class CreditsScreen extends ScreenBase {
         Table table = new Table(G.game.skin);
         table.setFillParent(true);
 
-        Label.LabelStyle labelStyle =
-                G.game.skin.get("labelDef", Label.LabelStyle.class);
+        Label.LabelStyle labelStyle = G.game.skin.get("labelDef", Label.LabelStyle.class);
 
         Label label = new Label("Game by Vinícius Jardim", labelStyle);
         label.setAlignment(Align.center);
@@ -79,17 +78,27 @@ public class CreditsScreen extends ScreenBase {
     }
 
     @Override
-    public void btStartDown() { action = ScreenBase.ACT_NEXT; }
+    public void btStartDown() {
+        action = ScreenBase.ACT_NEXT;
+    }
 
     @Override
-    public void bt1Down() { action = ScreenBase.ACT_NEXT; }
+    public void bt1Down() {
+        action = ScreenBase.ACT_NEXT;
+    }
 
     @Override
-    public void bt2Down() { action = ScreenBase.ACT_NEXT; }
+    public void bt2Down() {
+        action = ScreenBase.ACT_NEXT;
+    }
 
     @Override
-    public void bt3Down() { action = ScreenBase.ACT_NEXT; }
+    public void bt3Down() {
+        action = ScreenBase.ACT_NEXT;
+    }
 
     @Override
-    public void bt4Down() { action = ScreenBase.ACT_NEXT; }
+    public void bt4Down() {
+        action = ScreenBase.ACT_NEXT;
+    }
 }

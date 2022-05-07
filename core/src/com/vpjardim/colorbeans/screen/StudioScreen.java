@@ -20,7 +20,7 @@ import aurelienribon.tweenengine.TweenManager;
 
 /**
  * @author Vinícius Jardim
- * 2015/10/31
+ *         2015/10/31
  */
 public class StudioScreen extends ScreenBase {
 
@@ -43,9 +43,9 @@ public class StudioScreen extends ScreenBase {
 
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+            if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 action = ACT_NEXT;
-            else if(key == G.game.data.printScreenBt)
+            else if (key == G.game.data.printScreenBt)
                 printScreen();
         };
 
@@ -56,56 +56,47 @@ public class StudioScreen extends ScreenBase {
 
         G.game.assets.get("audio/studio.ogg", Music.class).play();
 
-
         transition = new TweenManager();
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 
         // Logo fade in
-        Tween.set(studioLogo, SpriteAccessor.COLORS).
-                target(1.0f, 0.5f, 1.0f, 0f).start(transition);
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.5f).
-                target(1f, 1f, 1f, 1f).start(transition);
+        Tween.set(studioLogo, SpriteAccessor.COLORS).target(1.0f, 0.5f, 1.0f, 0f).start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.5f).target(1f, 1f, 1f, 1f).start(transition);
 
         // Logo blink 1
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(1f, 1f, 1f, 0f).delay(3.5f).start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(1f, 1f, 1f, 0f).delay(3.5f).start(transition);
 
         randomBlinkColor();
 
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(bcr, bcg, bcb, bca).delay(3.6f).start(transition);
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(bcr, bcg, bcb, 0f ).delay(3.9f).start(transition);
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(1f, 1f, 1f, 1f).delay(4.0f).start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(bcr, bcg, bcb, bca).delay(3.6f)
+                .start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(bcr, bcg, bcb, 0f).delay(3.9f)
+                .start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(1f, 1f, 1f, 1f).delay(4.0f).start(transition);
 
         // Logo blink 2
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(1f, 1f, 1f, 0f).delay(6.1f).start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(1f, 1f, 1f, 0f).delay(6.1f).start(transition);
 
         randomBlinkColor();
 
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(bcr, bcg, bcb, bca).delay(6.2f).start(transition);
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(bcr, bcg, bcb, 0f).delay(6.5f).start(transition);
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(1f, 1f, 1f, 1f).delay(6.6f).start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(bcr, bcg, bcb, bca).delay(6.2f)
+                .start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(bcr, bcg, bcb, 0f).delay(6.5f)
+                .start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(1f, 1f, 1f, 1f).delay(6.6f).start(transition);
 
         // Logo blink 3 and fade out
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(1f, 1f, 1f, 0f).delay(8.8f).start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(1f, 1f, 1f, 0f).delay(8.8f).start(transition);
 
         randomBlinkColor();
 
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).
-                target(bcr, bcg, bcb, bca).delay(8.9f).start(transition);
-        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.3f).
-                target(bcr, bcg, bcb, 0f).delay(9.2f).start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.1f).target(bcr, bcg, bcb, bca).delay(8.9f)
+                .start(transition);
+        Tween.to(studioLogo, SpriteAccessor.COLORS, 0.3f).target(bcr, bcg, bcb, 0f).delay(9.2f)
+                .start(transition);
 
         // Text fade out
-        Tween.to(studioText, SpriteAccessor.COLORS, 0.3f).
-                target(1, 1, 1, 0f).delay(10.6f).start(transition);
+        Tween.to(studioText, SpriteAccessor.COLORS, 0.3f).target(1, 1, 1, 0f).delay(10.6f).start(transition);
     }
 
     private void randomBlinkColor() {
@@ -130,7 +121,8 @@ public class StudioScreen extends ScreenBase {
 
         G.game.batch.end();
 
-        if(time >= 10.9f) action = ScreenBase.ACT_NEXT;
+        if (time >= 10.9f)
+            action = ScreenBase.ACT_NEXT;
     }
 
     @Override
@@ -146,12 +138,10 @@ public class StudioScreen extends ScreenBase {
 
         studioLogo.setPosition(
                 (width - studioLogo.getWidth()) / 2f,
-                (height - studioLogo.getHeight()) / 2f
-        );
+                (height - studioLogo.getHeight()) / 2f);
         studioText.setPosition(
                 (width - studioText.getWidth()) / 2f,
-                G.flipY(height * 0.67f, studioText.getHeight(), spriteScale)
-        );
+                G.flipY(height * 0.67f, studioText.getHeight(), spriteScale));
 
         // #debugCode
         Dbg.inf(Dbg.tag(this), "scale = " + spriteScale + "; textH = " +
@@ -166,17 +156,27 @@ public class StudioScreen extends ScreenBase {
     }
 
     @Override
-    public void btStartDown() { action = ScreenBase.ACT_NEXT; }
+    public void btStartDown() {
+        action = ScreenBase.ACT_NEXT;
+    }
 
     @Override
-    public void bt1Down() { action = ScreenBase.ACT_NEXT; }
+    public void bt1Down() {
+        action = ScreenBase.ACT_NEXT;
+    }
 
     @Override
-    public void bt2Down() { action = ScreenBase.ACT_NEXT; }
+    public void bt2Down() {
+        action = ScreenBase.ACT_NEXT;
+    }
 
     @Override
-    public void bt3Down() { action = ScreenBase.ACT_NEXT; }
+    public void bt3Down() {
+        action = ScreenBase.ACT_NEXT;
+    }
 
     @Override
-    public void bt4Down() { action = ScreenBase.ACT_NEXT; }
+    public void bt4Down() {
+        action = ScreenBase.ACT_NEXT;
+    }
 }

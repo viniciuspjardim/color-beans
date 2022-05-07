@@ -13,17 +13,19 @@ import com.vpjardim.colorbeans.core.Cfg;
 
 /**
  * @author Vinícius Jardim
- * 2016/04/09
+ *         2016/04/09
  */
 public class Ai1 extends AiCommon {
 
-    // Todo idea to improve Ai heuristics
-    // The Ai can have 2 score functions the fire function and the build function. The fire is
-    // similar to what we have i.e score proportional to de deleted beans. But the build function
-    // the score is grater as the structure is grater so it can create great combos.
-    // The final score will be a sum of both functions each one with weights. This weights can
-    // change according to some factors as opponents map chains probability, opponents map loose
-    // probability, this map fullness factor and others
+    // TODO: idea to improve Ai heuristics
+    // The Ai can have 2 score functions the fire function and the build function.
+    // The fire is similar to what we have i.e score proportional to de deleted
+    // beans. But the build function the score is grater as the structure is grater
+    // so it can create great combos.
+    // The final score will be a sum of both functions each one with weights. This
+    // weights can change according to some factors as opponents map chains
+    // probability, opponents map loose probability, this map fullness factor and
+    // others
 
     private AiMap aiMap;
 
@@ -34,7 +36,8 @@ public class Ai1 extends AiCommon {
     }
 
     @Override
-    protected void entryPoint1() {}
+    protected void entryPoint1() {
+    }
 
     @Override
     protected void entryPoint2() {
@@ -46,7 +49,7 @@ public class Ai1 extends AiCommon {
         IntArray movesArr = this.moves.getArray(color1, color2);
 
         // Loop through moves array to find the best move
-        for(int i = 0; i < movesArr.size; i++) {
+        for (int i = 0; i < movesArr.size; i++) {
 
             moves.setMove(movesArr.get(i));
 
@@ -56,11 +59,13 @@ public class Ai1 extends AiCommon {
             float score;
 
             // If less the zero is a illegal or lost move
-            if(result < 0f) score = result;
+            if (result < 0f)
+                score = result;
             // Zero or grater is a legal move, then calc the score
-            else score = scoreCalc();
+            else
+                score = scoreCalc();
 
-            if(score > bestMoveScore) {
+            if (score > bestMoveScore) {
                 bestMoveScore = score;
                 bestMovePosition = moves.position;
                 bestMoveRotation = moves.rotation;
@@ -70,7 +75,8 @@ public class Ai1 extends AiCommon {
     }
 
     @Override
-    protected void entryPoint3() {}
+    protected void entryPoint3() {
+    }
 
     private float scoreCalc() {
 
@@ -79,9 +85,8 @@ public class Ai1 extends AiCommon {
         float score = 0;
 
         // Score for color groups
-        for(IntMap.Entry<Integer> entry : aiMap.lc.entries())
-        {
-            score += (entry.value * entry.value) -1;
+        for (IntMap.Entry<Integer> entry : aiMap.lc.entries()) {
+            score += (entry.value * entry.value) - 1;
         }
 
         // Score for deleted groups
@@ -90,13 +95,13 @@ public class Ai1 extends AiCommon {
         // Bad position because the blocks are reaching the top and may cause
         // obstruction in the following plays.
         // i: distance from the center
-        for(int i = 0; i + center < aiMap.b.length; i++) {
+        for (int i = 0; i + center < aiMap.b.length; i++) {
             // j: distance from the top
-            for(int j = 0; j < 3; j++) {
+            for (int j = 0; j < 3; j++) {
 
-                if(aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
+                if (aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
                     score -= 50 * Math.pow(0.75, i + j);
-                if(aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)
+                if (aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)
                     score -= 50 * Math.pow(0.75, i + j);
             }
         }
@@ -108,7 +113,8 @@ public class Ai1 extends AiCommon {
         score *= 1f + MathUtils.random(cfg.randomness) - cfg.randomness / 2;
 
         // Big random number to force AI acts nonsense
-        if(trashMove) score += MathUtils.random(50);
+        if (trashMove)
+            score += MathUtils.random(50);
 
         return score;
     }

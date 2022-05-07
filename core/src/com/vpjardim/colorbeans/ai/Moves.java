@@ -9,7 +9,7 @@ import com.vpjardim.colorbeans.Block;
 
 /**
  * @author Vinícius Jardim
- * 2016/05/02
+ *         2016/05/02
  */
 public class Moves {
 
@@ -32,19 +32,19 @@ public class Moves {
         moves1C = new IntArray(13);
 
         // === All colors ===
-        for(int color1 = 1; color1 < 6; color1++) {
-            for(int color2 = color1; color2 < 6; color2++) {
+        for (int color1 = 1; color1 < 6; color1++) {
+            for (int color2 = color1; color2 < 6; color2++) {
 
                 // No rotation (vertical)
-                for(int i = 0; i < nCol; i++)
+                for (int i = 0; i < nCol; i++)
                     movesAll.add(getMove(color1, color2, i, 0));
                 // Rotation = 1 (horizontal)
-                for(int i = 0; i < nCol -1; i++)
+                for (int i = 0; i < nCol - 1; i++)
                     movesAll.add(getMove(color1, color2, i, 1));
 
                 // If the colors are equal, the following moves wore
                 // already covered. Do not need the 2 and the 3 rotation
-                if(color1 != color2) {
+                if (color1 != color2) {
                     // Rotation = 2 (vertical)
                     for (int i = 0; i < nCol; i++)
                         movesAll.add(getMove(color1, color2, i, 2));
@@ -58,25 +58,25 @@ public class Moves {
         // === Fixed different colors ===
 
         // No rotation (vertical)
-        for(int i = 0; i < nCol; i++)
+        for (int i = 0; i < nCol; i++)
             moves2C.add(getMove(99, 99, i, 0));
         // Rotation = 1 (horizontal)
-        for(int i = 0; i < nCol -1; i++)
+        for (int i = 0; i < nCol - 1; i++)
             moves2C.add(getMove(99, 99, i, 1));
         // Rotation = 2 (vertical)
         for (int i = 0; i < nCol; i++)
             moves2C.add(getMove(99, 99, i, 2));
         // Rotation = 3 (horizontal)
-        for (int i = 0; i < nCol -1; i++)
+        for (int i = 0; i < nCol - 1; i++)
             moves2C.add(getMove(99, 99, i, 3));
 
         // === Fixed equal colors ===
 
         // No rotation (vertical)
-        for(int i = 0; i < nCol; i++)
+        for (int i = 0; i < nCol; i++)
             moves1C.add(getMove(99, 99, i, 0));
         // Rotation = 1 (horizontal)
-        for(int i = 0; i < nCol -1; i++)
+        for (int i = 0; i < nCol - 1; i++)
             moves1C.add(getMove(99, 99, i, 1));
     }
 
@@ -89,7 +89,8 @@ public class Moves {
     }
 
     /**
-     * @param move number in the format AABBPPR (AA = color1, BB color2, PP = position, R =
+     * @param move number in the format AABBPPR (AA = color1, BB color2, PP =
+     *             position, R =
      *             rotation)
      */
     public void setMove(int move) {
@@ -105,8 +106,10 @@ public class Moves {
 
     public IntArray getArray(int color1, int color2) {
 
-        if(color1 < Block.CLR_A) return movesAll;
-        if(color1 == color2) return moves1C;
+        if (color1 < Block.CLR_A)
+            return movesAll;
+        if (color1 == color2)
+            return moves1C;
 
         return moves2C;
     }

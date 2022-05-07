@@ -17,7 +17,7 @@ import static com.badlogic.gdx.Gdx.input;
 
 /**
  * @author Vinícius Jardim
- * 2015/12/05
+ *         2015/12/05
  */
 public class InputManager {
 
@@ -63,13 +63,15 @@ public class InputManager {
         multiplex.addProcessor(new GestureDetector(debugInput));
 
         // Initially attempts to assign controllers to the targets
-        for(int i = 0; i < Controllers.getControllers().size; i++) {
+        for (int i = 0; i < Controllers.getControllers().size; i++) {
 
             ControllerInput input = new ControllerInput();
 
             // If there is profile add, otherwise create a new one
-            if(i < G.game.data.ctrlProfs.size) input.setProfile(G.game.data.ctrlProfs.get(i));
-            else input.setProfile(new Profile());
+            if (i < G.game.data.ctrlProfs.size)
+                input.setProfile(G.game.data.ctrlProfs.get(i));
+            else
+                input.setProfile(new Profile());
 
             input.gdxController = Controllers.getControllers().get(i);
             input.gdxController.addListener(input);
@@ -80,7 +82,7 @@ public class InputManager {
 
         // On Mobile devices:
         // When there is no more controllers try to assign touch input to android device
-        if(Gdx.app.getType() == Application.ApplicationType.Android) {
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
 
             TouchInput input = new TouchInput();
             multiplex.addProcessor(new GestureDetector(input));
@@ -89,12 +91,13 @@ public class InputManager {
             inputs.add(input);
         }
         // On Desktop:
-        // When there is no more controllers try to assign keyboard profiles to desktop device
-        else if(Gdx.app.getType() == Application.ApplicationType.Desktop) {
+        // When there is no more controllers try to assign keyboard profiles to desktop
+        // device
+        else if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
 
             // One keyboard can control one or more maps, depending on the number of
             // profiles the keyboard has
-            for(int i = 0; i < G.game.data.kbProfs.size; i++) {
+            for (int i = 0; i < G.game.data.kbProfs.size; i++) {
 
                 KeyboardInput input = new KeyboardInput();
                 input.setProfile(G.game.data.kbProfs.get(i));
@@ -106,9 +109,13 @@ public class InputManager {
         }
     }
 
-    public void addInput(InputBase input) { inputs.add(input); }
+    public void addInput(InputBase input) {
+        inputs.add(input);
+    }
 
-    public void removeInput(InputBase input) { inputs.removeValue(input, true); }
+    public void removeInput(InputBase input) {
+        inputs.removeValue(input, true);
+    }
 
     public void addTarget(TargetBase target) {
         targets.add(target);
@@ -119,11 +126,14 @@ public class InputManager {
     }
 
     public void moveInput(int index, int value) {
-        if(value != 1 && value != -1) return;
-        if(index < 0 || index >= inputs.size) return;
+        if (value != 1 && value != -1)
+            return;
+        if (index < 0 || index >= inputs.size)
+            return;
 
         int neighborIndex = index + value;
-        if(neighborIndex < 0 || neighborIndex >= inputs.size) return;
+        if (neighborIndex < 0 || neighborIndex >= inputs.size)
+            return;
 
         inputs.swap(index, neighborIndex);
     }
@@ -132,7 +142,7 @@ public class InputManager {
 
         int max = Math.min(inputs.size, targets.size);
 
-        for(int i = 0; i < max; i++) {
+        for (int i = 0; i < max; i++) {
             link(inputs.get(i), targets.get(i));
         }
     }
@@ -153,12 +163,12 @@ public class InputManager {
     public void inputsClear() {
 
         // Clear targets references for inputs
-        for(TargetBase t : targets) {
+        for (TargetBase t : targets) {
             t.setInput(null);
         }
 
         // Clear inputs references for targets
-        for(InputBase i : inputs) {
+        for (InputBase i : inputs) {
             i.setTarget(null);
         }
 
@@ -169,12 +179,12 @@ public class InputManager {
     public void targetsClear() {
 
         // Clear targets references for inputs
-        for(TargetBase t : targets) {
+        for (TargetBase t : targets) {
             t.setInput(null);
         }
 
         // Clear inputs references for targets
-        for(InputBase i : inputs) {
+        for (InputBase i : inputs) {
             i.setTarget(null);
         }
 

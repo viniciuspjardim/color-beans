@@ -11,11 +11,12 @@ import com.vpjardim.colorbeans.input.InputBase;
 
 /**
  * @author Vinícius Jardim
- * 2017/03/29
+ *         2017/03/29
  */
 public abstract class AiCommon implements AiBase {
 
-    // Todo fix bug that looks like ai 6 (campaign) fake doubt and down key is messing with it
+    // TODO: fix bug that looks like ai 6 (campaign) fake doubt and down key is
+    // messing with it
 
     protected Map m;
     protected AiInput input;
@@ -59,7 +60,9 @@ public abstract class AiCommon implements AiBase {
     }
 
     @Override
-    public InputBase getInput() { return input; }
+    public InputBase getInput() {
+        return input;
+    }
 
     protected abstract void entryPoint1();
 
@@ -75,10 +78,10 @@ public abstract class AiCommon implements AiBase {
         entryPoint1();
 
         // Is in the PLAYER_FALL state
-        if(m.isInState(Map.MState.PLAYER_FALL)) {
+        if (m.isInState(Map.MState.PLAYER_FALL)) {
 
             // And was in another state before. Just entered in the PLAYER_FALL state
-            if(!m.isInState(prevState)) {
+            if (!m.isInState(prevState)) {
 
                 downKeyRand = MathUtils.random(cfg.downKeyMin, cfg.downKeyMax);
                 doubtRand = MathUtils.random(cfg.doubtMin, cfg.doubtMax);
@@ -96,9 +99,10 @@ public abstract class AiCommon implements AiBase {
 
             entryPoint3();
 
-            // If the best move is defined, it will not fake doubt and the final move is not set,
+            // If the best move is defined, it will not fake doubt and the final move is not
+            // set,
             // set the best move in the AI input
-            if(bestMoveDefined && cfg.doubtMax == 0f && !isFinalMoveSet) {
+            if (bestMoveDefined && cfg.doubtMax == 0f && !isFinalMoveSet) {
                 input.setMove(bestMovePosition, bestMoveRotation, false);
                 isFinalMoveSet = true;
             }
@@ -110,7 +114,7 @@ public abstract class AiCommon implements AiBase {
         }
 
         // Just lived the PLAYER_FALL state
-        if(!m.isInState(Map.MState.PLAYER_FALL) && prevState == Map.MState.PLAYER_FALL) {
+        if (!m.isInState(Map.MState.PLAYER_FALL) && prevState == Map.MState.PLAYER_FALL) {
             input.fastFall = false;
         }
 
@@ -120,39 +124,43 @@ public abstract class AiCommon implements AiBase {
     protected void fakeDoubt() {
 
         // Amount fallen until this frame: from 0 (top) to 1 (floor)
-        float fallAmount = (float)Math.max(m.pb.b1y +1 - Map.OUT_ROW, 0) / (float) Map.N_ROW;
+        float fallAmount = (float) Math.max(m.pb.b1y + 1 - Map.OUT_ROW, 0) / (float) Map.N_ROW;
 
         float slowFallMax = 1 - downKeyRand;
         downKey = fallAmount > slowFallMax && bestMoveDefined;
 
         // If there is fake doubt and the final move is not yet set...
-        if(cfg.doubtMax > 0f && !isFinalMoveSet) {
+        if (cfg.doubtMax > 0f && !isFinalMoveSet) {
 
             // Do not fake doubt while the down key is pressed
             float doubt = Math.min(doubtRand, slowFallMax * 0.8f);
             float deltaH = fallAmount - lastMoveSwitch;
 
             // If the player blocks are before (fall less) the doubt limit...
-            if(fallAmount < doubt && !dangerRow(m.pb.b1y)) {
+            if (fallAmount < doubt && !dangerRow(m.pb.b1y)) {
 
-                if(deltaH >= doubtFreqRand) {
+                if (deltaH >= doubtFreqRand) {
                     input.setMove(MathUtils.random(0, m.b.length), MathUtils.random(0, 3), false);
                     lastMoveSwitch = fallAmount;
                     doubtFreqRand = MathUtils.random(cfg.doubtFreqMin, cfg.doubtFreqMax);
                 }
             }
             // The fake doubt has ended and if the best move is defined it will be set
-            else if(bestMoveDefined) {
+            else if (bestMoveDefined) {
                 input.setMove(bestMovePosition, bestMoveRotation, false);
                 isFinalMoveSet = true;
             }
         }
     }
 
-    /** Returns true when the player block row or the below have blocks that may obstruct moves */
+    /**
+     * Returns true when the player block row or the below have blocks that may
+     * obstruct moves
+     */
     protected boolean dangerRow(int row) {
-        for(int i = 0; i < m.b.length; i++) {
-            if(!m.isEmpty(i, row + 2)) return true;
+        for (int i = 0; i < m.b.length; i++) {
+            if (!m.isEmpty(i, row + 2))
+                return true;
         }
         return false;
     }

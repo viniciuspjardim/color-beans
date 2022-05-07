@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * @author Vinícius Jardim
- * 2016/08/10
+ *         2016/08/10
  */
 public interface DebugNode {
 

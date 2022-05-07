@@ -12,7 +12,7 @@ import com.vpjardim.colorbeans.ai.ai3.Ai3;
 
 /**
  * @author Vinícius Jardim
- * 2016/11/06
+ *         2016/11/06
  */
 public class Training extends MapManager {
 
@@ -27,9 +27,11 @@ public class Training extends MapManager {
         G.game.input.targetsClear();
 
         // #debugCode
-        if(G.game.dbg.aiTraining != null) { gameCfg = G.game.data.loopGame; }
+        if (G.game.dbg.aiTraining != null) {
+            gameCfg = G.game.data.loopGame;
+        }
 
-        for(int i = 0; i < G.game.data.players.size; i++) {
+        for (int i = 0; i < G.game.data.players.size; i++) {
             Map m = new Map(this);
             m.index = i;
             m.setCfg(G.game.data.mapT);
@@ -42,14 +44,13 @@ public class Training extends MapManager {
             render.add(r);
 
             // #debugCode
-            if(G.game.dbg.aiTraining != null) {
+            if (G.game.dbg.aiTraining != null) {
 
-                if(G.game.dbg.aiTraining[i] == 1) {
+                if (G.game.dbg.aiTraining[i] == 1) {
                     m.ai = new Ai1();
                     m.ai.init(m, G.game.data.ai7);
                     G.game.input.removeTarget(m);
-                }
-                else if(G.game.dbg.aiTraining[i] == 3) {
+                } else if (G.game.dbg.aiTraining[i] == 3) {
                     m.ai = new Ai3();
                     m.ai.init(m, G.game.data.ai7);
                     G.game.input.removeTarget(m);
@@ -57,7 +58,7 @@ public class Training extends MapManager {
             }
 
             // #debugCode
-            if(G.game.dbg.mapShape != null)
+            if (G.game.dbg.mapShape != null)
                 m.debugShape(G.game.dbg.mapShape[i]);
         }
 
@@ -73,5 +74,6 @@ public class Training extends MapManager {
     }
 
     @Override
-    public void mapLost(int mapIndex) {}
+    public void mapLost(int mapIndex) {
+    }
 }

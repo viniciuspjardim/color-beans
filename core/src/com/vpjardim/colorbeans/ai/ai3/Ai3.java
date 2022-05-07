@@ -16,15 +16,18 @@ import com.vpjardim.colorbeans.input.InputBase;
 
 /**
  * @author Vinícius Jardim
- * 2016/05/30
+ *         2016/05/30
  */
 public class Ai3 extends AiCommon {
 
-    // Todo persist the last ai move
-    // When the game resume, because the ai has a small random factor, the new ai
-    // calc might lead to another move witch might don't have enough time to complete.
-    // Todo debug, sometimes seems it did not executed the best move.
-    // Done other bug is the it perform sort of a random move before move to the right place
+    // TODO: persist the last ai move: when the game resume, because the ai has a
+    // small random factor, the new ai calc might lead to another move witch might
+    // don't have enough time to complete;
+
+    // TODO: debug, sometimes seems it did not executed the best move;
+
+    // DONE: other bug is the it perform sort of a random move before move to the
+    // right place.
 
     // #debugCode
     public static boolean debug = false;
@@ -37,7 +40,8 @@ public class Ai3 extends AiCommon {
     }
 
     @Override
-    protected void entryPoint1() {}
+    protected void entryPoint1() {
+    }
 
     @Override
     protected void entryPoint2() {
@@ -56,10 +60,9 @@ public class Ai3 extends AiCommon {
     @Override
     protected void entryPoint3() {
 
-        if(!tree.processFinished) {
+        if (!tree.processFinished) {
             tree.process();
-        }
-        else if(!input.move) {
+        } else if (!input.move) {
             Tree3Node bestNode = tree.bestRootChild();
             bestMovePosition = bestNode.position;
             bestMoveRotation = bestNode.rotation;
@@ -68,7 +71,9 @@ public class Ai3 extends AiCommon {
     }
 
     @Override
-    public InputBase getInput() { return input; }
+    public InputBase getInput() {
+        return input;
+    }
 
     public static ScoreFormula formula1 = new ScoreFormula() {
 
@@ -78,18 +83,16 @@ public class Ai3 extends AiCommon {
             int center = aiMap.b.length / 2;
 
             // The blocks are obstructed. This move lead to game over.
-            if(     aiMap.b[center][aiMap.outRow]     != Block.EMPTY ||
-                    aiMap.b[center][aiMap.outRow + 1] != Block.EMPTY)
-            {
+            if (aiMap.b[center][aiMap.outRow] != Block.EMPTY ||
+                    aiMap.b[center][aiMap.outRow + 1] != Block.EMPTY) {
                 return AiMap.MOVE_LOST;
             }
 
             float score = 0;
 
             // Score for color groups
-            for(IntMap.Entry<Integer> entry : aiMap.lc.entries())
-            {
-                score += (entry.value * entry.value) -1;
+            for (IntMap.Entry<Integer> entry : aiMap.lc.entries()) {
+                score += (entry.value * entry.value) - 1;
             }
 
             // Score for deleted groups
@@ -98,13 +101,13 @@ public class Ai3 extends AiCommon {
             // Bad position because the blocks are reaching the top and may cause
             // obstruction in the following plays.
             // i: distance from the center
-            for(int i = 0; i + center < aiMap.b.length; i++) {
+            for (int i = 0; i + center < aiMap.b.length; i++) {
                 // j: distance from the top
-                for(int j = 0; j < 3; j++) {
+                for (int j = 0; j < 3; j++) {
 
-                    if(aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
+                    if (aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
                         score -= 100 * Math.pow(0.75, i + j);
-                    if(aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)
+                    if (aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)
                         score -= 100 * Math.pow(0.75, i + j);
                 }
             }

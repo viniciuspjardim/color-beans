@@ -11,18 +11,19 @@ import com.vpjardim.colorbeans.ai.ScoreFormula;
 
 /**
  * @author Vinícius Jardim
- * 2016/07/29
+ *         2016/07/29
  */
 public class Uct {
 
-    // Done fix child nodes add
-    // child nodes has always been added from right to left (should be randomly) until all child has
-    // at least on child
-    // Todo fix exploitation vs exploration balance. It's always exploiting. Research RAVE
+    // Done fix child nodes add: child nodes has always been added from right to
+    // left (should be randomly) until all child has at least on child;
+
+    // TODO: fix exploitation vs exploration balance. It's always exploiting.
+    // Research RAVE.
 
     static final float EPSILON1 = 0.00001f;
     static final float EPSILON2 = 0.01f;
-    static final float EXPLORE_CONST = 175f;//0.7071067812f; // 1/sqrt(2)
+    static final float EXPLORE_CONST = 175f; // 0.7071067812f; // 1/sqrt(2)
 
     public Moves moves;
     public ScoreFormula formula;
@@ -54,8 +55,7 @@ public class Uct {
     }
 
     public void initProcess(byte[][] map, int deleteSize, int outRow, ScoreFormula formula,
-                            int color1, int color2)
-    {
+            int color1, int color2) {
         this.formula = formula;
         this.color1 = color1;
         this.color2 = color2;
@@ -70,7 +70,7 @@ public class Uct {
 
         startTime = TimeUtils.millis();
 
-        while(hasTime() && framesCount <= framesAi) {
+        while (hasTime() && framesCount <= framesAi) {
             root.iterate();
             totalIter++;
         }
@@ -79,8 +79,8 @@ public class Uct {
 
     public UctNode bestRootChild() {
 
-        for(UctNode c : root.children) {
-            if(c.totalValue >= bestNode.totalValue) {
+        for (UctNode c : root.children) {
+            if (c.totalValue >= bestNode.totalValue) {
                 bestNode = c;
             }
         }
@@ -90,7 +90,7 @@ public class Uct {
 
     public void reset() {
 
-        if(root != null)
+        if (root != null)
             UctNode.pool.free(root);
 
         formula = null;
@@ -112,5 +112,7 @@ public class Uct {
         return TimeUtils.timeSinceMillis(startTime) < limitTime;
     }
 
-    public boolean processFinished() { return framesCount > framesAi; }
+    public boolean processFinished() {
+        return framesCount > framesAi;
+    }
 }

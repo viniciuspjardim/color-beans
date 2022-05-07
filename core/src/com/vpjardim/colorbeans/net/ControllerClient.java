@@ -14,7 +14,7 @@ import com.vpjardim.colorbeans.input.TargetBase;
 
 /**
  * @author Vinícius Jardim
- * 2018/05/03
+ *         2018/05/03
  */
 public class ControllerClient implements TargetBase {
 
@@ -40,7 +40,8 @@ public class ControllerClient implements TargetBase {
             client.addListener(new Listener() {
 
                 @Override
-                public void received(Connection connection, Object object) { }
+                public void received(Connection connection, Object object) {
+                }
 
                 @Override
                 public void connected(Connection connection) {
@@ -59,30 +60,32 @@ public class ControllerClient implements TargetBase {
             client.connect(5000, ip, Net.tcpPort, Net.udpPort);
 
             Dbg.print("==== Client start ====");
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void disconnect() {
-        if(connection != null) {
+        if (connection != null) {
             connection.close();
             connection = null;
         }
     }
 
     @Override
-    public void setInput(InputBase input) { this.input = input; }
+    public void setInput(InputBase input) {
+        this.input = input;
+    }
 
     private boolean sendUdp(int key, boolean isDown) {
 
-        if(connection == null) return false;
+        if (connection == null)
+            return false;
 
         ControllerData data = new ControllerData();
         data.keyMap = input.getKeyMap();
         data.keyMapOld = input.getKeyMapOld();
-        data.key = (byte)key;
+        data.key = (byte) key;
         data.keyDown = isDown;
 
         connection.sendUDP(data);
@@ -94,7 +97,7 @@ public class ControllerClient implements TargetBase {
 
         input.update();
 
-        if(input.getKeyMap() != input.getKeyMapOld()) {
+        if (input.getKeyMap() != input.getKeyMapOld()) {
             sendUdp(-1, false);
             zeroSent = false;
 
@@ -103,7 +106,7 @@ public class ControllerClient implements TargetBase {
                     input.getKeyMapOld(), input.getKeyMap(), input.getEvent()));
         }
         // Send all zero keys when all keys are released
-        else if(!zeroSent) {
+        else if (!zeroSent) {
             sendUdp(-1, false);
             zeroSent = true;
 
@@ -114,38 +117,60 @@ public class ControllerClient implements TargetBase {
     }
 
     @Override
-    public void keyDown(int key) { }
+    public void keyDown(int key) {
+    }
 
     @Override
-    public void btStartDown() { sendUdp(InputBase.START_KEY, true); }
+    public void btStartDown() {
+        sendUdp(InputBase.START_KEY, true);
+    }
 
     @Override
-    public void bt1Down() { sendUdp(InputBase.BUTTON1_KEY, true); }
+    public void bt1Down() {
+        sendUdp(InputBase.BUTTON1_KEY, true);
+    }
 
     @Override
-    public void bt2Down() { sendUdp(InputBase.BUTTON2_KEY, true); }
+    public void bt2Down() {
+        sendUdp(InputBase.BUTTON2_KEY, true);
+    }
 
     @Override
-    public void bt3Down() { sendUdp(InputBase.BUTTON3_KEY, true); }
+    public void bt3Down() {
+        sendUdp(InputBase.BUTTON3_KEY, true);
+    }
 
     @Override
-    public void bt4Down() { sendUdp(InputBase.BUTTON4_KEY, true); }
+    public void bt4Down() {
+        sendUdp(InputBase.BUTTON4_KEY, true);
+    }
 
     @Override
-    public void keyUp(int key) { }
+    public void keyUp(int key) {
+    }
 
     @Override
-    public void btStartUp() { sendUdp(InputBase.START_KEY, false); }
+    public void btStartUp() {
+        sendUdp(InputBase.START_KEY, false);
+    }
 
     @Override
-    public void bt1Up() { sendUdp(InputBase.BUTTON1_KEY, false); }
+    public void bt1Up() {
+        sendUdp(InputBase.BUTTON1_KEY, false);
+    }
 
     @Override
-    public void bt2Up() { sendUdp(InputBase.BUTTON2_KEY, false); }
+    public void bt2Up() {
+        sendUdp(InputBase.BUTTON2_KEY, false);
+    }
 
     @Override
-    public void bt3Up() { sendUdp(InputBase.BUTTON3_KEY, false); }
+    public void bt3Up() {
+        sendUdp(InputBase.BUTTON3_KEY, false);
+    }
 
     @Override
-    public void bt4Up() { sendUdp(InputBase.BUTTON4_KEY, false); }
+    public void bt4Up() {
+        sendUdp(InputBase.BUTTON4_KEY, false);
+    }
 }

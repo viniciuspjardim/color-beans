@@ -14,7 +14,7 @@ import com.vpjardim.colorbeans.input.TargetBase;
 
 /**
  * @author Vinícius Jardim
- * 2017/05/08
+ *         2017/05/08
  */
 
 public class ControllerActor extends Actor implements TargetBase {
@@ -24,7 +24,10 @@ public class ControllerActor extends Actor implements TargetBase {
     }
 
     private TextureAtlas.AtlasRegion body;
-    /** Button indexes: 0 up, 1 right, 2 down, 3 left, 4 start, 5 bt1, 6 bt2, 7 bt3, 8 bt4 */
+    /**
+     * Button indexes: 0 up, 1 right, 2 down, 3 left, 4 start, 5 bt1, 6 bt2, 7 bt3,
+     * 8 bt4
+     */
     private int position;
     private float time = 0f;
     private int[] keys;
@@ -58,16 +61,17 @@ public class ControllerActor extends Actor implements TargetBase {
         batch.draw(body, x, y, width, height);
 
         boolean blinkOn = time < 0.5f;
-        if(time > 0.75f) time = 0f;
+        if (time > 0.75f)
+            time = 0f;
 
-        if(tile >= 1 && tile <= 9 && blinkOn) {
+        if (tile >= 1 && tile <= 9 && blinkOn) {
 
             TextureAtlas.AtlasRegion shade = G.game.atlas.findRegion("game/c_shade", tile);
 
             float scaleX = width / shade.originalWidth;
             float scaleY = height / shade.originalHeight;
 
-            // Todo why offset in the draw method not working?
+            // TODO: why offset in the draw method not working?
             batch.draw(shade, x + (shade.offsetX * scaleX), y + (shade.offsetY * scaleY), 0, 0,
                     shade.packedWidth, shade.packedHeight, scaleX, scaleY, 0);
         }
@@ -78,17 +82,19 @@ public class ControllerActor extends Actor implements TargetBase {
     @Override
     public void keyDown(int key) {
 
-        if(position < 0 || position >= keys.length) return;
+        if (position < 0 || position >= keys.length)
+            return;
 
         keys[position] = key;
 
         // The last button
-        if(position == keys.length -1) {
+        if (position == keys.length - 1) {
             Profile profile = profileCreate();
-            if(callback != null) callback.finished(profile);
+            if (callback != null)
+                callback.finished(profile);
             recycle();
-        }
-        else position++;
+        } else
+            position++;
     }
 
     public Profile profileCreate() {
@@ -99,44 +105,56 @@ public class ControllerActor extends Actor implements TargetBase {
         position = -1;
         callback = null;
 
-        for(int i = 0; i < keys.length; i++) {
+        for (int i = 0; i < keys.length; i++) {
             keys[i] = Profile.UNDEFINED;
         }
     }
 
     @Override
-    public void setInput(InputBase input) {}
+    public void setInput(InputBase input) {
+    }
 
     @Override
-    public void btStartDown() {}
+    public void btStartDown() {
+    }
 
     @Override
-    public void bt1Down() {}
+    public void bt1Down() {
+    }
 
     @Override
-    public void bt2Down() {}
+    public void bt2Down() {
+    }
 
     @Override
-    public void bt3Down() {}
+    public void bt3Down() {
+    }
 
     @Override
-    public void bt4Down() {}
+    public void bt4Down() {
+    }
 
     @Override
-    public void keyUp(int key) {}
+    public void keyUp(int key) {
+    }
 
     @Override
-    public void btStartUp() {}
+    public void btStartUp() {
+    }
 
     @Override
-    public void bt1Up() {}
+    public void bt1Up() {
+    }
 
     @Override
-    public void bt2Up() {}
+    public void bt2Up() {
+    }
 
     @Override
-    public void bt3Up() {}
+    public void bt3Up() {
+    }
 
     @Override
-    public void bt4Up() {}
+    public void bt4Up() {
+    }
 }

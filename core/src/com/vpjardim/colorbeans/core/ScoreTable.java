@@ -14,15 +14,15 @@ import java.util.Comparator;
 
 /**
  * @author Vinícius Jardim
- * 2016/09/03
+ *         2016/09/03
  */
 public class ScoreTable {
 
-    // Todo create a match id and to link multiple players to one match
+    // TODO: create a match id and to link multiple players to one match
     // This way it is possible to see multiple opponents score in one match
 
-    public static final int GMODE_CAMPAIGN  = 1;
-    public static final int GMODE_TRAINING  = 2;
+    public static final int GMODE_CAMPAIGN = 1;
+    public static final int GMODE_TRAINING = 2;
 
     private static final Comparator compare = new Comparator<ScoreTable.Row>() {
         @Override
@@ -69,7 +69,8 @@ public class ScoreTable {
 
     private void sort() {
 
-        if(sorted) return;
+        if (sorted)
+            return;
 
         Sort.instance().sort(rows, compare);
         sorted = true;
@@ -77,7 +78,8 @@ public class ScoreTable {
 
     public static void save(ScoreTable table) {
 
-        if(table.saved) return;
+        if (table.saved)
+            return;
 
         // Sort before save
         table.sort();
@@ -98,7 +100,7 @@ public class ScoreTable {
         FileHandle file = Gdx.files.local("state/scores.json");
         ScoreTable score = new ScoreTable();
 
-        if(file.exists()) {
+        if (file.exists()) {
             String jsonTxt = file.readString();
             Json json = new Json();
             score.rows.addAll(json.fromJson(Row[].class, jsonTxt));

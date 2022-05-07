@@ -12,7 +12,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
- * 2015/11/12
+ *         2015/11/12
  */
 public class GameClient {
 
@@ -39,7 +39,7 @@ public class GameClient {
                 @Override
                 public void received(Connection connection, Object object) {
 
-                    if(object instanceof NetData) {
+                    if (object instanceof NetData) {
 
                         NetData data = (NetData) object;
                         Dbg.print("C[" + data.clientID + "] rec: " + data.num);
@@ -77,8 +77,7 @@ public class GameClient {
             client.sendUDP(data);
 
             Dbg.print("==== Client start ====");
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

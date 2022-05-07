@@ -14,7 +14,7 @@ import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
- * 2015/03/21
+ *         2015/03/21
  */
 public class AndroidLauncher extends AndroidApplication {
 
@@ -31,13 +31,13 @@ public class AndroidLauncher extends AndroidApplication {
 
     public void setImmersive() {
 
-        // Todo find workaround for Android bug black belt
+        // TODO: find workaround for Android bug black belt
         // More info at https://github.com/libgdx/libgdx/issues/3500
 
         getWindow().getDecorView().setSystemUiVisibility(0);
         int newUiOptions = 0;
 
-        // Navigation bar hiding:  Backwards compatible to ICS.
+        // Navigation bar hiding: Backwards compatible to ICS.
         if (Build.VERSION.SDK_INT >= 14) {
             newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         }

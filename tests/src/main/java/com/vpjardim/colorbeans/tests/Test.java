@@ -24,12 +24,12 @@ import com.vpjardim.colorbeans.tests.treeview.TreeView;
 
 /**
  * @author Vinícius Jardim
- * 2016/03/02
+ *         2016/03/02
  */
 
 public class Test {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Test t = new Test();
         t.test14();
     }
@@ -66,16 +66,13 @@ public class Test {
         DefaultHandler defaultHandler = new DefaultHandler();
 
         defaultHandler.addListener("PAUSE",
-                e -> System.out.println("PAUSE handler <Stop Music>: " + e.getAttribute())
-        );
+                e -> System.out.println("PAUSE handler <Stop Music>: " + e.getAttribute()));
 
         defaultHandler.addListener("PAUSE",
-                e -> System.out.println("PAUSE handler <Stop Animation>: " + e.getAttribute())
-        );
+                e -> System.out.println("PAUSE handler <Stop Animation>: " + e.getAttribute()));
 
         defaultHandler.addListener("MAP_LOST",
-                e -> System.out.println("MAP_LOST handler <Show Menu>: " + e.getAttribute())
-        );
+                e -> System.out.println("MAP_LOST handler <Show Menu>: " + e.getAttribute()));
 
         // ==== Adding Events ====
 
@@ -99,21 +96,21 @@ public class Test {
     }
 
     public void test12() {
-        System.out.println("1110 = " + 1110/100 % 10);
-        System.out.println("10   = " + 10  /100 % 10);
-        System.out.println("100  = " + 100 /100 % 10);
-        System.out.println("1    = " + 1   /100 % 10);
-        System.out.println("1010 = " + 1010/100 % 10);
-        System.out.println("1000 = " + 1000/100 % 10);
-        System.out.println("1111 = " + 1111/100 % 10);
-        System.out.println("1100 = " + 1100/100 % 10);
+        System.out.println("1110 = " + 1110 / 100 % 10);
+        System.out.println("10   = " + 10 / 100 % 10);
+        System.out.println("100  = " + 100 / 100 % 10);
+        System.out.println("1    = " + 1 / 100 % 10);
+        System.out.println("1010 = " + 1010 / 100 % 10);
+        System.out.println("1000 = " + 1000 / 100 % 10);
+        System.out.println("1111 = " + 1111 / 100 % 10);
+        System.out.println("1100 = " + 1100 / 100 % 10);
     }
 
     public void test11() {
-        System.out.println(" 0 % 4 = " +  0 % 4);
-        System.out.println(" 1 % 4 = " +  1 % 4);
-        System.out.println(" 2 % 4 = " +  2 % 4);
-        System.out.println(" 4 % 4 = " +  4 % 4);
+        System.out.println(" 0 % 4 = " + 0 % 4);
+        System.out.println(" 1 % 4 = " + 1 % 4);
+        System.out.println(" 2 % 4 = " + 2 % 4);
+        System.out.println(" 4 % 4 = " + 4 % 4);
         System.out.println("-1 % 4 = " + -1 % 4);
         System.out.println("-2 % 4 = " + -2 % 4);
     }
@@ -145,8 +142,9 @@ public class Test {
         RunnableTV run = new RunnableTV();
         run.tv = new TreeView(root);
 
-        // The app will run in this new thread. This way we can debug (with break points) the main
-        // thread while watch the TreeView app (it won't stop because it's in another thread)
+        // The app will run in this new thread. This way we can debug (with break
+        // points) the main thread while watch the TreeView app (it won't stop because
+        // it's in another thread)
         new Thread(run).start();
 
         // Wait until the TreeView app is created in the new thread
@@ -157,33 +155,33 @@ public class Test {
         }
 
         // Iterating throw the UCT algorithm: it adds new nodes search tree
-        while(uct.totalIter <= 10000) {
+        while (uct.totalIter <= 10000) {
 
             // If not debugging, make tree build process slower so we can watch. Comment if
             // debugging
             // try {
-            //     Thread.sleep(25);
+            // Thread.sleep(25);
             // } catch (InterruptedException e) {
-            //     e.printStackTrace();
+            // e.printStackTrace();
             // }
 
             uct.root.iterate();
             uct.totalIter++;
             run.tv.update();
 
-            //UctNode bc = uct.bestRootChild();
+            // UctNode bc = uct.bestRootChild();
 
-            //System.out.println("Best child: " + bc.color1 + "/" + bc.color2 + "/"
-            //        + bc.position + "/" + bc.rotation);
+            // System.out.println("Best child: " + bc.color1 + "/" + bc.color2 + "/"
+            // + bc.position + "/" + bc.rotation);
             //
-            //System.out.println("Uct iterations: " + uct.totalIter);
-            //System.out.println("UctNodes obj: " + UctNode.objCount);
-            //System.out.println("AiMap obj: " + AiMap.objCount);
+            // System.out.println("Uct iterations: " + uct.totalIter);
+            // System.out.println("UctNodes obj: " + UctNode.objCount);
+            // System.out.println("AiMap obj: " + AiMap.objCount);
 
-            // Put a brake point in the print below to render the TreeView while debugging the tree
-            // built process. Each time the program reach this break point a new node were added and
-            // you can watch this live in the TreeView window
-            //System.out.println("======================");
+            // Put a brake point in the print below to render the TreeView while debugging
+            // the tree built process. Each time the program reach this break point a new
+            // node were added and you can watch this live in the TreeView window
+            // System.out.println("======================");
         }
     }
 
@@ -207,15 +205,16 @@ public class Test {
 
         long timeIni = System.currentTimeMillis();
 
-        while(uct.totalIter <= 100000) {
+        while (uct.totalIter <= 100000) {
             uct.root.iterate();
             uct.totalIter++;
         }
 
         long timeEnd = System.currentTimeMillis();
 
-        // Todo find out why best child is always 1/2/3/1 since 1/2/4/0 leads to the same state
-        // Guess it was bad luck. On new tests 1/2/4/0 wore the best too. Redo to confirm
+        // TODO: find out why best child is always 1/2/3/1 since 1/2/4/0 leads to the
+        // same state Guess it was bad luck. On new tests 1/2/4/0 wore the best too.
+        // Redo to confirm
         UctNode bc = uct.bestRootChild();
 
         System.out.println("Time = " + (timeEnd - timeIni) + "ms");
@@ -236,10 +235,10 @@ public class Test {
 
         // Rendering tree
 
-        //TVNode<UctNode> root = new TVNode<>(0, 0, null);
-        //TreeView.dbgToTV(uct.root, root);
+        // TVNode<UctNode> root = new TVNode<>(0, 0, null);
+        // TreeView.dbgToTV(uct.root, root);
 
-        //new Lwjgl3Application(new TreeView<>(root), config);
+        // new Lwjgl3Application(new TreeView<>(root), config);
     }
 
     public void test7() {
@@ -261,7 +260,8 @@ public class Test {
         block = 4;
         a = block * 10;
         b = db.getChainPower(1) + db.getColorBonus(1) + db.getGroupBonus(block);
-        if(b < 1) b = 1;
+        if (b < 1)
+            b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
 
@@ -269,10 +269,10 @@ public class Test {
         block = 4;
         a = block * 10;
         b = db.getChainPower(2) + db.getColorBonus(1) + db.getGroupBonus(block);
-        if(b < 1) b = 1;
+        if (b < 1)
+            b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
-
 
         System.out.println("\n========= Test 2 video at 2:31 =========");
         score = 655;
@@ -283,7 +283,8 @@ public class Test {
         a = block * 10;
         // Group bonus 0 because no group has more then 4 blocks
         b = db.getChainPower(1) + db.getColorBonus(2) + db.getGroupBonus(0);
-        if(b < 1) b = 1;
+        if (b < 1)
+            b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
 
@@ -291,10 +292,10 @@ public class Test {
         block = 5;
         a = block * 10;
         b = db.getChainPower(2) + db.getColorBonus(1) + db.getGroupBonus(block);
-        if(b < 1) b = 1;
+        if (b < 1)
+            b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
-
 
         System.out.println("\n========= Test 3 video at 2:58 =========");
         score = 1806;
@@ -304,7 +305,8 @@ public class Test {
         block = 7;
         a = block * 10;
         b = db.getChainPower(1) + db.getColorBonus(1) + db.getGroupBonus(block);
-        if(b < 1) b = 1;
+        if (b < 1)
+            b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
 
@@ -313,7 +315,8 @@ public class Test {
         a = block * 10;
         // Only has one group with more then 4 blocks (5 blocks in this case)
         b = db.getChainPower(2) + db.getColorBonus(2) + db.getGroupBonus(5);
-        if(b < 1) b = 1;
+        if (b < 1)
+            b = 1;
         score += a * b;
         System.out.println(a + " x " + b + " = " + (a * b) + " => score = " + score);
     }
@@ -359,7 +362,7 @@ public class Test {
         // Total Memory:123
         // Max Memory:1801
         // i:68, 76, 74, 78, 67, 68, 73, 74
-        for(int j = 0; j < 10; j++) {
+        for (int j = 0; j < 10; j++) {
 
             t.processFinished = false;
             t.root = Tree3Node.pool.obtain();
@@ -371,7 +374,7 @@ public class Test {
             t.color1 = 1;
             t.color2 = 2;
 
-            if(t.color1 != -1) {
+            if (t.color1 != -1) {
                 t.addChild(t.root, t.color1, t.color2);
                 t.cacheSwap();
             }
@@ -409,26 +412,29 @@ public class Test {
         System.out.println("getMove: " + moves.getMove());
 
         moves.init(7);
-        //moves.setColor(2, 2);
+        // moves.setColor(2, 2);
 
         int cont = 0;
-        /*for(Moves m : moves) {
-            System.out.println("[" + cont + "] " + m.color1 + ";" + m.color2 + ";" + m.position + ";" + m.rotation);
-            cont++;
-        }*/
+        /*
+         * for(Moves m : moves) {
+         * System.out.println("[" + cont + "] " + m.color1 + ";" + m.color2 + ";" +
+         * m.position + ";" + m.rotation);
+         * cont++;
+         * }
+         */
     }
-    
+
     public void test2() {
 
         AiMap m = new AiMap();
         m.init(Utils.map, 4, 5);
         AiMap c;
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
 
             long time = System.currentTimeMillis();
 
-            for(int j = 0; j < 300000; j++) {
+            for (int j = 0; j < 300000; j++) {
                 c = m.copy();
                 c.process(
                         MathUtils.random(1, 5),
@@ -441,12 +447,12 @@ public class Test {
             System.out.println("time: " + time);
         }
     }
-    
+
     public void test1() {
         float time;
         float shift = 0.0f;
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
 
             time = i;
             shift = 0.5f * 7 * time * time;

@@ -10,7 +10,7 @@ import com.vpjardim.colorbeans.Map;
 
 /**
  * @author Vinícius Jardim
- * 2015/03/21
+ *         2015/03/21
  */
 public class Animations {
 
@@ -25,11 +25,12 @@ public class Animations {
 
         boolean animating = false;
 
-        for(int i = 0; i < m.b.length; i++) {
+        for (int i = 0; i < m.b.length; i++) {
             // Skipping columns that are already in the deform or shake animation
-            if(m.colShakeTimer[i] != 0) continue;
+            if (m.colShakeTimer[i] != 0)
+                continue;
 
-            for(int j =  0; j < m.b[i].length; j++) {
+            for (int j = 0; j < m.b[i].length; j++) {
                 animating = animating | blockGravityFall(m.b[i][j], i, j);
             }
         }
@@ -39,7 +40,8 @@ public class Animations {
 
     private boolean blockGravityFall(Block b, int col, int row) {
 
-        if(b.py == 0f || b.isEmpty()) return false;
+        if (b.py == 0f || b.isEmpty())
+            return false;
 
         boolean animating = true;
 
@@ -54,17 +56,19 @@ public class Animations {
         // animation is running and the block is falling.
         b.py = b.moveY - shift;
 
-        if(b.py <= 0f) {
+        if (b.py <= 0f) {
 
             animating = false;
             b.recycleFall();
             b.deformTime = m.afterGravityFallWait;
 
             // Sound quite after trashBlocksTurn, which is not trashBlocksTurn anymore
-            if(b.isTrash() && !m.trashBlocksTurn) {
+            if (b.isTrash() && !m.trashBlocksTurn) {
                 // If it's not playing the sound, request it
-                if(m.trashSound == Map.TRASH_SOUND_NO) m.trashSound = Map.TRASH_SOUND_REQUESTED;
-                if(m.colShakeTimer[col] == 0f) m.colShakeTimer[col] = m.afterGravityFallWait;
+                if (m.trashSound == Map.TRASH_SOUND_NO)
+                    m.trashSound = Map.TRASH_SOUND_REQUESTED;
+                if (m.colShakeTimer[col] == 0f)
+                    m.colShakeTimer[col] = m.afterGravityFallWait;
             }
         }
 
@@ -76,8 +80,8 @@ public class Animations {
 
         boolean animating = false;
 
-        for(int i = 0; i < m.b.length; i++) {
-            for(int j =  0; j < m.b[i].length; j++) {
+        for (int i = 0; i < m.b.length; i++) {
+            for (int j = 0; j < m.b[i].length; j++) {
                 animating = animating | blockDeform(m.b[i][j]);
             }
         }
@@ -87,7 +91,8 @@ public class Animations {
 
     private boolean blockDeform(Block b) {
 
-        if(b.deformTime == 0f || b.isEmpty()) return false;
+        if (b.deformTime == 0f || b.isEmpty())
+            return false;
 
         boolean animating = true;
 
@@ -97,30 +102,23 @@ public class Animations {
 
         // 4, 0, 3, 0, 4, 0, 3, 0 (tile index)
 
-       if(b.deformTime <= 0f) {
+        if (b.deformTime <= 0f) {
             animating = false;
             b.deformTime = 0f;
             b.tile = 0;
-        }
-        else if(b.deformTime <= deformTime * 1f/7f) {
+        } else if (b.deformTime <= deformTime * 1f / 7f) {
             b.tile = 3;
-        }
-        else if(b.deformTime <= deformTime * 2f/7f) {
+        } else if (b.deformTime <= deformTime * 2f / 7f) {
             b.tile = 0;
-        }
-        else if(b.deformTime <= deformTime * 3f/7f) {
+        } else if (b.deformTime <= deformTime * 3f / 7f) {
             b.tile = 4;
-        }
-        else if(b.deformTime <= deformTime * 4f/7f) {
+        } else if (b.deformTime <= deformTime * 4f / 7f) {
             b.tile = 0;
-        }
-        else if(b.deformTime <= deformTime * 5f/7f) {
+        } else if (b.deformTime <= deformTime * 5f / 7f) {
             b.tile = 3;
-        }
-        else if(b.deformTime <= deformTime * 6f/7f) {
+        } else if (b.deformTime <= deformTime * 6f / 7f) {
             b.tile = 0;
-        }
-        else if(b.deformTime <= deformTime) {
+        } else if (b.deformTime <= deformTime) {
             b.tile = 4;
         }
 
@@ -132,7 +130,7 @@ public class Animations {
 
         boolean animating = false;
 
-        for(int i = 0; i < m.b.length; i++) {
+        for (int i = 0; i < m.b.length; i++) {
             animating = animating | colShake(i);
         }
 
@@ -141,35 +139,36 @@ public class Animations {
 
     private boolean colShake(int col) {
 
-        if(m.colShakeTimer[col] == 0f) return false;
+        if (m.colShakeTimer[col] == 0f)
+            return false;
 
         boolean animating = true;
         m.colShakeTimer[col] -= G.delta;
         float time = m.colShakeTimer[col] / m.afterGravityFallWait;
 
-        for(int row = 0; row < m.b[col].length; row++) {
+        for (int row = 0; row < m.b[col].length; row++) {
 
-            if(m.b[col][row].isEmpty()) continue;
+            if (m.b[col][row].isEmpty())
+                continue;
 
             m.removeSideLinks(col, row);
 
-            if(m.colShakeTimer[col] <= 0f) {
+            if (m.colShakeTimer[col] <= 0f) {
                 m.colShakeTimer[col] = 0f;
                 m.b[col][row].py = 0f;
                 animating = false;
-            }
-            else if(time < 1f/6f)
-                m.b[col][row].py = - 0.06f + 0.06f * ((-time +1f/6f) * 6f); // from -0.06 to 0 = 0.06
-            else if(time < 2f/6f)
-                m.b[col][row].py = + 0.15f - 0.21f * ((-time +2f/6f) * 6f); // from 0.15 to -0.06 = -0.21
-            else if(time < 3f/6f)
-                m.b[col][row].py = - 0.3f  + 0.45f * ((-time +3f/6f) * 6f); // from -0.3 to 0.15 = 0.45
-            else if(time < 4f/6f)
-                m.b[col][row].py = + 0.75f - 1.05f * ((-time +4f/6f) * 6f); // from 0.75 to -0.3 = -1.05
-            else if(time < 5f/6f)
-                m.b[col][row].py = - 1f    + 1.75f * ((-time +5f/6f) * 6f); // from -1 to 0.75 = 1.75
-            else if(time < 1f)
-                m.b[col][row].py = + 0f    - 1f    * ((-time +1f   ) * 6f); // from 0 to -1 = -1
+            } else if (time < 1f / 6f)
+                m.b[col][row].py = -0.06f + 0.06f * ((-time + 1f / 6f) * 6f); // from -0.06 to 0 = 0.06
+            else if (time < 2f / 6f)
+                m.b[col][row].py = +0.15f - 0.21f * ((-time + 2f / 6f) * 6f); // from 0.15 to -0.06 = -0.21
+            else if (time < 3f / 6f)
+                m.b[col][row].py = -0.3f + 0.45f * ((-time + 3f / 6f) * 6f); // from -0.3 to 0.15 = 0.45
+            else if (time < 4f / 6f)
+                m.b[col][row].py = +0.75f - 1.05f * ((-time + 4f / 6f) * 6f); // from 0.75 to -0.3 = -1.05
+            else if (time < 5f / 6f)
+                m.b[col][row].py = -1f + 1.75f * ((-time + 5f / 6f) * 6f); // from -1 to 0.75 = 1.75
+            else if (time < 1f)
+                m.b[col][row].py = +0f - 1f * ((-time + 1f) * 6f); // from 0 to -1 = -1
 
             m.b[col][row].py *= m.trashShakePower;
         }
@@ -190,17 +189,18 @@ public class Animations {
 
     private boolean blockPlayerFall(Block b) {
 
-        if(b.py == 0f || b.isEmpty()) return false;
+        if (b.py == 0f || b.isEmpty())
+            return false;
 
         boolean animating = true;
 
         b.moveTime += G.delta;
 
-        float shift =  G.delta / m.vPlayMoveWait2 * 2f;
+        float shift = G.delta / m.vPlayMoveWait2 * 2f;
 
         b.py -= shift * 2;
 
-        if(b.py <= 0f) {
+        if (b.py <= 0f) {
 
             animating = false;
             b.recycleFall();
@@ -211,7 +211,8 @@ public class Animations {
 
     public void playHorizontal() {
 
-        if(m.pb.moveX == 0) return;
+        if (m.pb.moveX == 0)
+            return;
 
         boolean animating = false;
 
@@ -219,14 +220,14 @@ public class Animations {
         animating = animating | blockPlayHorizontal(m.pb.b2);
 
         // End of animation
-        if(!animating) {
+        if (!animating) {
             m.pb.moveX = 0;
         }
     }
 
     private boolean blockPlayHorizontal(Block b) {
 
-        if(m.hPlayMoveTimer < m.hPlayMoveWait / 2f) {
+        if (m.hPlayMoveTimer < m.hPlayMoveWait / 2f) {
             b.px = 0;
             return false;
         }
@@ -238,37 +239,39 @@ public class Animations {
 
     public void playRotation() {
 
-        float fRotation = (float)m.pb.rotation;
+        float fRotation = (float) m.pb.rotation;
 
-        if(fRotation == m.pb.rotationAnim) return;
+        if (fRotation == m.pb.rotationAnim)
+            return;
 
         // Correction in counterclockwise rotation.
         // 3 is equivalent to -1 and 0 to 4
-        if(fRotation == 3 && m.pb.rotationAnim <= 0f)
+        if (fRotation == 3 && m.pb.rotationAnim <= 0f)
             fRotation = -1f;
-        if(fRotation == 0 && m.pb.rotationAnim >= 2f)
+        if (fRotation == 0 && m.pb.rotationAnim >= 2f)
             fRotation = 4f;
 
         boolean isClockwise = fRotation > m.pb.rotationAnim;
 
-        if(isClockwise) {
+        if (isClockwise) {
             m.pb.rotationAnim = 1f / m.rPlayMoveWait *
                     (m.rPlayMoveWait - m.rPlayMoveTimer) +
-                    fRotation -1;
+                    fRotation - 1;
 
-            if(m.pb.rotationAnim >= fRotation) {
+            if (m.pb.rotationAnim >= fRotation) {
                 m.pb.rotationAnim = fRotation;
-                if(m.pb.rotationAnim > 3f) m.pb.rotationAnim = 0f;
+                if (m.pb.rotationAnim > 3f)
+                    m.pb.rotationAnim = 0f;
             }
-        }
-        else {
+        } else {
             m.pb.rotationAnim = -1f / m.rPlayMoveWait *
                     (m.rPlayMoveWait - m.rPlayMoveTimer) +
-                    fRotation +1;
+                    fRotation + 1;
 
-            if(m.pb.rotationAnim <= fRotation) {
+            if (m.pb.rotationAnim <= fRotation) {
                 m.pb.rotationAnim = fRotation;
-                if(m.pb.rotationAnim < 0f) m.pb.rotationAnim = 3f;
+                if (m.pb.rotationAnim < 0f)
+                    m.pb.rotationAnim = 3f;
             }
         }
     }
@@ -278,8 +281,8 @@ public class Animations {
 
         boolean animating = false;
 
-        for(int i = 0; i < m.b.length; i++) {
-            for(int j = 0; j < m.b[i].length; j++) {
+        for (int i = 0; i < m.b.length; i++) {
+            for (int j = 0; j < m.b[i].length; j++) {
                 animating = animating | blockLabelDelete(m.b[i][j]);
             }
         }
@@ -289,27 +292,25 @@ public class Animations {
 
     private boolean blockLabelDelete(Block b) {
 
-        if(b.toDelete == 0f || b.isEmpty()) return false;
+        if (b.toDelete == 0f || b.isEmpty())
+            return false;
 
         boolean animating = true;
 
         float blockTime = b.toDelete - G.delta;
 
-        if(blockTime <= 0f) {
+        if (blockTime <= 0f) {
 
             b.recycle();
             blockTime = 0f;
             animating = false;
-        }
-        else if(blockTime <= m.delWait3) {
+        } else if (blockTime <= m.delWait3) {
 
             b.visible = true;
-        }
-        else if(blockTime <= 2 * m.delWait3) {
+        } else if (blockTime <= 2 * m.delWait3) {
 
             b.visible = false;
-        }
-        else if(blockTime <= 3 * m.delWait3) {
+        } else if (blockTime <= 3 * m.delWait3) {
 
             b.visible = true;
         }
@@ -324,8 +325,8 @@ public class Animations {
 
         boolean animating = false;
 
-        for(int i = 0; i < m.b.length; i++) {
-            for(int j =  0; j < m.b[i].length; j++) {
+        for (int i = 0; i < m.b.length; i++) {
+            for (int j = 0; j < m.b[i].length; j++) {
                 m.removeSideLinks(i, j);
                 animating = animating | blockGameOver(m.b[i][j], i);
             }
@@ -345,18 +346,19 @@ public class Animations {
                 b.moveTime;
         b.py = -shift;
 
-        if(b.py <= -Map.N_ROW) {
+        if (b.py <= -Map.N_ROW) {
 
             animating = false;
-            //b.recycleFall();
+            // b.recycleFall();
         }
 
         return animating;
     }
 
     /**
-     * Needs to be called before render when the map is loaded from a serialized source. This
-     * because some references and objects are not serialized and it needs to be setup
+     * Needs to be called before render when the map is loaded from a serialized
+     * source. This because some references and objects are not serialized and it
+     * needs to be setup
      */
     public void deserialize(Map m) {
         this.m = m;

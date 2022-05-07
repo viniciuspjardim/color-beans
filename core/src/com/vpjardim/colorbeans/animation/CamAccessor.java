@@ -10,7 +10,7 @@ import aurelienribon.tweenengine.TweenAccessor;
 
 /**
  * @author Vinícius Jardim
- * 2017/07/22
+ *         2017/07/22
  */
 
 public class CamAccessor implements TweenAccessor<OrthographicCamera> {
@@ -20,7 +20,7 @@ public class CamAccessor implements TweenAccessor<OrthographicCamera> {
 
     @Override
     public int getValues(OrthographicCamera target, int tweenType, float[] returnValues) {
-        switch(tweenType) {
+        switch (tweenType) {
             case POSITION:
                 returnValues[0] = target.position.x;
                 returnValues[1] = target.position.y;
@@ -35,7 +35,7 @@ public class CamAccessor implements TweenAccessor<OrthographicCamera> {
 
     @Override
     public void setValues(OrthographicCamera target, int tweenType, float[] newValues) {
-        switch(tweenType) {
+        switch (tweenType) {
             case POSITION:
                 target.position.x = newValues[0];
                 target.position.y = newValues[1];

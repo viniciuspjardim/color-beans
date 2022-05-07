@@ -16,17 +16,19 @@ import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.input.InputBase;
 
 /**
- * Todo not usable yet
+ * TODO: not usable yet
  *
  * @author Vinícius Jardim
- * 2016/07/28
+ *         2016/07/28
  */
 public class Ai4 implements AiBase {
 
-    // Todo persist the last ai move
-    // When the game resume, because the ai has a small random factor, the new ai
-    // calc might lead to another move witch might don't have enough time to complete.
-    // Todo fix: some times this AI "suicide", it don't execute any move until loses the match
+    // TODO: persist the last ai move: when the game resume, because the ai has a
+    // small random factor, the new ai calc might lead to another move witch might
+    // don't have enough time to complete;
+
+    // TODO: fix: some times this AI "suicide", it don't execute any move until
+    // loses the match.
 
     private Map m;
     private Uct uctTree;
@@ -46,14 +48,16 @@ public class Ai4 implements AiBase {
     }
 
     @Override
-    public InputBase getInput() { return input; }
+    public InputBase getInput() {
+        return input;
+    }
 
     @Override
     public void update() {
 
-        if(m.isInState(Map.MState.PLAYER_FALL)) {
+        if (m.isInState(Map.MState.PLAYER_FALL)) {
 
-            if(!m.isInState(prevState)) {
+            if (!m.isInState(prevState)) {
 
                 uctTree.reset();
                 input.cleanMove();
@@ -65,18 +69,17 @@ public class Ai4 implements AiBase {
                         formula1, color1, color2);
             }
 
-            if(!uctTree.processFinished()) {
+            if (!uctTree.processFinished()) {
                 uctTree.process();
-            }
-            else if(!input.move) {
+            } else if (!input.move) {
                 UctNode bestNode = uctTree.bestRootChild();
                 input.setMove(bestNode.position, bestNode.rotation, true);
 
                 // #debugCode
-                //Dbg.print("Uct iterations: " + uctTree.totalIter);
-                //Dbg.print("UctNodes obj: " + UctNode.objCount);
-                //Dbg.print("AiMap obj: " + AiMap.objCount);
-                //Dbg.print("======================");
+                // Dbg.print("Uct iterations: " + uctTree.totalIter);
+                // Dbg.print("UctNodes obj: " + UctNode.objCount);
+                // Dbg.print("AiMap obj: " + AiMap.objCount);
+                // Dbg.print("======================");
             }
 
             input.update();
@@ -94,9 +97,8 @@ public class Ai4 implements AiBase {
             float score = 0;
 
             // Score for color groups
-            for(IntMap.Entry<Integer> entry : aiMap.lc.entries())
-            {
-                score += (entry.value * entry.value) -1;
+            for (IntMap.Entry<Integer> entry : aiMap.lc.entries()) {
+                score += (entry.value * entry.value) - 1;
             }
 
             // Score for deleted groups
@@ -105,13 +107,13 @@ public class Ai4 implements AiBase {
             // Bad position because the blocks are reaching the top and may cause
             // obstruction in the following plays.
             // i: distance from the center
-            for(int i = 0; i + center < aiMap.b.length; i++) {
+            for (int i = 0; i + center < aiMap.b.length; i++) {
                 // j: distance from the top
-                for(int j = 0; j < 3; j++) {
+                for (int j = 0; j < 3; j++) {
 
-                    if(aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
+                    if (aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
                         score -= 100 * Math.pow(0.75, i + j);
-                    if(aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)
+                    if (aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)
                         score -= 100 * Math.pow(0.75, i + j);
                 }
             }

@@ -13,7 +13,7 @@ import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
- * 2017/08/08
+ *         2017/08/08
  */
 
 public class MenuBeans {
@@ -45,7 +45,7 @@ public class MenuBeans {
         float w = G.width / 7f;
         float h = G.height / 10f;
         size = Math.min(w, h);
-        widthMax = (int)(G.width / size);
+        widthMax = (int) (G.width / size);
         yStart = G.height + size;
         yEnd = -size;
     }
@@ -55,13 +55,13 @@ public class MenuBeans {
         time += G.delta;
 
         // Insert new block in the screen if it's time
-        if(time >= rand) {
+        if (time >= rand) {
 
             // Update rand for next block anim
             rand = MathUtils.random(timeMax);
 
             Bean bean = pool.obtain();
-            bean.x = ((float)MathUtils.random(widthMax)) * size;
+            bean.x = ((float) MathUtils.random(widthMax)) * size;
             bean.y = yStart;
             bean.color = MathUtils.random(Block.CLR_A, Block.CLR_N);
             beans.add(bean);
@@ -69,7 +69,7 @@ public class MenuBeans {
         }
 
         // Update blocks position
-        for(int i = 0; i < beans.size; i++) {
+        for (int i = 0; i < beans.size; i++) {
             Bean bean = beans.get(i);
             bean.moveTime += G.delta;
 
@@ -77,7 +77,7 @@ public class MenuBeans {
             bean.y = yStart - (0.5f * 1 * bean.moveTime * bean.moveTime * size);
 
             // It has fell out of the screen
-            if(bean.y < yEnd) {
+            if (bean.y < yEnd) {
                 bean.x = 0f;
                 bean.x = 0f;
                 bean.moveTime = 0;
@@ -94,7 +94,7 @@ public class MenuBeans {
         TextureAtlas.AtlasRegion tile;
 
         G.game.batch.setColor(1f, 1f, 1f, 0.16f);
-        for(int i = 0; i < beans.size; i++) {
+        for (int i = 0; i < beans.size; i++) {
             Bean bean = beans.get(i);
             tile = G.game.data.BEANS_REG.get(bean.color * 10000);
             G.game.batch.draw(tile, bean.x, bean.y, size, size);

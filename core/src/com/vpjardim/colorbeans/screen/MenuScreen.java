@@ -22,16 +22,16 @@ import com.vpjardim.colorbeans.events.EventListener;
 
 /**
  * @author Vinícius Jardim
- * 2015/12/06
+ *         2015/12/06
  */
 public class MenuScreen extends ScreenBase {
 
-    // Todo finish falling beans animation
+    // TODO: finish falling beans animation
 
-    public static final int ACT_PLAY     = 10;
+    public static final int ACT_PLAY = 10;
     public static final int ACT_TRAINING = 11;
-    public static final int ACT_SCORE    = 12;
-    public static final int ACT_CONFIG   = 13;
+    public static final int ACT_SCORE = 12;
+    public static final int ACT_CONFIG = 13;
 
     private Stage stage;
     private MenuBeans beansAnim;
@@ -48,9 +48,9 @@ public class MenuScreen extends ScreenBase {
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
 
-            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+            if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 Gdx.app.exit();
-            else if(key == G.game.data.printScreenBt)
+            else if (key == G.game.data.printScreenBt)
                 printScreen();
         };
 
@@ -115,8 +115,7 @@ public class MenuScreen extends ScreenBase {
             }
         });
 
-        Label.LabelStyle labelStyle =
-                G.game.skin.get("labelGTitle", Label.LabelStyle.class);
+        Label.LabelStyle labelStyle = G.game.skin.get("labelGTitle", Label.LabelStyle.class);
 
         float bttW = G.style.buttWidth;
         float padS = G.style.padSmall;
@@ -161,7 +160,8 @@ public class MenuScreen extends ScreenBase {
         stage.draw();
 
         label.setSize(table.getWidth() + G.style.ribbonSide * 2 - G.style.menuBgPad * 2, G.style.ribbonHeight);
-        label.setPosition(table.getX() + G.style.menuBgPad - G.style.ribbonSide, G.height -label.getHeight() - table.getY() - table.getHeight() * 0.04f);
+        label.setPosition(table.getX() + G.style.menuBgPad - G.style.ribbonSide,
+                G.height - label.getHeight() - table.getY() - table.getHeight() * 0.04f);
 
         G.game.batch.begin();
         label.draw(G.game.batch, 1f);

@@ -25,11 +25,11 @@ import com.vpjardim.colorbeans.events.EventListener;
 
 /**
  * @author Vinícius Jardim
- * 2016/09/03
+ *         2016/09/03
  */
 public class ScoreScreen extends ScreenBase {
 
-    // Todo finish score screen
+    // TODO: finish score screen
 
     private Stage stage;
     private EventListener specialKeyDown;
@@ -41,9 +41,9 @@ public class ScoreScreen extends ScreenBase {
 
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+            if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 action = ACT_NEXT;
-            else if(key == G.game.data.printScreenBt)
+            else if (key == G.game.data.printScreenBt)
                 printScreen();
         };
 
@@ -55,11 +55,11 @@ public class ScoreScreen extends ScreenBase {
         G.game.input.addProcessor(stage);
 
         // ==== Tables ====
-        Table titleT   = new Table(G.game.skin);
+        Table titleT = new Table(G.game.skin);
         Table contentT = new Table(G.game.skin);
-        Table tabT     = new Table(G.game.skin);
-        Table campaignT    = new Table(G.game.skin);
-        Table trainingT   = new Table(G.game.skin);
+        Table tabT = new Table(G.game.skin);
+        Table campaignT = new Table(G.game.skin);
+        Table trainingT = new Table(G.game.skin);
 
         titleT.setFillParent(true);
         titleT.setBackground("tbg");
@@ -72,8 +72,7 @@ public class ScoreScreen extends ScreenBase {
         trainingT.setDebug(G.game.dbg.uiTable);
 
         // ==== Labels ====
-        Label.LabelStyle labelStyle =
-                G.game.skin.get("labelDef", Label.LabelStyle.class);
+        Label.LabelStyle labelStyle = G.game.skin.get("labelDef", Label.LabelStyle.class);
 
         Label trainingL = new Label("Content 2", labelStyle);
 
@@ -113,7 +112,7 @@ public class ScoreScreen extends ScreenBase {
 
         // Listen to changes in the tab button checked states
         // Set visibility of the tab content to match the checked state
-        final ChangeListener tabListener = new ChangeListener(){
+        final ChangeListener tabListener = new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
 
@@ -126,11 +125,15 @@ public class ScoreScreen extends ScreenBase {
                 campaignScroll.setVisible(campaignButt.isChecked());
                 trainingScroll.setVisible(trainingButt.isChecked());
 
-                if(campaignButt.isChecked()) campaignButt.setStyle(buttOn);
-                else campaignButt.setStyle(buttOff);
+                if (campaignButt.isChecked())
+                    campaignButt.setStyle(buttOn);
+                else
+                    campaignButt.setStyle(buttOff);
 
-                if(trainingButt.isChecked()) trainingButt.setStyle(buttOn);
-                else trainingButt.setStyle(buttOff);
+                if (trainingButt.isChecked())
+                    trainingButt.setStyle(buttOn);
+                else
+                    trainingButt.setStyle(buttOff);
             }
         };
 
@@ -170,7 +173,7 @@ public class ScoreScreen extends ScreenBase {
 
         // Loop through scores and assemble each row
         int cont = 1;
-        for(ScoreTable.Row row : G.game.score.getRows()) {
+        for (ScoreTable.Row row : G.game.score.getRows()) {
             Label label;
 
             label = new Label(Integer.toString(cont), labelStyle);

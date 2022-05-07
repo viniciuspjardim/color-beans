@@ -32,7 +32,7 @@ import java.text.NumberFormat;
  * Just a black screen waiting load to be done
  *
  * @author Vinícius Jardim
- * 2016/06/10
+ *         2016/06/10
  */
 public class LoadingScreen extends ScreenBase {
 
@@ -40,7 +40,9 @@ public class LoadingScreen extends ScreenBase {
     private String atlasStr;
     private final Color BAR_COLOR = new Color(0x4048ccff);
 
-    public LoadingScreen() { manageInput = false; }
+    public LoadingScreen() {
+        manageInput = false;
+    }
 
     @Override
     public void show() {
@@ -51,8 +53,10 @@ public class LoadingScreen extends ScreenBase {
     private void loadStuff() {
 
         G.scale = G.height / 720f;
-        if(G.height >= 1080) G.res = G.RES_MEDIUM;
-        else G.res = G.RES_SMALL;
+        if (G.height >= 1080)
+            G.res = G.RES_MEDIUM;
+        else
+            G.res = G.RES_SMALL;
 
         G.style.setDefaults();
         G.style.scale(G.scale);
@@ -103,7 +107,7 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.borderWidth = 6;
         G.game.assets.load("dimbo_gtitle.ttf", BitmapFont.class, param);
 
-        // Todo fix the font shadow offset when not full screen. It should be smaller
+        // TODO: fix the font shadow offset when not full screen. It should be smaller
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         param.fontFileName = "font/dimbo.ttf";
@@ -145,11 +149,11 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.shadowOffsetY = -3;
         G.game.assets.load("dimbo_gray.ttf", BitmapFont.class, param);
 
-        G.game.data   = Db.load();
-        G.game.input  = new InputManager();
-        G.game.batch  = new SpriteBatch();
-        G.game.score  = ScoreTable.load();
-        G.game.audio  = new Audio();
+        G.game.data = Db.load();
+        G.game.input = new InputManager();
+        G.game.batch = new SpriteBatch();
+        G.game.score = ScoreTable.load();
+        G.game.audio = new Audio();
         G.game.intFmt = NumberFormat.getInstance();
 
         G.game.input.loadInputs();
@@ -157,8 +161,10 @@ public class LoadingScreen extends ScreenBase {
         G.game.server = new ControllerServer();
         G.game.server.init();
 
-        if(G.res == G.RES_MEDIUM) atlasStr = "img/pack_m.atlas"; // Medium size sprites
-        else atlasStr = "img/pack_s.atlas";                      // Small size sprites
+        if (G.res == G.RES_MEDIUM)
+            atlasStr = "img/pack_m.atlas"; // Medium size sprites
+        else
+            atlasStr = "img/pack_s.atlas"; // Small size sprites
 
         G.game.assets.load(atlasStr, TextureAtlas.class);
         G.game.assets.load("audio/studio.ogg", Music.class);
@@ -188,22 +194,24 @@ public class LoadingScreen extends ScreenBase {
 
         super.render(delta);
 
-        // Only start loading after the first frame to avoid a white screen blink at the startup.
-        // Spite using AssetManager, that load things at a nonblocking method (other thread),
+        // Only start loading after the first frame to avoid a white screen blink at the
+        // startup.
+        // Spite using AssetManager, that load things at a nonblocking method (other
+        // thread),
         // it takes a while, sufficient to cause white screen on the game startup.
-        if(frameCount == 1) {
+        if (frameCount == 1) {
             loadStuff();
             G.game.sr = new ShapeRenderer();
         }
 
         // If loading has started but not finished draw progress bar
-        if(frameCount > 1 && !G.game.assets.update()) {
+        if (frameCount > 1 && !G.game.assets.update()) {
 
-            final int width = (int)(Math.min(0.8f * G.height, 0.8 * G.width));
+            final int width = (int) (Math.min(0.8f * G.height, 0.8 * G.width));
             final int height = 20;
-            final int x = (int)(G.width / 2f - width / 2f);
-            final int y = (int)(0.3f * G.height);
-            final int progress = (int)(width * G.game.assets.getProgress());
+            final int x = (int) (G.width / 2f - width / 2f);
+            final int y = (int) (0.3f * G.height);
+            final int progress = (int) (width * G.game.assets.getProgress());
 
             G.game.sr.setColor(BAR_COLOR);
             G.game.sr.setProjectionMatrix(cam.combined);
@@ -212,19 +220,19 @@ public class LoadingScreen extends ScreenBase {
             G.game.sr.end();
 
             G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
-            G.game.sr.rect(x + 5, y + 6, progress  - 11,  height - 11);
+            G.game.sr.rect(x + 5, y + 6, progress - 11, height - 11);
             G.game.sr.end();
         }
 
         // If stuff has done loading, init some vars and go to the next screen
-        if(frameCount > 1 && G.game.assets.update()) {
+        if (frameCount > 1 && G.game.assets.update()) {
 
             action = ScreenBase.ACT_NEXT;
 
             // After loading is done we can create atlas and skin
             G.game.atlas = G.game.assets.get(atlasStr, TextureAtlas.class);
 
-            G.game.skin  = new Skin();
+            G.game.skin = new Skin();
             G.game.skin.addRegions(G.game.atlas);
 
             BitmapFont font;

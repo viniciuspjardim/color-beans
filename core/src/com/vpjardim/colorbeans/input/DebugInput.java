@@ -9,7 +9,7 @@ import com.vpjardim.colorbeans.events.EventHandler;
 
 /**
  * @author Vinícius Jardim
- * 2018/10/14
+ *         2018/10/14
  */
 public class DebugInput extends GestureDetector.GestureAdapter {
 
@@ -18,7 +18,9 @@ public class DebugInput extends GestureDetector.GestureAdapter {
         public float y;
         public int button;
 
-        public Data() {}
+        public Data() {
+        }
+
         public Data(float x, float y, int button) {
             this.x = x;
             this.y = y;

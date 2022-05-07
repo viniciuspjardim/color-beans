@@ -14,7 +14,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
- * 2015/11/11
+ *         2015/11/11
  */
 public class GameServer extends Server {
 
@@ -37,7 +37,7 @@ public class GameServer extends Server {
                 @Override
                 public void received(Connection connection, Object object) {
 
-                    if(object instanceof NetData) {
+                    if (object instanceof NetData) {
 
                         NetData data = (NetData) object;
                         data.clientID = connection.getID();
@@ -52,12 +52,12 @@ public class GameServer extends Server {
                 }
 
                 @Override
-                public void connected (Connection connection) {
+                public void connected(Connection connection) {
                     Dbg.print("Client " + connection.getID() + " connected");
                 }
 
                 @Override
-                public void disconnected (Connection connection) {
+                public void disconnected(Connection connection) {
                     Dbg.print("Client " + connection.getID() + " disconnected");
                 }
             });
@@ -66,14 +66,13 @@ public class GameServer extends Server {
             start();
 
             Dbg.print("==== Server start ====");
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    protected Connection newConnection () {
+    protected Connection newConnection() {
 
         // By providing our own connection implementation, we can store per
         // connection state without a connection ID to state look up

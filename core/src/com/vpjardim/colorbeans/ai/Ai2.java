@@ -13,10 +13,10 @@ import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.input.InputBase;
 
 /**
- * Todo too slow, not usable
+ * TODO: too slow, not usable
  *
  * @author Vinícius Jardim
- * 2016/04/29
+ *         2016/04/29
  */
 public class Ai2 implements AiBase {
 
@@ -40,18 +40,21 @@ public class Ai2 implements AiBase {
     }
 
     @Override
-    public InputBase getInput() { return input; }
+    public InputBase getInput() {
+        return input;
+    }
 
     @Override
     public void update() {
 
-        if(m.isInState(Map.MState.PLAYER_FALL)) {
+        if (m.isInState(Map.MState.PLAYER_FALL)) {
 
             input.update();
 
-            if(!m.isInState(prevState)) {
+            if (!m.isInState(prevState)) {
 
-                if(root != null) Tree3Node.pool.free(root);
+                if (root != null)
+                    Tree3Node.pool.free(root);
 
                 root = Tree3Node.pool.obtain();
                 root.init(AiMap.getByteBlocks(root.aiMap.b, m.b), m.deleteSize, Map.OUT_ROW);
@@ -61,14 +64,14 @@ public class Ai2 implements AiBase {
 
                 IntArray m1 = moves.getArray(color1, color2);
 
-                for(int i = 0; i < m1.size; i++) {
+                for (int i = 0; i < m1.size; i++) {
                     moves.setMove(m1.get(i));
                     root.addChild(color1, color2, moves.position, moves.rotation);
 
                     IntArray m2 = moves.getArray();
                     Tree3Node n = root.children.get(i);
 
-                    for(int j = 0; j < m2.size; j++) {
+                    for (int j = 0; j < m2.size; j++) {
                         moves.setMove(m2.get(j));
                         n.addChild(moves.color1, moves.color2, moves.position, moves.rotation);
                     }
@@ -78,9 +81,9 @@ public class Ai2 implements AiBase {
 
                 input.setMove(bestNode.position, bestNode.rotation, true);
 
-                //Dbg.print("===================");
-                //Dbg.print("BestNode: pos = " + bestNode.position + "; rot = " +
-                //        bestNode.rotation + "; score = " + bestNode.score);
+                // Dbg.print("===================");
+                // Dbg.print("BestNode: pos = " + bestNode.position + "; rot = " +
+                // bestNode.rotation + "; score = " + bestNode.score);
             }
         }
         prevState = m.getState();
@@ -91,9 +94,8 @@ public class Ai2 implements AiBase {
         float score = AiMap.MOVE_ILLEGAL;
 
         // Score for color groups
-        for(IntMap.Entry<Integer> entry : move.lc.entries())
-        {
-            score += (entry.value * entry.value) -1;
+        for (IntMap.Entry<Integer> entry : move.lc.entries()) {
+            score += (entry.value * entry.value) - 1;
         }
 
         // Score for deleted groups

@@ -37,15 +37,15 @@ import com.vpjardim.colorbeans.views.InputActor;
 
 /**
  * @author Vinícius Jardim
- * 2017/01/03
+ *         2017/01/03
  */
 public class ConfigScreen extends ScreenBase {
 
-    // Todo fix fps going from 60 to 30 after changing to windowed mode
-    // Todo finish config screen
+    // TODO: fix fps going from 60 to 30 after changing to windowed mode;
+    // TODO: finish config screen.
 
-    public static final int ACT_MENU       = 10;
-    public static final int ACT_NET_INPUT  = 11;
+    public static final int ACT_MENU = 10;
+    public static final int ACT_NET_INPUT = 11;
 
     private Stage stage;
 
@@ -60,7 +60,9 @@ public class ConfigScreen extends ScreenBase {
 
     private EventListener specialKeyDown;
 
-    public ConfigScreen() { manageInput = false; }
+    public ConfigScreen() {
+        manageInput = false;
+    }
 
     @Override
     public void show() {
@@ -69,9 +71,9 @@ public class ConfigScreen extends ScreenBase {
 
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+            if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 action = ACT_MENU;
-            else if(key == G.game.data.printScreenBt)
+            else if (key == G.game.data.printScreenBt)
                 printScreen();
         };
 
@@ -83,12 +85,12 @@ public class ConfigScreen extends ScreenBase {
         G.game.input.addProcessor(stage);
 
         // ==== Tables ====
-        Table titleT   = new Table(G.game.skin);
+        Table titleT = new Table(G.game.skin);
         Table contentT = new Table(G.game.skin);
-        Table tabT     = new Table(G.game.skin);
-        Table gameT    = new Table(G.game.skin);
-        Table videoT   = new Table(G.game.skin);
-        inputT         = new Table(G.game.skin);
+        Table tabT = new Table(G.game.skin);
+        Table gameT = new Table(G.game.skin);
+        Table videoT = new Table(G.game.skin);
+        inputT = new Table(G.game.skin);
 
         titleT.setFillParent(true);
         titleT.setBackground("tbg");
@@ -102,10 +104,9 @@ public class ConfigScreen extends ScreenBase {
         inputT.setDebug(G.game.dbg.uiTable);
 
         // ==== Labels ====
-        Label.LabelStyle labelStyle =
-                G.game.skin.get("labelDef", Label.LabelStyle.class);
+        Label.LabelStyle labelStyle = G.game.skin.get("labelDef", Label.LabelStyle.class);
 
-        Label gameL  = new Label("Type the players name:", labelStyle);
+        Label gameL = new Label("Type the players name:", labelStyle);
         Label videoL = new Label("Content 2", labelStyle);
         Label inputL = new Label("Content 3", labelStyle);
         Label serverIPL = new Label("IP", labelStyle);
@@ -118,13 +119,13 @@ public class ConfigScreen extends ScreenBase {
 
         final Array<Cfg.Player> pls = G.game.data.players;
 
-        if(pls.size >= 1)
+        if (pls.size >= 1)
             player1.setText(pls.get(0).name);
-        if(pls.size >= 2)
+        if (pls.size >= 2)
             player2.setText(pls.get(1).name);
-        if(pls.size >= 3)
+        if (pls.size >= 3)
             player3.setText(pls.get(2).name);
-        if(pls.size >= 4)
+        if (pls.size >= 4)
             player4.setText(pls.get(3).name);
 
         netServerIP.setText(G.game.data.netServerIP);
@@ -171,7 +172,7 @@ public class ConfigScreen extends ScreenBase {
 
         // Listen to changes in the tab button checked states
         // Set visibility of the tab content to match the checked state
-        final ChangeListener tabListener = new ChangeListener(){
+        final ChangeListener tabListener = new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
 
@@ -185,14 +186,20 @@ public class ConfigScreen extends ScreenBase {
                 videoScroll.setVisible(videoButt.isChecked());
                 inputScroll.setVisible(inputButt.isChecked());
 
-                if(gameButt.isChecked()) gameButt.setStyle(buttOn);
-                else gameButt.setStyle(buttOff);
+                if (gameButt.isChecked())
+                    gameButt.setStyle(buttOn);
+                else
+                    gameButt.setStyle(buttOff);
 
-                if(videoButt.isChecked()) videoButt.setStyle(buttOn);
-                else videoButt.setStyle(buttOff);
+                if (videoButt.isChecked())
+                    videoButt.setStyle(buttOn);
+                else
+                    videoButt.setStyle(buttOff);
 
-                if(inputButt.isChecked()) inputButt.setStyle(buttOn);
-                else inputButt.setStyle(buttOff);
+                if (inputButt.isChecked())
+                    inputButt.setStyle(buttOn);
+                else
+                    inputButt.setStyle(buttOff);
             }
         };
 
@@ -257,7 +264,7 @@ public class ConfigScreen extends ScreenBase {
         G.game.input.targetsClear();
 
         final ControllerActor controllerActor = new ControllerActor();
-        inputT.add(controllerActor); //.expand().fill();
+        inputT.add(controllerActor); // .expand().fill();
         inputT.row();
 
         final TextButton netInputBtt = new TextButton("Net Input",
@@ -277,19 +284,19 @@ public class ConfigScreen extends ScreenBase {
         inputT.row();
 
         // Loop through inputs and show edit keys button for each one
-        for(int i = 0; i < G.game.input.getInputs().size; i++) {
+        for (int i = 0; i < G.game.input.getInputs().size; i++) {
 
             final int index = i;
             final InputBase input = G.game.input.getInputs().get(i);
             final InputActor inputActor;
 
-            if(input instanceof ControllerInput)
+            if (input instanceof ControllerInput)
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
-            else if(input instanceof KeyboardInput)
+            else if (input instanceof KeyboardInput)
                 inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
-            else if(input instanceof TouchInput)
+            else if (input instanceof TouchInput)
                 inputActor = new InputActor(InputActor.TOUCH, null);
-            else if(input instanceof NetController)
+            else if (input instanceof NetController)
                 inputActor = new InputActor(InputActor.NET_CONTROLLER, null);
             else
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
@@ -357,7 +364,7 @@ public class ConfigScreen extends ScreenBase {
     @Override
     public void render(float delta) {
         super.render(delta);
-        if(dirtInputT) {
+        if (dirtInputT) {
             inputLoop();
         }
         stage.act(delta);
@@ -371,16 +378,16 @@ public class ConfigScreen extends ScreenBase {
 
         pls.clear();
 
-        if(!player1.getText().equals(""))
+        if (!player1.getText().equals(""))
             pls.add(new Cfg.Player(player1.getText()));
         else
             pls.add(new Cfg.Player("Player"));
 
-        if(!player2.getText().equals(""))
+        if (!player2.getText().equals(""))
             pls.add(new Cfg.Player(player2.getText()));
-        if(!player3.getText().equals(""))
+        if (!player3.getText().equals(""))
             pls.add(new Cfg.Player(player3.getText()));
-        if(!player4.getText().equals(""))
+        if (!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
 
         G.game.data.netServerIP = netServerIP.getText();
@@ -388,13 +395,13 @@ public class ConfigScreen extends ScreenBase {
         G.game.data.kbProfs.clear();
         G.game.data.ctrlProfs.clear();
 
-        for(int i = 0; i < G.game.input.getInputs().size; i++) {
+        for (int i = 0; i < G.game.input.getInputs().size; i++) {
 
             final InputBase input = G.game.input.getInputs().get(i);
 
-            if(input instanceof ControllerInput)
+            if (input instanceof ControllerInput)
                 G.game.data.ctrlProfs.add(input.getProfile());
-            else if(input instanceof KeyboardInput)
+            else if (input instanceof KeyboardInput)
                 G.game.data.kbProfs.add(input.getProfile());
         }
 

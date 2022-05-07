@@ -10,21 +10,20 @@ import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
- * 2015/03/21
+ *         2015/03/21
  */
 public class DesktopLauncher {
 
     public static void main(String[] args) {
 
         boolean fullScreen = true;
-        boolean useVsync = true;
+        boolean useVSync = true;
 
-        for(int i = 0; i < args.length; i++) {
-            if(args[i].equals("-window")) {
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("-window")) {
                 fullScreen = false;
-            }
-            else if(args[i].equals("-vsyncOff")) {
-                useVsync = false;
+            } else if (args[i].equals("-vsyncOff")) {
+                useVSync = false;
             }
         }
 
@@ -35,9 +34,9 @@ public class DesktopLauncher {
         config.setWindowedMode(1280, 720);
         config.setTitle("Color Beans");
         config.setWindowSizeLimits(480, 320, 3840, 2160);
-        config.useVsync(useVsync);
+        config.useVsync(useVSync);
 
-        if(fullScreen) {
+        if (fullScreen) {
             config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         }
 

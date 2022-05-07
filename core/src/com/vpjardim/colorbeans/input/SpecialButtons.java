@@ -11,15 +11,15 @@ import com.vpjardim.colorbeans.events.EventHandler;
 
 /**
  * @author Vinícius Jardim
- * 2018/01/22
+ *         2018/01/22
  */
 public class SpecialButtons extends InputAdapter {
 
     @Override
-    public boolean keyDown (int keycode) {
+    public boolean keyDown(int keycode) {
 
         Array<TargetBase> targets = G.game.input.getTargets();
-        if(targets != null && targets.size > 0) {
+        if (targets != null && targets.size > 0) {
             targets.get(0).keyDown(keycode);
         }
         EventHandler.getHandler().addEvent("SpecialButtons.keyDown", () -> keycode);
@@ -27,10 +27,10 @@ public class SpecialButtons extends InputAdapter {
     }
 
     @Override
-    public boolean keyUp (int keycode) {
+    public boolean keyUp(int keycode) {
 
         Array<TargetBase> targets = G.game.input.getTargets();
-        if(targets != null && targets.size > 0) {
+        if (targets != null && targets.size > 0) {
             targets.get(0).keyUp(keycode);
         }
         EventHandler.getHandler().addEvent("SpecialButtons.keyUp", () -> keycode);

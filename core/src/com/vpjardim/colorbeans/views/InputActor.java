@@ -17,15 +17,16 @@ import com.vpjardim.colorbeans.input.TargetBase;
 
 /**
  * @author Vinícius Jardim
- * 2017/05/08
+ *         2017/05/08
  */
 public class InputActor extends Actor implements TargetBase {
 
-    // Todo fix bug where keyboard key events make the controller InputActor to animate
+    // TODO: fix bug where keyboard key events make the controller InputActor to
+    // animate
 
-    public static final int CONTROLLER     = 1;
-    public static final int KEYBOARD       = 2;
-    public static final int TOUCH          = 3;
+    public static final int CONTROLLER = 1;
+    public static final int KEYBOARD = 2;
+    public static final int TOUCH = 3;
     public static final int NET_CONTROLLER = 4;
 
     private Array<TextureAtlas.AtlasRegion> bodies;
@@ -37,7 +38,7 @@ public class InputActor extends Actor implements TargetBase {
 
     public InputActor(int type, Profile profile) {
 
-        if(type == CONTROLLER)
+        if (type == CONTROLLER)
             bodies = G.game.atlas.findRegions("game/controller_small");
         else if (type == KEYBOARD)
             bodies = G.game.atlas.findRegions("game/keyboard_small");
@@ -71,7 +72,7 @@ public class InputActor extends Actor implements TargetBase {
         batch.draw(body, x, y, width, height);
 
         // Draw the input number id
-        if(number > 0) {
+        if (number > 0) {
 
             float scaleX = width / body.originalWidth;
             float scaleY = height / body.originalHeight;
@@ -79,7 +80,7 @@ public class InputActor extends Actor implements TargetBase {
             float offsetX = (body.originalWidth - numberBg.packedWidth) * scaleX;
             float offsetY = (body.originalHeight - numberBg.packedHeight) * scaleY;
 
-            // Todo why offset in the draw method not working?
+            // TODO: why offset in the draw method not working?
             batch.draw(numberBg, x + offsetX, y + offsetY, 0, 0,
                     numberBg.packedWidth, numberBg.packedHeight, scaleX, scaleY, 0);
 
@@ -95,49 +96,60 @@ public class InputActor extends Actor implements TargetBase {
     }
 
     @Override
-    public void setInput(InputBase input) {}
+    public void setInput(InputBase input) {
+    }
 
     @Override
     public void keyDown(int key) {
 
-        if(profile == null || profile.hasKey(key))
+        if (profile == null || profile.hasKey(key))
             body = bodies.get(1);
     }
 
     @Override
     public void keyUp(int key) {
 
-        if(profile == null || profile.hasKey(key))
+        if (profile == null || profile.hasKey(key))
             body = bodies.first();
     }
 
     @Override
-    public void btStartDown() {}
+    public void btStartDown() {
+    }
 
     @Override
-    public void bt1Down() {}
+    public void bt1Down() {
+    }
 
     @Override
-    public void bt2Down() {}
+    public void bt2Down() {
+    }
 
     @Override
-    public void bt3Down() {}
+    public void bt3Down() {
+    }
 
     @Override
-    public void bt4Down() {}
+    public void bt4Down() {
+    }
 
     @Override
-    public void btStartUp() {}
+    public void btStartUp() {
+    }
 
     @Override
-    public void bt1Up() {}
+    public void bt1Up() {
+    }
 
     @Override
-    public void bt2Up() {}
+    public void bt2Up() {
+    }
 
     @Override
-    public void bt3Up() {}
+    public void bt3Up() {
+    }
 
     @Override
-    public void bt4Up() {}
+    public void bt4Up() {
+    }
 }

@@ -21,17 +21,18 @@ import com.vpjardim.colorbeans.input.TargetBase;
 
 /**
  * @author Vinícius Jardim
- * 2015/12/05
+ *         2015/12/05
  */
 public class ScreenBase implements Screen, TargetBase {
 
     public static final int ACT_RUNNING = 1;
-    public static final int ACT_NEXT    = 2;
+    public static final int ACT_NEXT = 2;
 
     protected int action;
     protected OrthographicCamera cam;
     protected Viewport viewport;
-    // Todo review usage of this field, when false it disable esc and print screen buttons
+    // TODO: review usage of this field, when false it disable esc and print screen
+    // buttons
     protected boolean manageInput = true;
 
     protected Color bgColor;
@@ -67,7 +68,7 @@ public class ScreenBase implements Screen, TargetBase {
         viewport = new ScreenViewport(cam);
         viewport.apply(true);
 
-        if(manageInput) {
+        if (manageInput) {
             G.game.input.targetsClear();
             G.game.input.addTarget(this);
             G.game.input.linkAll();
@@ -86,56 +87,76 @@ public class ScreenBase implements Screen, TargetBase {
     }
 
     @Override
-    public void resize(int width, int height) { viewport.update(width, height, true); }
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
-    public void dispose() { G.game.input.targetsClear(); }
+    public void dispose() {
+        G.game.input.targetsClear();
+    }
 
     @Override
-    public void setInput(InputBase input) {}
+    public void setInput(InputBase input) {
+    }
 
     @Override
-    public void keyDown(int key) { }
+    public void keyDown(int key) {
+    }
 
     @Override
-    public void btStartDown() {}
+    public void btStartDown() {
+    }
 
     @Override
-    public void bt1Down() {}
+    public void bt1Down() {
+    }
 
     @Override
-    public void bt2Down() {}
+    public void bt2Down() {
+    }
 
     @Override
-    public void bt3Down() {}
+    public void bt3Down() {
+    }
 
     @Override
-    public void bt4Down() {}
+    public void bt4Down() {
+    }
 
     @Override
-    public void keyUp(int key) {}
+    public void keyUp(int key) {
+    }
 
     @Override
-    public void btStartUp() {}
+    public void btStartUp() {
+    }
 
     @Override
-    public void bt1Up() {}
+    public void bt1Up() {
+    }
 
     @Override
-    public void bt2Up() {}
+    public void bt2Up() {
+    }
 
     @Override
-    public void bt3Up() {}
+    public void bt3Up() {
+    }
 
     @Override
-    public void bt4Up() {}
+    public void bt4Up() {
+    }
 }

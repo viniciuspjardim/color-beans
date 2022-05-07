@@ -14,17 +14,16 @@ import com.vpjardim.colorbeans.core.Dbg;
 
 /**
  * @author Vinícius Jardim
- * 2016/02/09
+ *         2016/02/09
  */
 public class AiMap implements Pool.Poolable {
 
     public static int objCount = 0;
 
     public static final float MOVE_ILLEGAL = -999999999f;
-    public static final float MOVE_LEGAL   = +0f;
-    public static final float MOVE_LOST    = -99999999f;
-    public static final float MOVE_WIN     = +99999999f;
-
+    public static final float MOVE_LEGAL = +0f;
+    public static final float MOVE_LOST = -99999999f;
+    public static final float MOVE_WIN = +99999999f;
 
     public static Pool<AiMap> pool = new Pool<AiMap>(8450) {
         @Override
@@ -47,11 +46,12 @@ public class AiMap implements Pool.Poolable {
 
     public static byte[][] getByteBlocks(byte[][] result, Block[][] source) {
 
-        if(result == null) result = new byte[source.length][source[0].length];
+        if (result == null)
+            result = new byte[source.length][source[0].length];
 
-        for(int i = 0; i < source.length; i++) {
-            for(int j = 0; j < source[i].length; j++) {
-                result[i][j] = (byte)source[i][j].color;
+        for (int i = 0; i < source.length; i++) {
+            for (int j = 0; j < source[i].length; j++) {
+                result[i][j] = (byte) source[i][j].color;
             }
         }
 
@@ -66,8 +66,8 @@ public class AiMap implements Pool.Poolable {
 
     private void init(int deleteSize, int outRow) {
 
-        // Alloc new l only when necessary
-        if(l == null || l.length != b.length || l[0].length != b[0].length)
+        // Allocate new l only when necessary
+        if (l == null || l.length != b.length || l[0].length != b[0].length)
             l = new short[b.length][b[0].length];
 
         blocksDeleted = 0;
@@ -89,17 +89,17 @@ public class AiMap implements Pool.Poolable {
         AiMap to = AiMap.pool.obtain();
 
         to.blocksDeleted = blocksDeleted;
-        to.trashBlocks   = trashBlocks;
-        to.deleteSize    = deleteSize;
-        to.outRow        = outRow;
-        to.labelDeleted  = labelDeleted;
+        to.trashBlocks = trashBlocks;
+        to.deleteSize = deleteSize;
+        to.outRow = outRow;
+        to.labelDeleted = labelDeleted;
 
-        if(to.b == null) {
+        if (to.b == null) {
             to.b = new byte[b.length][b[0].length];
             to.l = new short[l.length][l[0].length];
         }
 
-        for(int i = 0; i < b.length; i++) {
+        for (int i = 0; i < b.length; i++) {
             System.arraycopy(b[i], 0, to.b[i], 0, b[i].length);
         }
 
@@ -107,10 +107,11 @@ public class AiMap implements Pool.Poolable {
     }
 
     /**
-     * @param color1 color of the upper block
-     * @param color2 color of the lower (center) block
+     * @param color1   color of the upper block
+     * @param color2   color of the lower (center) block
      * @param rotation rotation between 0 and 3: 0, 2 vertical; 1, 3 horizontal
-     * @param position column of the block (the left one when horizontal) on the map.
+     * @param position column of the block (the left one when horizontal) on the
+     *                 map.
      */
     public float process(int color1, int color2, int position, int rotation) {
 
@@ -124,36 +125,37 @@ public class AiMap implements Pool.Poolable {
 
         // Because the right block goes to the left on this rotation
         // there is a need to fix position
-        if(rotation == 0) {
+        if (rotation == 0) {
 
-            if(isMoveObstructed(position, outRow -1, position, outRow)) return MOVE_ILLEGAL;
+            if (isMoveObstructed(position, outRow - 1, position, outRow))
+                return MOVE_ILLEGAL;
 
-            b[position][outRow -1] = (byte)color1; // upper
-            b[position][outRow]    = (byte)color2; // center
+            b[position][outRow - 1] = (byte) color1; // upper
+            b[position][outRow] = (byte) color2; // center
+        } else if (rotation == 1) {
+
+            if (isMoveObstructed(position, outRow, position + 1, outRow))
+                return MOVE_ILLEGAL;
+
+            b[position][outRow] = (byte) color2; // center stay
+            b[position + 1][outRow] = (byte) color1; // upper goes down/left
+        } else if (rotation == 2) {
+
+            if (isMoveObstructed(position, outRow - 1, position, outRow))
+                return MOVE_ILLEGAL;
+
+            b[position][outRow - 1] = (byte) color2; // center goes up
+            b[position][outRow] = (byte) color1; // upper goes down
+        } else if (rotation == 3) {
+
+            if (isMoveObstructed(position, outRow, position + 1, outRow))
+                return MOVE_ILLEGAL;
+
+            b[position][outRow] = (byte) color1; // upper goes down
+            b[position + 1][outRow] = (byte) color2; // center goes right
         }
-        else if(rotation == 1) {
 
-            if(isMoveObstructed(position, outRow, position +1, outRow)) return MOVE_ILLEGAL;
-
-            b[position][outRow]    = (byte)color2; // center stay
-            b[position +1][outRow] = (byte)color1; // upper goes down/left
-        }
-        else if(rotation == 2) {
-
-            if(isMoveObstructed(position, outRow -1, position, outRow)) return MOVE_ILLEGAL;
-
-            b[position][outRow -1] = (byte)color2; // center goes up
-            b[position][outRow]    = (byte)color1; // upper goes down
-        }
-        else if(rotation == 3) {
-
-            if(isMoveObstructed(position, outRow, position + 1, outRow)) return MOVE_ILLEGAL;
-
-            b[position][outRow]    = (byte)color1; // upper goes down
-            b[position +1][outRow] = (byte)color2; // center goes right
-        }
-
-        if(Ai3.debug) {
+        if (Ai3.debug) {
             Dbg.print("================");
             Dbg.print("pos = " + position + "; rot = " + rotation);
             print();
@@ -163,14 +165,13 @@ public class AiMap implements Pool.Poolable {
             gravityFallCalc();
             labelCalc();
 
-        } while(labelDeleted);
+        } while (labelDeleted);
 
         int center = b.length / 2;
 
         // The blocks are obstructed. This move lead to game over.
-        if(     b[center][outRow]     != Block.EMPTY ||
-                b[center][outRow + 1] != Block.EMPTY)
-        {
+        if (b[center][outRow] != Block.EMPTY ||
+                b[center][outRow + 1] != Block.EMPTY) {
             return AiMap.MOVE_LOST;
         }
 
@@ -187,10 +188,11 @@ public class AiMap implements Pool.Poolable {
 
         int center = b.length / 2;
         int deltaX = b1X - center;
-        int sign   = deltaX != 0 ? deltaX / Math.abs(deltaX) : 1;
+        int sign = deltaX != 0 ? deltaX / Math.abs(deltaX) : 1;
 
-        for(int i = 0; i <= Math.abs(deltaX); i++) {
-            if(!isEmpty(b1X - i * sign, b1Y) || !isEmpty(b2X - i * sign, b2Y)) return true;
+        for (int i = 0; i <= Math.abs(deltaX); i++) {
+            if (!isEmpty(b1X - i * sign, b1Y) || !isEmpty(b2X - i * sign, b2Y))
+                return true;
         }
 
         return false;
@@ -198,14 +200,15 @@ public class AiMap implements Pool.Poolable {
 
     private void trashBlocksCalc() {
 
-        if(blocksDeleted <= 0) return;
+        if (blocksDeleted <= 0)
+            return;
         trashBlocks = Math.round(((blocksDeleted * 10f) * (blocksDeleted - 3f)) / 70f);
     }
 
     private void gravityFallCalc() {
 
         // Loop through the columns 0(left) to 6(right)
-        for(int col = 0; col < b.length; col++) {
+        for (int col = 0; col < b.length; col++) {
 
             // Number of empty rows blocks in this column
             int nEmpty = 0;
@@ -213,13 +216,12 @@ public class AiMap implements Pool.Poolable {
             // Loop through the rows 14 + OUT_ROW (floor) to 0 (top) of the actual
             // column. Keep looking from floor to top and counting empty blocks
             // then move down non empty the number that has been counted
-            for(int row = b[col].length -1; row >= 0; row--)
-            {
+            for (int row = b[col].length - 1; row >= 0; row--) {
                 // If it`s not empty then swap: the block goes down
                 // and the empty goes up
-                if(b[col][row] != Block.EMPTY) {
+                if (b[col][row] != Block.EMPTY) {
 
-                    if(nEmpty > 0) {
+                    if (nEmpty > 0) {
 
                         byte swap = b[col][row + nEmpty];
                         b[col][row + nEmpty] = b[col][row];
@@ -241,14 +243,14 @@ public class AiMap implements Pool.Poolable {
         short label = 1;
 
         // cols 0 -> 6
-        for(int col = 0; col < b.length; col++) {
+        for (int col = 0; col < b.length; col++) {
 
             // row 0 -> 14 + OUT_ROW
-            for(int row = 0; row < b[col].length; row++) {
+            for (int row = 0; row < b[col].length; row++) {
 
                 // Empty blocks and trash blocks don`t group at first:
                 // put a zero label
-                if(!Block.isColor(b[col][row])) {
+                if (!Block.isColor(b[col][row])) {
 
                     l[col][row] = 0;
                     continue;
@@ -256,24 +258,24 @@ public class AiMap implements Pool.Poolable {
 
                 boolean sameColorLeft = false;
                 boolean sameColorUpper = false;
-                int left = col -1;
-                int upper = row -1;
+                int left = col - 1;
+                int upper = row - 1;
 
                 // If it has the same color of the left block
                 // then mark with the same label
-                if(left >= 0 && b[left][row] == b[col][row]) {
+                if (left >= 0 && b[left][row] == b[col][row]) {
                     l[col][row] = l[left][row];
                     sameColorLeft = true;
                 }
 
                 // If it has the same color of the upper block
-                if(upper >= 0 && b[col][upper] == b[col][row]) {
+                if (upper >= 0 && b[col][upper] == b[col][row]) {
 
                     sameColorUpper = true;
 
                     // If it has the same color of the left block add a label
                     // equivalence
-                    if(sameColorLeft) {
+                    if (sameColorLeft) {
                         addLabelEquivalence(l[col][row], l[col][upper]);
                     }
 
@@ -283,7 +285,7 @@ public class AiMap implements Pool.Poolable {
 
                 // If it has not the same color of the left and de upper one,
                 // then put a new label
-                if(!sameColorLeft && !sameColorUpper) {
+                if (!sameColorLeft && !sameColorUpper) {
                     l[col][row] = label;
                     label++;
                 }
@@ -298,12 +300,13 @@ public class AiMap implements Pool.Poolable {
 
         // If they are equal they not need to be marked
         // as equivalent
-        if(labelA == labelB) return;
+        if (labelA == labelB)
+            return;
 
         // try to find a set that contains A or B label
-        for(IntSet s : le) {
+        for (IntSet s : le) {
             // If contains A or B, add A and B
-            if(s.contains(labelA) || s.contains(labelB)) {
+            if (s.contains(labelA) || s.contains(labelB)) {
                 s.addAll(labelA, labelB);
                 return;
             }
@@ -311,8 +314,8 @@ public class AiMap implements Pool.Poolable {
 
         // Try to find a empty set where A and B labels
         // can be added
-        for(IntSet s : le) {
-            if(s.size == 0) {
+        for (IntSet s : le) {
+            if (s.size == 0) {
                 s.addAll(labelA, labelB);
                 return;
             }
@@ -326,17 +329,18 @@ public class AiMap implements Pool.Poolable {
 
     private void mergeEquivalentLabels() {
 
-        for(int i = 0; i < b.length; i++) {
+        for (int i = 0; i < b.length; i++) {
 
-            for(int j = 0; j < b[i].length; j++) {
+            for (int j = 0; j < b[i].length; j++) {
 
-                if(l[i][j] == 0) continue;
+                if (l[i][j] == 0)
+                    continue;
 
-                for(IntSet s : le) {
+                for (IntSet s : le) {
 
-                    if(s.contains(l[i][j])) {
+                    if (s.contains(l[i][j])) {
 
-                        l[i][j] = (short)s.first();
+                        l[i][j] = (short) s.first();
                     }
                 }
 
@@ -352,13 +356,14 @@ public class AiMap implements Pool.Poolable {
 
         labelDeleted = false;
 
-        for(int i = 0; i < b.length; i++) {
+        for (int i = 0; i < b.length; i++) {
 
-            for(int j = 0; j < b[i].length; j++) {
+            for (int j = 0; j < b[i].length; j++) {
 
-                if(l[i][j] == 0) continue;
+                if (l[i][j] == 0)
+                    continue;
 
-                if(lc.get(l[i][j]) >= deleteSize) {
+                if (lc.get(l[i][j]) >= deleteSize) {
 
                     b[i][j] = Block.EMPTY;
                     l[i][j] = 0;
@@ -366,16 +371,16 @@ public class AiMap implements Pool.Poolable {
                     labelDeleted = true;
 
                     // Check the 4 adjacent blocks: delete those that are trash blocks
-                    if(i -1 >= 0 && b[i -1][j] == Block.CLR_T)
+                    if (i - 1 >= 0 && b[i - 1][j] == Block.CLR_T)
                         b[i - 1][j] = Block.EMPTY;
 
-                    if(i +1 < b.length && b[i +1][j] == Block.CLR_T)
+                    if (i + 1 < b.length && b[i + 1][j] == Block.CLR_T)
                         b[i + 1][j] = Block.EMPTY;
 
-                    if(j -1 >= 0 && b[i][j -1] == Block.CLR_T)
+                    if (j - 1 >= 0 && b[i][j - 1] == Block.CLR_T)
                         b[i][j - 1] = Block.EMPTY;
 
-                    if(j +1 < b[i].length && b[i][j +1] == Block.CLR_T)
+                    if (j + 1 < b[i].length && b[i][j + 1] == Block.CLR_T)
                         b[i][j + 1] = Block.EMPTY;
                 }
             }
@@ -384,7 +389,7 @@ public class AiMap implements Pool.Poolable {
 
     private void recycleLabelEquivalence() {
 
-        for(IntSet s : le) {
+        for (IntSet s : le) {
             s.clear();
         }
         lc.clear();
@@ -396,15 +401,16 @@ public class AiMap implements Pool.Poolable {
         Dbg.print("Blocks print ->");
 
         // row 0 -> 14 + OUT_ROW
-        for(int row = 7; row < b[0].length; row++) {
+        for (int row = 7; row < b[0].length; row++) {
 
             // col 0 -> 6
-            for(int col = 0; col < b.length; col++) {
+            for (int col = 0; col < b.length; col++) {
 
                 System.out.print(b[col][row] + " ");
             }
             Dbg.print("");
-            if(row == outRow -1) Dbg.print("---");
+            if (row == outRow - 1)
+                Dbg.print("---");
         }
     }
 
@@ -414,20 +420,20 @@ public class AiMap implements Pool.Poolable {
         Dbg.print("Label print ->");
 
         // row 0 -> 14 + OUT_ROW
-        for(int row = 7; row < b[0].length; row++) {
+        for (int row = 7; row < b[0].length; row++) {
 
             // col 0 -> 6
-            for(int col = 0; col < b.length; col++) {
+            for (int col = 0; col < b.length; col++) {
 
                 System.out.printf(" %5d", l[col][row]);
             }
             Dbg.print("");
-            if(row == outRow -1) Dbg.print("---");
+            if (row == outRow - 1)
+                Dbg.print("---");
         }
 
         // Prints labels count
-        for(IntMap.Entry<Integer> entry : lc.entries())
-        {
+        for (IntMap.Entry<Integer> entry : lc.entries()) {
             System.out.print(entry.key + ":" + entry.value + "; ");
         }
 
@@ -435,5 +441,6 @@ public class AiMap implements Pool.Poolable {
     }
 
     @Override
-    public void reset() {}
+    public void reset() {
+    }
 }

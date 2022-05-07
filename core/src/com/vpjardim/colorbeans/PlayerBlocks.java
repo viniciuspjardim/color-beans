@@ -10,7 +10,7 @@ import com.vpjardim.colorbeans.input.InputBase;
 
 /**
  * @author Vinícius Jardim
- * 2015/03/21
+ *         2015/03/21
  */
 public class PlayerBlocks {
 
@@ -19,7 +19,7 @@ public class PlayerBlocks {
     /** Block 1: center block */
     public Block b1;
 
-    /** Block 2: this block rotates around the center block*/
+    /** Block 2: this block rotates around the center block */
     public Block b2;
 
     /** Block 1 color at the next ply */
@@ -43,6 +43,7 @@ public class PlayerBlocks {
     /**
      * Current rotation shape.
      * Rotations around the center block:
+     * 
      * <pre>
      *   0
      * 3 C 1
@@ -91,7 +92,7 @@ public class PlayerBlocks {
         // Starts at the center column
         b1x = Map.N_COL / 2;
         // Starts before the first map row (out of the map)
-        b1y = Map.OUT_ROW -1;
+        b1y = Map.OUT_ROW - 1;
 
         rotation = 0;
         rotationAnim = 0f;
@@ -104,11 +105,15 @@ public class PlayerBlocks {
         return collide(b1x, b1y);
     }
 
-    /** Returns true if it would have collision if the center block is in de given position */
+    /**
+     * Returns true if it would have collision if the center block is in de given
+     * position
+     */
     public boolean collide(int mapCol, int mapRow) {
 
         // Center block check
-        if(!m.isEmpty(mapCol, mapRow)) return true;
+        if (!m.isEmpty(mapCol, mapRow))
+            return true;
 
         // Other block check
         int deltaX = mapCol - b1x;
@@ -119,7 +124,7 @@ public class PlayerBlocks {
 
     public boolean moveHorizontal(int value) {
 
-        if(!collide(b1x + value, b1y)) {
+        if (!collide(b1x + value, b1y)) {
             b1x += value;
             moveX = value;
             updateB2pos();
@@ -131,23 +136,23 @@ public class PlayerBlocks {
     public boolean moveDueCollision() {
 
         // Should not collide
-        if(rotation == 0) {
+        if (rotation == 0) {
             Dbg.print("processCollision: rotation == 0");
             return false;
         }
         // Move player blocks left
-        if(rotation == 1) {
+        if (rotation == 1) {
             m.hPlayMoveTimer = m.hPlayMoveWait;
             return moveHorizontal(-1);
         }
         // Move player blocks up
-        if(rotation == 2) {
+        if (rotation == 2) {
             b1y--;
             updateB2pos();
             return true;
         }
         // Move player blocks right
-        if(rotation == 3) {
+        if (rotation == 3) {
             m.hPlayMoveTimer = m.hPlayMoveWait;
             return moveHorizontal(1);
         }
@@ -160,16 +165,18 @@ public class PlayerBlocks {
         int prevRotation = rotation;
 
         rotation = rotation + 1;
-        if(rotation > 3) rotation = 0;
+        if (rotation > 3)
+            rotation = 0;
 
         updateB2pos();
 
-        if(detectCollision && collide()) {
-            if(moveDueCollision()) {}
-            else rotateCounterclockwise(false);
+        if (detectCollision && collide()) {
+            if (moveDueCollision()) {
+            } else
+                rotateCounterclockwise(false);
         }
 
-        if(detectCollision && prevRotation != rotation) {
+        if (detectCollision && prevRotation != rotation) {
             m.rPlayMoveTimer = m.rPlayMoveWait;
         }
     }
@@ -178,17 +185,19 @@ public class PlayerBlocks {
 
         int prevRotation = rotation;
 
-        rotation = rotation - 1 ;
-        if(rotation < 0) rotation = 3;
+        rotation = rotation - 1;
+        if (rotation < 0)
+            rotation = 3;
 
         updateB2pos();
 
-        if(detectCollision && collide()) {
-            if(moveDueCollision()) {}
-            else rotateClockwise(false);
+        if (detectCollision && collide()) {
+            if (moveDueCollision()) {
+            } else
+                rotateClockwise(false);
         }
 
-        if(detectCollision && prevRotation != rotation) {
+        if (detectCollision && prevRotation != rotation) {
             m.rPlayMoveTimer = m.rPlayMoveWait;
         }
     }
@@ -196,20 +205,17 @@ public class PlayerBlocks {
     /** Update block 2 position according to rotation and center block position */
     public void updateB2pos() {
 
-        if(rotation == 0) {
+        if (rotation == 0) {
             b2x = b1x;
-            b2y = b1y -1;
-        }
-        else if(rotation == 1) {
-            b2x = b1x +1;
+            b2y = b1y - 1;
+        } else if (rotation == 1) {
+            b2x = b1x + 1;
             b2y = b1y;
-        }
-        else if(rotation == 2) {
+        } else if (rotation == 2) {
             b2x = b1x;
-            b2y = b1y +1;
-        }
-        else if(rotation == 3) {
-            b2x = b1x -1;
+            b2y = b1y + 1;
+        } else if (rotation == 3) {
+            b2x = b1x - 1;
             b2y = b1y;
         }
     }
@@ -217,7 +223,7 @@ public class PlayerBlocks {
     /** Insert the player blocks in the map blocks array */
     public void insert() {
 
-        if(b1y < 0 || b2y < 0) {
+        if (b1y < 0 || b2y < 0) {
             m.lost = true;
             return;
         }
@@ -229,13 +235,13 @@ public class PlayerBlocks {
 
         // Triggers b1 deform animation
         boolean b1Collide = !m.isEmpty(b1x, b1y + 1);
-        if(downKey && b1Collide) {
+        if (downKey && b1Collide) {
             m.b[b1x][b1y].deformTime = m.afterGravityFallWait;
         }
 
         // Triggers b2 deform animation
         boolean b2Collide = !m.isEmpty(b2x, b2y + 1);
-        if(downKey && b2Collide) {
+        if (downKey && b2Collide) {
             m.b[b2x][b2y].deformTime = m.afterGravityFallWait;
         }
     }
@@ -245,10 +251,10 @@ public class PlayerBlocks {
         m.vPlayMoveTimer -= G.delta;
         boolean downKey = m.input != null && m.input.getKey(InputBase.DOWN_KEY);
 
-        if(m.vPlayMoveTimer <= 0f) {
+        if (m.vPlayMoveTimer <= 0f) {
 
             // Looking if there is a collision on row bellow b1y
-            if(!collide(b1x, b1y + 1)) {
+            if (!collide(b1x, b1y + 1)) {
 
                 m.vPlayMoveTimer += m.vPlayMoveWait2;
                 setFallStartEnd(b1y, b1y + 1);
@@ -257,10 +263,9 @@ public class PlayerBlocks {
             }
             // Wait some time before insert the player blocks.
             // The player can use this time to do his last moves
-            else if(!downKey && m.vPlayMoveTimer >= -m.beforeInsertWait) {
+            else if (!downKey && m.vPlayMoveTimer >= -m.beforeInsertWait) {
 
-            }
-            else {
+            } else {
                 insert();
                 init();
                 m.vPlayMoveTimer = m.vPlayMoveWait2;
@@ -270,16 +275,17 @@ public class PlayerBlocks {
     }
 
     private void setFallStartEnd(int start, int end) {
-        int val  = end - start;
+        int val = end - start;
         b1.moveY = val;
-        b1.py    = val;
+        b1.py = val;
         b2.moveY = val;
-        b2.py    = val;
+        b2.py = val;
     }
 
     /**
-     * Needs to be called before render when the map is loaded from a serialized source. This
-     * because some references and objects are not serialized and it needs to be setup
+     * Needs to be called before render when the map is loaded from a serialized
+     * source. This because some references and objects are not serialized and it
+     * needs to be setup
      */
     public void deserialize(Map m) {
         this.m = m;

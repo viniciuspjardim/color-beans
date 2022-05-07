@@ -9,7 +9,7 @@ import com.vpjardim.colorbeans.G;
 
 /**
  * @author Vinícius Jardim
- * 2018/06/06
+ *         2018/06/06
  */
 public class Audio {
 
@@ -19,7 +19,6 @@ public class Audio {
 
     private Music playingMusic;
     private float musicVolume = 0.5f;
-    private float effectsVolume = 1f;
 
     public static Music getMusic(String fileName) {
         return G.game.assets.get(fileName, Music.class);
@@ -27,7 +26,8 @@ public class Audio {
 
     public void playMusic(String music, boolean resetVolume) {
         playingMusic = G.game.assets.get(music, Music.class);
-        if(resetVolume) playingMusic.setVolume(musicVolume);
+        if (resetVolume)
+            playingMusic.setVolume(musicVolume);
         playingMusic.play();
     }
 

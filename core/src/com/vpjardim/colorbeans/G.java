@@ -26,6 +26,7 @@ import aurelienribon.tweenengine.Tween;
 
 /**
  * Game class
+ * 
  * <pre>
  *
  * libGDX coordinate system
@@ -50,34 +51,47 @@ import aurelienribon.tweenengine.Tween;
  * </pre>
  *
  * @author Vinícius Jardim
- * 2015/03/21
+ *         2015/03/21
  */
 public class G extends Game {
 
-    // Todo android very laggy: 25fps with 2 maps, 17 with 4 maps
-    // Todo small memory leak even in debugPG variant
-    // Todo one map player blocks falls first then the others when if the game is restarted (...)
-    // It happen to the loser map when the winner wins pressing down key
-    // Todo black screen after minimizing and restoring on full screen mode
-    // Todo restart music on map win, music fade in/out, add win/lost sound effects, pause (...)
-    // music on game paused, music2 volume seems lower then music2
-    // Todo fix art: create text shade and text dialog balloon 9patch
-    // Todo Add win/lost camera transition and statistics layer
-    // Todo fix game over animation: top blocks might render as if they were linked to (...)
-    // offscreen blocks
-    // Todo "Next" text is rendered behind the next block bg
-    // Todo do not render blocks in the out rows
-    // Todo Android back button crashes app in LoadingScreen
-    // Todo create a semi transparent black bg and to use in front of the beans in MenuScreen
+    // TODO: android very laggy: 25fps with 2 maps, 17 with 4 maps;
 
-    // Todo negative score sometimes after first match in campaign (maybe fixed)
+    // TODO: small memory leak even in debugPG variant;
 
-    // Todo touch and drag in Android crashes app when using controller (fixed)
-    // Todo capture android back button event: go to menu when in PlayScreen (done)
+    // TODO: one map player blocks falls first then the others when if the game is
+    // restarted. It happen to the loser map when the winner wins pressing down key;
 
+    // TODO: black screen after minimizing and restoring on full screen mode;
+
+    // TODO: restart music on map win, music fade in/out, add win/lost sound
+    // effects, pause music on game paused, music2 volume seems lower then music2;
+
+    // TODO: fix art: create text shade and text dialog balloon 9patch;
+
+    // TODO: add win/lost camera transition and statistics layer;
+
+    // TODO: fix game over animation: top blocks might render as if they were linked
+    // to offscreen blocks;
+
+    // TODO: "Next" text is rendered behind the next block bg;
+
+    // TODO: do not render blocks in the out rows;
+
+    // TODO: Android back button crashes app in LoadingScreen;
+
+    // TODO: create a semi transparent black bg and to use in front of the beans in
+    // MenuScreen.
+
+    // TODO: negative score sometimes after first match in campaign (maybe fixed)
+
+    // TODO: touch and drag in Android crashes app when using controller (fixed);
+
+    // TODO: capture android back button event: go to menu when in PlayScreen
+    // (done).
 
     // Game resolution
-    public static final int RES_SMALL  = 1;
+    public static final int RES_SMALL = 1;
     public static final int RES_MEDIUM = 2;
 
     public static G game;
@@ -113,7 +127,7 @@ public class G extends Game {
 
         startTime = System.nanoTime();
 
-        game = (G)Gdx.app.getApplicationListener();
+        game = (G) Gdx.app.getApplicationListener();
         Gdx.input.setCatchBackKey(true);
         Tween.setCombinedAttributesLimit(5);
 
@@ -142,9 +156,10 @@ public class G extends Game {
     }
 
     /**
-     * Convert Y down (0 = top left corner) to Y up (0 = bottom left corner) and vice-versa.
-     * All the game logic should use Y down and this method should be called when giving Y to a
-     * libGDX draw method.
+     * Convert Y down (0 = top left corner) to Y up (0 = bottom left corner) and
+     * vice-versa. All the game logic should use Y down and this method should be
+     * called when giving Y to a libGDX draw method.
+     * 
      * @param y coordinate to be flipped
      * @return flipped coordinate
      */
@@ -157,23 +172,26 @@ public class G extends Game {
     }
 
     public static float flipY(float y, float height, float scale) {
-        return G.height - 1 - y - (height * (scale + 1f)/2f);
+        return G.height - 1 - y - (height * (scale + 1f) / 2f);
     }
 
     @Override
-    public void render() { screens.render(); }
+    public void render() {
+        screens.render();
+    }
 
     @Override
     public void resume() {
         super.resume();
-        game = (G)Gdx.app.getApplicationListener();
+        game = (G) Gdx.app.getApplicationListener();
     }
 
     @Override
-    public void resize (int width, int height) {
+    public void resize(int width, int height) {
         G.width = width;
         G.height = height;
-        if(screen != null) screen.resize(width, height);
+        if (screen != null)
+            screen.resize(width, height);
     }
 
     @Override

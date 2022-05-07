@@ -44,7 +44,7 @@ android {
             debuggable true
             applicationIdSuffix ".debug"
         }
-        // Todo seams that build variants that invoke proguard are not working anymore. Fix it
+        // TODO: seams that build variants that invoke proguard are not working anymore. Fix it
         // Debug with ProGuard enabled
         debugPG {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-project.txt"

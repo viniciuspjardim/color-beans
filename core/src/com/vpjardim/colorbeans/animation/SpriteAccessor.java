@@ -10,18 +10,18 @@ import aurelienribon.tweenengine.TweenAccessor;
 
 /**
  * @author Vinícius Jardim
- * 2015/11/01
+ *         2015/11/01
  */
 public class SpriteAccessor implements TweenAccessor<Sprite> {
 
-    public static final int ALPHA    = 0;
-    public static final int COLORS   = 1;
+    public static final int ALPHA = 0;
+    public static final int COLORS = 1;
     public static final int POSITION = 2;
 
     @Override
     public int getValues(Sprite target, int tweenType, float[] returnValues) {
 
-        switch(tweenType) {
+        switch (tweenType) {
             case ALPHA:
                 returnValues[0] = target.getColor().a;
                 return 1;
@@ -43,7 +43,7 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
     @Override
     public void setValues(Sprite target, int tweenType, float[] newValues) {
 
-        switch(tweenType) {
+        switch (tweenType) {
             case ALPHA:
                 target.setColor(
                         target.getColor().r,

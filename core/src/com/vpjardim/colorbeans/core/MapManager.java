@@ -11,17 +11,17 @@ import com.vpjardim.colorbeans.Map;
 
 /**
  * @author Vinícius Jardim
- * 2016/09/02
+ *         2016/09/02
  */
 public abstract class MapManager {
 
-    public static final int PAUSED_NONE  = 1;
-    public static final int PAUSED_ALL   = 2;
+    public static final int PAUSED_NONE = 1;
+    public static final int PAUSED_ALL = 2;
     public static final int PAUSED_MIXED = 3;
 
     public static final int GAME_CONTIUES = 1;
-    public static final int GAME_OVER     = 2;
-    public static final int GAME_ZEROED   = 3;
+    public static final int GAME_OVER = 2;
+    public static final int GAME_ZEROED = 3;
 
     public Cfg.Game gameCfg;
     public Array<Map> maps;
@@ -46,35 +46,37 @@ public abstract class MapManager {
         float totalY = (side * Map.N_ROW) + side;
 
         // Updating size and positions
-        for(int i = 0; i < render.size; i++) {
+        for (int i = 0; i < render.size; i++) {
 
             MapRender r = render.get(i);
 
             r.size = side;
             r.px = (side * Map.N_COL) * i + (side * 2f * (i + 1))
-                   + (G.width - totalX) / 2f;
+                    + (G.width - totalX) / 2f;
             r.py = (G.height + totalY) / 2f - side / 2f;
         }
     }
 
     public Map getOpponent(int excludeIndex) {
 
-        if(maps.size <= 1) return null;
+        if (maps.size <= 1)
+            return null;
 
         opps.clear();
         opps.addAll(maps);
         opps.removeIndex(excludeIndex);
 
-        for(int i = 0; i < opps.size; i++) {
+        for (int i = 0; i < opps.size; i++) {
 
             Map opp = opps.get(i);
 
-            // Todo fix cause the map go to GRAVITY_FALL state in winLost method if is autoRestart
-            if(opp.isInState(Map.MState.OVER) || opp.isInState(Map.MState.DONE))
+            // TODO: fix cause the map go to GRAVITY_FALL state in winLost method if is
+            // autoRestart
+            if (opp.isInState(Map.MState.OVER) || opp.isInState(Map.MState.DONE))
                 opps.removeIndex(i);
         }
 
-        if(opps.size > 0) {
+        if (opps.size > 0) {
             return opps.get(MathUtils.random(0, opps.size - 1));
         }
         return null;
@@ -90,38 +92,40 @@ public abstract class MapManager {
         int mapsPlaying = 0;
         Map mapPlaying = null;
 
-        for(Map m : maps) {
+        for (Map m : maps) {
 
             // Maps not in (OVER or DONE) state: maps playing
-            if(!(m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE))) {
+            if (!(m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE))) {
                 mapsPlaying++;
                 mapPlaying = m;
             }
 
             // Maps not in DONE state: playing or animating (win or lost animations)
-            if(!m.isInState(Map.MState.DONE)) {
+            if (!m.isInState(Map.MState.DONE)) {
                 mapsAnimating++;
             }
         }
 
         // All maps except one are in OVER or DONE state, so one map win
-        if(mapsPlaying == 1 && maps.size > 1) {
+        if (mapsPlaying == 1 && maps.size > 1) {
             mapPlaying.gameWin = true;
             winnerMap = mapPlaying;
         }
 
-        // Wait until animation is over to call mapWin / mapLost events if there is a winner
-        if(winnerMap != null && mapsAnimating == 0) {
+        // Wait until animation is over to call mapWin / mapLost events if there is a
+        // winner
+        if (winnerMap != null && mapsAnimating == 0) {
             mapWin(winnerMap.index);
 
-            for(Map m : maps) {
-                if(winnerMap.index == m.index) continue;
+            for (Map m : maps) {
+                if (winnerMap.index == m.index)
+                    continue;
                 mapLost(m.index);
             }
         }
 
         // Maps animations ended
-        if(mapsAnimating == 0) {
+        if (mapsAnimating == 0) {
 
             boolean autoRestart = gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART ||
                     gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
@@ -129,9 +133,9 @@ public abstract class MapManager {
             boolean paused = gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
 
             // If auto restart is on and animations finished: restart the game
-            if(autoRestart) {
-                for(Map m : maps) {
-                    m.recycle(true); // Todo remove and test. It's done in MState
+            if (autoRestart) {
+                for (Map m : maps) {
+                    m.recycle(true); // TODO: remove and test. It's done in MState
                     m.state.changeState(Map.MState.GRAVITY_FALL);
 
                     pause(m.index, paused);
@@ -139,8 +143,8 @@ public abstract class MapManager {
                 winnerMap = null;
 
                 // #debugCode
-                if(G.game.dbg.mapShape != null) {
-                    for(int i = 0; i < maps.size; i++) {
+                if (G.game.dbg.mapShape != null) {
+                    for (int i = 0; i < maps.size; i++) {
                         Map m = maps.get(i);
                         m.debugShape(G.game.dbg.mapShape[i]);
                     }
@@ -151,17 +155,16 @@ public abstract class MapManager {
 
     public void pause(int mapIndex, boolean paused) {
 
-        if(gameCfg.pauseAct == Cfg.Game.PAUSE_SELF) {
+        if (gameCfg.pauseAct == Cfg.Game.PAUSE_SELF) {
             Map m = maps.get(mapIndex);
             m.pause = paused;
-        }
-        else if(gameCfg.pauseAct == Cfg.Game.PAUSE_ALL) {
-            for(int i = 0; i < maps.size; i++) {
+        } else if (gameCfg.pauseAct == Cfg.Game.PAUSE_ALL) {
+            for (int i = 0; i < maps.size; i++) {
                 Map m = maps.get(i);
                 m.pause = paused;
             }
+        } else if (gameCfg.pauseAct == Cfg.Game.PAUSE_OFF) {
         }
-        else if(gameCfg.pauseAct == Cfg.Game.PAUSE_OFF) {}
 
         updatePausedStatus();
     }
@@ -170,13 +173,17 @@ public abstract class MapManager {
 
         int pausedCont = 0;
 
-        for(int i = 0; i < maps.size; i++) {
+        for (int i = 0; i < maps.size; i++) {
             Map m = maps.get(i);
-            if(m.pause) pausedCont++;
+            if (m.pause)
+                pausedCont++;
         }
 
-        if(pausedCont == 0) pauseStatus = PAUSED_NONE;
-        else if(pausedCont == maps.size) pauseStatus = PAUSED_ALL;
-        else pauseStatus = PAUSED_MIXED;
+        if (pausedCont == 0)
+            pauseStatus = PAUSED_NONE;
+        else if (pausedCont == maps.size)
+            pauseStatus = PAUSED_ALL;
+        else
+            pauseStatus = PAUSED_MIXED;
     }
 }

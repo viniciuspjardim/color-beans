@@ -13,7 +13,7 @@ import com.vpjardim.colorbeans.net.ControllerClient;
 
 /**
  * @author Vinícius Jardim
- * 2018/05/03
+ *         2018/05/03
  */
 public class NetInputScreen extends ScreenBase {
 
@@ -31,9 +31,9 @@ public class NetInputScreen extends ScreenBase {
 
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if(key == G.game.data.escBt || key == Input.Keys.BACK)
+            if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 action = ACT_NEXT;
-            else if(key == G.game.data.printScreenBt)
+            else if (key == G.game.data.printScreenBt)
                 printScreen();
         };
 

@@ -11,7 +11,7 @@ import com.vpjardim.colorbeans.ai.ai3.Ai3;
 
 /**
  * @author Vinícius Jardim
- * 2016/09/02
+ *         2016/09/02
  */
 public class Campaign extends MapManager {
 
@@ -35,43 +35,43 @@ public class Campaign extends MapManager {
         aiCfgs = new Array<>();
         aiMapNames = new Array<>();
 
-        if(G.game.dbg.campStart <= 1 && G.game.dbg.campEnd >= 1) {
+        if (G.game.dbg.campStart <= 1 && G.game.dbg.campEnd >= 1) {
             mapCfgs.add(G.game.data.map1);
             aiCfgs.add(G.game.data.ai1);
             aiMapNames.add("Stage 1");
         }
 
-        if(G.game.dbg.campStart <= 2 && G.game.dbg.campEnd >= 2) {
+        if (G.game.dbg.campStart <= 2 && G.game.dbg.campEnd >= 2) {
             mapCfgs.add(G.game.data.map2);
             aiCfgs.add(G.game.data.ai2);
             aiMapNames.add("Stage 2");
         }
 
-        if(G.game.dbg.campStart <= 3 && G.game.dbg.campEnd >= 3) {
+        if (G.game.dbg.campStart <= 3 && G.game.dbg.campEnd >= 3) {
             mapCfgs.add(G.game.data.map3);
             aiCfgs.add(G.game.data.ai3);
             aiMapNames.add("Stage 3");
         }
 
-        if(G.game.dbg.campStart <= 4 && G.game.dbg.campEnd >= 4) {
+        if (G.game.dbg.campStart <= 4 && G.game.dbg.campEnd >= 4) {
             mapCfgs.add(G.game.data.map4);
             aiCfgs.add(G.game.data.ai4);
             aiMapNames.add("Stage 4");
         }
 
-        if(G.game.dbg.campStart <= 5 && G.game.dbg.campEnd >= 5) {
+        if (G.game.dbg.campStart <= 5 && G.game.dbg.campEnd >= 5) {
             mapCfgs.add(G.game.data.map5);
             aiCfgs.add(G.game.data.ai5);
             aiMapNames.add("Stage 5");
         }
 
-        if(G.game.dbg.campStart <= 6 && G.game.dbg.campEnd >= 6) {
+        if (G.game.dbg.campStart <= 6 && G.game.dbg.campEnd >= 6) {
             mapCfgs.add(G.game.data.map6);
             aiCfgs.add(G.game.data.ai6);
             aiMapNames.add("Stage 6");
         }
 
-        if(G.game.dbg.campStart <= 7 && G.game.dbg.campEnd >= 7) {
+        if (G.game.dbg.campStart <= 7 && G.game.dbg.campEnd >= 7) {
             mapCfgs.add(G.game.data.map7);
             aiCfgs.add(G.game.data.ai7);
             aiMapNames.add("Stage 7");
@@ -93,7 +93,7 @@ public class Campaign extends MapManager {
         G.game.input.addTarget(playerMap);
 
         // #debugCode
-        if(G.game.dbg.aiPlayerCamp) {
+        if (G.game.dbg.aiPlayerCamp) {
             playerMap.ai = new Ai3();
             playerMap.ai.init(playerMap, G.game.data.ai7);
             G.game.input.removeTarget(playerMap);
@@ -111,14 +111,15 @@ public class Campaign extends MapManager {
         aiMap.name = aiMapNames.get(stageIndex);
 
         // #DebugCode the content is needed, just the if is debug
-        if(!G.game.dbg.aiDisableMap1) {
-            // Todo Ai3 seams laggy in android. Debug (probably rendering too slow, not Ai3)
+        if (!G.game.dbg.aiDisableMap1) {
+            // TODO: Ai3 seams laggy in android. Debug (probably rendering too slow, not
+            // Ai3)
             aiMap.ai = new Ai3();
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }
 
         // #debugCode
-        if(G.game.dbg.mapShape != null) {
+        if (G.game.dbg.mapShape != null) {
             playerMap.debugShape(G.game.dbg.mapShape[0]);
             aiMap.debugShape(G.game.dbg.mapShape[1]);
         }
@@ -130,7 +131,7 @@ public class Campaign extends MapManager {
     public void mapWin(int mapIndex) {
 
         // Player (index 0) won
-        if(mapIndex == 0) {
+        if (mapIndex == 0) {
 
             Map p = maps.get(0);
 
@@ -138,7 +139,7 @@ public class Campaign extends MapManager {
                     p.matchTimer);
 
             stageIndex++;
-            if(stageIndex >= mapCfgs.size) {
+            if (stageIndex >= mapCfgs.size) {
                 gameStatus = GAME_ZEROED;
             }
             // Config maps to the next stage
@@ -151,12 +152,13 @@ public class Campaign extends MapManager {
                 aiMap.name = aiMapNames.get(stageIndex);
 
                 // #DebugCode
-                if(!G.game.dbg.aiDisableMap1)
+                if (!G.game.dbg.aiDisableMap1)
                     aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
             }
         }
     }
 
     @Override
-    public void mapLost(int mapIndex) {}
+    public void mapLost(int mapIndex) {
+    }
 }

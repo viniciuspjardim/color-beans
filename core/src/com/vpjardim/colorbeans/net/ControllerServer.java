@@ -15,7 +15,7 @@ import com.vpjardim.colorbeans.input.InputBase;
 
 /**
  * @author Vinícius Jardim
- * 2018/05/03
+ *         2018/05/03
  */
 public class ControllerServer extends Server {
 
@@ -39,32 +39,32 @@ public class ControllerServer extends Server {
                 public void received(Connection connection, Object object) {
 
                     NetController controller = controllersMap.get(connection.getID());
-                    if(controller == null) return;
+                    if (controller == null)
+                        return;
 
-                    if(object instanceof ControllerData) {
+                    if (object instanceof ControllerData) {
 
                         ControllerData data = (ControllerData) object;
-                        // Dbg.print("ControllerServer::received [" + connection.getID() + "]: key = " + data.key +
-                        //         "; keyDown = " + data.keyDown);
+                        // Dbg.print("ControllerServer::received [" + connection.getID() + "]: key = " +
+                        // data.key + "; keyDown = " + data.keyDown);
 
-                        if(data.key >= 0) {
-                            if(data.keyDown)
+                        if (data.key >= 0) {
+                            if (data.keyDown)
                                 controller.keyDown(data.key);
                             else
                                 controller.keyUp(data.key);
-                        }
-                        else if(data.key == -1) {
+                        } else if (data.key == -1) {
                             controller.keyMap = data.keyMap;
                             controller.keyMapOld = data.keyMapOld;
 
                             Dbg.print(InputBase.keyMapToString(
-                                    controller.keyMapOld, controller.keyMap, (short)0));
+                                    controller.keyMapOld, controller.keyMap, (short) 0));
                         }
                     }
                 }
 
                 @Override
-                public void connected (Connection connection) {
+                public void connected(Connection connection) {
                     Dbg.print("ControllerServer::connected [" + connection.getID() + "]");
 
                     NetController controller = new NetController();
@@ -74,7 +74,7 @@ public class ControllerServer extends Server {
                 }
 
                 @Override
-                public void disconnected (Connection connection) {
+                public void disconnected(Connection connection) {
                     Dbg.print("ControllerServer::disconnected [" + connection.getID() + "]");
                     NetController controller = controllersMap.remove(connection.getID());
                     G.game.input.removeInput(controller);
@@ -86,8 +86,7 @@ public class ControllerServer extends Server {
             start();
 
             Dbg.print("==== Server start ====");
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -13,7 +13,7 @@ import com.vpjardim.colorbeans.ai.ScoreFormula;
 
 /**
  * @author Vinícius Jardim
- * 2016/05/24
+ *         2016/05/24
  */
 public class Tree3 {
 
@@ -49,7 +49,7 @@ public class Tree3 {
 
     public void reset() {
 
-        if(root != null)
+        if (root != null)
             Tree3Node.pool.free(root);
 
         root = null;
@@ -76,7 +76,7 @@ public class Tree3 {
     }
 
     public void initProcess(byte[][] map, int deleteSize, int outRow, ScoreFormula formula,
-                            int color1, int color2, int nColor1, int nColor2) {
+            int color1, int color2, int nColor1, int nColor2) {
 
         this.formula = formula;
         this.color1 = color1;
@@ -91,7 +91,7 @@ public class Tree3 {
         bestNode = Tree3Node.ILLEGAL_NODE;
 
         // If the color is defined, add moves only for that color
-        if(this.color1 != -1) {
+        if (this.color1 != -1) {
             addChild(root, color1, color2);
             cacheSwap();
         }
@@ -101,12 +101,13 @@ public class Tree3 {
 
         startTime = TimeUtils.millis();
 
-        for(; levelPos < 1; levelPos++) {
-            for(; cachePos < cacheA.size; cachePos++) {
+        for (; levelPos < 1; levelPos++) {
+            for (; cachePos < cacheA.size; cachePos++) {
 
-                if(!hasTime()) return;
+                if (!hasTime())
+                    return;
 
-                if(levelPos == 0)
+                if (levelPos == 0)
                     addChild(cacheA.get(cachePos), nColor1, nColor2);
                 else
                     addChild(cacheA.get(cachePos));
@@ -120,7 +121,7 @@ public class Tree3 {
 
         IntArray movesArr = moves.getArray(c1, c2);
 
-        for(int i = 0; i < movesArr.size; i++) {
+        for (int i = 0; i < movesArr.size; i++) {
 
             moves.setMove(movesArr.get(i));
             Tree3Node childNode = node.addChild(c1, c2, moves.position, moves.rotation);
@@ -129,7 +130,7 @@ public class Tree3 {
             cacheB.add(childNode);
 
             // Caching the best node
-            if(childNode.scoreSum > bestNode.scoreSum) {
+            if (childNode.scoreSum > bestNode.scoreSum) {
                 bestNode = childNode;
             }
         }
@@ -144,7 +145,7 @@ public class Tree3 {
 
         IntArray movesArr = moves.getArray();
 
-        for(int i = 0; i < movesArr.size; i++) {
+        for (int i = 0; i < movesArr.size; i++) {
 
             moves.setMove(movesArr.get(i));
             Tree3Node childNode = node.addChild(moves.color1, moves.color2, moves.position, moves.rotation);
@@ -153,7 +154,7 @@ public class Tree3 {
             cacheB.add(childNode);
 
             // Caching the best node
-            if(childNode.scoreSum > bestNode.scoreSum) {
+            if (childNode.scoreSum > bestNode.scoreSum) {
                 bestNode = childNode;
             }
         }
@@ -168,7 +169,7 @@ public class Tree3 {
 
         Tree3Node curr = bestNode;
 
-        while(curr.parent.parent != null) {
+        while (curr.parent.parent != null) {
             curr = curr.parent;
         }
 

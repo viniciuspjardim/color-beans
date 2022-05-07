@@ -6,7 +6,7 @@ package com.vpjardim.colorbeans.ai;
 
 /**
  * @author Vinícius Jardim
- * 2016/06/06
+ *         2016/06/06
  */
 public interface ScoreFormula {
 

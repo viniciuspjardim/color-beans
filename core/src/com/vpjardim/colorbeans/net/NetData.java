@@ -6,7 +6,7 @@ package com.vpjardim.colorbeans.net;
 
 /**
  * @author Vinícius Jardim
- * 2015/11/12
+ *         2015/11/12
  */
 public class NetData {
     public int clientID = -1;
