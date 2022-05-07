@@ -1376,25 +1376,25 @@ public class Map implements TargetBase {
     @Override
     public void bt1Down() {
         if (!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
-            pb.rotateClockwise(true);
+            pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void bt2Down() {
         if (!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
-            pb.rotateClockwise(true);
+            pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void bt3Down() {
         if (!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
-            pb.rotateCounterclockwise(true);
+            pb.rotateClockwise(true);
     }
 
     @Override
     public void bt4Down() {
         if (!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
-            pb.rotateCounterclockwise(true);
+            pb.rotateClockwise(true);
     }
 
     @Override

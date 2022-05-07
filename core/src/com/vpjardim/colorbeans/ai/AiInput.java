@@ -143,10 +143,10 @@ public class AiInput implements InputBase {
         if (deltaR != 0) {
             // Rotate counterclockwise
             if (deltaR == 3)
-                map.bt3Down();
+                map.bt1Down();
             // Rotate clockwise
             else
-                map.bt1Down();
+                map.bt3Down();
         }
 
         // If there is no horizontal move and no rotation to be done, the down key can

@@ -6,8 +6,6 @@ package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.PovDirection;
-import com.badlogic.gdx.math.Vector3;
 import com.vpjardim.colorbeans.core.Dbg;
 
 /**
@@ -124,7 +122,19 @@ public class ControllerInput implements InputBase, ControllerListener {
 
         // Always return true because there is only one key profile per controller
 
-        if (keycode == p.start) {
+        if (keycode == p.up) {
+            keyEvent(InputBase.UP_KEY, InputBase.DOWN);
+            return true;
+        } else if (keycode == p.right) {
+            keyEvent(InputBase.RIGHT_KEY, InputBase.DOWN);
+            return true;
+        } else if (keycode == p.down) {
+            keyEvent(InputBase.DOWN_KEY, InputBase.DOWN);
+            return true;
+        } else if (keycode == p.left) {
+            keyEvent(InputBase.LEFT_KEY, InputBase.DOWN);
+            return true;
+        } else if (keycode == p.start) {
             keyEvent(InputBase.START_KEY, InputBase.DOWN);
             target.btStartDown();
         } else if (keycode == p.button1) {
@@ -157,7 +167,19 @@ public class ControllerInput implements InputBase, ControllerListener {
 
         // Always return true because there is only one key profile per controller
 
-        if (keycode == p.start) {
+        if (keycode == p.up) {
+            keyEvent(InputBase.UP_KEY, InputBase.UP);
+            return true;
+        } else if (keycode == p.right) {
+            keyEvent(InputBase.RIGHT_KEY, InputBase.UP);
+            return true;
+        } else if (keycode == p.down) {
+            keyEvent(InputBase.DOWN_KEY, InputBase.UP);
+            return true;
+        } else if (keycode == p.left) {
+            keyEvent(InputBase.LEFT_KEY, InputBase.UP);
+            return true;
+        } else if (keycode == p.start) {
             keyEvent(InputBase.START_KEY, InputBase.UP);
             target.btStartUp();
             return true;
@@ -246,29 +268,5 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public void disconnected(Controller controller) {
-    }
-
-    @Override
-    public boolean povMoved(Controller controller, int povIndex, PovDirection value) {
-        Dbg.dbg(Dbg.tag(this), "povMoved -> povIndex = " + povIndex + "; value = " + value);
-        return true;
-    }
-
-    @Override
-    public boolean xSliderMoved(Controller controller, int sliderIndex, boolean value) {
-        Dbg.dbg(Dbg.tag(this), "xSliderMoved -> sliderIndex = " + sliderIndex);
-        return true;
-    }
-
-    @Override
-    public boolean ySliderMoved(Controller controller, int sliderIndex, boolean value) {
-        Dbg.dbg(Dbg.tag(this), "ySliderMoved -> sliderIndex = " + sliderIndex);
-        return true;
-    }
-
-    @Override
-    public boolean accelerometerMoved(
-            Controller controller, int accelerometerIndex, Vector3 value) {
-        return true;
     }
 }

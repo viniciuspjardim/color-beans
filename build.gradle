@@ -20,7 +20,7 @@ allprojects {
     ext {
         appName = "Color Beans"
         gdxVersion = "1.10.0"
-        controllerVersion = "1.9.13"
+        controllerVersion = "2.2.1"
         aiVersion = "1.8.2"
     }
 
@@ -44,14 +44,14 @@ project(":desktop") {
 
         implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        implementation "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$controllerVersion"
+        implementation "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$controllerVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
 
         myConfig project(":core")
 
         myConfig "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         myConfig "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        myConfig "com.badlogicgames.gdx:gdx-controllers-lwjgl3:$controllerVersion"
+        myConfig "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$controllerVersion"
         myConfig "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
 }
@@ -65,7 +65,7 @@ project(":android") {
         implementation project(":core")
 
         implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-controllers-android:$controllerVersion"
+        implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$controllerVersion"
 
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
@@ -88,7 +88,7 @@ project(":core") {
 
     dependencies {
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-controllers:$controllerVersion"
+        implementation "com.badlogicgames.gdx-controllers:gdx-controllers-core:$controllerVersion"
         implementation "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
