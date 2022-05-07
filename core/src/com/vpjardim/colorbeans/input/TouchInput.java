@@ -170,10 +170,10 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
         if (x > G.width / 2f) {
             keyEvent(InputBase.BUTTON1_KEY, InputBase.DOWN);
-            target.bt1Down();
+            target.bt3Down();
         } else {
             keyEvent(InputBase.BUTTON3_KEY, InputBase.DOWN);
-            target.bt3Down();
+            target.bt1Down();
         }
 
         return false;
