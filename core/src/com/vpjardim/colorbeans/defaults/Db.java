@@ -32,7 +32,7 @@ import com.vpjardim.colorbeans.input.Profile;
  */
 public class Db {
 
-    // Initialized After loading screen finished loading
+    // Initialized after loading screen finished loading
 
     public transient IntMap<TextureAtlas.AtlasRegion> BEANS_REG = new IntMap<>();
     public transient BitmapFont font1;
@@ -289,39 +289,53 @@ public class Db {
         // Controller key profiles
 
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            p = new Profile();
+            ctrlProfs.add(p);
+            p.up = 19;
+            p.right = 22;
+            p.down = 20;
+            p.left = 21;
+            p.start = 108;
+            p.button1 = 100;
+            p.button2 = 97;
+            p.button3 = 96;
+            p.button4 = 99;
 
             p = new Profile();
             ctrlProfs.add(p);
-            p.start = 197;
-            p.button1 = 188;
-            p.button2 = 189;
-            p.button3 = 190;
-            p.button4 = 191;
-
-            p = new Profile();
-            ctrlProfs.add(p);
-            p.start = 197;
-            p.button1 = 188;
-            p.button2 = 189;
-            p.button3 = 190;
-            p.button4 = 191;
+            p.up = 19;
+            p.right = 22;
+            p.down = 20;
+            p.left = 21;
+            p.start = 108;
+            p.button1 = 100;
+            p.button2 = 97;
+            p.button3 = 96;
+            p.button4 = 99;
         } else {
+            p = new Profile();
+            ctrlProfs.add(p);
+            p.up = 11;
+            p.right = 14;
+            p.down = 12;
+            p.left = 13;
+            p.start = 6;
+            p.button1 = 3;
+            p.button2 = 1;
+            p.button3 = 0;
+            p.button4 = 2;
 
             p = new Profile();
             ctrlProfs.add(p);
-            p.start = 9;
-            p.button1 = 0;
+            p.up = 11;
+            p.right = 14;
+            p.down = 12;
+            p.left = 13;
+            p.start = 6;
+            p.button1 = 3;
             p.button2 = 1;
-            p.button3 = 2;
-            p.button4 = 3;
-
-            p = new Profile();
-            ctrlProfs.add(p);
-            p.start = 9;
-            p.button1 = 0;
-            p.button2 = 1;
-            p.button3 = 2;
-            p.button4 = 3;
+            p.button3 = 0;
+            p.button4 = 2;
         }
 
         // Current training mode player fall speed
