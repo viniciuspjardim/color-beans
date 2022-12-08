@@ -168,12 +168,6 @@ public class MapRender {
 
         BitmapFont font2 = G.game.data.font2;
 
-        // ==== Draw next text =====
-        txt = "Next";
-        gl.setText(font2, txt);
-        w = gl.width;
-        font2.draw(G.game.batch, txt, nextPx - w + size - pad, py - gl.height - pad);
-
         // ==== Draw wins text =====
         txt = "Wins";
         gl.setText(font2, txt);
@@ -223,21 +217,21 @@ public class MapRender {
 
         float b1X = px + (m.pb.b1x + m.pb.b1.px) * size;
         float b1Y = py + (m.pb.b1y + 1 - Map.OUT_ROW - m.pb.b1.py) * -size;
-        float ang = -(m.pb.rotationAnim - 0.5f) / 4f * 2f * MathUtils.PI;
 
-        G.game.batch.draw(tile, b1X, b1Y, size, size);
+        if (b1Y <= py) {
+            G.game.batch.draw(tile, b1X, b1Y, size, size);
+        }
 
         tile = G.game.data.BEANS_REG.get(m.pb.b2.getRegionKey());
 
-        // TODO: review ang and size2 it's a weird code
+        float ang = -(m.pb.rotationAnim - 0.5f) / 4f * 2f * MathUtils.PI;
         float size2 = size * 0.7071f; // 1/sqrt(2) == 0.7071
+        float b2X = b1X + (size2 * MathUtils.cos(ang) - size2 * MathUtils.sin(ang));
+        float b2Y = b1Y + (size2 * MathUtils.sin(ang) + size2 * MathUtils.cos(ang));
 
-        G.game.batch.draw(
-                tile,
-                b1X + (size2 * MathUtils.cos(ang) - size2 * MathUtils.sin(ang)),
-                b1Y + (size2 * MathUtils.sin(ang) + size2 * MathUtils.cos(ang)),
-                size,
-                size);
+        if (b2Y <= py) {
+            G.game.batch.draw(tile, b2X, b2Y, size, size);
+        }
 
         // ==== Draw map ceil and flor that shakes with the beans ====
         rand.setState(seed0, seed1);
@@ -294,6 +288,13 @@ public class MapRender {
         float w;
 
         BitmapFont font1 = G.game.data.font1;
+        BitmapFont font2 = G.game.data.font2;
+
+        // ==== Draw next text =====
+        txt = "Next";
+        gl.setText(font2, txt);
+        w = gl.width;
+        font2.draw(G.game.batch, txt, nextPx - w + size - pad, py - gl.height - pad);
 
         // ==== Draw player name =====
         txt = m.name;
