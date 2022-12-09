@@ -8,7 +8,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.android.tools.build:gradle:7.2.2'
     }
 }
 
@@ -19,8 +19,8 @@ allprojects {
     version = "0.1.9"
     ext {
         appName = "Color Beans"
-        gdxVersion = "1.10.0"
-        controllerVersion = "2.2.1"
+        gdxVersion = "1.11.0"
+        controllerVersion = "2.2.2"
         aiVersion = "1.8.2"
     }
 
