@@ -35,46 +35,67 @@ public class Campaign extends MapManager {
         aiCfgs = new Array<>();
         aiMapNames = new Array<>();
 
-        if (G.game.dbg.campStart <= 1 && G.game.dbg.campEnd >= 1) {
+        int start = G.game.data.campaignCurrentStage;
+        int end = 9;
+
+        // #debugCode
+        if (G.game.dbg.on) {
+            start = G.game.dbg.campStart;
+            end = G.game.dbg.campEnd;
+        }
+
+        if (start <= 1 && end >= 1) {
             mapCfgs.add(G.game.data.map1);
             aiCfgs.add(G.game.data.ai1);
-            aiMapNames.add("Stage 1");
+            aiMapNames.add("BunnyAlan");
         }
 
-        if (G.game.dbg.campStart <= 2 && G.game.dbg.campEnd >= 2) {
+        if (start <= 2 && end >= 2) {
             mapCfgs.add(G.game.data.map2);
             aiCfgs.add(G.game.data.ai2);
-            aiMapNames.add("Stage 2");
+            aiMapNames.add("ChickenBil");
         }
 
-        if (G.game.dbg.campStart <= 3 && G.game.dbg.campEnd >= 3) {
+        if (start <= 3 && end >= 3) {
             mapCfgs.add(G.game.data.map3);
             aiCfgs.add(G.game.data.ai3);
-            aiMapNames.add("Stage 3");
+            aiMapNames.add("LizardLoy");
         }
 
-        if (G.game.dbg.campStart <= 4 && G.game.dbg.campEnd >= 4) {
+        if (start <= 4 && end >= 4) {
             mapCfgs.add(G.game.data.map4);
             aiCfgs.add(G.game.data.ai4);
-            aiMapNames.add("Stage 4");
+            aiMapNames.add("BlackCat");
         }
 
-        if (G.game.dbg.campStart <= 5 && G.game.dbg.campEnd >= 5) {
+        if (start <= 5 && end >= 5) {
             mapCfgs.add(G.game.data.map5);
             aiCfgs.add(G.game.data.ai5);
-            aiMapNames.add("Stage 5");
+            aiMapNames.add("EagleEye");
         }
 
-        if (G.game.dbg.campStart <= 6 && G.game.dbg.campEnd >= 6) {
+        if (start <= 6 && end >= 6) {
             mapCfgs.add(G.game.data.map6);
             aiCfgs.add(G.game.data.ai6);
-            aiMapNames.add("Stage 6");
+            aiMapNames.add("CheetahGhost");
         }
 
-        if (G.game.dbg.campStart <= 7 && G.game.dbg.campEnd >= 7) {
+        if (start <= 7 && end >= 7) {
             mapCfgs.add(G.game.data.map7);
             aiCfgs.add(G.game.data.ai7);
-            aiMapNames.add("Stage 7");
+            aiMapNames.add("DemonDog");
+        }
+
+        if (start <= 8 && end >= 8) {
+            mapCfgs.add(G.game.data.map8);
+            aiCfgs.add(G.game.data.ai8);
+            aiMapNames.add("Deepness God");
+        }
+
+        if (start <= 9 && end >= 9) {
+            mapCfgs.add(G.game.data.map9);
+            aiCfgs.add(G.game.data.ai9);
+            aiMapNames.add("Creator");
         }
 
         G.game.input.targetsClear();
@@ -134,13 +155,16 @@ public class Campaign extends MapManager {
         if (mapIndex == 0) {
 
             Map p = maps.get(0);
+            stageIndex++;
 
             G.game.score.addRow(ScoreTable.GMODE_CAMPAIGN, p.name, true, p.score, p.scoreSum,
                     p.matchTimer);
 
-            stageIndex++;
+            G.game.data.campaignCurrentStage++;
+
             if (stageIndex >= mapCfgs.size) {
                 gameStatus = GAME_ZEROED;
+                G.game.data.campaignCurrentStage = 1;
             }
             // Config maps to the next stage
             else {

@@ -27,6 +27,7 @@ import com.vpjardim.colorbeans.animation.CamAccessor;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.core.ScoreTable;
+import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
@@ -298,6 +299,7 @@ public class PlayScreen extends ScreenBase {
     @Override
     public void hide() {
         ScoreTable.save(G.game.score);
+        Db.save(G.game.data);
         G.game.assets.get("audio/music1.ogg", Music.class).stop();
     }
 

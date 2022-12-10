@@ -140,16 +140,16 @@ public class G extends Game {
 
         // #debugCode
         // dbg.uiTable = true;
-        // dbg.mapShape = new int[] {3, 0, 0, 0};
-        // dbg.campStart = 7;
-        // dbg.campEnd = 7;
+        dbg.mapShape = new int[] {3, 0, 0, 0};
+        // dbg.campStart = 9;
+        // dbg.campEnd = 9;
         // dbg.delta = Dbg.DELTA_0_5X;
         // dbg.fps = true;
         // dbg.fpsStat = true;
         // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
-        // dbg.aiTraining = new int[] {3, 3, 3, 3};
+        // dbg.aiTraining = new int[] {0, 3, 3, 3};
         // dbg.on();
 
         screens = new ScreenManager();
