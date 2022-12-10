@@ -1,8 +1,8 @@
 
 pack_s.png
-size: 1024,1024
+size: 1024, 1024
 format: RGBA8888
-filter: MipMapLinearNearest,Linear
+filter: MipMapLinearNearest, Linear
 repeat: none
 beans/bgb
   rotate: false
@@ -1238,9 +1238,9 @@ beans/yellow
   index: 1111
 
 pack_s2.png
-size: 1024,512
+size: 1024, 512
 format: RGBA8888
-filter: MipMapLinearNearest,Linear
+filter: MipMapLinearNearest, Linear
 repeat: none
 game/b_blue_down
   rotate: false
@@ -1416,6 +1416,21 @@ game/controller_small
   orig: 128, 88
   offset: 0, 0
   index: 2
+game/cursor
+  rotate: false
+  xy: 321, 192
+  size: 2, 22
+  orig: 2, 22
+  offset: 0, 0
+  index: -1
+game/input
+  rotate: false
+  xy: 967, 458
+  size: 37, 37
+  split: 10, 10, 10, 10
+  orig: 37, 37
+  offset: 0, 0
+  index: -1
 game/keyboard_small
   rotate: false
   xy: 260, 282
@@ -1432,7 +1447,7 @@ game/keyboard_small
   index: 2
 game/number_bg
   rotate: false
-  xy: 967, 464
+  xy: 967, 425
   size: 30, 31
   orig: 32, 32
   offset: 1, 0
@@ -1510,9 +1525,9 @@ game/wifi_small
   index: 2
 
 pack_s3.png
-size: 512,512
+size: 512, 512
 format: RGBA8888
-filter: MipMapLinearNearest,Linear
+filter: MipMapLinearNearest, Linear
 repeat: none
 studio/studio_logo
   rotate: false

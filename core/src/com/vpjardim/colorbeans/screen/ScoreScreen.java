@@ -55,16 +55,18 @@ public class ScoreScreen extends ScreenBase {
         G.game.input.addProcessor(stage);
 
         // ==== Tables ====
+        Table outerT = new Table(G.game.skin);
         Table titleT = new Table(G.game.skin);
         Table contentT = new Table(G.game.skin);
         Table tabT = new Table(G.game.skin);
         Table campaignT = new Table(G.game.skin);
         Table trainingT = new Table(G.game.skin);
 
-        titleT.setFillParent(true);
+        outerT.setFillParent(true);
         titleT.setBackground("tbg");
 
         // #debugCode
+        outerT.setDebug(G.game.dbg.uiTable);
         titleT.setDebug(G.game.dbg.uiTable);
         contentT.setDebug(G.game.dbg.uiTable);
         tabT.setDebug(G.game.dbg.uiTable);
@@ -72,9 +74,10 @@ public class ScoreScreen extends ScreenBase {
         trainingT.setDebug(G.game.dbg.uiTable);
 
         // ==== Labels ====
-        Label.LabelStyle labelStyle = G.game.skin.get("labelDef", Label.LabelStyle.class);
+        Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
 
-        Label trainingL = new Label("Content 2", labelStyle);
+        Label campaignL = new Label("Play the campaign to see the scores.", labelStyle);
+        Label trainingL = new Label("No content available yet.", labelStyle);
 
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",
@@ -144,10 +147,11 @@ public class ScoreScreen extends ScreenBase {
         trainingButt.addListener(tabListener);
 
         // ==== Align, Pad / widths / heights ====
-        float bttW = G.style.buttWidth;
+        float bttW = 200;
         float padM = G.style.padMedium;
 
-        trainingL.setAlignment(Align.topLeft);
+        campaignL.setAlignment(Align.center);
+        trainingL.setAlignment(Align.center);
 
         titleT.pad(padM);
         titleT.defaults().minWidth(bttW);
@@ -192,7 +196,17 @@ public class ScoreScreen extends ScreenBase {
             cont++;
         }
 
-        stage.addActor(titleT);
+        if (G.game.score.getRows().size == 0) {
+            campaignT.add(campaignL).expand().fill();
+        }
+
+        float width = G.width <= 1080? G.width -40 : 800;
+
+        outerT.add();
+        outerT.add(titleT).width(width).height(G.height -40f);
+        outerT.add();
+
+        stage.addActor(outerT);
         titleT.setDebug(G.game.dbg.uiTable); // #debugCode
     }
 

@@ -1,7 +1,8 @@
 {
     com.badlogic.gdx.graphics.Color: {
         white: { hex: ffffffff },
-        black: { hex: 000000ff }
+        black: { hex: 000000ff },
+        orange800: { hex: 523800 }
     },
 
     com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -35,7 +36,9 @@
     com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
         tField: {
             font: dimbo_white,
-            fontColor: white
+            fontColor: white,
+            background: "game/input",
+            cursor: "game/cursor"
         }
     },
 
@@ -52,9 +55,13 @@
             font: roboto,
             fontColor: white
         },
+        robotoMenu: {
+            font: roboto,
+            fontColor: orange800
+        },
         labelGTitle: {
             background: "game/ribbon_red",
-            font: dimbo_gtitle,
+            font: dimbo_gtitle
         }
     }
 }

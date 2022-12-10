@@ -53,6 +53,7 @@ public class LoadingScreen extends ScreenBase {
     private void loadStuff() {
 
         G.scale = G.height / 720f;
+
         if (G.height >= 1080)
             G.res = G.RES_MEDIUM;
         else
@@ -60,6 +61,7 @@ public class LoadingScreen extends ScreenBase {
 
         G.style.setDefaults();
         G.style.scale(G.scale);
+
 
         G.game.assets = new AssetManager();
 

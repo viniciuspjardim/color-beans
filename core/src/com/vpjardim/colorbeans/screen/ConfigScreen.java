@@ -85,37 +85,37 @@ public class ConfigScreen extends ScreenBase {
         G.game.input.addProcessor(stage);
 
         // ==== Tables ====
+        Table outerT = new Table(G.game.skin);
         Table titleT = new Table(G.game.skin);
         Table contentT = new Table(G.game.skin);
         Table tabT = new Table(G.game.skin);
         Table gameT = new Table(G.game.skin);
-        Table videoT = new Table(G.game.skin);
         inputT = new Table(G.game.skin);
+        Table videoT = new Table(G.game.skin);
 
-        titleT.setFillParent(true);
+        outerT.setFillParent(true);
         titleT.setBackground("tbg");
 
         // #debugCode
+        outerT.setDebug(G.game.dbg.uiTable);
         titleT.setDebug(G.game.dbg.uiTable);
         contentT.setDebug(G.game.dbg.uiTable);
         tabT.setDebug(G.game.dbg.uiTable);
         gameT.setDebug(G.game.dbg.uiTable);
-        videoT.setDebug(G.game.dbg.uiTable);
         inputT.setDebug(G.game.dbg.uiTable);
+        videoT.setDebug(G.game.dbg.uiTable);
 
         // ==== Labels ====
-        Label.LabelStyle labelStyle = G.game.skin.get("labelDef", Label.LabelStyle.class);
+        Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
 
-        Label gameL = new Label("Type the players name:", labelStyle);
-        Label videoL = new Label("Content 2", labelStyle);
-        Label inputL = new Label("Content 3", labelStyle);
-        Label serverIPL = new Label("IP", labelStyle);
+        Label gameL = new Label("Players:", labelStyle);
+        Label videoL = new Label("No content available yet.", labelStyle);
 
         player1 = new TextField("", G.game.skin, "tField");
         player2 = new TextField("", G.game.skin, "tField");
         player3 = new TextField("", G.game.skin, "tField");
         player4 = new TextField("", G.game.skin, "tField");
-        netServerIP = new TextField("123", G.game.skin, "tField");
+        netServerIP = new TextField("", G.game.skin, "tField");
 
         final Array<Cfg.Player> pls = G.game.data.players;
 
@@ -133,28 +133,33 @@ public class ConfigScreen extends ScreenBase {
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",
                 G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
+
         final TextButton gameButt = new TextButton("Game",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
-        final TextButton videoButt = new TextButton("Video",
-                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
+
         final TextButton inputButt = new TextButton("Input",
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
+
+        final TextButton videoButt = new TextButton("Video",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
         // Let only one tab button be checked at a time
         ButtonGroup logicGroup = new ButtonGroup();
         logicGroup.setMinCheckCount(1);
         logicGroup.setMaxCheckCount(1);
+
         logicGroup.add(gameButt);
-        logicGroup.add(videoButt);
         logicGroup.add(inputButt);
+        logicGroup.add(videoButt);
 
         // ==== Scrolls ====
         final ScrollPane gameScroll = new ScrollPane(gameT);
-        final ScrollPane videoScroll = new ScrollPane(videoT);
         final ScrollPane inputScroll = new ScrollPane(inputT);
+        final ScrollPane videoScroll = new ScrollPane(videoT);
+
         gameScroll.setScrollingDisabled(true, false);
-        videoScroll.setScrollingDisabled(true, false);
         inputScroll.setScrollingDisabled(true, false);
+        videoScroll.setScrollingDisabled(true, false);
 
         // ==== Listeners ====
         backBtt.addListener(new ClickListener() {
@@ -167,8 +172,8 @@ public class ConfigScreen extends ScreenBase {
         // ==== Stack ====
         final Stack tabs = new Stack();
         tabs.add(inputScroll);
-        tabs.add(videoScroll);
         tabs.add(gameScroll);
+        tabs.add(videoScroll);
 
         // Listen to changes in the tab button checked states
         // Set visibility of the tab content to match the checked state
@@ -183,23 +188,23 @@ public class ConfigScreen extends ScreenBase {
                         "bttGreen", TextButton.TextButtonStyle.class);
 
                 gameScroll.setVisible(gameButt.isChecked());
-                videoScroll.setVisible(videoButt.isChecked());
                 inputScroll.setVisible(inputButt.isChecked());
+                videoScroll.setVisible(videoButt.isChecked());
 
                 if (gameButt.isChecked())
                     gameButt.setStyle(buttOn);
                 else
                     gameButt.setStyle(buttOff);
 
-                if (videoButt.isChecked())
-                    videoButt.setStyle(buttOn);
-                else
-                    videoButt.setStyle(buttOff);
-
                 if (inputButt.isChecked())
                     inputButt.setStyle(buttOn);
                 else
                     inputButt.setStyle(buttOff);
+
+                if (videoButt.isChecked())
+                    videoButt.setStyle(buttOn);
+                else
+                    videoButt.setStyle(buttOff);
             }
         };
 
@@ -207,52 +212,55 @@ public class ConfigScreen extends ScreenBase {
         tabListener.changed(null, null);
 
         gameButt.addListener(tabListener);
-        videoButt.addListener(tabListener);
         inputButt.addListener(tabListener);
+        videoButt.addListener(tabListener);
 
         // ==== Align, Pad / widths / heights ====
         float bttW = G.style.buttWidth;
         float padM = G.style.padMedium;
 
         gameL.setAlignment(Align.topLeft);
-        videoL.setAlignment(Align.topLeft);
-        inputL.setAlignment(Align.topLeft);
+        videoL.setAlignment(Align.center);
 
         titleT.pad(padM);
-        titleT.defaults().minWidth(bttW);
         contentT.defaults().align(Align.left);
-        tabT.defaults().minWidth(bttW);
 
         // ==== Assembling from outer to inner components ====
         titleT.row();
         titleT.add(contentT).expand().fill();
         titleT.row();
-        titleT.add(backBtt);
+        titleT.add(backBtt).width(bttW);
 
         contentT.add(tabT).align(Align.center);
         contentT.row();
         contentT.add(tabs).expand().fill();
 
-        tabT.add(gameButt);
-        tabT.add(videoButt);
-        tabT.add(inputButt);
+        tabT.add(gameButt).width(200);
+        tabT.add(inputButt).width(200);
+        tabT.add(videoButt).width(200);
 
         gameT.add(gameL);
         gameT.row();
-        gameT.add(player1);
+        gameT.add(player1).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
-        gameT.add(player2);
+        gameT.add(player2).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
-        gameT.add(player3);
+        gameT.add(player3).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
-        gameT.add(player4);
+        gameT.add(player4).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
         videoT.add(videoL).expand().fill();
 
         inputLoop();
 
-        stage.addActor(titleT);
+        float width = G.width <= 1080? G.width -40 : 800;
+
+        outerT.add();
+        outerT.add(titleT).width(width).height(G.height -40f);
+        outerT.add();
+
+        stage.addActor(outerT);
         titleT.setDebug(G.game.dbg.uiTable); // #debugCode
     }
 
@@ -264,7 +272,7 @@ public class ConfigScreen extends ScreenBase {
         G.game.input.targetsClear();
 
         final ControllerActor controllerActor = new ControllerActor();
-        inputT.add(controllerActor); // .expand().fill();
+        inputT.add(controllerActor).colspan(4).align(Align.center);
         inputT.row();
 
         final TextButton netInputBtt = new TextButton("Net Input",
@@ -278,8 +286,7 @@ public class ConfigScreen extends ScreenBase {
             }
         });
 
-        // inputT.add(serverIPL);
-        inputT.add(netServerIP);
+        inputT.add(netServerIP).colspan(2).expandX().fillX().pad(0, 20, 0, 20);
         inputT.add(netInputBtt);
         inputT.row();
 

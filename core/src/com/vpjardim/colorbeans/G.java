@@ -140,7 +140,7 @@ public class G extends Game {
 
         // #debugCode
         // dbg.uiTable = true;
-        // dbg.mapShape = new int[] {11, 11, 11, 11};
+        // dbg.mapShape = new int[] {3, 0, 0, 0};
         // dbg.campStart = 7;
         // dbg.campEnd = 7;
         // dbg.delta = Dbg.DELTA_0_5X;
