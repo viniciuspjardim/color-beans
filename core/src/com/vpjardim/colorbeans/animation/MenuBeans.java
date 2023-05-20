@@ -34,7 +34,7 @@ public class MenuBeans {
     static int[] tiles = { 0, 2, 3, 4};
     static int[] animationTiles = { 0, 4, 0, 3};
 
-    private final Pool<Bean> pool = new Pool<>(144) {
+    private final Pool<Bean> pool = new Pool<Bean>(144) {
         @Override
         protected Bean newObject() {
             return new Bean();
