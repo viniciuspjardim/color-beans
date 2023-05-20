@@ -49,8 +49,6 @@ public class ScoreScreen extends ScreenBase {
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
-        bgColor = G.game.data.bgColor();
-
         stage = new Stage(viewport, G.game.batch);
         G.game.input.addProcessor(stage);
 
@@ -213,8 +211,21 @@ public class ScoreScreen extends ScreenBase {
     @Override
     public void render(float delta) {
         super.render(delta);
+
+        G.game.beansAnim.update();
+
+        G.game.batch.begin();
+        G.game.beansAnim.render();
+        G.game.batch.end();
+
         stage.act(delta);
         stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        G.game.beansAnim.resize();
     }
 
     @Override

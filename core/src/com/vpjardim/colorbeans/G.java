@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.vpjardim.colorbeans.animation.MenuBeans;
 import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.ScoreTable;
@@ -18,6 +19,7 @@ import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
 import com.vpjardim.colorbeans.net.ControllerServer;
+import com.vpjardim.colorbeans.screen.ScreenBase;
 import com.vpjardim.colorbeans.screen.ScreenManager;
 
 import java.text.NumberFormat;
@@ -116,6 +118,7 @@ public class G extends Game {
     public NumberFormat intFmt;
     public long startTime;
     public ControllerServer server;
+    public MenuBeans beansAnim;
 
     // #debugCode
     public Dbg dbg;
@@ -135,6 +138,8 @@ public class G extends Game {
         G.height = Gdx.graphics.getHeight();
         G.style = new Style();
 
+        beansAnim = new MenuBeans();
+
         dbg = new Dbg();
 
         // #debugCode
@@ -153,6 +158,7 @@ public class G extends Game {
 
         screens = new ScreenManager();
         screens.create();
+        ScreenBase.bgColor = Db.bgColor();
     }
 
     /**
@@ -163,13 +169,6 @@ public class G extends Game {
      * @param y coordinate to be flipped
      * @return flipped coordinate
      */
-    public static float flipY(float y) {
-        return G.height - 1 - y;
-    }
-
-    public static float flipY(float y, float height) {
-        return G.height - 1 - y - height;
-    }
 
     public static float flipY(float y, float height, float scale) {
         return G.height - 1 - y - (height * (scale + 1f) / 2f);

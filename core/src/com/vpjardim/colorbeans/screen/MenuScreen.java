@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
-import com.vpjardim.colorbeans.animation.MenuBeans;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
@@ -34,7 +33,6 @@ public class MenuScreen extends ScreenBase {
     public static final int ACT_CONFIG = 13;
 
     private Stage stage;
-    private MenuBeans beansAnim;
     private Table table;
     private Label label;
     private TextureAtlas.AtlasRegion titleRegion;
@@ -42,7 +40,6 @@ public class MenuScreen extends ScreenBase {
 
     @Override
     public void show() {
-
         super.show();
 
         specialKeyDown = (Event e) -> {
@@ -56,10 +53,7 @@ public class MenuScreen extends ScreenBase {
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
-        bgColor = G.game.data.bgColor();
-
         stage = new Stage(viewport, G.game.batch);
-        beansAnim = new MenuBeans();
         G.game.input.addProcessor(stage);
 
         Table outerT = new Table(G.game.skin);
@@ -150,10 +144,10 @@ public class MenuScreen extends ScreenBase {
     @Override
     public void render(float delta) {
         super.render(delta);
-        beansAnim.update();
+        G.game.beansAnim.update();
 
         G.game.batch.begin();
-        beansAnim.render();
+        G.game.beansAnim.render();
         G.game.batch.end();
 
         stage.act(delta);
@@ -177,7 +171,7 @@ public class MenuScreen extends ScreenBase {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        beansAnim.resize();
+        G.game.beansAnim.resize();
     }
 
     @Override

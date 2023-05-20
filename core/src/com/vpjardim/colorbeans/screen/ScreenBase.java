@@ -28,14 +28,15 @@ public class ScreenBase implements Screen, TargetBase {
     public static final int ACT_RUNNING = 1;
     public static final int ACT_NEXT = 2;
 
+    public static Color bgColor;
+
     protected int action;
     protected OrthographicCamera cam;
     protected Viewport viewport;
+
     // TODO: review usage of this field, when false it disable esc and print screen
     // buttons
     protected boolean manageInput = true;
-
-    protected Color bgColor;
 
     public float time;
 
@@ -73,14 +74,11 @@ public class ScreenBase implements Screen, TargetBase {
             G.game.input.addTarget(this);
             G.game.input.linkAll();
         }
-
-        bgColor = Color.BLACK;
     }
 
     @Override
     public void render(float delta) {
-
-        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 1f);
+        Gdx.gl.glClearColor(ScreenBase.bgColor.r, ScreenBase.bgColor.g, ScreenBase.bgColor.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         time += delta;

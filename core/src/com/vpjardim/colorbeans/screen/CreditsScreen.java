@@ -39,8 +39,6 @@ public class CreditsScreen extends ScreenBase {
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
-        bgColor = G.game.data.bgColor();
-
         stage = new Stage(viewport, G.game.batch);
         Table table = new Table(G.game.skin);
         table.setFillParent(true);

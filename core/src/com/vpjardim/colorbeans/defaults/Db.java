@@ -31,6 +31,13 @@ import com.vpjardim.colorbeans.input.Profile;
  *         2016/09/02
  */
 public class Db {
+    // Initialize when the application starts
+    public static Color[] screenBgColor = {
+            new Color(0x20000000), // Dark red
+            new Color(0x000A0000), // Dark green
+            new Color(0x00002000), // Dark blue
+            new Color(0x10001000), // Dark purple
+    };
 
     // Initialized after loading screen finished loading
 
@@ -43,7 +50,6 @@ public class Db {
 
     public final transient IntMap<String> COLORS = new IntMap<>();
     public final transient int[] ri;
-    public final transient Color[] screenBgColor;
 
     public final transient Cfg.Game campGame = new Cfg.Game();
     public final transient Cfg.Game loopGame = new Cfg.Game();
@@ -124,7 +130,6 @@ public class Db {
 
     /** Init constants (default values) */
     public Db() {
-
         COLORS.put(1, "beans/red");
         COLORS.put(2, "beans/blue");
         COLORS.put(3, "beans/green");
@@ -138,13 +143,6 @@ public class Db {
         ri = new int[] {
                 0, 1, 2, 3, 4, 10, 11, 100, 101, 110, 111, 1000, 1001, 1010, 1011, 1100, 1101, 1110,
                 1111 };
-
-        screenBgColor = new Color[] {
-                new Color(0x20000000), // Dark red
-                new Color(0x000A0000), // Dark green
-                new Color(0x00002000), // Dark blue
-                new Color(0x10001000), // Dark purple
-        };
 
         campGame.net = Cfg.Game.NET_LOCAL;
         campGame.difficulty = Cfg.Game.DIFFICULTY_NORMAL;
@@ -454,7 +452,7 @@ public class Db {
         return data;
     }
 
-    public Color bgColor() {
+    public static Color bgColor() {
         return screenBgColor[MathUtils.random(0, screenBgColor.length - 1)];
     }
 }

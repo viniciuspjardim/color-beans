@@ -108,14 +108,16 @@ public class StudioScreen extends ScreenBase {
 
     @Override
     public void render(float delta) {
-
         super.render(delta);
+
+        G.game.beansAnim.update();
 
         transition.update(delta);
 
         G.game.batch.setProjectionMatrix(cam.combined);
         G.game.batch.begin();
 
+        G.game.beansAnim.render();
         studioLogo.draw(G.game.batch);
         studioText.draw(G.game.batch);
 
@@ -127,8 +129,9 @@ public class StudioScreen extends ScreenBase {
 
     @Override
     public void resize(int width, int height) {
-
         super.resize(width, height);
+
+        G.game.beansAnim.resize();
 
         float spriteSide = Math.min(width * 0.8f, height * 0.8f);
         float spriteScale = spriteSide / studioLogo.getWidth();

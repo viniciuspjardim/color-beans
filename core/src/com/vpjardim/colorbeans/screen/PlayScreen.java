@@ -94,8 +94,6 @@ public class PlayScreen extends ScreenBase {
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
         EventHandler.getHandler().addListener("DebugInput.tap", debugInput);
 
-        bgColor = new Color(0x101010ff);
-
         transition = new TweenManager();
         Tween.registerAccessor(OrthographicCamera.class, new CamAccessor());
 
@@ -164,7 +162,9 @@ public class PlayScreen extends ScreenBase {
     public void render(float delta) {
 
         super.render(delta);
+
         transition.update(delta);
+        G.game.beansAnim.update();
 
         manager.winLost();
 
@@ -172,15 +172,22 @@ public class PlayScreen extends ScreenBase {
             r.m.update();
         }
 
+        // Draw background
+        G.game.batch.begin();
+        G.game.beansAnim.render();
+        G.game.batch.end();
+
         G.game.batch.setProjectionMatrix(cam.combined);
         G.game.batch.begin();
 
         // Draw cached background
         bgSprite.draw(G.game.batch);
+
         // Draw beans and other stuff
         for (MapRender r : manager.render) {
             r.renderBatch();
         }
+
         G.game.batch.end();
 
         stage.act(delta);
@@ -238,11 +245,11 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void resize(int width, int height) {
-
         super.resize(width, height);
 
         menuViewport.update(width, height, true);
         manager.resize();
+        G.game.beansAnim.resize();
 
         updateCache();
     }
@@ -276,7 +283,7 @@ public class PlayScreen extends ScreenBase {
 
         fb.begin();
 
-        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 1f);
+        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         G.game.batch.begin();
