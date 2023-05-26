@@ -186,7 +186,8 @@ public class ScoreScreen extends ScreenBase {
             label.setAlignment(Align.center);
             campaignT.add(label).width(bttW);
 
-            label = new Label(G.game.intFmt.format(row.score), labelStyle);
+            // label = new Label(G.game.intFmt.format(row.score), labelStyle);
+            label = new Label(Integer.toString(row.score), labelStyle);
             label.setAlignment(Align.center);
             campaignT.add(label).width(bttW);
 

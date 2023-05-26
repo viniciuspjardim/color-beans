@@ -38,7 +38,7 @@ public interface InputBase {
     // #debugCode
     static String keyMapToString(short keyMapOld, short keyMap, short events) {
 
-        String str = "\n                      4321SLDRU\n";
+        /*String str = "\n                      4321SLDRU\n";
 
         str += "    keyMapOld = ";
 
@@ -53,9 +53,9 @@ public interface InputBase {
         str += "       events = ";
 
         str += String.format("%15s\n", Integer.toBinaryString(
-                events & 0xFFFF)).replace(' ', '0');
+                events & 0xFFFF)).replace(' ', '0');*/
 
-        return str;
+        return "";
     }
 
     void setTarget(TargetBase target);

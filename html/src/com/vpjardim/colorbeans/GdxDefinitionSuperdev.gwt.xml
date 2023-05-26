@@ -5,7 +5,8 @@
 	<inherits name='com.badlogic.gdx.controllers' />
 	<inherits name='com.badlogic.gdx.controllers.controllers-gwt' />
 	<inherits name='com.badlogic.gdx.ai' />
-
+	<inherits name='aurelienribon.tweenengine' />
+	<inherits name="com.badlogic.gdx.graphics.g2d.freetype.freetype-gwt" />
     <inherits name='com.vpjardim.colorbeans.GdxDefinition' />
     
     <collapse-all-properties />

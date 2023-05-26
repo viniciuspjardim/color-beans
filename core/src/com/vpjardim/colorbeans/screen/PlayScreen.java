@@ -278,7 +278,7 @@ public class PlayScreen extends ScreenBase {
         GLFrameBuffer.FrameBufferBuilder fbb = new GLFrameBuffer.FrameBufferBuilder(
                 G.width, G.height);
 
-        fbb.addColorTextureAttachment(GL30.GL_RGBA8, GL30.GL_RGBA, GL30.GL_UNSIGNED_BYTE);
+        fbb.addColorTextureAttachment(GL20.GL_RGBA, GL20.GL_RGBA, GL20.GL_UNSIGNED_BYTE);
         fb = fbb.build();
 
         fb.begin();

@@ -31,7 +31,6 @@ import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.KeyboardInput;
 import com.vpjardim.colorbeans.input.Profile;
 import com.vpjardim.colorbeans.input.TouchInput;
-import com.vpjardim.colorbeans.net.NetController;
 import com.vpjardim.colorbeans.views.ControllerActor;
 import com.vpjardim.colorbeans.views.InputActor;
 
@@ -311,8 +310,6 @@ public class ConfigScreen extends ScreenBase {
                 inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
             else if (input instanceof TouchInput)
                 inputActor = new InputActor(InputActor.TOUCH, null);
-            else if (input instanceof NetController)
-                inputActor = new InputActor(InputActor.NET_CONTROLLER, null);
             else
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
 
@@ -395,7 +392,6 @@ public class ConfigScreen extends ScreenBase {
 
     @Override
     public void hide() {
-
         final Array<Cfg.Player> pls = G.game.data.players;
 
         pls.clear();
@@ -448,8 +444,10 @@ public class ConfigScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
+
         G.game.input.removeProcessor(stage);
         EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
+
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }

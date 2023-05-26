@@ -9,7 +9,6 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
-import com.vpjardim.colorbeans.net.ControllerClient;
 
 /**
  * @author Vinícius Jardim
@@ -17,7 +16,6 @@ import com.vpjardim.colorbeans.net.ControllerClient;
  */
 public class NetInputScreen extends ScreenBase {
 
-    private ControllerClient controllerClient;
     private EventListener specialKeyDown;
 
     public NetInputScreen() {
@@ -39,25 +37,18 @@ public class NetInputScreen extends ScreenBase {
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
-        controllerClient = new ControllerClient();
-
         G.game.input.targetsClear();
-        G.game.input.addTarget(controllerClient);
         G.game.input.linkAll();
-
-        controllerClient.init(G.game.data.netServerIP);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        controllerClient.update();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        controllerClient.disconnect();
         EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
     }
 }

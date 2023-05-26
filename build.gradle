@@ -84,6 +84,10 @@ project(":html") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion:sources"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
+        api "org.mini2Dx:universal-tween-engine:6.3.3"
+        api "org.mini2Dx:universal-tween-engine:6.3.3:sources"
+        api "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:1.9.10.1"
+        api "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:1.9.10.1:sources"
     }
 }
 
@@ -95,7 +99,6 @@ project(":core") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-
-        api fileTree(dir: "../libs", include: "*.jar")
+        api "org.mini2Dx:universal-tween-engine:6.3.3"
     }
 }

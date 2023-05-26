@@ -1670,7 +1670,7 @@ public class Map implements TargetBase {
             // col 0 -> 6
             for (int col = 0; col < b.length; col++) {
 
-                System.out.printf(" %5d", b[col][row].label);
+                // System.out.printf(" %5d", b[col][row].label);
             }
             Dbg.print("");
         }

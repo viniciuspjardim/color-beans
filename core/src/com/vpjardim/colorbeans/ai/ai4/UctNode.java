@@ -23,12 +23,12 @@ public class UctNode implements Pool.Poolable, DebugNode {
     // #debugCode
     public static int objCount = 0;
 
-    public static NumberFormat fmt1 = NumberFormat.getInstance();
-    public static NumberFormat fmt2 = NumberFormat.getInstance();
+    // public static NumberFormat fmt1 = NumberFormat.getInstance();
+    // public static NumberFormat fmt2 = NumberFormat.getInstance();
 
     static {
-        fmt1.setMaximumFractionDigits(0);
-        fmt2.setMaximumFractionDigits(2);
+        // fmt1.setMaximumFractionDigits(0);
+        // fmt2.setMaximumFractionDigits(2);
     }
 
     public static Pool<UctNode> pool = new Pool<UctNode>(8450) {
@@ -272,9 +272,9 @@ public class UctNode implements Pool.Poolable, DebugNode {
 
         return new String[] {
                 color1 + "/" + color2 + "/" + position + "/" + rotation,
-                fmt1.format(visits) + "/" + fmt2.format(totalValue) + "/" + fmt2.format(value),
-                fmt2.format(totalValue / visits),
-                fmt2.format(exploit) + " + " + fmt2.format(explore) + " = " + fmt2.format(exploit + explore),
+                // fmt1.format(visits) + "/" + fmt2.format(totalValue) + "/" + fmt2.format(value),
+                // fmt2.format(totalValue / visits),
+                // fmt2.format(exploit) + " + " + fmt2.format(explore) + " = " + fmt2.format(exploit + explore),
         };
     }
 

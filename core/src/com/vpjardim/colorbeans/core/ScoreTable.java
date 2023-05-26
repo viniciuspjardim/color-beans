@@ -84,11 +84,12 @@ public class ScoreTable {
         // Sort before save
         table.sort();
 
-        Json json = new Json();
-
-        String jsonTxt = json.prettyPrint(table.rows.toArray());
-        FileHandle file = Gdx.files.local("state/scores.json");
-        file.writeString(jsonTxt, false);
+        // Json json = new Json();
+        //
+        // String jsonTxt = json.prettyPrint(table.rows.toArray());
+        //
+        // FileHandle file = Gdx.files.local("state/scores.json");
+        // file.writeString(jsonTxt, false);
 
         table.saved = true;
     }
@@ -97,14 +98,14 @@ public class ScoreTable {
 
         // The object loaded is already sorted and obviously saved
 
-        FileHandle file = Gdx.files.local("state/scores.json");
+        //FileHandle file = Gdx.files.local("state/scores.json");
         ScoreTable score = new ScoreTable();
 
-        if (file.exists()) {
+        /* if (file.exists()) {
             String jsonTxt = file.readString();
             Json json = new Json();
             score.rows.addAll(json.fromJson(Row[].class, jsonTxt));
-        }
+        }*/
 
         return score;
     }

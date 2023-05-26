@@ -11,6 +11,8 @@ gwt {
     compiler {
         strict = true;
         disableCastChecking = true;
+        // The line bellow makes the code to not be minified. Useful for debugging only.
+        // style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED;
     }
 }
 

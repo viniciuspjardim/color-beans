@@ -93,7 +93,7 @@ public class InputManager {
         // On Desktop:
         // When there is no more controllers try to assign keyboard profiles to desktop
         // device
-        else if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+        else if (Gdx.app.getType() == Application.ApplicationType.Desktop || Gdx.app.getType() == Application.ApplicationType.WebGL) {
 
             // One keyboard can control one or more maps, depending on the number of
             // profiles the keyboard has

@@ -422,32 +422,34 @@ public class Db {
     public static boolean save(Db data) {
 
         try {
-            Json json = new Json();
-            json.setUsePrototypes(false);
+            // Json json = new Json();
+            // json.setUsePrototypes(false);
 
-            String jsonTxt = json.prettyPrint(data);
-            FileHandle file = Gdx.files.local("state/cfg.json");
-            file.writeString(jsonTxt, false);
+            // String jsonTxt = json.prettyPrint(data);
+            // FileHandle file = Gdx.files.local("state/cfg.json");
+            // file.writeString(jsonTxt, false);
             return true;
         } catch (GdxRuntimeException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return false;
         }
     }
 
     public static Db load() {
 
-        FileHandle file = Gdx.files.local("state/cfg.json");
+        // FileHandle file = Gdx.files.local("state/cfg.json");
         Db data;
+        data = new Db();
+        data.initPreferences();
 
-        if (file.exists()) {
+        /*if (file.exists()) {
             String jsonTxt = file.readString();
             Json json = new Json();
             data = json.fromJson(Db.class, jsonTxt);
         } else {
             data = new Db();
             data.initPreferences();
-        }
+        }*/
 
         return data;
     }

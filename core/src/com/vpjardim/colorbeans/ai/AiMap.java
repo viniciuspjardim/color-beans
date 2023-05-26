@@ -425,7 +425,7 @@ public class AiMap implements Pool.Poolable {
             // col 0 -> 6
             for (int col = 0; col < b.length; col++) {
 
-                System.out.printf(" %5d", l[col][row]);
+                // System.out.printf(" %5d", l[col][row]);
             }
             Dbg.print("");
             if (row == outRow - 1)
