@@ -16,8 +16,9 @@ game. This project is for learn and showcase purpose only.
 
 This game is made using the libGDX framework and it's cross-platform. It
 should run on Windows, Linux, macOS, Android, iOS and WebGL enabled
-browsers. Currently it's only tested on Windows and Android
-environments.
+browsers.
+
+[Play In The Browser Now (Alpha)](https://www.viniciusjardim.com/p/color-beans)
 
 ###### Features
 
