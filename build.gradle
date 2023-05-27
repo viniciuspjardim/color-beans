@@ -100,6 +100,5 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "org.mini2Dx:universal-tween-engine:6.3.3"
-        api 'com.esotericsoftware:kryonet:2.22.0-RC1'
     }
 }

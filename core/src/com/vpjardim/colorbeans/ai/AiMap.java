@@ -414,32 +414,6 @@ public class AiMap implements Pool.Poolable {
         }
     }
 
-    // #debugCode
-    public void printLabel() {
-
-        Dbg.print("Label print ->");
-
-        // row 0 -> 14 + OUT_ROW
-        for (int row = 7; row < b[0].length; row++) {
-
-            // col 0 -> 6
-            for (int col = 0; col < b.length; col++) {
-
-                System.out.printf(" %5d", l[col][row]);
-            }
-            Dbg.print("");
-            if (row == outRow - 1)
-                Dbg.print("---");
-        }
-
-        // Prints labels count
-        for (IntMap.Entry<Integer> entry : lc.entries()) {
-            System.out.print(entry.key + ":" + entry.value + "; ");
-        }
-
-        Dbg.print("");
-    }
-
     @Override
     public void reset() {
     }

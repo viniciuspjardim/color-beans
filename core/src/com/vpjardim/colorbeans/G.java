@@ -18,11 +18,8 @@ import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
-import com.vpjardim.colorbeans.net.ControllerServer;
 import com.vpjardim.colorbeans.screen.ScreenBase;
 import com.vpjardim.colorbeans.screen.ScreenManager;
-
-import java.text.NumberFormat;
 
 import aurelienribon.tweenengine.Tween;
 
@@ -115,9 +112,6 @@ public class G extends Game {
     public Skin skin;
     public ScoreTable score;
     public Audio audio;
-    public NumberFormat intFmt;
-    public long startTime;
-    public ControllerServer server;
     public MenuBeans beansAnim;
 
     // #debugCode
@@ -125,10 +119,7 @@ public class G extends Game {
 
     @Override
     public void create() {
-
         // Most things are loaded in the LoadingScreen class. See explanation there.
-
-        startTime = System.nanoTime();
 
         game = (G) Gdx.app.getApplicationListener();
         Gdx.input.setCatchBackKey(true);
@@ -200,7 +191,6 @@ public class G extends Game {
         batch.dispose();
         sr.dispose();
         atlas.dispose();
-        server.stop();
         // Skin is disposed when assets is disposed
     }
 }

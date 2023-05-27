@@ -1659,27 +1659,4 @@ public class Map implements TargetBase {
             Dbg.print("");
         }
     }
-
-    public void printLabel() {
-
-        Dbg.print("Label print ->");
-
-        // row 0 -> 14 + OUT_ROW
-        for (int row = 0; row < b[0].length; row++) {
-
-            // col 0 -> 6
-            for (int col = 0; col < b.length; col++) {
-
-                System.out.printf(" %5d", b[col][row].label);
-            }
-            Dbg.print("");
-        }
-
-        // Prints labels count
-        for (IntMap.Entry<Integer> entry : lc.entries()) {
-            System.out.print(entry.key + ":" + entry.value + "; ");
-        }
-
-        Dbg.print("");
-    }
 }

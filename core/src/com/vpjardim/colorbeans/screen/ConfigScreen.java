@@ -31,7 +31,6 @@ import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.KeyboardInput;
 import com.vpjardim.colorbeans.input.Profile;
 import com.vpjardim.colorbeans.input.TouchInput;
-import com.vpjardim.colorbeans.net.NetController;
 import com.vpjardim.colorbeans.views.ControllerActor;
 import com.vpjardim.colorbeans.views.InputActor;
 
@@ -45,7 +44,6 @@ public class ConfigScreen extends ScreenBase {
     // TODO: finish config screen.
 
     public static final int ACT_MENU = 10;
-    public static final int ACT_NET_INPUT = 11;
 
     private Stage stage;
 
@@ -58,7 +56,6 @@ public class ConfigScreen extends ScreenBase {
     private TextField player4;
 
     private TextField stageTF;
-    private TextField netServerIP;
 
     private EventListener specialKeyDown;
 
@@ -68,15 +65,12 @@ public class ConfigScreen extends ScreenBase {
 
     @Override
     public void show() {
-
         super.show();
 
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
             if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 action = ACT_MENU;
-            else if (key == G.game.data.printScreenBt)
-                printScreen();
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
@@ -118,7 +112,6 @@ public class ConfigScreen extends ScreenBase {
         player4 = new TextField("", G.game.skin, "tField");
 
         stageTF = new TextField(Integer.toString(G.game.data.campaignCurrentStage), G.game.skin, "tField");
-        netServerIP = new TextField("", G.game.skin, "tField");
 
         final Array<Cfg.Player> pls = G.game.data.players;
 
@@ -130,8 +123,6 @@ public class ConfigScreen extends ScreenBase {
             player3.setText(pls.get(2).name);
         if (pls.size >= 4)
             player4.setText(pls.get(3).name);
-
-        netServerIP.setText(G.game.data.netServerIP);
 
         // ==== Buttons ====
         final TextButton backBtt = new TextButton("Back",
@@ -283,21 +274,6 @@ public class ConfigScreen extends ScreenBase {
         inputT.add(controllerActor).colspan(4).align(Align.center);
         inputT.row();
 
-        final TextButton netInputBtt = new TextButton("Net Input",
-                G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
-
-        netInputBtt.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                G.game.data.netServerIP = netServerIP.getText();
-                action = ACT_NET_INPUT;
-            }
-        });
-
-        inputT.add(netServerIP).colspan(2).expandX().fillX().pad(0, 20, 0, 20);
-        inputT.add(netInputBtt);
-        inputT.row();
-
         // Loop through inputs and show edit keys button for each one
         for (int i = 0; i < G.game.input.getInputs().size; i++) {
 
@@ -311,8 +287,6 @@ public class ConfigScreen extends ScreenBase {
                 inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
             else if (input instanceof TouchInput)
                 inputActor = new InputActor(InputActor.TOUCH, null);
-            else if (input instanceof NetController)
-                inputActor = new InputActor(InputActor.NET_CONTROLLER, null);
             else
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
 
@@ -395,7 +369,6 @@ public class ConfigScreen extends ScreenBase {
 
     @Override
     public void hide() {
-
         final Array<Cfg.Player> pls = G.game.data.players;
 
         pls.clear();
@@ -420,8 +393,6 @@ public class ConfigScreen extends ScreenBase {
                     G.game.data.campaignCurrentStage = stageNumber;
             } catch (NumberFormatException error) {}
         }
-
-        G.game.data.netServerIP = netServerIP.getText();
 
         int controllerCount = 0;
         int keyboardCount = 0;
@@ -462,8 +433,10 @@ public class ConfigScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
+
         G.game.input.removeProcessor(stage);
         EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
+
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
     }

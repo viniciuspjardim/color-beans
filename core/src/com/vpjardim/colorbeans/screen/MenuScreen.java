@@ -47,8 +47,6 @@ public class MenuScreen extends ScreenBase {
 
             if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 Gdx.app.exit();
-            else if (key == G.game.data.printScreenBt)
-                printScreen();
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);

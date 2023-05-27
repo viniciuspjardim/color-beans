@@ -43,8 +43,6 @@ public class ScoreScreen extends ScreenBase {
             int key = (Integer) e.getAttribute();
             if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 action = ACT_NEXT;
-            else if (key == G.game.data.printScreenBt)
-                printScreen();
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
@@ -186,7 +184,7 @@ public class ScoreScreen extends ScreenBase {
             label.setAlignment(Align.center);
             campaignT.add(label).width(bttW);
 
-            label = new Label(G.game.intFmt.format(row.score), labelStyle);
+            label = new Label(Integer.toString(row.score), labelStyle);
             label.setAlignment(Align.center);
             campaignT.add(label).width(bttW);
 
