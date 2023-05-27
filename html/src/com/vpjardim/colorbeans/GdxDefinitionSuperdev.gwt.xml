@@ -7,10 +7,10 @@
 	<inherits name='com.badlogic.gdx.ai' />
 	<inherits name='aurelienribon.tweenengine' />
 	<inherits name="com.badlogic.gdx.graphics.g2d.freetype.freetype-gwt" />
-    <inherits name='com.vpjardim.colorbeans.GdxDefinition' />
-    
-    <collapse-all-properties />
-    
+	<inherits name='com.vpjardim.colorbeans.GdxDefinition' />
+
+	<collapse-all-properties />
+
 	<add-linker name="xsiframe"/>	
 	<set-configuration-property name="devModeRedirectEnabled" value="true"/>
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>	
