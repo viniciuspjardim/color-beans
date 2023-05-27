@@ -45,8 +45,6 @@ public class StudioScreen extends ScreenBase {
             int key = (Integer) e.getAttribute();
             if (key == G.game.data.escBt || key == Input.Keys.BACK)
                 action = ACT_NEXT;
-            else if (key == G.game.data.printScreenBt)
-                printScreen();
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);

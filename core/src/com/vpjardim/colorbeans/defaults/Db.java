@@ -107,8 +107,6 @@ public class Db {
 
     public int campaignCurrentStage = 1;
 
-    public String netServerIP = "192.168.1.1";
-
     /**
      * The keyboard profiles are used to enable 2 or more players play in the same
      * keyboard
@@ -125,8 +123,6 @@ public class Db {
     public Cfg.Map mapT = null;
 
     public int escBt = 0;
-
-    public int printScreenBt = 0;
 
     /** Init constants (default values) */
     public Db() {
@@ -365,8 +361,6 @@ public class Db {
         mapT = mapT1;
 
         escBt = Keys.ESCAPE;
-
-        printScreenBt = Keys.F1;
     }
 
     /**

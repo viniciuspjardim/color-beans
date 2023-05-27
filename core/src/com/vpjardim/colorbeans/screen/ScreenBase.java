@@ -49,20 +49,6 @@ public class ScreenBase implements Screen, TargetBase {
         return action != ACT_RUNNING;
     }
 
-    public void printScreen() {
-
-        //byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0,
-        //        Gdx.graphics.getBackBufferWidth(),
-        //        Gdx.graphics.getBackBufferHeight(), true);
-        //
-        //Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(),
-        //        Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
-        //
-        // BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
-        // PixmapIO.writePNG(Gdx.files.external("print.png"), pixmap);
-        // pixmap.dispose();
-    }
-
     @Override
     public void show() {
         cam = new OrthographicCamera();

@@ -83,14 +83,6 @@ public class ScreenManager {
             font.draw(G.game.batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
                     G.width * 0.85f, G.height - G.style.fontSizeMedium);
 
-            // if (G.game.dbg.fpsStat) {
-            //     // Elapsed time in seconds
-            //     double elapsedTime = ((double) (System.nanoTime() - G.game.startTime)) * 1e-9;
-            //     double avg = Gdx.graphics.getFrameId() / elapsedTime;
-            //     font.draw(G.game.batch, Math.round(avg) + " avg",
-            //             G.width * 0.85f, G.height - 3f * G.style.fontSizeMedium);
-            // }
-
             G.game.batch.end();
         }
 
@@ -126,8 +118,6 @@ public class ScreenManager {
             else if (currScreen instanceof ConfigScreen) {
                 if (currScreen.action == ConfigScreen.ACT_MENU)
                     G.game.setScreen(new MenuScreen());
-                else if (currScreen.action == ConfigScreen.ACT_NET_INPUT)
-                    G.game.setScreen(new NetInputScreen());
             } else if (currScreen instanceof PlayScreen) {
                 if (currScreen.action == PlayScreen.ACT_MENU)
                     G.game.setScreen(new MenuScreen());
@@ -135,8 +125,6 @@ public class ScreenManager {
                     G.game.setScreen(new CreditsScreen());
             } else if (currScreen instanceof CreditsScreen)
                 G.game.setScreen(new MenuScreen());
-            else if (currScreen instanceof NetInputScreen)
-                G.game.setScreen(new ConfigScreen());
         }
     }
 }

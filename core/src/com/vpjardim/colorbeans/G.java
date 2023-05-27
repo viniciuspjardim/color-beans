@@ -20,7 +20,6 @@ import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
 import com.vpjardim.colorbeans.screen.ScreenBase;
 import com.vpjardim.colorbeans.screen.ScreenManager;
-// import java.text.NumberFormat;
 
 import aurelienribon.tweenengine.Tween;
 
@@ -113,8 +112,6 @@ public class G extends Game {
     public Skin skin;
     public ScoreTable score;
     public Audio audio;
-    // public NumberFormat intFmt;
-    public long startTime;
     public MenuBeans beansAnim;
 
     // #debugCode
@@ -122,10 +119,7 @@ public class G extends Game {
 
     @Override
     public void create() {
-
         // Most things are loaded in the LoadingScreen class. See explanation there.
-
-        startTime = 0l; // System.nanoTime();
 
         game = (G) Gdx.app.getApplicationListener();
         Gdx.input.setCatchBackKey(true);

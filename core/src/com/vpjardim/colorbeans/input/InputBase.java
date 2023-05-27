@@ -35,29 +35,6 @@ public interface InputBase {
         return ((keyMap >> key) & 1) == 1 ? true : false;
     }
 
-    // #debugCode
-    static String keyMapToString(short keyMapOld, short keyMap, short events) {
-
-        /*String str = "\n                      4321SLDRU\n";
-
-        str += "    keyMapOld = ";
-
-        str += String.format("%15s\n", Integer.toBinaryString(
-                keyMapOld & 0xFFFF)).replace(' ', '0');
-
-        str += "       keyMap = ";
-
-        str += String.format("%15s\n", Integer.toBinaryString(
-                keyMap & 0xFFFF)).replace(' ', '0');
-
-        str += "       events = ";
-
-        str += String.format("%15s\n", Integer.toBinaryString(
-                events & 0xFFFF)).replace(' ', '0');*/
-
-        return "";
-    }
-
     void setTarget(TargetBase target);
 
     void setProfile(Profile profile);

@@ -79,8 +79,7 @@ public class PlayScreen extends ScreenBase {
                     manager.maps.first().btStartDown();
                 }
                 menuVisible = true;
-            } else if (key == G.game.data.printScreenBt)
-                printScreen();
+            }
         };
 
         // Tap event
