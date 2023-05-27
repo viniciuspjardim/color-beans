@@ -420,6 +420,10 @@ public class Db {
     }
 
     public static boolean save(Db data) {
+        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
+
+        if (!isLocAvailable)
+            return true;
 
         try {
             Json json = new Json();
@@ -428,6 +432,7 @@ public class Db {
             String jsonTxt = json.prettyPrint(data);
             FileHandle file = Gdx.files.local("state/cfg.json");
             file.writeString(jsonTxt, false);
+
             return true;
         } catch (GdxRuntimeException e) {
             e.printStackTrace();
@@ -436,9 +441,17 @@ public class Db {
     }
 
     public static Db load() {
+        Db data;
+        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
+
+        if (!isLocAvailable) {
+            data = new Db();
+            data.initPreferences();
+
+            return data;
+        }
 
         FileHandle file = Gdx.files.local("state/cfg.json");
-        Db data;
 
         if (file.exists()) {
             String jsonTxt = file.readString();
