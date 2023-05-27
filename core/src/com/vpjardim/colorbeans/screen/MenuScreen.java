@@ -4,6 +4,7 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -128,7 +129,11 @@ public class MenuScreen extends ScreenBase {
         table.row();
         table.add(optionsButt);
         table.row();
-        table.add(exitButt).width(bttW).pad(G.style.padMedium, padS, padS, padS);
+
+        if (Gdx.app.getType() != Application.ApplicationType.WebGL) {
+            table.add(exitButt).width(bttW).pad(G.style.padMedium, padS, padS, padS);
+        }
+
         table.getMaxWidth();
 
         label = new Label(" ", labelStyle);

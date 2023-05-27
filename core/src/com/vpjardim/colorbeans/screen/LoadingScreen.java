@@ -11,6 +11,7 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -37,6 +38,8 @@ public class LoadingScreen extends ScreenBase {
 
     private int frameCount = 0;
     private String atlasStr;
+
+    private Texture loadingTexture;
     private final Color BAR_COLOR = new Color(0x4048ccff);
 
     public LoadingScreen() {
@@ -202,14 +205,22 @@ public class LoadingScreen extends ScreenBase {
             G.game.sr = new ShapeRenderer();
         }
 
+        if (frameCount == 2) {
+            loadingTexture = new Texture(Gdx.files.internal("img/loading.png"));
+        }
+
         // If loading has started but not finished draw progress bar
-        if (frameCount > 1 && !G.game.assets.update()) {
+        if (frameCount > 2 && !G.game.assets.update()) {
 
             final int width = (int) (Math.min(0.8f * G.height, 0.8 * G.width));
             final int height = 20;
             final int x = (int) (G.width / 2f - width / 2f);
             final int y = (int) (0.3f * G.height);
             final int progress = (int) (width * G.game.assets.getProgress());
+
+            G.game.batch.begin();
+            G.game.batch.draw(loadingTexture, x + (width / 2f) - 36, y + 24f);
+            G.game.batch.end();
 
             G.game.sr.setColor(BAR_COLOR);
             G.game.sr.setProjectionMatrix(cam.combined);
@@ -223,7 +234,7 @@ public class LoadingScreen extends ScreenBase {
         }
 
         // If stuff has done loading, init some vars and go to the next screen
-        if (frameCount > 1 && G.game.assets.update()) {
+        if (frameCount > 2 && G.game.assets.update()) {
 
             action = ScreenBase.ACT_NEXT;
 
