@@ -4,8 +4,8 @@
 
 package com.vpjardim.colorbeans.input;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.controllers.Controllers;
@@ -62,6 +62,9 @@ public class InputManager {
         multiplex.addProcessor(specialButtons);
         multiplex.addProcessor(new GestureDetector(debugInput));
 
+        boolean multiTouch = Gdx.input.isPeripheralAvailable(Input.Peripheral.MultitouchScreen);
+        boolean hardwareKeyboard = Gdx.input.isPeripheralAvailable(Input.Peripheral.HardwareKeyboard);
+
         // Initially attempts to assign controllers to the targets
         for (int i = 0; i < Controllers.getControllers().size; i++) {
 
@@ -80,21 +83,15 @@ public class InputManager {
             inputs.add(input);
         }
 
-        // On Mobile devices:
-        // When there is no more controllers try to assign touch input to android device
-        if (Gdx.app.getType() == Application.ApplicationType.Android) {
-
+        if (multiTouch) {
             TouchInput input = new TouchInput();
             multiplex.addProcessor(new GestureDetector(input));
             input.setId(maxId++);
 
             inputs.add(input);
         }
-        // On Desktop:
-        // When there is no more controllers try to assign keyboard profiles to desktop
-        // device
-        else if (Gdx.app.getType() == Application.ApplicationType.Desktop || Gdx.app.getType() == Application.ApplicationType.WebGL) {
 
+        if (hardwareKeyboard) {
             // One keyboard can control one or more maps, depending on the number of
             // profiles the keyboard has
             for (int i = 0; i < G.game.data.kbProfs.size; i++) {
@@ -177,6 +174,7 @@ public class InputManager {
     }
 
     public void targetsClear() {
+        maxId = 1;
 
         // Clear targets references for inputs
         for (TargetBase t : targets) {

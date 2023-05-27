@@ -419,17 +419,31 @@ public class ConfigScreen extends ScreenBase {
 
         G.game.data.netServerIP = netServerIP.getText();
 
-        G.game.data.kbProfs.clear();
-        G.game.data.ctrlProfs.clear();
+        int controllerCount = 0;
+        int keyboardCount = 0;
 
         for (int i = 0; i < G.game.input.getInputs().size; i++) {
 
             final InputBase input = G.game.input.getInputs().get(i);
 
-            if (input instanceof ControllerInput)
-                G.game.data.ctrlProfs.add(input.getProfile());
-            else if (input instanceof KeyboardInput)
-                G.game.data.kbProfs.add(input.getProfile());
+            if (input instanceof ControllerInput) {
+                // If exists replace, otherwise add it
+                if (G.game.data.ctrlProfs.size > controllerCount)
+                    G.game.data.ctrlProfs.set(controllerCount, input.getProfile());
+                else
+                    G.game.data.ctrlProfs.add(input.getProfile());
+
+                controllerCount++;
+            }
+            else if (input instanceof KeyboardInput) {
+                // If exists replace, otherwise add it
+                if (G.game.data.kbProfs.size > keyboardCount)
+                    G.game.data.kbProfs.set(keyboardCount, input.getProfile());
+                else
+                    G.game.data.kbProfs.add(input.getProfile());
+
+                keyboardCount++;
+            }
         }
 
         Db.save(G.game.data);
