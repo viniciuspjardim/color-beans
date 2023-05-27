@@ -36,7 +36,6 @@ public class ScoreTable {
     private boolean saved = true;
 
     public static class Row {
-
         public int gameMode;
         public String nick;
         public boolean win;
@@ -46,7 +45,7 @@ public class ScoreTable {
     }
 
     public void addRow(int gameMode, String nick, boolean win, int score, int scoreSum,
-            float time) {
+                       float time) {
 
         ScoreTable.Row row = new ScoreTable.Row();
 
@@ -68,7 +67,6 @@ public class ScoreTable {
     }
 
     private void sort() {
-
         if (sorted)
             return;
 
@@ -77,35 +75,39 @@ public class ScoreTable {
     }
 
     public static void save(ScoreTable table) {
-
         if (table.saved)
             return;
 
         // Sort before save
         table.sort();
 
-        // Json json = new Json();
-        //
-        // String jsonTxt = json.prettyPrint(table.rows.toArray());
-        //
-        // FileHandle file = Gdx.files.local("state/scores.json");
-        // file.writeString(jsonTxt, false);
+        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
+
+        if (isLocAvailable) {
+            Json json = new Json();
+
+            String jsonTxt = json.prettyPrint(table.rows.toArray());
+
+            FileHandle file = Gdx.files.local("state/scores.json");
+            file.writeString(jsonTxt, false);
+        }
 
         table.saved = true;
     }
 
     public static ScoreTable load() {
-
-        // The object loaded is already sorted and obviously saved
-
-        //FileHandle file = Gdx.files.local("state/scores.json");
         ScoreTable score = new ScoreTable();
+        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
 
-        /* if (file.exists()) {
+        if (!isLocAvailable) return score;
+
+        FileHandle file = Gdx.files.local("state/scores.json");
+
+        if (file.exists()) {
             String jsonTxt = file.readString();
             Json json = new Json();
             score.rows.addAll(json.fromJson(Row[].class, jsonTxt));
-        }*/
+        }
 
         return score;
     }
