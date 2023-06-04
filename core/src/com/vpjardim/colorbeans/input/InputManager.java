@@ -21,13 +21,13 @@ import static com.badlogic.gdx.Gdx.input;
  */
 public class InputManager {
 
-    private Array<InputBase> inputs;
-    private Array<TargetBase> targets;
-    private InputMultiplexer multiplex;
+    private final Array<InputBase> inputs;
+    private final Array<TargetBase> targets;
+    private final InputMultiplexer multiplex;
 
-    private ControllerConnection ctrlConn;
-    private SpecialButtons specialButtons;
-    private DebugInput debugInput;
+    private final ControllerConnection ctrlConn;
+    private final SpecialButtons specialButtons;
+    private final DebugInput debugInput;
 
     private int maxId = 1;
 
@@ -104,14 +104,6 @@ public class InputManager {
                 inputs.add(input);
             }
         }
-    }
-
-    public void addInput(InputBase input) {
-        inputs.add(input);
-    }
-
-    public void removeInput(InputBase input) {
-        inputs.removeValue(input, true);
     }
 
     public void addTarget(TargetBase target) {

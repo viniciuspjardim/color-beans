@@ -19,11 +19,8 @@ import aurelienribon.tweenengine.TweenManager;
  *         2015/12/05
  */
 public class ScreenManager {
-
-    public static boolean showStudioScreen = false;
-
-    private FPSLogger fps;
-    private TweenManager transition;
+    private final FPSLogger fps;
+    private final TweenManager transition;
 
     public ScreenManager() {
         fps = new FPSLogger();
@@ -95,14 +92,8 @@ public class ScreenManager {
 
             // Switch to the next screen based on the current screen
             // and the screen action
-            if (currScreen instanceof LoadingScreen) {
-                if (showStudioScreen)
-                    G.game.setScreen(new StudioScreen());
-                else
-                    G.game.setScreen(new MenuScreen());
-            } else if (currScreen instanceof StudioScreen)
+            if (currScreen instanceof LoadingScreen)
                 G.game.setScreen(new MenuScreen());
-
             else if (currScreen instanceof MenuScreen) {
                 if (currScreen.action == MenuScreen.ACT_PLAY)
                     G.game.setScreen(new PlayScreen(new Campaign()));
@@ -114,7 +105,6 @@ public class ScreenManager {
                     G.game.setScreen(new ConfigScreen());
             } else if (currScreen instanceof ScoreScreen)
                 G.game.setScreen(new MenuScreen());
-
             else if (currScreen instanceof ConfigScreen) {
                 if (currScreen.action == ConfigScreen.ACT_MENU)
                     G.game.setScreen(new MenuScreen());

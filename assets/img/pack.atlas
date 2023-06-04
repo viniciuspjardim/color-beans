@@ -1,5 +1,5 @@
 
-pack_m.png
+pack.png
 size: 1024, 1024
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
@@ -390,7 +390,7 @@ beans/grad_bg_red
   offset: 0, 0
   index: -1
 
-pack_m2.png
+pack2.png
 size: 1024, 1024
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
@@ -739,7 +739,7 @@ beans/orange
   offset: 0, 0
   index: 11
 
-pack_m3.png
+pack3.png
 size: 1024, 1024
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
@@ -1088,7 +1088,7 @@ beans/red
   offset: 0, 0
   index: 1110
 
-pack_m4.png
+pack4.png
 size: 1024, 1024
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
@@ -1255,7 +1255,7 @@ beans/yellow
   offset: 0, 0
   index: 1111
 
-pack_m5.png
+pack5.png
 size: 1024, 1024
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
@@ -1456,7 +1456,7 @@ game/wifi_small
   offset: 2, 0
   index: 2
 
-pack_m6.png
+pack6.png
 size: 1024, 512
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
@@ -1546,24 +1546,4 @@ game/tbg_yellow
   pad: 27, 27, 24, 36
   orig: 128, 128
   offset: 0, 0
-  index: -1
-
-pack_m7.png
-size: 1024, 1024
-format: RGBA8888
-filter: MipMapLinearNearest, Linear
-repeat: none
-studio/studio_logo
-  rotate: false
-  xy: 2, 183
-  size: 800, 800
-  orig: 800, 800
-  offset: 0, 0
-  index: -1
-studio/studio_text
-  rotate: false
-  xy: 2, 2
-  size: 716, 179
-  orig: 728, 193
-  offset: 3, 13
   index: -1

@@ -26,8 +26,6 @@ import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.input.InputManager;
 
-import java.text.NumberFormat;
-
 /**
  * Just a black screen waiting load to be done
  *
@@ -35,7 +33,6 @@ import java.text.NumberFormat;
  *         2016/06/10
  */
 public class LoadingScreen extends ScreenBase {
-
     private int frameCount = 0;
     private String atlasStr;
 
@@ -53,17 +50,10 @@ public class LoadingScreen extends ScreenBase {
     }
 
     private void loadStuff() {
-
         G.scale = G.height / 720f;
-
-        if (G.height >= 1080)
-            G.res = G.RES_MEDIUM;
-        else
-            G.res = G.RES_SMALL;
 
         G.style.setDefaults();
         G.style.scale(G.scale);
-
 
         G.game.assets = new AssetManager();
 
@@ -105,8 +95,6 @@ public class LoadingScreen extends ScreenBase {
         param.fontFileName = "font/dimbo.ttf";
         param.fontParameters.size = G.style.fontSizeXBig;
         param.fontParameters.color = new Color(0xe8e2b4ff);
-        // param.fontParameters.shadowColor = new Color(0xffffffff);
-        // param.fontParameters.shadowOffsetY = 3;
         param.fontParameters.borderColor = new Color(0x7b0a41ff);
         param.fontParameters.borderWidth = 6;
         G.game.assets.load("dimbo_gtitle.ttf", BitmapFont.class, param);
@@ -158,17 +146,12 @@ public class LoadingScreen extends ScreenBase {
         G.game.batch = new SpriteBatch();
         G.game.score = ScoreTable.load();
         G.game.audio = new Audio();
-        // G.game.intFmt = NumberFormat.getInstance();
 
         G.game.input.loadInputs();
 
-        if (G.res == G.RES_MEDIUM)
-            atlasStr = "img/pack_m.atlas"; // Medium size sprites
-        else
-            atlasStr = "img/pack_s.atlas"; // Small size sprites
+        atlasStr = "img/pack.atlas";
 
         G.game.assets.load(atlasStr, TextureAtlas.class);
-        G.game.assets.load("audio/studio.ogg", Music.class);
         G.game.assets.load("audio/music1.ogg", Music.class);
         G.game.assets.load("audio/music2.ogg", Music.class);
         G.game.assets.load("audio/music3.ogg", Music.class);
@@ -192,7 +175,6 @@ public class LoadingScreen extends ScreenBase {
 
     @Override
     public void render(float delta) {
-
         super.render(delta);
 
         // Only start loading after the first frame to avoid a white screen blink at the

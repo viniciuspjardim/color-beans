@@ -23,14 +23,14 @@ public class ControllerActor extends Actor implements TargetBase {
         void finished(Profile profile);
     }
 
-    private TextureAtlas.AtlasRegion body;
+    private final TextureAtlas.AtlasRegion body;
     /**
      * Button indexes: 0 up, 1 right, 2 down, 3 left, 4 start, 5 bt1, 6 bt2, 7 bt3,
      * 8 bt4
      */
     private int position;
     private float time = 0f;
-    private int[] keys;
+    private final int[] keys;
     private KeysSetListener callback;
 
     public ControllerActor() {

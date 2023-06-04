@@ -15,7 +15,7 @@ public class DefaultHandler implements EventHandler {
 
     public static final DefaultHandler defaultHandler = new DefaultHandler();
 
-    private ObjectMap<String, Array<EventListener>> listeners;
+    private final ObjectMap<String, Array<EventListener>> listeners;
 
     public DefaultHandler() {
         listeners = new ObjectMap<>();

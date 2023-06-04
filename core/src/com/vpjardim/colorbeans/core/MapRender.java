@@ -50,9 +50,9 @@ public class MapRender {
 
     public GlyphLayout gl = new GlyphLayout();
 
-    private RandomXS128 rand = new RandomXS128();
-    private long seed0 = rand.getState(0);
-    private long seed1 = rand.getState(1);
+    private final RandomXS128 rand = new RandomXS128();
+    private final long seed0 = rand.getState(0);
+    private final long seed1 = rand.getState(1);
 
     // # debugCode
     private EventListener debugInput;

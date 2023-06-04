@@ -9,7 +9,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -192,10 +191,7 @@ public class PlayScreen extends ScreenBase {
         stage.act(delta);
         stage.draw();
 
-        if (manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
-            table.setVisible(true);
-        else
-            table.setVisible(false);
+        table.setVisible(manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible);
 
         // If it has a TouchInput draw the box and the arrow of the input
         if (touchInput != null && touchInput.draw) {

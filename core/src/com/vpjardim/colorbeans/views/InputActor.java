@@ -29,11 +29,11 @@ public class InputActor extends Actor implements TargetBase {
     public static final int TOUCH = 3;
     public static final int NET_CONTROLLER = 4;
 
-    private Array<TextureAtlas.AtlasRegion> bodies;
+    private final Array<TextureAtlas.AtlasRegion> bodies;
     private TextureAtlas.AtlasRegion body;
-    private TextureAtlas.AtlasRegion numberBg;
-    private GlyphLayout gl = new GlyphLayout();
-    private Profile profile;
+    private final TextureAtlas.AtlasRegion numberBg;
+    private final GlyphLayout gl = new GlyphLayout();
+    private final Profile profile;
     private int number;
 
     public InputActor(int type, Profile profile) {

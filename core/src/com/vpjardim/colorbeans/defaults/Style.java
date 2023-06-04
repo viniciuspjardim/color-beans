@@ -4,8 +4,6 @@
 
 package com.vpjardim.colorbeans.defaults;
 
-import com.vpjardim.colorbeans.G;
-
 /**
  * @author Vinícius Jardim
  *         2017/01/04
@@ -52,9 +50,9 @@ public class Style {
         buttWidth = 180;
 
         ribbonWidth = 294;
-        ribbonHeight = 128;
-        ribbonSide = 84;
-        menuBgPad = 3.5f;
+        ribbonHeight = 256;
+        ribbonSide = 168;
+        menuBgPad = 7;
     }
 
     public void scale(float scale) {
@@ -73,11 +71,5 @@ public class Style {
 
         buttWidth = buttWidth * scale;
         ribbonWidth = ribbonWidth * scale;
-
-        if (G.res == G.RES_MEDIUM) {
-            ribbonHeight = 256;
-            ribbonSide = 168;
-            menuBgPad = 7;
-        }
     }
 }

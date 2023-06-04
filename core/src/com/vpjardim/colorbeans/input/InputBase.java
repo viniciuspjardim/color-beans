@@ -32,7 +32,7 @@ public interface InputBase {
     }
 
     static boolean getKeyMapKey(short keyMap, int key) {
-        return ((keyMap >> key) & 1) == 1 ? true : false;
+        return ((keyMap >> key) & 1) == 1;
     }
 
     void setTarget(TargetBase target);

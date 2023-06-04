@@ -53,50 +53,9 @@ import aurelienribon.tweenengine.Tween;
  *         2015/03/21
  */
 public class G extends Game {
-
-    // TODO: android very laggy: 25fps with 2 maps, 17 with 4 maps;
-
-    // TODO: small memory leak even in debugPG variant;
-
-    // TODO: one map player blocks falls first then the others when if the game is
-    // restarted. It happen to the loser map when the winner wins pressing down key;
-
-    // TODO: black screen after minimizing and restoring on full screen mode;
-
-    // TODO: restart music on map win, music fade in/out, add win/lost sound
-    // effects, pause music on game paused, music2 volume seems lower then music2;
-
-    // TODO: fix art: create text shade and text dialog balloon 9patch;
-
-    // TODO: add win/lost camera transition and statistics layer;
-
-    // TODO: fix game over animation: top blocks might render as if they were linked
-    // to offscreen blocks;
-
-    // TODO: "Next" text is rendered behind the next block bg;
-
-    // TODO: do not render blocks in the out rows;
-
-    // TODO: Android back button crashes app in LoadingScreen;
-
-    // TODO: create a semi transparent black bg and to use in front of the beans in
-    // MenuScreen.
-
-    // TODO: negative score sometimes after first match in campaign (maybe fixed)
-
-    // TODO: touch and drag in Android crashes app when using controller (fixed);
-
-    // TODO: capture android back button event: go to menu when in PlayScreen
-    // (done).
-
-    // Game resolution
-    public static final int RES_SMALL = 1;
-    public static final int RES_MEDIUM = 2;
-
     public static G game;
     public static float delta;
     public static float scale;
-    public static int res;
     public static int width;
     public static int height;
     public static boolean loading;
@@ -150,19 +109,6 @@ public class G extends Game {
         screens = new ScreenManager();
         screens.create();
         ScreenBase.bgColor = Db.bgColor();
-    }
-
-    /**
-     * Convert Y down (0 = top left corner) to Y up (0 = bottom left corner) and
-     * vice-versa. All the game logic should use Y down and this method should be
-     * called when giving Y to a libGDX draw method.
-     * 
-     * @param y coordinate to be flipped
-     * @return flipped coordinate
-     */
-
-    public static float flipY(float y, float height, float scale) {
-        return G.height - 1 - y - (height * (scale + 1f) / 2f);
     }
 
     @Override
