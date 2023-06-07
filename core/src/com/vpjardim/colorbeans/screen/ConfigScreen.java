@@ -317,6 +317,7 @@ public class ConfigScreen extends ScreenBase {
 
                             // #debugCode
                             Dbg.dbg(Dbg.tag(ConfigScreen.this), "Key config finished");
+                            profile.log();
                         }
                     });
                     input.setTarget(controllerActor);

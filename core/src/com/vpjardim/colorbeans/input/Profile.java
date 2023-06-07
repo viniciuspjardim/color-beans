@@ -4,6 +4,8 @@
 
 package com.vpjardim.colorbeans.input;
 
+import com.vpjardim.colorbeans.core.Dbg;
+
 /**
  * Stores input implementation key codes. Then these keys can be mapped to
  * internal key codes
@@ -75,5 +77,18 @@ public class Profile {
     public boolean hasKey(int key) {
         return key == up || key == right || key == down || key == left || key == start ||
                 key == button1 || key == button2 || key == button3 || key == button4;
+    }
+
+    // #debugCode
+    public void log() {
+        Dbg.inf("Profile", "up -> " + this.up);
+        Dbg.inf("Profile", "right -> " + this.right);
+        Dbg.inf("Profile", "down -> " + this.down);
+        Dbg.inf("Profile", "left -> " + this.left);
+        Dbg.inf("Profile", "start -> " + this.start);
+        Dbg.inf("Profile", "button1 -> " + this.button1);
+        Dbg.inf("Profile", "button2 -> " + this.button2);
+        Dbg.inf("Profile", "button3 -> " + this.button3);
+        Dbg.inf("Profile", "button4 -> " + this.button4);
     }
 }
