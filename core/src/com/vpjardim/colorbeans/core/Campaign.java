@@ -40,62 +40,61 @@ public class Campaign extends MapManager {
 
         // #debugCode
         if (G.game.dbg.on) {
-            start = G.game.dbg.campStart;
             end = G.game.dbg.campEnd;
         }
 
         if (start <= 1 && end >= 1) {
             mapCfgs.add(G.game.data.map1);
             aiCfgs.add(G.game.data.ai1);
-            aiMapNames.add("BunnyAlan");
+            aiMapNames.add("1. BunnyAlan");
         }
 
         if (start <= 2 && end >= 2) {
             mapCfgs.add(G.game.data.map2);
             aiCfgs.add(G.game.data.ai2);
-            aiMapNames.add("ChickenBil");
+            aiMapNames.add("2. ChickenBil");
         }
 
         if (start <= 3 && end >= 3) {
             mapCfgs.add(G.game.data.map3);
             aiCfgs.add(G.game.data.ai3);
-            aiMapNames.add("LizardLoy");
+            aiMapNames.add("3. LizardLoyd");
         }
 
         if (start <= 4 && end >= 4) {
             mapCfgs.add(G.game.data.map4);
             aiCfgs.add(G.game.data.ai4);
-            aiMapNames.add("BlackCat");
+            aiMapNames.add("4. BlackCat");
         }
 
         if (start <= 5 && end >= 5) {
             mapCfgs.add(G.game.data.map5);
             aiCfgs.add(G.game.data.ai5);
-            aiMapNames.add("EagleEye");
+            aiMapNames.add("5. EagleEye");
         }
 
         if (start <= 6 && end >= 6) {
             mapCfgs.add(G.game.data.map6);
             aiCfgs.add(G.game.data.ai6);
-            aiMapNames.add("CheetahGhost");
+            aiMapNames.add("6. CheetahSpirit");
         }
 
         if (start <= 7 && end >= 7) {
             mapCfgs.add(G.game.data.map7);
             aiCfgs.add(G.game.data.ai7);
-            aiMapNames.add("DemonDog");
+            aiMapNames.add("7. DemonDog");
         }
 
         if (start <= 8 && end >= 8) {
             mapCfgs.add(G.game.data.map8);
             aiCfgs.add(G.game.data.ai8);
-            aiMapNames.add("Deepness God");
+            aiMapNames.add("8. DeepnessGod");
         }
 
         if (start <= 9 && end >= 9) {
             mapCfgs.add(G.game.data.map9);
             aiCfgs.add(G.game.data.ai9);
-            aiMapNames.add("Creator");
+            aiMapNames.add("9. Creator");
         }
 
         G.game.input.targetsClear();
@@ -140,9 +139,9 @@ public class Campaign extends MapManager {
         }
 
         // #debugCode
-        if (G.game.dbg.mapShape != null) {
-            playerMap.debugShape(G.game.dbg.mapShape[0]);
-            aiMap.debugShape(G.game.dbg.mapShape[1]);
+        if (G.game.dbg.mapShapes != null) {
+            playerMap.debugShape(G.game.dbg.mapShapes[0]);
+            aiMap.debugShape(G.game.dbg.mapShapes[1]);
         }
 
         G.game.input.linkAll();

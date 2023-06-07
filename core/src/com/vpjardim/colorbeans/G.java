@@ -95,7 +95,7 @@ public class G extends Game {
         // #debugCode
         // dbg.uiTable = true;
         // dbg.mapShape = new int[] {3, 0, 0, 0};
-        // dbg.campStart = 9;
+        // dbg.clearMaps = new boolean[] { true, false, false, false };
         // dbg.campEnd = 9;
         // dbg.delta = Dbg.DELTA_0_5X;
         // dbg.fps = true;

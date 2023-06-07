@@ -39,8 +39,8 @@ public class Dbg {
      */
     public int logLevel;
     public boolean uiTable;
-    public int[] mapShape;
-    public int campStart;
+    public int[] mapShapes;
+    public boolean[] clearMaps;
     public int campEnd;
     public boolean aiPlayerCamp;
     public boolean aiDisableMap1;
@@ -51,7 +51,6 @@ public class Dbg {
     }
 
     public void off() {
-
         on = false;
 
         delta = DELTA_REAL;
@@ -60,9 +59,9 @@ public class Dbg {
         lagWarn = false;
         fpsStat = false;
         logLevel = Application.LOG_NONE;
-        mapShape = null;
+        mapShapes = null;
+        clearMaps = null;
         uiTable = false;
-        campStart = 0;
         campEnd = Integer.MAX_VALUE;
         aiPlayerCamp = false;
         aiDisableMap1 = false;

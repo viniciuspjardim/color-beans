@@ -259,6 +259,15 @@ public class Map implements TargetBase {
                 // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = PLAYER_FALL");
 
+                // #debugCode
+                if (G.game.dbg.clearMaps != null && G.game.dbg.clearMaps[map.index]) {
+                    for (int i = 0; i < map.b.length; i++) {
+                        for (int j = 0; j < map.b[i].length; j++) {
+                            map.b[i][j].recycle();
+                        }
+                    }
+                }
+
                 map.chainPowerCount = 0;
                 map.scoredBlocks = 0;
 

@@ -58,8 +58,8 @@ public class Training extends MapManager {
             }
 
             // #debugCode
-            if (G.game.dbg.mapShape != null)
-                m.debugShape(G.game.dbg.mapShape[i]);
+            if (G.game.dbg.mapShapes != null)
+                m.debugShape(G.game.dbg.mapShapes[i]);
         }
 
         G.game.input.linkAll();

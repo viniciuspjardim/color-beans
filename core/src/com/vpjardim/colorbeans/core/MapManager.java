@@ -143,10 +143,10 @@ public abstract class MapManager {
                 winnerMap = null;
 
                 // #debugCode
-                if (G.game.dbg.mapShape != null) {
+                if (G.game.dbg.mapShapes != null) {
                     for (int i = 0; i < maps.size; i++) {
                         Map m = maps.get(i);
-                        m.debugShape(G.game.dbg.mapShape[i]);
+                        m.debugShape(G.game.dbg.mapShapes[i]);
                     }
                 }
             }
