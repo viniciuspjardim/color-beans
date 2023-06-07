@@ -9,6 +9,5 @@ package com.vpjardim.colorbeans.ai;
  *         2016/06/06
  */
 public interface ScoreFormula {
-
     float calc(AiMap aiMap);
 }

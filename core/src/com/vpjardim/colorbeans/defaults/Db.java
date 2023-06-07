@@ -194,7 +194,7 @@ public class Db {
         ai1.doubtFreqMin = 0.12f;
         ai1.doubtFreqMax = 0.18f;
         ai1.randomness = 0.8f;
-        ai1.trashMoves = 0.7f;
+        ai1.trashMoves = 0.8f;
 
         ai2.downKeyMin = 0.0f;
         ai2.downKeyMax = 0.1f;
@@ -203,7 +203,7 @@ public class Db {
         ai2.doubtFreqMin = 0.12f;
         ai2.doubtFreqMax = 0.18f;
         ai2.randomness = 0.75f;
-        ai2.trashMoves = 0.5f;
+        ai2.trashMoves = 0.7f;
 
         ai3.downKeyMin = 0.0f;
         ai3.downKeyMax = 0.2f;
@@ -212,7 +212,7 @@ public class Db {
         ai3.doubtFreqMin = 0.1f;
         ai3.doubtFreqMax = 0.16f;
         ai3.randomness = 0.55f;
-        ai3.trashMoves = 0.3f;
+        ai3.trashMoves = 0.6f;
 
         ai4.downKeyMin = 0.2f;
         ai4.downKeyMax = 0.4f;
@@ -221,7 +221,7 @@ public class Db {
         ai4.doubtFreqMin = 0.08f;
         ai4.doubtFreqMax = 0.14f;
         ai4.randomness = 0.35f;
-        ai4.trashMoves = 0.2f;
+        ai4.trashMoves = 0.4f;
 
         ai5.downKeyMin = 0.2f;
         ai5.downKeyMax = 0.5f;
@@ -230,7 +230,7 @@ public class Db {
         ai5.doubtFreqMin = 0.06f;
         ai5.doubtFreqMax = 0.14f;
         ai5.randomness = 0.22f;
-        ai5.trashMoves = 0.1f;
+        ai5.trashMoves = 0.2f;
 
         ai6.downKeyMin = 0.4f;
         ai6.downKeyMax = 0.8f;
@@ -239,7 +239,7 @@ public class Db {
         ai6.doubtFreqMin = 0.1f;
         ai6.doubtFreqMax = 0.14f;
         ai6.randomness = 0.15f;
-        ai6.trashMoves = 0.05f;
+        ai6.trashMoves = 0.1f;
 
         ai7.downKeyMin = 0.6f;
         ai7.downKeyMax = 0.9f;
@@ -248,7 +248,7 @@ public class Db {
         ai7.doubtFreqMin = 0.1f;
         ai7.doubtFreqMax = 0.18f;
         ai7.randomness = 0.08f;
-        ai7.trashMoves = 0.02f;
+        ai7.trashMoves = 0.05f;
 
         ai8.downKeyMin = 0.8f;
         ai8.downKeyMax = 1f;

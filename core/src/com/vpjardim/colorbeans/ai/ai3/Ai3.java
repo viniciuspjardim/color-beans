@@ -59,7 +59,6 @@ public class Ai3 extends AiCommon {
 
     @Override
     protected void entryPoint3() {
-
         if (!tree.processFinished) {
             tree.process();
         } else if (!input.move) {
@@ -79,7 +78,6 @@ public class Ai3 extends AiCommon {
 
         @Override
         public float calc(AiMap aiMap) {
-
             int center = aiMap.b.length / 2;
 
             // The blocks are obstructed. This move lead to game over.

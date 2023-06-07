@@ -1653,6 +1653,14 @@ public class Map implements TargetBase {
                 }
             }
         }
+        // Filled by trash. Only 6 rows free at the top.
+        else if (shape == 12) {
+            for (int col = 0; col < b.length; col++) {
+                for (int row = OUT_ROW + 6; row < b[col].length; row++) {
+                    b[col][row].setColor(Block.CLR_T);
+                }
+            }
+        }
     }
 
     public void print() {

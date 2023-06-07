@@ -43,7 +43,7 @@ public class CreditsScreen extends ScreenBase {
 
         Label.LabelStyle labelStyle = G.game.skin.get("labelDef", Label.LabelStyle.class);
 
-        Label label = new Label("Game by Vinícius Jardim", labelStyle);
+        Label label = new Label("A game by Vinícius Jardim", labelStyle);
         label.setAlignment(Align.center);
         table.add(label).width(400);
 

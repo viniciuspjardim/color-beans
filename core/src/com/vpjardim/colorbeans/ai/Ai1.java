@@ -112,10 +112,6 @@ public class Ai1 extends AiCommon {
         // Random multiplier for the Ai have a worst performance in easy levels
         score *= 1f + MathUtils.random(cfg.randomness) - cfg.randomness / 2;
 
-        // Big random number to force AI acts nonsense
-        if (trashMove)
-            score += MathUtils.random(50);
-
         return score;
     }
 }

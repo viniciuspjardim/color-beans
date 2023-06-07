@@ -80,10 +80,6 @@ public class Ai2 implements AiBase {
                 Tree3Node bestNode = root.getBestChild();
 
                 input.setMove(bestNode.position, bestNode.rotation, true);
-
-                // Dbg.print("===================");
-                // Dbg.print("BestNode: pos = " + bestNode.position + "; rot = " +
-                // bestNode.rotation + "; score = " + bestNode.score);
             }
         }
         prevState = m.getState();
