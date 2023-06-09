@@ -18,13 +18,30 @@ public class Training extends MapManager {
 
     @Override
     public void init() {
-
         gameCfg = G.game.data.trainingGame;
         maps = new Array<>();
         opps = new Array<>();
         render = new Array<>();
 
         G.game.input.targetsClear();
+
+        Cfg.Map mapT = new Cfg.Map();
+
+        // Training mode player fall speed default options
+        if (G.game.data.trainingSpeed == 1) {
+            mapT.moveTime = G.game.data.map1.moveTime;
+        } else if (G.game.data.trainingSpeed == 2) {
+            mapT.moveTime = G.game.data.map3.moveTime;
+        } else if (G.game.data.trainingSpeed == 3) {
+            mapT.moveTime = G.game.data.map5.moveTime;
+        } else if (G.game.data.trainingSpeed == 4) {
+            mapT.moveTime = G.game.data.map7.moveTime;
+        } else if (G.game.data.trainingSpeed == 5) {
+            mapT.moveTime = G.game.data.map9.moveTime;
+        } else {
+            G.game.data.trainingSpeed = 1;
+            mapT.moveTime = G.game.data.map1.moveTime;
+        }
 
         // #debugCode
         if (G.game.dbg.aiTraining != null) {
@@ -34,7 +51,7 @@ public class Training extends MapManager {
         for (int i = 0; i < G.game.data.players.size; i++) {
             Map m = new Map(this);
             m.index = i;
-            m.setCfg(G.game.data.mapT);
+            m.setCfg(mapT);
             m.name = G.game.data.players.get(i).name;
             maps.add(m);
             G.game.input.addTarget(m);

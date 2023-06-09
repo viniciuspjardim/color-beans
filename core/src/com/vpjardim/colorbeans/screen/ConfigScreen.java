@@ -54,8 +54,8 @@ public class ConfigScreen extends ScreenBase {
     private TextField player2;
     private TextField player3;
     private TextField player4;
-
     private TextField stageTF;
+    private TextField trainingSpeedTF;
 
     private EventListener specialKeyDown;
 
@@ -104,6 +104,7 @@ public class ConfigScreen extends ScreenBase {
 
         Label playersL = new Label("Players:", labelStyle);
         Label stageL = new Label("Current Stage (1-9):", labelStyle);
+        Label trainingSpeedL = new Label("Training Speed (1-5):", labelStyle);
         Label videoL = new Label("No content available yet.", labelStyle);
 
         player1 = new TextField("", G.game.skin, "tField");
@@ -112,6 +113,7 @@ public class ConfigScreen extends ScreenBase {
         player4 = new TextField("", G.game.skin, "tField");
 
         stageTF = new TextField(Integer.toString(G.game.data.campaignCurrentStage), G.game.skin, "tField");
+        trainingSpeedTF = new TextField(Integer.toString(G.game.data.trainingSpeed), G.game.skin, "tField");
 
         final Array<Cfg.Player> pls = G.game.data.players;
 
@@ -233,7 +235,7 @@ public class ConfigScreen extends ScreenBase {
         tabT.add(inputButt).width(200);
         tabT.add(videoButt).width(200);
 
-        gameT.add(playersL);
+        gameT.add(playersL).padTop(8);
         gameT.row();
         gameT.add(player1).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
@@ -244,9 +246,14 @@ public class ConfigScreen extends ScreenBase {
         gameT.add(player4).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
-        gameT.add(stageL);
+        gameT.add(stageL).padTop(20);
         gameT.row();
         gameT.add(stageTF).expandX().fill().pad(0, 20, 0, 20);
+        gameT.row();
+
+        gameT.add(trainingSpeedL).padTop(8);
+        gameT.row();
+        gameT.add(trainingSpeedTF).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
         videoT.add(videoL).expand().fill();
@@ -392,6 +399,15 @@ public class ConfigScreen extends ScreenBase {
 
                 if (stageNumber >= 1 && stageNumber <= 9)
                     G.game.data.campaignCurrentStage = stageNumber;
+            } catch (NumberFormatException error) {}
+        }
+
+        if (!trainingSpeedTF.getText().equals("")) {
+            try {
+                int trainingSpeed = Integer.parseInt(trainingSpeedTF.getText());
+
+                if (trainingSpeed >= 1 && trainingSpeed <= 5)
+                    G.game.data.trainingSpeed = trainingSpeed;
             } catch (NumberFormatException error) {}
         }
 

@@ -64,10 +64,6 @@ public class Db {
     public final transient Cfg.Map map7 = new Cfg.Map();
     public final transient Cfg.Map map8 = new Cfg.Map();
     public final transient Cfg.Map map9 = new Cfg.Map();
-
-    public final transient Cfg.Map mapT1 = new Cfg.Map();
-    public final transient Cfg.Map mapT2 = new Cfg.Map();
-
     public final transient Cfg.Ai ai1 = new Cfg.Ai();
     public final transient Cfg.Ai ai2 = new Cfg.Ai();
     public final transient Cfg.Ai ai3 = new Cfg.Ai();
@@ -107,6 +103,8 @@ public class Db {
 
     public int campaignCurrentStage = 1;
 
+    public int trainingSpeed = 1;
+
     /**
      * The keyboard profiles are used to enable 2 or more players play in the same
      * keyboard
@@ -119,8 +117,6 @@ public class Db {
      * manufactures
      */
     public Array<Profile> ctrlProfs = new Array<>();
-
-    public Cfg.Map mapT = null;
 
     public int escBt = 0;
 
@@ -174,17 +170,6 @@ public class Db {
         map7.moveTime = new float[] { 0, 0.16f, 15, 0.14f, 15, 0.12f, 15, 0.11f, 15, 0.10f };
         map8.moveTime = new float[] { 0, 0.12f, 15, 0.11f, 15, 0.10f, 15, 0.09f, 15, 0.08f };
         map9.moveTime = new float[] { 0, 0.11f, 15, 0.10f, 15, 0.09f, 15, 0.08f, 15, 0.07f };
-
-        // Training mode player fall speed default options
-        mapT1.moveTime = new float[] { 0, 0.30f, 15, 0.26f, 15, 0.22f, 15, 0.18f, 15, 0.16f };
-        mapT2.moveTime = new float[] {
-                0, 0.50f, 15, 0.40f, 15, 0.32f, 15, 0.16f,
-                15, 0.32f, 15, 0.24f, 15, 0.18f, 15, 0.12f,
-                15, 0.18f, 15, 0.16f, 15, 0.14f, 15, 0.10f,
-                15, 0.14f, 15, 0.12f, 15, 0.11f, 15, 0.08f,
-                15, 0.11f, 15, 0.10f, 15, 0.09f, 15, 0.07f,
-                15, 0.09f,
-        };
 
         // Ai used on campaign stages
         ai1.downKeyMin = 0.0f;
@@ -274,7 +259,6 @@ public class Db {
      * can be overwritten
      */
     public void initPreferences() {
-
         players.add(new Cfg.Player("Player"));
 
         // Keyboard key profiles
@@ -380,9 +364,6 @@ public class Db {
             p.button3 = 0;
             p.button4 = 2;
         }
-
-        // Current training mode player fall speed
-        mapT = mapT1;
 
         escBt = Keys.ESCAPE;
     }
