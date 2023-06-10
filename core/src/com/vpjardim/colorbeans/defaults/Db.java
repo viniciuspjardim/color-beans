@@ -118,8 +118,6 @@ public class Db {
      */
     public Array<Profile> ctrlProfs = new Array<>();
 
-    public int escBt = 0;
-
     /** Init constants (default values) */
     public Db() {
         COLORS.put(1, "beans/red");
@@ -364,8 +362,6 @@ public class Db {
             p.button3 = 0;
             p.button4 = 2;
         }
-
-        escBt = Keys.ESCAPE;
     }
 
     /**

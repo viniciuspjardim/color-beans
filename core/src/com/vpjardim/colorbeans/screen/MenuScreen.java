@@ -6,7 +6,6 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -43,8 +42,9 @@ public class MenuScreen extends ScreenBase {
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
 
-            if (key == G.game.data.escBt || key == Input.Keys.BACK)
+            if (G.isBackKey(key)) {
                 Gdx.app.exit();
+            }
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);

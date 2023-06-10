@@ -4,7 +4,6 @@
 
 package com.vpjardim.colorbeans.screen;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -31,8 +30,10 @@ public class CreditsScreen extends ScreenBase {
 
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if (key == G.game.data.escBt || key == Input.Keys.BACK)
+
+            if (G.isBackKey(key)) {
                 action = ACT_NEXT;
+            }
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);

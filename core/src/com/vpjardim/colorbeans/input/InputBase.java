@@ -9,7 +9,6 @@ package com.vpjardim.colorbeans.input;
  *         2015/07/13
  */
 public interface InputBase {
-
     int UP_KEY = 0;
     int RIGHT_KEY = 1;
     int DOWN_KEY = 2;

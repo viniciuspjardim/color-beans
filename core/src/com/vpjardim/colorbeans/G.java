@@ -6,6 +6,7 @@ package com.vpjardim.colorbeans;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -76,12 +77,20 @@ public class G extends Game {
     // #debugCode
     public Dbg dbg;
 
+    public static boolean isBackKey(int key) {
+        return key == Keys.BACK || key == Keys.ESCAPE || key == Keys.HOME;
+    }
+
     @Override
     public void create() {
         // Most things are loaded in the LoadingScreen class. See explanation there.
 
         game = (G) Gdx.app.getApplicationListener();
-        Gdx.input.setCatchBackKey(true);
+
+        Gdx.input.setCatchKey(Keys.BACK, true);
+        Gdx.input.setCatchKey(Keys.ESCAPE, true);
+        Gdx.input.setCatchKey(Keys.HOME, true);
+
         Tween.setCombinedAttributesLimit(5);
 
         G.width = Gdx.graphics.getWidth();
@@ -103,7 +112,7 @@ public class G extends Game {
         // dbg.logLevel = Application.LOG_DEBUG;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
-        // dbg.aiTraining = new int[] {0, 3, 3, 3};
+        // dbg.aiTraining = new int[] {3, 3, 3, 3};
         // dbg.on();
 
         screens = new ScreenManager();

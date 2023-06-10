@@ -4,8 +4,8 @@
 
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -71,11 +71,15 @@ public class PlayScreen extends ScreenBase {
         // Special key event
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
-            if (key == G.game.data.escBt || key == Input.Keys.BACK) {
-                if (menuVisible) {
+
+            if (G.isBackKey(key)) {
+                // In WebGL this event is called four times it no pauses if we use btStartDown()
+                if (Gdx.app.getType() == Application.ApplicationType.WebGL) {
+                    manager.pause(0, true);
+                } else {
                     manager.maps.first().btStartDown();
+                    menuVisible = true;
                 }
-                menuVisible = true;
             }
         };
 
