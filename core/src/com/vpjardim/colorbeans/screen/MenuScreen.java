@@ -25,9 +25,6 @@ import com.vpjardim.colorbeans.events.EventListener;
  *         2015/12/06
  */
 public class MenuScreen extends ScreenBase {
-
-    // TODO: finish falling beans animation
-
     public static final int ACT_PLAY = 10;
     public static final int ACT_TRAINING = 11;
     public static final int ACT_SCORE = 12;
@@ -147,6 +144,7 @@ public class MenuScreen extends ScreenBase {
     @Override
     public void render(float delta) {
         super.render(delta);
+
         G.game.beansAnim.update();
 
         G.game.batch.begin();

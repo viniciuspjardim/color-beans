@@ -9,10 +9,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.PixmapIO;
-import com.badlogic.gdx.utils.BufferUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
@@ -24,7 +20,6 @@ import com.vpjardim.colorbeans.input.TargetBase;
  *         2015/12/05
  */
 public class ScreenBase implements Screen, TargetBase {
-
     public static final int ACT_RUNNING = 1;
     public static final int ACT_NEXT = 2;
 
@@ -34,8 +29,7 @@ public class ScreenBase implements Screen, TargetBase {
     protected OrthographicCamera cam;
     protected Viewport viewport;
 
-    // TODO: review usage of this field, when false it disable esc and print screen
-    // buttons
+    // TODO: review usage of this field, when false it disable esc and print screen buttons
     protected boolean manageInput = true;
 
     public float time;
@@ -65,7 +59,7 @@ public class ScreenBase implements Screen, TargetBase {
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(ScreenBase.bgColor.r, ScreenBase.bgColor.g, ScreenBase.bgColor.b, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         time += delta;
     }

@@ -50,7 +50,7 @@ public class LoadingScreen extends ScreenBase {
     }
 
     private void loadStuff() {
-        G.scale = G.height / 720f;
+        G.scale = G.height / 1080f;
 
         G.style.setDefaults();
         G.style.scale(G.scale);
@@ -72,10 +72,10 @@ public class LoadingScreen extends ScreenBase {
         param.fontFileName = "font/roboto.ttf";
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.shadowColor = new Color(0x00000040);
-        param.fontParameters.shadowOffsetX = 2;
-        param.fontParameters.shadowOffsetY = 4;
+        param.fontParameters.shadowOffsetX = 0;
+        param.fontParameters.shadowOffsetY = 2;
         param.fontParameters.borderColor = new Color(0x000000ff);
-        param.fontParameters.borderWidth = 2;
+        param.fontParameters.borderWidth = 1;
         G.game.assets.load("roboto_shadow.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -88,7 +88,7 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = Color.WHITE;
         param.fontParameters.borderColor = Color.BLACK;
-        param.fontParameters.borderWidth = 4;
+        param.fontParameters.borderWidth = 2;
         G.game.assets.load("dimbo_white.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -178,10 +178,8 @@ public class LoadingScreen extends ScreenBase {
         super.render(delta);
 
         // Only start loading after the first frame to avoid a white screen blink at the
-        // startup.
-        // Spite using AssetManager, that load things at a nonblocking method (other
-        // thread),
-        // it takes a while, sufficient to cause white screen on the game startup.
+        // startup. Spite using AssetManager, that load things at a nonblocking method (other
+        // thread), it takes a while, sufficient to cause white screen on the game startup.
         if (frameCount == 1) {
             loadStuff();
             G.game.sr = new ShapeRenderer();
@@ -193,7 +191,6 @@ public class LoadingScreen extends ScreenBase {
 
         // If loading has started but not finished draw progress bar
         if (frameCount > 2 && !G.game.assets.update()) {
-
             final int width = (int) (Math.min(0.8f * G.height, 0.8 * G.width));
             final int height = 20;
             final int x = (int) (G.width / 2f - width / 2f);
@@ -217,7 +214,6 @@ public class LoadingScreen extends ScreenBase {
 
         // If stuff has done loading, init some vars and go to the next screen
         if (frameCount > 2 && G.game.assets.update()) {
-
             action = ScreenBase.ACT_NEXT;
 
             // After loading is done we can create atlas and skin

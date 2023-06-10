@@ -40,7 +40,6 @@ import aurelienribon.tweenengine.TweenManager;
  *         2016/09/02
  */
 public class PlayScreen extends ScreenBase {
-
     public static final int ACT_MENU = 10;
     public static final int ACT_CREDITS = 11;
 
@@ -67,7 +66,6 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void show() {
-
         super.show();
 
         // Special key event
@@ -158,7 +156,6 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void render(float delta) {
-
         super.render(delta);
 
         transition.update(delta);
@@ -254,7 +251,6 @@ public class PlayScreen extends ScreenBase {
      * Android). The background is drawn only when the screen is resized
      */
     public void updateCache() {
-
         // When the app is minimized the size of the window is 0x0 px and FrameBuffer
         // would throw an exception if it's constructed. Because of this the cache is
         // not updated

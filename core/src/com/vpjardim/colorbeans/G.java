@@ -126,6 +126,7 @@ public class G extends Game {
     public void resize(int width, int height) {
         G.width = width;
         G.height = height;
+
         if (screen != null)
             screen.resize(width, height);
     }
@@ -137,6 +138,6 @@ public class G extends Game {
         batch.dispose();
         sr.dispose();
         atlas.dispose();
-        // Skin is disposed when assets is disposed
+        // The skin is disposed when assets are disposed
     }
 }
