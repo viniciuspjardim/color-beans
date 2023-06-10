@@ -13,7 +13,6 @@ import com.vpjardim.colorbeans.core.Dbg;
  *         2015/04/03
  */
 public class ControllerInput implements InputBase, ControllerListener {
-
     private TargetBase target;
     public Profile p;
     public Controller gdxController;
@@ -38,7 +37,6 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     /** Change the state of the given key to the isDown value */
     public void keyEvent(int key, boolean isDown) {
-
         // If the key is already in the given isDown state, do nothing
         if (InputBase.getKeyMapKey(keyMap, key) == isDown)
             return;
@@ -111,9 +109,8 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public boolean buttonDown(Controller controller, int keycode) {
-
         // #debugCode
-        Dbg.dbg(Dbg.tag(this), "buttonDown -> keycode = " + keycode);
+        Dbg.dbg(Dbg.tag(this), "[" + id + "] buttonDown -> keycode = " + keycode);
 
         if (target == null)
             return true;
@@ -156,9 +153,8 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public boolean buttonUp(Controller controller, int keycode) {
-
         // #debugCode
-        Dbg.dbg(Dbg.tag(this), "buttonUp -> keycode = " + keycode);
+        Dbg.dbg(Dbg.tag(this), "[" + id + "] buttonUp   -> keycode = " + keycode);
 
         if (target == null)
             return true;
@@ -206,9 +202,8 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
-
         // #debugCode
-        Dbg.dbg(Dbg.tag(this), "axisMoved -> axisIndex = " + axisIndex + "; value = " + value);
+        Dbg.dbg(Dbg.tag(this), "[" + id + "] axisMoved -> axisIndex = " + axisIndex + "; value = " + value);
 
         int val = Math.round(value);
 

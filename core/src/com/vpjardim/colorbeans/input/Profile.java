@@ -17,7 +17,6 @@ import com.vpjardim.colorbeans.core.Dbg;
  *         2017/04/30
  */
 public class Profile {
-
     public static final int UNDEFINED = -1;
 
     /** Up key. Internal code = 0 */
@@ -48,7 +47,6 @@ public class Profile {
     public int button4;
 
     public Profile(int... keys) {
-
         if (keys != null && keys.length == 9) {
             up = keys[0];
             right = keys[1];

@@ -36,7 +36,6 @@ public class KeyboardInput implements InputBase, InputProcessor {
 
     /** Change the state of the given key to the isDown value */
     public void keyEvent(int key, boolean isDown) {
-
         // If the key is already in the given isDown state, do nothing
         if (InputBase.getKeyMapKey(keyMap, key) == isDown)
             return;
@@ -73,14 +72,12 @@ public class KeyboardInput implements InputBase, InputProcessor {
 
     @Override
     public void update() {
-
-        // Dbg.print("kb:" + InputBase.keyMapToString(keyMapOld, keyMap, event));
-
         // These flowing 2 lines changes keyMapOld only the bits that had no events in
         // the last update. This is done because keyMapOld needs to stay one update
         // before keyMap.
         keyMapOld = keyMap;
         keyMapOld = (short) (keyMapOld ^ event);
+
         // Clear event bits
         event = 0;
     }
@@ -112,9 +109,8 @@ public class KeyboardInput implements InputBase, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-
         // #debugCode
-        Dbg.dbg(Dbg.tag(this), "keyDown -> keycode = " + keycode);
+        Dbg.dbg(Dbg.tag(this), "[" + id + "] keyDown -> keycode = " + keycode);
 
         if (target == null)
             return false;
@@ -167,9 +163,8 @@ public class KeyboardInput implements InputBase, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-
         // #debugCode
-        Dbg.dbg(Dbg.tag(this), "keyUp -> keycode = " + keycode);
+        Dbg.dbg(Dbg.tag(this), "[" + id + "] keyUp   -> keycode = " + keycode);
 
         if (target == null)
             return false;
