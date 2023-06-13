@@ -2,41 +2,30 @@
 
 ![bean](android/res/drawable-xhdpi/ic_launcher.png)
 
-Color Beans is a Tetris like blocks (called beans) game. While in Tetris
-the goal is to complete rows of blocks, in Color Beans the goal is to
-link beans of the same color. If there are at least 4 beans of the same
-color linked together, they will be freed (deleted) and the player will
-score.
+Color Beans is a Tetris-like blocks game. While in Tetris the goal is to complete rows of blocks, in Color Beans the goal is to link beans of the same color. If there are at least 4 beans of the same color linked together, they will be freed (deleted) and the player will score.
 
-This game is a clone of Dr. Robotnik's Mean Bean Machine (called Puyo
-Puyo in Japan), but it does not use any assets or code from the original
-game. This project is for learn and showcase purpose only.
+This game is a clone of Dr. Robotnik's Mean Bean Machine (called Puyo Puyo in Japan), but it does not use any assets or code from the original game. This project is for learn and showcase purpose only.
 
 ## About
 
-This game is made using the libGDX framework and it's cross-platform. It
-should run on Windows, Linux, macOS, Android, iOS and WebGL enabled
-browsers.
+This game is made using the libGDX framework and it's cross-platform. It should run on Windows, Linux, macOS, Android, iOS and WebGL enabled browsers.
 
 [Play In The Browser Now (Alpha)](https://www.viniciusjardim.com/p/color-beans)
 
-###### Features
+##### Features
 
-* High resolution sprites
-* Support for different screen sizes and screen rotation
-* Up to 4 local players in split screen mode
-* Multiple players using the same keyboard
-* Support for gamepads
-* Custom touch input for mobile devices
-* Use your cellphone as a controller to desktop and vice versa (Network controller)
-* Campaign mode where the player duels the AI
-* Stages of different difficulties in campaign mode
+* High resolution sprites.
+* Support for different screen sizes and screen rotation.
+* Up to 4 local players in split screen mode.
+* Multiple players using the same keyboard.
+* Support for gamepads.
+* Custom touch input for mobile devices.
+* Campaign mode where the player duels the AI.
+* Stages of different difficulties in campaign mode.
 
-For more details about the game mechanics, watch videos of the Dr.
-Robotnik's Mean Bean Machine game or read the source code documentation,
-for example, the [Map](core/src/com/vpjardim/colorbeans/Map.java) class.
+For more details about the game mechanics, watch videos of the Dr. Robotnik's Mean Bean Machine game or read the source code documentation, for example, the [Map](core/src/com/vpjardim/colorbeans/Map.java) class.
 
-> Color Beans is in pre alpha stage. Do not expect a finished game.
+> Color Beans is in alpha stage. Do not expect a finished game.
 
 ## Gallery
 
