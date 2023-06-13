@@ -4,7 +4,7 @@
 
 Color Beans is a Tetris-like blocks game. While in Tetris the goal is to complete rows of blocks, in Color Beans the goal is to link beans of the same color. If there are at least 4 beans of the same color linked together, they will be freed (deleted) and the player will score.
 
-This game is a clone of Dr. Robotnik's Mean Bean Machine (called Puyo Puyo in Japan), but it does not use any assets or code from the original game. This project is for learn and showcase purpose only.
+This game is a clone of Dr. Robotnik's Mean Bean Machine (called Puyo Puyo in Japan), but it does not use any assets or code from the original game. This project is for learning and showcase purposes only.
 
 ## About
 
