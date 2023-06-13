@@ -18,7 +18,7 @@ This game is made using the libGDX framework and it's cross-platform. It should 
 * Support for different screen sizes and screen rotation.
 * Up to 4 local players in split screen mode.
 * Multiple players using the same keyboard.
-* Support for gamepads.
+* Support for gamepads (even in the browser).
 * Custom touch input for mobile devices.
 * Campaign mode where the player duels the AI.
 * Stages of different difficulties in campaign mode.
