@@ -8,10 +8,8 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.IntMap;
@@ -31,14 +29,6 @@ import com.vpjardim.colorbeans.input.Profile;
  *         2016/09/02
  */
 public class Db {
-    // Initialize when the application starts
-    public static Color[] screenBgColor = {
-            new Color(0x20000000), // Dark red
-            new Color(0x000A0000), // Dark green
-            new Color(0x00002000), // Dark blue
-            new Color(0x10001000), // Dark purple
-    };
-
     // Initialized after loading screen finished loading
 
     public transient IntMap<TextureAtlas.AtlasRegion> BEANS_REG = new IntMap<>();
@@ -458,9 +448,5 @@ public class Db {
         }
 
         return data;
-    }
-
-    public static Color bgColor() {
-        return screenBgColor[MathUtils.random(0, screenBgColor.length - 1)];
     }
 }
