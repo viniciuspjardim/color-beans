@@ -5,6 +5,7 @@
 package com.vpjardim.colorbeans.core;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.vpjardim.colorbeans.G;
 
 /**
@@ -21,7 +22,7 @@ public class Audio {
         playingMusic.setLooping(loop);
 
         if (resetVolume) {
-            playingMusic.setVolume(0.5f);
+            playingMusic.setVolume(G.game.data.musicVolume);
         }
     }
 
@@ -35,5 +36,9 @@ public class Audio {
 
     public void stopMusic() {
         playingMusic.stop();
+    }
+
+    public void playEffect(String effect) {
+        G.game.assets.get(effect, Sound.class).play(G.game.data.effectsVolume);
     }
 }

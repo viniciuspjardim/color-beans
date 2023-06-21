@@ -55,6 +55,8 @@ public class ConfigScreen extends ScreenBase {
     private TextField player4;
     private TextField stageTF;
     private TextField trainingSpeedTF;
+    private TextField musicVolumeTF;
+    private TextField effectsVolumeTF;
 
     private EventListener specialKeyDown;
 
@@ -106,7 +108,8 @@ public class ConfigScreen extends ScreenBase {
         Label playersL = new Label("Players:", labelStyle);
         Label stageL = new Label("Current Stage (1-9):", labelStyle);
         Label trainingSpeedL = new Label("Training Speed (1-5):", labelStyle);
-        Label videoL = new Label("No content available yet.", labelStyle);
+        Label musicVolumeL = new Label("Music Volume (0-10):", labelStyle);
+        Label effectsVolumeL = new Label("Effects Volume (0-10):", labelStyle);
 
         player1 = new TextField("", G.game.skin, "tField");
         player2 = new TextField("", G.game.skin, "tField");
@@ -115,6 +118,8 @@ public class ConfigScreen extends ScreenBase {
 
         stageTF = new TextField(Integer.toString(G.game.data.campaignCurrentStage), G.game.skin, "tField");
         trainingSpeedTF = new TextField(Integer.toString(G.game.data.trainingSpeed), G.game.skin, "tField");
+        musicVolumeTF = new TextField(Integer.toString((int)(G.game.data.musicVolume * 10)), G.game.skin, "tField");
+        effectsVolumeTF = new TextField(Integer.toString((int)(G.game.data.effectsVolume * 10)), G.game.skin, "tField");
 
         final Array<Cfg.Player> pls = G.game.data.players;
 
@@ -137,7 +142,7 @@ public class ConfigScreen extends ScreenBase {
         final TextButton inputButt = new TextButton("Input",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
-        final TextButton videoButt = new TextButton("Video",
+        final TextButton videoButt = new TextButton("Aud / Vid",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
         // Let only one tab button be checked at a time
@@ -217,7 +222,6 @@ public class ConfigScreen extends ScreenBase {
         float padM = G.style.padMedium;
 
         playersL.setAlignment(Align.topLeft);
-        videoL.setAlignment(Align.center);
 
         titleT.pad(padM);
         contentT.defaults().align(Align.left);
@@ -257,7 +261,15 @@ public class ConfigScreen extends ScreenBase {
         gameT.add(trainingSpeedTF).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
-        videoT.add(videoL).expand().fill();
+        videoT.add(musicVolumeL).padTop(8);
+        videoT.row();
+        videoT.add(musicVolumeTF).expandX().fill().pad(0, 20, 0, 20);
+        videoT.row();
+
+        videoT.add(effectsVolumeL).padTop(8);
+        videoT.row();
+        videoT.add(effectsVolumeTF).expandX().fill().pad(0, 20, 0, 20);
+        videoT.row();
 
         inputLoop();
 
@@ -392,23 +404,33 @@ public class ConfigScreen extends ScreenBase {
         if (!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
 
-        if (!stageTF.getText().equals("")) {
-            try {
-                int stageNumber = Integer.parseInt(stageTF.getText());
+        try {
+            int stageNumber = Integer.parseInt(stageTF.getText());
 
-                if (stageNumber >= 1 && stageNumber <= 9)
-                    G.game.data.campaignCurrentStage = stageNumber;
-            } catch (NumberFormatException error) {}
-        }
+            if (stageNumber >= 1 && stageNumber <= 9)
+                G.game.data.campaignCurrentStage = stageNumber;
+        } catch (NumberFormatException error) {}
 
-        if (!trainingSpeedTF.getText().equals("")) {
-            try {
-                int trainingSpeed = Integer.parseInt(trainingSpeedTF.getText());
+        try {
+            int trainingSpeed = Integer.parseInt(trainingSpeedTF.getText());
 
-                if (trainingSpeed >= 1 && trainingSpeed <= 5)
-                    G.game.data.trainingSpeed = trainingSpeed;
-            } catch (NumberFormatException error) {}
-        }
+            if (trainingSpeed >= 1 && trainingSpeed <= 5)
+                G.game.data.trainingSpeed = trainingSpeed;
+        } catch (NumberFormatException error) {}
+
+        try {
+            int musicVolume = Integer.parseInt(musicVolumeTF.getText());
+
+            if (musicVolume >= 0 && musicVolume <= 10)
+                G.game.data.musicVolume = musicVolume / 10f;
+        } catch (NumberFormatException error) {}
+
+        try {
+            int effectsVolume = Integer.parseInt(effectsVolumeTF.getText());
+
+            if (effectsVolume >= 0 && effectsVolume <= 10)
+                G.game.data.effectsVolume = effectsVolume / 10f;
+        } catch (NumberFormatException error) {}
 
         int controllerCount = 0;
         int keyboardCount = 0;

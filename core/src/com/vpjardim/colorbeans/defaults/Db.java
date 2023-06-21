@@ -95,6 +95,10 @@ public class Db {
 
     public int trainingSpeed = 1;
 
+    public float musicVolume = 0.4f;
+
+    public float effectsVolume = 0.8f;
+
     /**
      * The keyboard profiles are used to enable 2 or more players play in the same
      * keyboard

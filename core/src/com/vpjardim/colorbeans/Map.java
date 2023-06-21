@@ -8,7 +8,6 @@ import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
@@ -161,7 +160,7 @@ public class Map implements TargetBase {
                 map.anim.shake();
 
                 if (map.trashSound == TRASH_SOUND_REQUESTED) {
-                    G.game.assets.get("audio/trash.ogg", Sound.class).play();
+                    G.game.audio.playEffect("audio/trash.ogg");
                     map.trashSound = TRASH_SOUND_PLAYING;
                 }
 
@@ -364,7 +363,7 @@ public class Map implements TargetBase {
                 map.shuffleColAcceleration(0.8f);
                 map.colAcceleration[map.b.length / 2] = map.gravityFallAcceleration * 0.8f;
                 map.anim.gameOver();
-                G.game.assets.get("audio/lostfall.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/lostfall.ogg");
             }
 
             @Override
@@ -1130,37 +1129,36 @@ public class Map implements TargetBase {
     }
 
     private void playScoreSound() {
-
         if (index % 2 == 0) {
             if (chainPowerCount == 1)
-                G.game.assets.get("audio/chain_11.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_11.ogg");
             else if (chainPowerCount == 2)
-                G.game.assets.get("audio/chain_12.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_12.ogg");
             else if (chainPowerCount == 3)
-                G.game.assets.get("audio/chain_13.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_13.ogg");
             else if (chainPowerCount == 4)
-                G.game.assets.get("audio/chain_14.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_14.ogg");
             else if (chainPowerCount == 5)
-                G.game.assets.get("audio/chain_15.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_15.ogg");
             else if (chainPowerCount == 6)
-                G.game.assets.get("audio/chain_16.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_16.ogg");
             else if (chainPowerCount >= 7)
-                G.game.assets.get("audio/chain_17.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_17.ogg");
         } else {
             if (chainPowerCount == 1)
-                G.game.assets.get("audio/chain_21.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_21.ogg");
             else if (chainPowerCount == 2)
-                G.game.assets.get("audio/chain_22.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_22.ogg");
             else if (chainPowerCount == 3)
-                G.game.assets.get("audio/chain_23.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_23.ogg");
             else if (chainPowerCount == 4)
-                G.game.assets.get("audio/chain_24.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_24.ogg");
             else if (chainPowerCount == 5)
-                G.game.assets.get("audio/chain_25.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_25.ogg");
             else if (chainPowerCount == 6)
-                G.game.assets.get("audio/chain_26.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_26.ogg");
             else if (chainPowerCount >= 7)
-                G.game.assets.get("audio/chain_27.ogg", Sound.class).play();
+                G.game.audio.playEffect("audio/chain_27.ogg");
         }
     }
 
