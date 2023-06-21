@@ -154,6 +154,11 @@ public abstract class MapManager {
     }
 
     public void pause(int mapIndex, boolean paused) {
+        if (paused) {
+            G.game.audio.pauseMusic();
+        } else {
+            G.game.audio.playMusic();
+        }
 
         if (gameCfg.pauseAct == Cfg.Game.PAUSE_SELF) {
             Map m = maps.get(mapIndex);
@@ -170,7 +175,6 @@ public abstract class MapManager {
     }
 
     public void updatePausedStatus() {
-
         int pausedCont = 0;
 
         for (int i = 0; i < maps.size; i++) {

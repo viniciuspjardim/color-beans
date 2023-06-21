@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.animation.CamAccessor;
+import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.core.ScoreTable;
@@ -113,9 +114,8 @@ public class PlayScreen extends ScreenBase {
         table.setFillParent(true);
         menuVisible = true;
 
-        G.game.assets.get("audio/music1.ogg", Music.class).setVolume(0.5f);
-        G.game.assets.get("audio/music1.ogg", Music.class).setLooping(true);
-        G.game.assets.get("audio/music1.ogg", Music.class).play();
+        G.game.audio.configMusic(Audio.MUSIC1, true, true);
+        G.game.audio.playMusic();
 
         TextButton resumeButt, menuButt;
 

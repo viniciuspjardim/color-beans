@@ -86,7 +86,6 @@ public class ScreenManager {
         // When the screen is done we change to the
         // next screen
         if (currScreen.isFinished()) {
-
             // dispose the resources of the current screen
             currScreen.dispose();
 

@@ -272,7 +272,6 @@ public class ConfigScreen extends ScreenBase {
     }
 
     private void inputLoop() {
-
         dirtInputT = false;
         inputT.clearChildren();
 
@@ -284,7 +283,6 @@ public class ConfigScreen extends ScreenBase {
 
         // Loop through inputs and show edit keys button for each one
         for (int i = 0; i < G.game.input.getInputs().size; i++) {
-
             final int index = i;
             final InputBase input = G.game.input.getInputs().get(i);
             final InputActor inputActor;

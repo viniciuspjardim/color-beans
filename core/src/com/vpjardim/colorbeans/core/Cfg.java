@@ -11,7 +11,6 @@ package com.vpjardim.colorbeans.core;
 public class Cfg {
 
     public static class Game {
-
         public static final int NET_LOCAL = 1;
         public static final int NET_SERVER = 2;
         public static final int NET_CLIENT = 3;

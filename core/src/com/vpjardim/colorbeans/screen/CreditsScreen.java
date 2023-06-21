@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
-import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
@@ -19,13 +18,11 @@ import com.vpjardim.colorbeans.events.EventListener;
  *         2016/12/13
  */
 public class CreditsScreen extends ScreenBase {
-
     private Stage stage;
     private EventListener specialKeyDown;
 
     @Override
     public void show() {
-
         super.show();
 
         specialKeyDown = (Event e) -> {
@@ -50,8 +47,6 @@ public class CreditsScreen extends ScreenBase {
 
         stage.addActor(table);
         table.setDebug(G.game.dbg.uiTable); // #debugCode
-
-        G.game.audio.playMusic(Audio.MUSIC3, true);
     }
 
     @Override
@@ -62,13 +57,9 @@ public class CreditsScreen extends ScreenBase {
     }
 
     @Override
-    public void hide() {
-        G.game.audio.stopMusic();
-    }
-
-    @Override
     public void dispose() {
         super.dispose();
+
         EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
         // Only dispose what does not come from game.assets. Do not dispose skin.
         stage.dispose();
