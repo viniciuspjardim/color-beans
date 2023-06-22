@@ -14,7 +14,7 @@ This game is made using the [libGDX framework](https://github.com/libgdx/libgdx)
 
 * High resolution sprites.
 * Campaign mode where the player duels the AI.
-* Nine stages of progressive difficulty in the campaign mode.
+* Twelve stages of progressive difficulty in the campaign mode.
 * Support for different screen sizes and screen rotation.
 * Up to 4 local players in split screen mode.
 * Multiple players using the same keyboard.
