@@ -17,7 +17,6 @@ import com.vpjardim.colorbeans.G;
  */
 
 public class MenuBeans {
-
     private final float MAX_OPACITY = 10F;
     private final float FRAME_TIME = 1f / 12f; // 12 frames per second
 
@@ -48,7 +47,6 @@ public class MenuBeans {
     private float size;
     private int widthMax;
     private int heightMax;
-
     private int beansCount;
 
     public MenuBeans() {
