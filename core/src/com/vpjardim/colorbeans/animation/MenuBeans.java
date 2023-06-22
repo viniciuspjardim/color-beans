@@ -34,7 +34,7 @@ public class MenuBeans {
     static int[] tiles = { 0, 2, 3, 4};
     static int[] animationTiles = { 0, 4, 0, 3};
 
-    private final Pool<Bean> pool = new Pool<Bean>(144) {
+    private final Pool<Bean> pool = new Pool<Bean>(240) {
         @Override
         protected Bean newObject() {
             return new Bean();
@@ -57,8 +57,8 @@ public class MenuBeans {
         for (int i = 0; i < beansCount; i++) {
             Bean bean = pool.obtain();
 
-            bean.x = (int) (MathUtils.random(widthMax) * size);
-            bean.y = (int) (MathUtils.random(heightMax) * size);
+            bean.x = (int) MathUtils.random(widthMax);
+            bean.y = (int) MathUtils.random(heightMax);
             bean.opacity = MathUtils.random(MAX_OPACITY);
             bean.opacitySign = MathUtils.randomBoolean() ? 1 : -1;
             bean.color = MathUtils.random(Block.CLR_A, 8);
@@ -74,12 +74,9 @@ public class MenuBeans {
     }
 
     public void resize() {
-        float w = G.width / 7f;
-        float h = G.height / 10f;
-        size = Math.min(w, h);
+        size = G.height / 10f;
         widthMax = (int) (G.width / size);
         heightMax = (int) (G.height / size);
-
         beansCount = widthMax * heightMax;
     }
 
@@ -104,8 +101,8 @@ public class MenuBeans {
             time = MathUtils.random(0.25f);
             Bean bean = pool.obtain();
 
-            bean.x = (int) (MathUtils.random(widthMax) * size);
-            bean.y = (int) (MathUtils.random(heightMax) * size);
+            bean.x = (int) MathUtils.random(widthMax);
+            bean.y = (int) MathUtils.random(heightMax);
             bean.opacity = MathUtils.random(0f);
             bean.opacitySign = 1f;
             bean.color = MathUtils.random(Block.CLR_A, 8);
@@ -169,7 +166,7 @@ public class MenuBeans {
             Bean bean = beans.get(i);
             tile = G.game.data.BEANS_REG.get(bean.color * 10000 + bean.tile);
             G.game.batch.setColor(1f, 1f, 1f, Math.min(bean.opacity, 0.16f));
-            G.game.batch.draw(tile, bean.x, bean.y, size, size);
+            G.game.batch.draw(tile, bean.x * size, bean.y * size, size, size);
         }
 
         G.game.batch.setColor(1f, 1f, 1f, 1f);
