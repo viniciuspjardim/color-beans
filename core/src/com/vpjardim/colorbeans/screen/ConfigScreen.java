@@ -106,10 +106,10 @@ public class ConfigScreen extends ScreenBase {
         Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
 
         Label playersL = new Label("Players:", labelStyle);
-        Label stageL = new Label("Current Stage (1-9):", labelStyle);
-        Label trainingSpeedL = new Label("Training Speed (1-5):", labelStyle);
-        Label musicVolumeL = new Label("Music Volume (0-10):", labelStyle);
-        Label effectsVolumeL = new Label("Effects Volume (0-10):", labelStyle);
+        Label stageL = new Label("Current Stage (1 - 12):", labelStyle);
+        Label trainingSpeedL = new Label("Training Speed (1 - 12):", labelStyle);
+        Label musicVolumeL = new Label("Music Volume (0 - 10):", labelStyle);
+        Label effectsVolumeL = new Label("Effects Volume (0 - 10):", labelStyle);
 
         player1 = new TextField("", G.game.skin, "tField");
         player2 = new TextField("", G.game.skin, "tField");
@@ -407,14 +407,14 @@ public class ConfigScreen extends ScreenBase {
         try {
             int stageNumber = Integer.parseInt(stageTF.getText());
 
-            if (stageNumber >= 1 && stageNumber <= 9)
+            if (stageNumber >= 1 && stageNumber <= 12)
                 G.game.data.campaignCurrentStage = stageNumber;
         } catch (NumberFormatException error) {}
 
         try {
             int trainingSpeed = Integer.parseInt(trainingSpeedTF.getText());
 
-            if (trainingSpeed >= 1 && trainingSpeed <= 5)
+            if (trainingSpeed >= 1 && trainingSpeed <= 12)
                 G.game.data.trainingSpeed = trainingSpeed;
         } catch (NumberFormatException error) {}
 

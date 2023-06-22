@@ -31,13 +31,27 @@ public class Training extends MapManager {
         if (G.game.data.trainingSpeed == 1) {
             mapT.moveTime = G.game.data.map1.moveTime;
         } else if (G.game.data.trainingSpeed == 2) {
-            mapT.moveTime = G.game.data.map3.moveTime;
+            mapT.moveTime = G.game.data.map2.moveTime;
         } else if (G.game.data.trainingSpeed == 3) {
-            mapT.moveTime = G.game.data.map5.moveTime;
+            mapT.moveTime = G.game.data.map3.moveTime;
         } else if (G.game.data.trainingSpeed == 4) {
-            mapT.moveTime = G.game.data.map7.moveTime;
+            mapT.moveTime = G.game.data.map4.moveTime;
         } else if (G.game.data.trainingSpeed == 5) {
+            mapT.moveTime = G.game.data.map5.moveTime;
+        } else if (G.game.data.trainingSpeed == 6) {
+            mapT.moveTime = G.game.data.map6.moveTime;
+        } else if (G.game.data.trainingSpeed == 7) {
+            mapT.moveTime = G.game.data.map7.moveTime;
+        } else if (G.game.data.trainingSpeed == 8) {
+            mapT.moveTime = G.game.data.map8.moveTime;
+        } else if (G.game.data.trainingSpeed == 9) {
             mapT.moveTime = G.game.data.map9.moveTime;
+        } else if (G.game.data.trainingSpeed == 10) {
+            mapT.moveTime = G.game.data.map10.moveTime;
+        } else if (G.game.data.trainingSpeed == 11) {
+            mapT.moveTime = G.game.data.map11.moveTime;
+        } else if (G.game.data.trainingSpeed == 12) {
+            mapT.moveTime = G.game.data.map12.moveTime;
         } else {
             G.game.data.trainingSpeed = 1;
             mapT.moveTime = G.game.data.map1.moveTime;

@@ -54,6 +54,10 @@ public class Db {
     public final transient Cfg.Map map7 = new Cfg.Map();
     public final transient Cfg.Map map8 = new Cfg.Map();
     public final transient Cfg.Map map9 = new Cfg.Map();
+    public final transient Cfg.Map map10 = new Cfg.Map();
+    public final transient Cfg.Map map11 = new Cfg.Map();
+    public final transient Cfg.Map map12 = new Cfg.Map();
+
     public final transient Cfg.Ai ai1 = new Cfg.Ai();
     public final transient Cfg.Ai ai2 = new Cfg.Ai();
     public final transient Cfg.Ai ai3 = new Cfg.Ai();
@@ -63,6 +67,9 @@ public class Db {
     public final transient Cfg.Ai ai7 = new Cfg.Ai();
     public final transient Cfg.Ai ai8 = new Cfg.Ai();
     public final transient Cfg.Ai ai9 = new Cfg.Ai();
+    public final transient Cfg.Ai ai10 = new Cfg.Ai();
+    public final transient Cfg.Ai ai11 = new Cfg.Ai();
+    public final transient Cfg.Ai ai12 = new Cfg.Ai();
 
     /**
      * Chain power from 1 to 24+. Ref: https://puyonexus.com/wiki/Chain_Power_Table
@@ -153,15 +160,18 @@ public class Db {
         trainingGame.lostAct = Cfg.Game.LOST_RESTART_PAUSED;
 
         // Camping maps player fall speed
-        map1.moveTime = new float[] { 0, 0.80f, 15, 0.70f, 15, 0.60f, 15, 0.50f, 15, 0.44f };
-        map2.moveTime = new float[] { 0, 0.70f, 15, 0.60f, 15, 0.50f, 15, 0.44f, 15, 0.38f };
-        map3.moveTime = new float[] { 0, 0.50f, 15, 0.44f, 15, 0.38f, 15, 0.32f, 15, 0.28f };
-        map4.moveTime = new float[] { 0, 0.40f, 15, 0.35f, 15, 0.30f, 15, 0.26f, 15, 0.22f };
-        map5.moveTime = new float[] { 0, 0.30f, 15, 0.26f, 15, 0.22f, 15, 0.18f, 15, 0.16f };
-        map6.moveTime = new float[] { 0, 0.22f, 15, 0.18f, 15, 0.16f, 15, 0.14f, 15, 0.12f };
-        map7.moveTime = new float[] { 0, 0.16f, 15, 0.14f, 15, 0.12f, 15, 0.11f, 15, 0.10f };
-        map8.moveTime = new float[] { 0, 0.12f, 15, 0.11f, 15, 0.10f, 15, 0.09f, 15, 0.08f };
-        map9.moveTime = new float[] { 0, 0.11f, 15, 0.10f, 15, 0.09f, 15, 0.08f, 15, 0.07f };
+        map1.moveTime = new float[] { 0, 0.80f, 15, 0.70f, 15, 0.62f, 15, 0.54f, 15, 0.48f };
+        map2.moveTime = new float[] { 0, 0.70f, 15, 0.62f, 15, 0.54f, 15, 0.48f, 15, 0.42f };
+        map3.moveTime = new float[] { 0, 0.62f, 15, 0.54f, 15, 0.48f, 15, 0.42f, 15, 0.36f };
+        map4.moveTime = new float[] { 0, 0.54f, 15, 0.48f, 15, 0.42f, 15, 0.36f, 15, 0.32f };
+        map5.moveTime = new float[] { 0, 0.48f, 15, 0.42f, 15, 0.36f, 15, 0.32f, 15, 0.28f };
+        map6.moveTime = new float[] { 0, 0.42f, 15, 0.36f, 15, 0.32f, 15, 0.28f, 15, 0.24f };
+        map7.moveTime = new float[] { 0, 0.36f, 15, 0.32f, 15, 0.28f, 15, 0.24f, 15, 0.20f };
+        map8.moveTime = new float[] { 0, 0.32f, 15, 0.28f, 15, 0.24f, 15, 0.20f, 15, 0.16f };
+        map9.moveTime = new float[] { 0, 0.28f, 15, 0.24f, 15, 0.20f, 15, 0.16f, 15, 0.12f };
+        map10.moveTime = new float[] { 0, 0.24f, 15, 0.20f, 15, 0.16f, 15, 0.12f, 15, 0.10f };
+        map11.moveTime = new float[] { 0, 0.20f, 15, 0.16f, 15, 0.12f, 15, 0.10f, 15, 0.08f };
+        map12.moveTime = new float[] { 0, 0.16f, 15, 0.12f, 15, 0.10f, 15, 0.08f, 15, 0.07f };
 
         // Ai used on campaign stages
         ai1.downKeyMin = 0.0f;
@@ -174,76 +184,103 @@ public class Db {
         ai1.trashMoves = 0.8f;
 
         ai2.downKeyMin = 0.0f;
-        ai2.downKeyMax = 0.1f;
-        ai2.doubtMin = 0.5f;
-        ai2.doubtMax = 0.7f;
+        ai2.downKeyMax = 0.0f;
+        ai2.doubtMin = 0.6f;
+        ai2.doubtMax = 0.8f;
         ai2.doubtFreqMin = 0.12f;
         ai2.doubtFreqMax = 0.18f;
         ai2.randomness = 0.75f;
         ai2.trashMoves = 0.7f;
 
         ai3.downKeyMin = 0.0f;
-        ai3.downKeyMax = 0.2f;
-        ai3.doubtMin = 0.4f;
+        ai3.downKeyMax = 0.1f;
+        ai3.doubtMin = 0.5f;
         ai3.doubtMax = 0.6f;
         ai3.doubtFreqMin = 0.1f;
         ai3.doubtFreqMax = 0.16f;
-        ai3.randomness = 0.55f;
+        ai3.randomness = 0.7f;
         ai3.trashMoves = 0.6f;
 
-        ai4.downKeyMin = 0.2f;
-        ai4.downKeyMax = 0.4f;
-        ai4.doubtMin = 0.3f;
+        ai4.downKeyMin = 0.1f;
+        ai4.downKeyMax = 0.2f;
+        ai4.doubtMin = 0.4f;
         ai4.doubtMax = 0.6f;
         ai4.doubtFreqMin = 0.08f;
         ai4.doubtFreqMax = 0.14f;
-        ai4.randomness = 0.35f;
-        ai4.trashMoves = 0.4f;
+        ai4.randomness = 0.6f;
+        ai4.trashMoves = 0.52f;
 
         ai5.downKeyMin = 0.2f;
-        ai5.downKeyMax = 0.5f;
+        ai5.downKeyMax = 0.3f;
         ai5.doubtMin = 0.1f;
         ai5.doubtMax = 0.4f;
         ai5.doubtFreqMin = 0.06f;
         ai5.doubtFreqMax = 0.14f;
-        ai5.randomness = 0.22f;
-        ai5.trashMoves = 0.2f;
+        ai5.randomness = 0.52f;
+        ai5.trashMoves = 0.46f;
 
-        ai6.downKeyMin = 0.4f;
-        ai6.downKeyMax = 0.8f;
+        ai6.downKeyMin = 0.3f;
+        ai6.downKeyMax = 0.5f;
         ai6.doubtMin = 0.1f;
         ai6.doubtMax = 0.3f;
         ai6.doubtFreqMin = 0.1f;
         ai6.doubtFreqMax = 0.14f;
-        ai6.randomness = 0.15f;
-        ai6.trashMoves = 0.1f;
+        ai6.randomness = 0.4f;
+        ai6.trashMoves = 0.4f;
 
-        ai7.downKeyMin = 0.6f;
-        ai7.downKeyMax = 0.9f;
-        ai7.doubtMin = 0f;
-        ai7.doubtMax = 0.2f;
+        ai7.downKeyMin = 0.4f;
+        ai7.downKeyMax = 0.6f;
+        ai7.doubtMin = 0.1f;
+        ai7.doubtMax = 0.25f;
         ai7.doubtFreqMin = 0.1f;
         ai7.doubtFreqMax = 0.18f;
-        ai7.randomness = 0.08f;
-        ai7.trashMoves = 0.05f;
+        ai7.randomness = 0.32f;
+        ai7.trashMoves = 0.32f;
 
-        ai8.downKeyMin = 0.8f;
-        ai8.downKeyMax = 1f;
+        ai8.downKeyMin = 0.5f;
+        ai8.downKeyMax = 0.7f;
         ai8.doubtMin = 0f;
-        ai8.doubtMax = 0.1f;
-        ai8.doubtFreqMin = 0f;
-        ai8.doubtFreqMax = 0.1f;
-        ai8.randomness = 0f;
-        ai8.trashMoves = 0f;
+        ai8.doubtMax = 0.2f;
+        ai8.doubtFreqMin = 0.08f;
+        ai8.doubtFreqMax = 0.12f;
+        ai8.randomness = 0.28f;
+        ai8.trashMoves = 0.28f;
 
-        ai9.downKeyMin = 1f;
-        ai9.downKeyMax = 1f;
+        ai9.downKeyMin = 0.6f;
+        ai9.downKeyMax = 0.8f;
         ai9.doubtMin = 0f;
-        ai9.doubtMax = 0f;
-        ai9.doubtFreqMin = 0f;
-        ai9.doubtFreqMax = 0f;
-        ai9.randomness = 0f;
-        ai9.trashMoves = 0f;
+        ai9.doubtMax = 0.15f;
+        ai9.doubtFreqMin = 0.05f;
+        ai9.doubtFreqMax = 0.1f;
+        ai9.randomness = 0.22f;
+        ai9.trashMoves = 0.22f;
+
+        ai10.downKeyMin = 0.7f;
+        ai10.downKeyMax = 0.9f;
+        ai10.doubtMin = 0f;
+        ai10.doubtMax = 0.1f;
+        ai10.doubtFreqMin = 0.05f;
+        ai10.doubtFreqMax = 0.06f;
+        ai10.randomness = 0.16f;
+        ai10.trashMoves = 0.16f;
+
+        ai11.downKeyMin = 0.8f;
+        ai11.downKeyMax = 1f;
+        ai11.doubtMin = 0f;
+        ai11.doubtMax = 0.1f;
+        ai11.doubtFreqMin = 0.04f;
+        ai11.doubtFreqMax = 0.05f;
+        ai11.randomness = 0.1f;
+        ai11.trashMoves = 0.1f;
+
+        ai12.downKeyMin = 1f;
+        ai12.downKeyMax = 1f;
+        ai12.doubtMin = 0f;
+        ai12.doubtMax = 0f;
+        ai12.doubtFreqMin = 0f;
+        ai12.doubtFreqMax = 0f;
+        ai12.randomness = 0f;
+        ai12.trashMoves = 0f;
     }
 
     /**

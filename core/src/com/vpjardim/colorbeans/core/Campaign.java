@@ -36,7 +36,7 @@ public class Campaign extends MapManager {
         aiMapNames = new Array<>();
 
         int start = G.game.data.campaignCurrentStage;
-        int end = 9;
+        int end = 12;
 
         // #debugCode
         if (G.game.dbg.on) {
@@ -64,19 +64,19 @@ public class Campaign extends MapManager {
         if (start <= 4 && end >= 4) {
             mapCfgs.add(G.game.data.map4);
             aiCfgs.add(G.game.data.ai4);
-            aiMapNames.add("4. BlackCat");
+            aiMapNames.add("4. MadCow");
         }
 
         if (start <= 5 && end >= 5) {
             mapCfgs.add(G.game.data.map5);
             aiCfgs.add(G.game.data.ai5);
-            aiMapNames.add("5. EagleEye");
+            aiMapNames.add("5. BlackCat");
         }
 
         if (start <= 6 && end >= 6) {
             mapCfgs.add(G.game.data.map6);
             aiCfgs.add(G.game.data.ai6);
-            aiMapNames.add("6. CheetahSpirit");
+            aiMapNames.add("6. EagleEye");
         }
 
         if (start <= 7 && end >= 7) {
@@ -88,13 +88,31 @@ public class Campaign extends MapManager {
         if (start <= 8 && end >= 8) {
             mapCfgs.add(G.game.data.map8);
             aiCfgs.add(G.game.data.ai8);
-            aiMapNames.add("8. DeepnessGod");
+            aiMapNames.add("8. RedStorm");
         }
 
         if (start <= 9 && end >= 9) {
             mapCfgs.add(G.game.data.map9);
             aiCfgs.add(G.game.data.ai9);
-            aiMapNames.add("9. Creator");
+            aiMapNames.add("9. BlackLight");
+        }
+
+        if (start <= 10 && end >= 10) {
+            mapCfgs.add(G.game.data.map10);
+            aiCfgs.add(G.game.data.ai10);
+            aiMapNames.add("10. DeepnessGod");
+        }
+
+        if (start <= 11 && end >= 11) {
+            mapCfgs.add(G.game.data.map11);
+            aiCfgs.add(G.game.data.ai11);
+            aiMapNames.add("11. HellKeeper");
+        }
+
+        if (start <= 12 && end >= 12) {
+            mapCfgs.add(G.game.data.map12);
+            aiCfgs.add(G.game.data.ai12);
+            aiMapNames.add("12. TheCreator");
         }
 
         G.game.input.targetsClear();
@@ -132,8 +150,6 @@ public class Campaign extends MapManager {
 
         // #DebugCode the content is needed, just the if is debug
         if (!G.game.dbg.aiDisableMap1) {
-            // TODO: Ai3 seams laggy in android. Debug (probably rendering too slow, not
-            // Ai3)
             aiMap.ai = new Ai3();
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }
