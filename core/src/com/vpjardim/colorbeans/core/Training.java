@@ -25,37 +25,7 @@ public class Training extends MapManager {
 
         G.game.input.targetsClear();
 
-        Cfg.Map mapT = new Cfg.Map();
-
-        // Training mode player fall speed default options
-        if (G.game.data.trainingSpeed == 1) {
-            mapT.moveTime = G.game.data.map1.moveTime;
-        } else if (G.game.data.trainingSpeed == 2) {
-            mapT.moveTime = G.game.data.map2.moveTime;
-        } else if (G.game.data.trainingSpeed == 3) {
-            mapT.moveTime = G.game.data.map3.moveTime;
-        } else if (G.game.data.trainingSpeed == 4) {
-            mapT.moveTime = G.game.data.map4.moveTime;
-        } else if (G.game.data.trainingSpeed == 5) {
-            mapT.moveTime = G.game.data.map5.moveTime;
-        } else if (G.game.data.trainingSpeed == 6) {
-            mapT.moveTime = G.game.data.map6.moveTime;
-        } else if (G.game.data.trainingSpeed == 7) {
-            mapT.moveTime = G.game.data.map7.moveTime;
-        } else if (G.game.data.trainingSpeed == 8) {
-            mapT.moveTime = G.game.data.map8.moveTime;
-        } else if (G.game.data.trainingSpeed == 9) {
-            mapT.moveTime = G.game.data.map9.moveTime;
-        } else if (G.game.data.trainingSpeed == 10) {
-            mapT.moveTime = G.game.data.map10.moveTime;
-        } else if (G.game.data.trainingSpeed == 11) {
-            mapT.moveTime = G.game.data.map11.moveTime;
-        } else if (G.game.data.trainingSpeed == 12) {
-            mapT.moveTime = G.game.data.map12.moveTime;
-        } else {
-            G.game.data.trainingSpeed = 1;
-            mapT.moveTime = G.game.data.map1.moveTime;
-        }
+        Cfg.Map mapT = G.game.data.createMapConfig(G.game.data.trainingSpeed);
 
         // #debugCode
         if (G.game.dbg.aiTraining != null) {
@@ -76,14 +46,13 @@ public class Training extends MapManager {
 
             // #debugCode
             if (G.game.dbg.aiTraining != null) {
-
                 if (G.game.dbg.aiTraining[i] == 1) {
                     m.ai = new Ai1();
-                    m.ai.init(m, G.game.data.ai7);
+                    m.ai.init(m, G.game.data.createAiConfig(12));
                     G.game.input.removeTarget(m);
                 } else if (G.game.dbg.aiTraining[i] == 3) {
                     m.ai = new Ai3();
-                    m.ai.init(m, G.game.data.ai7);
+                    m.ai.init(m, G.game.data.createAiConfig(12));
                     G.game.input.removeTarget(m);
                 }
             }

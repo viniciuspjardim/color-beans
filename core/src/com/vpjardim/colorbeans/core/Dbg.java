@@ -62,7 +62,7 @@ public class Dbg {
         mapShapes = null;
         clearMaps = null;
         uiTable = false;
-        campEnd = Integer.MAX_VALUE;
+        campEnd = 12;
         aiPlayerCamp = false;
         aiDisableMap1 = false;
         aiTraining = null;

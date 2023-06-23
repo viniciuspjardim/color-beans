@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Cfg;
+import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.input.Profile;
 
 /**
@@ -45,66 +46,84 @@ public class Db {
     public final transient Cfg.Game loopGame = new Cfg.Game();
     public final transient Cfg.Game trainingGame = new Cfg.Game();
 
-    public final transient Cfg.Map map1 = new Cfg.Map();
-    public final transient Cfg.Map map2 = new Cfg.Map();
-    public final transient Cfg.Map map3 = new Cfg.Map();
-    public final transient Cfg.Map map4 = new Cfg.Map();
-    public final transient Cfg.Map map5 = new Cfg.Map();
-    public final transient Cfg.Map map6 = new Cfg.Map();
-    public final transient Cfg.Map map7 = new Cfg.Map();
-    public final transient Cfg.Map map8 = new Cfg.Map();
-    public final transient Cfg.Map map9 = new Cfg.Map();
-    public final transient Cfg.Map map10 = new Cfg.Map();
-    public final transient Cfg.Map map11 = new Cfg.Map();
-    public final transient Cfg.Map map12 = new Cfg.Map();
-
-    public final transient Cfg.Ai ai1 = new Cfg.Ai();
-    public final transient Cfg.Ai ai2 = new Cfg.Ai();
-    public final transient Cfg.Ai ai3 = new Cfg.Ai();
-    public final transient Cfg.Ai ai4 = new Cfg.Ai();
-    public final transient Cfg.Ai ai5 = new Cfg.Ai();
-    public final transient Cfg.Ai ai6 = new Cfg.Ai();
-    public final transient Cfg.Ai ai7 = new Cfg.Ai();
-    public final transient Cfg.Ai ai8 = new Cfg.Ai();
-    public final transient Cfg.Ai ai9 = new Cfg.Ai();
-    public final transient Cfg.Ai ai10 = new Cfg.Ai();
-    public final transient Cfg.Ai ai11 = new Cfg.Ai();
-    public final transient Cfg.Ai ai12 = new Cfg.Ai();
-
     /**
      * Chain power from 1 to 24+. Ref: https://puyonexus.com/wiki/Chain_Power_Table
      */
     public final transient int[] chainPowerTable = {
-            0, 8, 16, 32, 64, 128, 256, 512, 999 // Puyo Puyo
-            // 0, 8, 16, 32, 64, 96, 128, 160, // Puyo Puyo Tsu
-            // 192, 224, 256, 288, 320, 352,
-            // 384, 416, 448, 480, 512, 544,
-            // 576, 608, 640, 672
+            0, 8, 16, 32, 64, 128, 256, 512, 999,
     };
 
     /** Color bonus from 1 to 8. Ref: https://puyonexus.com/wiki/Scoring */
     public final transient int[] colorBonusTable = {
-            0, 3, 6, 12, 24 // classic
-            // 0, 2, 4, 8, 16, 20, 24, 28 // fever
+            0, 3, 6, 12, 24,
     };
 
     /** Group bonus from 4 to 11+. Ref: https://puyonexus.com/wiki/Scoring */
     public final transient int[] groupBonusTable = {
-            0, 2, 3, 4, 5, 6, 7, 10 // classic
-            // 0, 1, 2, 3, 4, 5, 6, 8 // fever
+            0, 2, 3, 4, 5, 6, 7, 10,
+    };
+
+    /** Player block map fall times, lower is faster */
+    public final transient int[] fallTimes = {
+            90, 80, 70, 62, 54, 48, 42, 36, 32, 28, 24, 20, 16, 12, 10, 8, 7, 6, 5, 4, 3
+    };
+
+    /** Stage Names */
+    public final transient String[] stageNames = {
+            "1. BunnyAlan", "2. ChickenBil", "3. LizardLoyd", "4. MadCow", "5. BlackCat",
+            "6. EagleEye", "7. DemonDog", "8. RedStorm", "9. BlackLight", "10. DeepnessGod",
+            "11. HellKeeper", "12. TheCreator",
+    };
+
+    /** AI move speed (down key), higher is harder */
+    public final transient int[] downKeyMinAi = {
+            0, 0, 0,  0, 10, 20, 30, 40, 50, 60, 70, 80,  90, 100, 100, 100,
+    };
+
+    /** AI move speed (down key), higher is harder */
+    public final transient int[] downKeyMaxAi = {
+            0, 0, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 100, 100,
+    };
+
+    /** AI doubt, lower it fells more confident */
+    public final transient int[] doubtMinAi = {
+             90, 80, 60, 50, 40, 30, 20, 15, 10,  5,  3, 2, 1, 0, 0, 0,
+    };
+
+    /** AI doubt, lower it fells more confident */
+    public final transient int[] doubtMaxAi = {
+            100, 90, 80, 60, 50, 40, 30, 25, 20, 15, 10, 5, 2, 1, 0, 0,
+    };
+
+    /** AI doubt frequency, lower it fells more confident */
+    public final transient int[] doubtFreqMinAi = {
+            18, 16, 14, 12, 10,  8, 7,  6, 5, 4, 3, 2, 1, 0, 0, 0,
+    };
+
+    /** AI doubt frequency, lower it fells more confident */
+    public final transient int[] doubtFreqMaxAi = {
+            22, 20, 18, 16, 14, 12, 10, 9, 8, 7, 6, 5, 4, 3, 0, 0,
+    };
+
+    /** Lower is harder */
+    public final transient int[] randomnessAi = {
+            90, 80, 70, 60, 52, 44, 36, 28, 22, 16, 10, 6, 4, 2, 0, 0,
+    };
+
+    /** Lower is harder */
+    public final transient int[] trashMovesAi = {
+            90, 80, 70, 60, 52, 44, 36, 28, 22, 16, 10, 6, 4, 2, 0, 0,
     };
 
     // Non 'final transient' fields ->
 
     public Array<Cfg.Player> players = new Array<>();
 
-    public int campaignCurrentStage = 1;
-
-    public int trainingSpeed = 1;
-
-    public float musicVolume = 0.4f;
-
-    public float effectsVolume = 0.8f;
+    public int difficulty = 2; // 0 to 4
+    public int campaignCurrentStage = 1; // 1 to 12
+    public int trainingSpeed = 1; // 1 to 12
+    public float musicVolume = 0.4f; // 0 to 1
+    public float effectsVolume = 0.8f; // 0 to 1
 
     /**
      * The keyboard profiles are used to enable 2 or more players play in the same
@@ -133,154 +152,23 @@ public class Db {
 
         ri = new int[] {
                 0, 1, 2, 3, 4, 10, 11, 100, 101, 110, 111, 1000, 1001, 1010, 1011, 1100, 1101, 1110,
-                1111 };
+                1111,
+        };
 
-        campGame.net = Cfg.Game.NET_LOCAL;
-        campGame.difficulty = Cfg.Game.DIFFICULTY_NORMAL;
         campGame.nPlayers = 2;
-        campGame.nContinues = 3;
         campGame.pauseAct = Cfg.Game.PAUSE_ALL;
         campGame.finishOnWin = true;
         campGame.lostAct = Cfg.Game.LOST_AUTO_RESTART;
 
-        loopGame.net = Cfg.Game.NET_LOCAL;
-        loopGame.difficulty = Cfg.Game.DIFFICULTY_NORMAL;
         loopGame.nPlayers = 2;
-        loopGame.nContinues = 3;
         loopGame.pauseAct = Cfg.Game.PAUSE_ALL;
         loopGame.finishOnWin = false;
         loopGame.lostAct = Cfg.Game.LOST_AUTO_RESTART;
 
-        trainingGame.net = Cfg.Game.NET_LOCAL;
-        trainingGame.difficulty = Cfg.Game.DIFFICULTY_NORMAL;
         trainingGame.nPlayers = 1;
-        trainingGame.nContinues = -1;
         trainingGame.pauseAct = Cfg.Game.PAUSE_ALL;
         trainingGame.finishOnWin = false;
         trainingGame.lostAct = Cfg.Game.LOST_RESTART_PAUSED;
-
-        // Camping maps player fall speed
-        map1.moveTime = new float[] { 0, 0.80f, 15, 0.70f, 15, 0.62f, 15, 0.54f, 15, 0.48f };
-        map2.moveTime = new float[] { 0, 0.70f, 15, 0.62f, 15, 0.54f, 15, 0.48f, 15, 0.42f };
-        map3.moveTime = new float[] { 0, 0.62f, 15, 0.54f, 15, 0.48f, 15, 0.42f, 15, 0.36f };
-        map4.moveTime = new float[] { 0, 0.54f, 15, 0.48f, 15, 0.42f, 15, 0.36f, 15, 0.32f };
-        map5.moveTime = new float[] { 0, 0.48f, 15, 0.42f, 15, 0.36f, 15, 0.32f, 15, 0.28f };
-        map6.moveTime = new float[] { 0, 0.42f, 15, 0.36f, 15, 0.32f, 15, 0.28f, 15, 0.24f };
-        map7.moveTime = new float[] { 0, 0.36f, 15, 0.32f, 15, 0.28f, 15, 0.24f, 15, 0.20f };
-        map8.moveTime = new float[] { 0, 0.32f, 15, 0.28f, 15, 0.24f, 15, 0.20f, 15, 0.16f };
-        map9.moveTime = new float[] { 0, 0.28f, 15, 0.24f, 15, 0.20f, 15, 0.16f, 15, 0.12f };
-        map10.moveTime = new float[] { 0, 0.24f, 15, 0.20f, 15, 0.16f, 15, 0.12f, 15, 0.10f };
-        map11.moveTime = new float[] { 0, 0.20f, 15, 0.16f, 15, 0.12f, 15, 0.10f, 15, 0.08f };
-        map12.moveTime = new float[] { 0, 0.16f, 15, 0.12f, 15, 0.10f, 15, 0.08f, 15, 0.07f };
-
-        // Ai used on campaign stages
-        ai1.downKeyMin = 0.0f;
-        ai1.downKeyMax = 0.0f;
-        ai1.doubtMin = 0.7f;
-        ai1.doubtMax = 0.9f;
-        ai1.doubtFreqMin = 0.12f;
-        ai1.doubtFreqMax = 0.18f;
-        ai1.randomness = 0.8f;
-        ai1.trashMoves = 0.8f;
-
-        ai2.downKeyMin = 0.0f;
-        ai2.downKeyMax = 0.0f;
-        ai2.doubtMin = 0.6f;
-        ai2.doubtMax = 0.8f;
-        ai2.doubtFreqMin = 0.12f;
-        ai2.doubtFreqMax = 0.18f;
-        ai2.randomness = 0.75f;
-        ai2.trashMoves = 0.7f;
-
-        ai3.downKeyMin = 0.0f;
-        ai3.downKeyMax = 0.1f;
-        ai3.doubtMin = 0.5f;
-        ai3.doubtMax = 0.6f;
-        ai3.doubtFreqMin = 0.1f;
-        ai3.doubtFreqMax = 0.16f;
-        ai3.randomness = 0.7f;
-        ai3.trashMoves = 0.6f;
-
-        ai4.downKeyMin = 0.1f;
-        ai4.downKeyMax = 0.2f;
-        ai4.doubtMin = 0.4f;
-        ai4.doubtMax = 0.6f;
-        ai4.doubtFreqMin = 0.08f;
-        ai4.doubtFreqMax = 0.14f;
-        ai4.randomness = 0.6f;
-        ai4.trashMoves = 0.52f;
-
-        ai5.downKeyMin = 0.2f;
-        ai5.downKeyMax = 0.3f;
-        ai5.doubtMin = 0.1f;
-        ai5.doubtMax = 0.4f;
-        ai5.doubtFreqMin = 0.06f;
-        ai5.doubtFreqMax = 0.14f;
-        ai5.randomness = 0.52f;
-        ai5.trashMoves = 0.46f;
-
-        ai6.downKeyMin = 0.3f;
-        ai6.downKeyMax = 0.5f;
-        ai6.doubtMin = 0.1f;
-        ai6.doubtMax = 0.3f;
-        ai6.doubtFreqMin = 0.1f;
-        ai6.doubtFreqMax = 0.14f;
-        ai6.randomness = 0.4f;
-        ai6.trashMoves = 0.4f;
-
-        ai7.downKeyMin = 0.4f;
-        ai7.downKeyMax = 0.6f;
-        ai7.doubtMin = 0.1f;
-        ai7.doubtMax = 0.25f;
-        ai7.doubtFreqMin = 0.1f;
-        ai7.doubtFreqMax = 0.18f;
-        ai7.randomness = 0.32f;
-        ai7.trashMoves = 0.32f;
-
-        ai8.downKeyMin = 0.5f;
-        ai8.downKeyMax = 0.7f;
-        ai8.doubtMin = 0f;
-        ai8.doubtMax = 0.2f;
-        ai8.doubtFreqMin = 0.08f;
-        ai8.doubtFreqMax = 0.12f;
-        ai8.randomness = 0.28f;
-        ai8.trashMoves = 0.28f;
-
-        ai9.downKeyMin = 0.6f;
-        ai9.downKeyMax = 0.8f;
-        ai9.doubtMin = 0f;
-        ai9.doubtMax = 0.15f;
-        ai9.doubtFreqMin = 0.05f;
-        ai9.doubtFreqMax = 0.1f;
-        ai9.randomness = 0.22f;
-        ai9.trashMoves = 0.22f;
-
-        ai10.downKeyMin = 0.7f;
-        ai10.downKeyMax = 0.9f;
-        ai10.doubtMin = 0f;
-        ai10.doubtMax = 0.1f;
-        ai10.doubtFreqMin = 0.05f;
-        ai10.doubtFreqMax = 0.06f;
-        ai10.randomness = 0.16f;
-        ai10.trashMoves = 0.16f;
-
-        ai11.downKeyMin = 0.8f;
-        ai11.downKeyMax = 1f;
-        ai11.doubtMin = 0f;
-        ai11.doubtMax = 0.1f;
-        ai11.doubtFreqMin = 0.04f;
-        ai11.doubtFreqMax = 0.05f;
-        ai11.randomness = 0.1f;
-        ai11.trashMoves = 0.1f;
-
-        ai12.downKeyMin = 1f;
-        ai12.downKeyMax = 1f;
-        ai12.doubtMin = 0f;
-        ai12.doubtMax = 0f;
-        ai12.doubtFreqMin = 0f;
-        ai12.doubtFreqMax = 0f;
-        ai12.randomness = 0f;
-        ai12.trashMoves = 0f;
     }
 
     /**
@@ -400,7 +288,6 @@ public class Db {
      * loading screen
      */
     public void initAfterLoading() {
-
         font1 = G.game.assets.get("dimbo_white.ttf", BitmapFont.class);
         font2 = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
         font3 = G.game.assets.get("roboto.ttf", BitmapFont.class);
@@ -443,6 +330,47 @@ public class Db {
         if (val >= groupBonusTable.length)
             return groupBonusTable[groupBonusTable.length - 1];
         return groupBonusTable[val];
+    }
+
+    public Cfg.Map createMapConfig(int stage) {
+        int i = stage -1 + difficulty;
+        Cfg.Map mapCfg = new Cfg.Map();
+
+        mapCfg.moveTime = new float[] {
+                0,  fallTimes[i]     / 100f,
+                15, fallTimes[i + 1] / 100f,
+                15, fallTimes[i + 2] / 100f,
+                15, fallTimes[i + 3] / 100f,
+                15, fallTimes[i + 4] / 100f,
+        };
+
+        // #debugCode
+        Dbg.dbg("createMapConfig", "stage: " + stage + "; moveTime: " +
+                mapCfg.moveTime[1] + " to " + mapCfg.moveTime[9] + "; difficulty: " +
+                difficulty);
+
+        return mapCfg;
+    }
+
+    public Cfg.Ai createAiConfig(int stage) {
+        int i = stage -1 + difficulty;
+        Cfg.Ai aiCfg = new Cfg.Ai();
+
+        aiCfg.downKeyMin   = downKeyMinAi[i]   / 100f;
+        aiCfg.downKeyMax   = downKeyMaxAi[i]   / 100f;
+        aiCfg.doubtMin     = doubtMinAi[i]     / 100f;
+        aiCfg.doubtMax     = doubtMaxAi[i]     / 100f;
+        aiCfg.doubtFreqMin = doubtFreqMinAi[i] / 100f;
+        aiCfg.doubtFreqMax = doubtFreqMaxAi[i] / 100f;
+        aiCfg.randomness   = randomnessAi[i]   / 100f;
+        aiCfg.trashMoves   = trashMovesAi[i]   / 100f;
+
+        // #debugCode
+        Dbg.dbg("createAiConfig ", "stage: " + stage + "; downKeyMin: " +
+                aiCfg.downKeyMin + "; trashMoves: " + aiCfg.trashMoves + "; difficulty: " +
+                difficulty);
+
+        return aiCfg;
     }
 
     public static boolean save(Db data) {

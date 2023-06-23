@@ -14,27 +14,23 @@ import com.vpjardim.colorbeans.Map;
  *         2016/09/02
  */
 public abstract class MapManager {
-
     public static final int PAUSED_NONE = 1;
     public static final int PAUSED_ALL = 2;
     public static final int PAUSED_MIXED = 3;
-
-    public static final int GAME_CONTIUES = 1;
-    public static final int GAME_OVER = 2;
-    public static final int GAME_ZEROED = 3;
+    public static final int GAME_CONTINUE = 1;
+    public static final int GAME_ZEROED = 2;
 
     public Cfg.Game gameCfg;
     public Array<Map> maps;
     public Array<Map> opps;
     public Array<MapRender> render;
     public Map winnerMap;
-    public int gameStatus = GAME_CONTIUES;
+    public int gameStatus = GAME_CONTINUE;
     public int pauseStatus = PAUSED_NONE;
 
     public abstract void init();
 
     public void resize() {
-
         // Calculating side size
 
         float sideX = G.width / (((Map.N_COL + 2f) * maps.size) + 1);
@@ -47,7 +43,6 @@ public abstract class MapManager {
 
         // Updating size and positions
         for (int i = 0; i < render.size; i++) {
-
             MapRender r = render.get(i);
 
             r.size = side;
@@ -58,7 +53,6 @@ public abstract class MapManager {
     }
 
     public Map getOpponent(int excludeIndex) {
-
         if (maps.size <= 1)
             return null;
 
@@ -67,7 +61,6 @@ public abstract class MapManager {
         opps.removeIndex(excludeIndex);
 
         for (int i = 0; i < opps.size; i++) {
-
             Map opp = opps.get(i);
 
             // TODO: fix cause the map go to GRAVITY_FALL state in winLost method if is
@@ -79,6 +72,7 @@ public abstract class MapManager {
         if (opps.size > 0) {
             return opps.get(MathUtils.random(0, opps.size - 1));
         }
+
         return null;
     }
 
@@ -87,13 +81,11 @@ public abstract class MapManager {
     public abstract void mapLost(int mapIndex);
 
     public void winLost() {
-
         int mapsAnimating = 0;
         int mapsPlaying = 0;
         Map mapPlaying = null;
 
         for (Map m : maps) {
-
             // Maps not in (OVER or DONE) state: maps playing
             if (!(m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE))) {
                 mapsPlaying++;
@@ -126,7 +118,6 @@ public abstract class MapManager {
 
         // Maps animations ended
         if (mapsAnimating == 0) {
-
             boolean autoRestart = gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART ||
                     gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
 
@@ -168,7 +159,6 @@ public abstract class MapManager {
                 Map m = maps.get(i);
                 m.pause = paused;
             }
-        } else if (gameCfg.pauseAct == Cfg.Game.PAUSE_OFF) {
         }
 
         updatePausedStatus();

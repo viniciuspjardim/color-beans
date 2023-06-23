@@ -14,7 +14,6 @@ import com.vpjardim.colorbeans.ai.ai3.Ai3;
  *         2016/09/02
  */
 public class Campaign extends MapManager {
-
     // #debugCode all over the class
 
     public int stageIndex;
@@ -24,16 +23,15 @@ public class Campaign extends MapManager {
 
     @Override
     public void init() {
-
         gameCfg = G.game.data.campGame;
         maps = new Array<>();
         opps = new Array<>();
         render = new Array<>();
 
         stageIndex = 0;
-        mapCfgs = new Array<>();
-        aiCfgs = new Array<>();
-        aiMapNames = new Array<>();
+        mapCfgs = new Array<>(12);
+        aiCfgs = new Array<>(12);
+        aiMapNames = new Array(12);
 
         int start = G.game.data.campaignCurrentStage;
         int end = 12;
@@ -43,76 +41,11 @@ public class Campaign extends MapManager {
             end = G.game.dbg.campEnd;
         }
 
-        if (start <= 1 && end >= 1) {
-            mapCfgs.add(G.game.data.map1);
-            aiCfgs.add(G.game.data.ai1);
-            aiMapNames.add("1. BunnyAlan");
-        }
-
-        if (start <= 2 && end >= 2) {
-            mapCfgs.add(G.game.data.map2);
-            aiCfgs.add(G.game.data.ai2);
-            aiMapNames.add("2. ChickenBil");
-        }
-
-        if (start <= 3 && end >= 3) {
-            mapCfgs.add(G.game.data.map3);
-            aiCfgs.add(G.game.data.ai3);
-            aiMapNames.add("3. LizardLoyd");
-        }
-
-        if (start <= 4 && end >= 4) {
-            mapCfgs.add(G.game.data.map4);
-            aiCfgs.add(G.game.data.ai4);
-            aiMapNames.add("4. MadCow");
-        }
-
-        if (start <= 5 && end >= 5) {
-            mapCfgs.add(G.game.data.map5);
-            aiCfgs.add(G.game.data.ai5);
-            aiMapNames.add("5. BlackCat");
-        }
-
-        if (start <= 6 && end >= 6) {
-            mapCfgs.add(G.game.data.map6);
-            aiCfgs.add(G.game.data.ai6);
-            aiMapNames.add("6. EagleEye");
-        }
-
-        if (start <= 7 && end >= 7) {
-            mapCfgs.add(G.game.data.map7);
-            aiCfgs.add(G.game.data.ai7);
-            aiMapNames.add("7. DemonDog");
-        }
-
-        if (start <= 8 && end >= 8) {
-            mapCfgs.add(G.game.data.map8);
-            aiCfgs.add(G.game.data.ai8);
-            aiMapNames.add("8. RedStorm");
-        }
-
-        if (start <= 9 && end >= 9) {
-            mapCfgs.add(G.game.data.map9);
-            aiCfgs.add(G.game.data.ai9);
-            aiMapNames.add("9. BlackLight");
-        }
-
-        if (start <= 10 && end >= 10) {
-            mapCfgs.add(G.game.data.map10);
-            aiCfgs.add(G.game.data.ai10);
-            aiMapNames.add("10. DeepnessGod");
-        }
-
-        if (start <= 11 && end >= 11) {
-            mapCfgs.add(G.game.data.map11);
-            aiCfgs.add(G.game.data.ai11);
-            aiMapNames.add("11. HellKeeper");
-        }
-
-        if (start <= 12 && end >= 12) {
-            mapCfgs.add(G.game.data.map12);
-            aiCfgs.add(G.game.data.ai12);
-            aiMapNames.add("12. TheCreator");
+        // Create all stages
+        for (int i = start; i <= end; i++) {
+            mapCfgs.add(G.game.data.createMapConfig(i));
+            aiCfgs.add(G.game.data.createAiConfig(i));
+            aiMapNames.add(G.game.data.stageNames[i -1]);
         }
 
         G.game.input.targetsClear();
@@ -125,6 +58,7 @@ public class Campaign extends MapManager {
         r = new MapRender();
         r.m = playerMap;
         render.add(r);
+
         // Config player's map to the first stage
         playerMap.setCfg(mapCfgs.get(stageIndex));
         playerMap.name = G.game.data.players.first().name;
@@ -133,7 +67,7 @@ public class Campaign extends MapManager {
         // #debugCode
         if (G.game.dbg.aiPlayerCamp) {
             playerMap.ai = new Ai3();
-            playerMap.ai.init(playerMap, G.game.data.ai7);
+            playerMap.ai.init(playerMap, G.game.data.createAiConfig(12));
             G.game.input.removeTarget(playerMap);
         }
 
@@ -148,7 +82,7 @@ public class Campaign extends MapManager {
         aiMap.setCfg(mapCfgs.get(stageIndex));
         aiMap.name = aiMapNames.get(stageIndex);
 
-        // #DebugCode the content is needed, just the if is debug
+        // #debugCode the content is needed, just the if is debug
         if (!G.game.dbg.aiDisableMap1) {
             aiMap.ai = new Ai3();
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));

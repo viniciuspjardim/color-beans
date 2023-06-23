@@ -53,6 +53,7 @@ public class ConfigScreen extends ScreenBase {
     private TextField player2;
     private TextField player3;
     private TextField player4;
+    private TextField difficultyTF;
     private TextField stageTF;
     private TextField trainingSpeedTF;
     private TextField musicVolumeTF;
@@ -106,6 +107,8 @@ public class ConfigScreen extends ScreenBase {
         Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
 
         Label playersL = new Label("Players:", labelStyle);
+
+        Label difficultyL = new Label("Difficulty (1 - 5):", labelStyle);
         Label stageL = new Label("Current Stage (1 - 12):", labelStyle);
         Label trainingSpeedL = new Label("Training Speed (1 - 12):", labelStyle);
         Label musicVolumeL = new Label("Music Volume (0 - 10):", labelStyle);
@@ -116,6 +119,7 @@ public class ConfigScreen extends ScreenBase {
         player3 = new TextField("", G.game.skin, "tField");
         player4 = new TextField("", G.game.skin, "tField");
 
+        difficultyTF = new TextField(Integer.toString(G.game.data.difficulty + 1), G.game.skin, "tField");
         stageTF = new TextField(Integer.toString(G.game.data.campaignCurrentStage), G.game.skin, "tField");
         trainingSpeedTF = new TextField(Integer.toString(G.game.data.trainingSpeed), G.game.skin, "tField");
         musicVolumeTF = new TextField(Integer.toString((int)(G.game.data.musicVolume * 10)), G.game.skin, "tField");
@@ -251,7 +255,12 @@ public class ConfigScreen extends ScreenBase {
         gameT.add(player4).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
-        gameT.add(stageL).padTop(20);
+        gameT.add(difficultyL).padTop(20);
+        gameT.row();
+        gameT.add(difficultyTF).expandX().fill().pad(0, 20, 0, 20);
+        gameT.row();
+
+        gameT.add(stageL).padTop(8);
         gameT.row();
         gameT.add(stageTF).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
@@ -403,6 +412,13 @@ public class ConfigScreen extends ScreenBase {
             pls.add(new Cfg.Player(player3.getText()));
         if (!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
+
+        try {
+            int difficultyNumber = Integer.parseInt(difficultyTF.getText());
+
+            if (difficultyNumber >= 1 && difficultyNumber <= 5)
+                G.game.data.difficulty = difficultyNumber -1;
+        } catch (NumberFormatException error) {}
 
         try {
             int stageNumber = Integer.parseInt(stageTF.getText());
