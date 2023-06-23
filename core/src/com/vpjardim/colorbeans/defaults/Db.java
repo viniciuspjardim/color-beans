@@ -298,9 +298,6 @@ public class Db {
             BEANS_REG.put(3 * 10000 + ri[i], G.game.atlas.findRegion("beans/green", ri[i]));
             BEANS_REG.put(4 * 10000 + ri[i], G.game.atlas.findRegion("beans/yellow", ri[i]));
             BEANS_REG.put(5 * 10000 + ri[i], G.game.atlas.findRegion("beans/purple", ri[i]));
-            BEANS_REG.put(6 * 10000 + ri[i], G.game.atlas.findRegion("beans/dblue", ri[i]));
-            BEANS_REG.put(7 * 10000 + ri[i], G.game.atlas.findRegion("beans/orange", ri[i]));
-            BEANS_REG.put(8 * 10000 + ri[i], G.game.atlas.findRegion("beans/magenta", ri[i]));
             BEANS_REG.put(9 * 10000 + ri[i], G.game.atlas.findRegion("beans/transparent", ri[i]));
         }
     }

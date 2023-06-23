@@ -79,11 +79,6 @@ public class LoadingScreen extends ScreenBase {
         G.game.assets.load("roboto_shadow.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        param.fontFileName = "font/roboto_i.ttf";
-        param.fontParameters.size = G.style.fontSizeMedium;
-        G.game.assets.load("roboto-i.ttf", BitmapFont.class, param);
-
-        param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         param.fontFileName = "font/dimbo.ttf";
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = Color.WHITE;

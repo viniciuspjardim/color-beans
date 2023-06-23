@@ -55,11 +55,11 @@ public class MenuBeans {
         for (int i = 0; i < beansCount; i++) {
             Bean bean = pool.obtain();
 
-            bean.x = (int) MathUtils.random(widthMax);
-            bean.y = (int) MathUtils.random(heightMax);
+            bean.x = MathUtils.random(widthMax);
+            bean.y = MathUtils.random(heightMax);
             bean.opacity = MathUtils.random(MAX_OPACITY);
             bean.opacitySign = MathUtils.randomBoolean() ? 1 : -1;
-            bean.color = MathUtils.random(Block.CLR_A, 8);
+            bean.color = MathUtils.random(Block.CLR_A, 5);
             bean.tile = tiles[MathUtils.random(3)];
             bean.animationTime = 0f;
 
@@ -99,11 +99,11 @@ public class MenuBeans {
             time = MathUtils.random(0.25f);
             Bean bean = pool.obtain();
 
-            bean.x = (int) MathUtils.random(widthMax);
-            bean.y = (int) MathUtils.random(heightMax);
+            bean.x = MathUtils.random(widthMax);
+            bean.y = MathUtils.random(heightMax);
             bean.opacity = MathUtils.random(0f);
             bean.opacitySign = 1f;
-            bean.color = MathUtils.random(Block.CLR_A, 8);
+            bean.color = MathUtils.random(Block.CLR_A, 5);
             bean.tile = tiles[MathUtils.random(3)];
             bean.animationTime = 0f;
 
