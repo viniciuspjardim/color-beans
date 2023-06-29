@@ -14,7 +14,6 @@ import com.vpjardim.colorbeans.core.Dbg;
  *         2017/02/10
  */
 public class TouchInput extends GestureDetector.GestureAdapter implements InputBase {
-
     private TargetBase target;
     private Map map;
     private int id;
@@ -237,7 +236,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
-
         // #debugCode
         Dbg.dbg(Dbg.tag(this), "panStop -> x = " + x + "; y = " + y);
 

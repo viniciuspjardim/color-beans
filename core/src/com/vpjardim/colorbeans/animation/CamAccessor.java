@@ -5,7 +5,6 @@
 package com.vpjardim.colorbeans.animation;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-
 import aurelienribon.tweenengine.TweenAccessor;
 
 /**
@@ -14,7 +13,6 @@ import aurelienribon.tweenengine.TweenAccessor;
  */
 
 public class CamAccessor implements TweenAccessor<OrthographicCamera> {
-
     public static final int POSITION = 0;
     public static final int ZOOM = 1;
 

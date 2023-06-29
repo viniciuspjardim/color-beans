@@ -114,7 +114,6 @@ public class MenuBeans {
             }
         }
 
-
         // Update beans opacity
         for (int i = 0; i < beans.size; i++) {
             Bean bean = beans.get(i);

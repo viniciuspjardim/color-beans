@@ -38,17 +38,11 @@ import com.vpjardim.colorbeans.views.InputActor;
  *         2017/01/03
  */
 public class ConfigScreen extends ScreenBase {
-
-    // TODO: fix fps going from 60 to 30 after changing to windowed mode;
-    // TODO: finish config screen.
-
     public static final int ACT_MENU = 10;
 
     private Stage stage;
-
     private Table inputT;
     private boolean dirtInputT = false;
-
     private TextField player1;
     private TextField player2;
     private TextField player3;
@@ -58,7 +52,6 @@ public class ConfigScreen extends ScreenBase {
     private TextField trainingSpeedTF;
     private TextField musicVolumeTF;
     private TextField effectsVolumeTF;
-
     private EventListener specialKeyDown;
 
     public ConfigScreen() {

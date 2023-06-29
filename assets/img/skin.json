@@ -2,7 +2,8 @@
     com.badlogic.gdx.graphics.Color: {
         white: { hex: ffffffff },
         black: { hex: 000000ff },
-        orange800: { hex: 523800 }
+        orange800: { hex: 523800 },
+        white50: { hex: ffffff80 }
     },
 
     com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -62,6 +63,14 @@
         labelGTitle: {
             background: "game/ribbon_red",
             font: dimbo_gtitle
+        },
+        labelWhite50: {
+            font: roboto,
+            fontColor: white50
+        },
+        labelCredits: {
+            font: dimbo_white,
+            fontColor: white
         }
     }
 }
