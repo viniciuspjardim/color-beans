@@ -48,11 +48,11 @@ public class Training extends MapManager {
             if (G.game.dbg.aiTraining != null) {
                 if (G.game.dbg.aiTraining[i] == 1) {
                     m.ai = new Ai1();
-                    m.ai.init(m, G.game.data.createAiConfig(12));
+                    m.ai.init(m, G.game.data.createAiConfig(11));
                     G.game.input.removeTarget(m);
                 } else if (G.game.dbg.aiTraining[i] == 3) {
                     m.ai = new Ai3();
-                    m.ai.init(m, G.game.data.createAiConfig(12));
+                    m.ai.init(m, G.game.data.createAiConfig(11));
                     G.game.input.removeTarget(m);
                 }
             }

@@ -48,9 +48,6 @@ public class ConfigScreen extends ScreenBase {
     private TextField player2;
     private TextField player3;
     private TextField player4;
-    private TextField difficultyTF;
-    private TextField stageTF;
-    private TextField trainingSpeedTF;
     private EventListener specialKeyDown;
 
     public ConfigScreen() {
@@ -103,14 +100,42 @@ public class ConfigScreen extends ScreenBase {
         player3 = new TextField("", G.game.skin, "tField");
         player4 = new TextField("", G.game.skin, "tField");
 
-        difficultyTF = new TextField(Integer.toString(G.game.data.difficulty + 1), G.game.skin, "tField");
-        stageTF = new TextField(Integer.toString(G.game.data.campaignCurrentStage), G.game.skin, "tField");
-        trainingSpeedTF = new TextField(Integer.toString(G.game.data.trainingSpeed), G.game.skin, "tField");
+        Slider difficultyS = new Slider(0f, 4f, 1f, false, G.game.skin, "slider");
+        difficultyS.setValue(G.game.data.difficulty);
+        Label difficultyL = new Label(G.game.data.difficultyNames[G.game.data.difficulty], labelStyle);
+        difficultyS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.data.difficulty = (int) difficultyS.getValue();
+                difficultyL.setText(G.game.data.difficultyNames[G.game.data.difficulty]);
+            }
+        });
+
+        Slider currentStageS = new Slider(0f, 11f, 1f, false, G.game.skin, "slider");
+        currentStageS.setValue(G.game.data.campaignCurrentStage);
+        Label currentStageL = new Label(G.game.data.stageNames[G.game.data.campaignCurrentStage], labelStyle);
+        currentStageS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.data.campaignCurrentStage = (int) currentStageS.getValue();
+                currentStageL.setText(G.game.data.stageNames[G.game.data.campaignCurrentStage]);
+            }
+        });
+
+        Slider trainingSpeedS = new Slider(0f, 11f, 1f, false, G.game.skin, "slider");
+        trainingSpeedS.setValue(G.game.data.trainingSpeed);
+        Label trainingSpeedL = new Label(Integer.toString(G.game.data.trainingSpeed + 1), labelStyle);
+        trainingSpeedS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.data.trainingSpeed = (int) trainingSpeedS.getValue();
+                trainingSpeedL.setText(G.game.data.trainingSpeed + 1);
+            }
+        });
 
         Slider musicVolumeS = new Slider(0f, 100f, 5f, false, G.game.skin, "slider");
         musicVolumeS.setValue(G.game.data.musicVolume * 100f);
         Label musicVolumeL = new Label(Integer.toString((int) musicVolumeS.getValue()), labelStyle);
-
         musicVolumeS.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -247,30 +272,33 @@ public class ConfigScreen extends ScreenBase {
         tabT.add(inputButt).width(200);
         tabT.add(videoButt).width(200);
 
-        gameT.add(new Label("Players:", labelStyle)).padTop(8);
+        gameT.add(new Label("Players:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
         gameT.row();
-        gameT.add(player1).expandX().fill().pad(0, 20, 0, 20);
+        gameT.add(player1).expandX().fill().pad(0, 20, 0, 20).colspan(2);
         gameT.row();
-        gameT.add(player2).expandX().fill().pad(0, 20, 0, 20);
+        gameT.add(player2).expandX().fill().pad(0, 20, 0, 20).colspan(2);
         gameT.row();
-        gameT.add(player3).expandX().fill().pad(0, 20, 0, 20);
+        gameT.add(player3).expandX().fill().pad(0, 20, 0, 20).colspan(2);
         gameT.row();
-        gameT.add(player4).expandX().fill().pad(0, 20, 0, 20);
-        gameT.row();
-
-        gameT.add(new Label("Difficulty (1 - 5):", labelStyle)).padTop(20);
-        gameT.row();
-        gameT.add(difficultyTF).expandX().fill().pad(0, 20, 0, 20);
+        gameT.add(player4).expandX().fill().pad(0, 20, 0, 20).colspan(2);
         gameT.row();
 
-        gameT.add(new Label("Current Stage (1 - 12):", labelStyle)).padTop(8);
+        gameT.add(new Label("Difficulty:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        gameT.add(difficultyL).padTop(24).padRight(30).align(Align.right);
         gameT.row();
-        gameT.add(stageTF).expandX().fill().pad(0, 20, 0, 20);
+        gameT.add(difficultyS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
         gameT.row();
 
-        gameT.add(new Label("Training Speed (1 - 12):", labelStyle)).padTop(8);
+        gameT.add(new Label("Current Stage:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        gameT.add(currentStageL).padTop(24).padRight(30).align(Align.right);
         gameT.row();
-        gameT.add(trainingSpeedTF).expandX().fill().pad(0, 20, 0, 20);
+        gameT.add(currentStageS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
+        gameT.row();
+
+        gameT.add(new Label("Training Speed:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        gameT.add(trainingSpeedL).padTop(24).padRight(30).align(Align.right);
+        gameT.row();
+        gameT.add(trainingSpeedS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
         gameT.row();
 
         videoT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
@@ -418,32 +446,10 @@ public class ConfigScreen extends ScreenBase {
         if (!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
 
-        try {
-            int difficultyNumber = Integer.parseInt(difficultyTF.getText());
-
-            if (difficultyNumber >= 1 && difficultyNumber <= 5)
-                G.game.data.difficulty = difficultyNumber -1;
-        } catch (NumberFormatException error) {}
-
-        try {
-            int stageNumber = Integer.parseInt(stageTF.getText());
-
-            if (stageNumber >= 1 && stageNumber <= 12)
-                G.game.data.campaignCurrentStage = stageNumber;
-        } catch (NumberFormatException error) {}
-
-        try {
-            int trainingSpeed = Integer.parseInt(trainingSpeedTF.getText());
-
-            if (trainingSpeed >= 1 && trainingSpeed <= 12)
-                G.game.data.trainingSpeed = trainingSpeed;
-        } catch (NumberFormatException error) {}
-
         int controllerCount = 0;
         int keyboardCount = 0;
 
         for (int i = 0; i < G.game.input.getInputs().size; i++) {
-
             final InputBase input = G.game.input.getInputs().get(i);
 
             if (input instanceof ControllerInput) {

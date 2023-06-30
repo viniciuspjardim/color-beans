@@ -115,13 +115,17 @@ public class Db {
             90, 80, 70, 60, 52, 44, 36, 28, 22, 16, 10, 6, 4, 2, 0, 0,
     };
 
+    public final transient String[] difficultyNames = {
+            "Very Easy", "Easy", "Normal", "Hard", "Very Hard",
+    };
+
     // Non 'final transient' fields ->
 
     public Array<Cfg.Player> players = new Array<>();
 
     public int difficulty = 2; // 0 to 4
-    public int campaignCurrentStage = 1; // 1 to 12
-    public int trainingSpeed = 1; // 1 to 12
+    public int campaignCurrentStage = 0; // 0 to 11
+    public int trainingSpeed = 0; // 0 to 11
     public float musicVolume = 0.4f; // 0 to 1
     public float effectsVolume = 0.8f; // 0 to 1
 
@@ -330,7 +334,7 @@ public class Db {
     }
 
     public Cfg.Map createMapConfig(int stage) {
-        int i = stage -1 + difficulty;
+        int i = stage + difficulty;
         Cfg.Map mapCfg = new Cfg.Map();
 
         mapCfg.moveTime = new float[] {
@@ -350,7 +354,7 @@ public class Db {
     }
 
     public Cfg.Ai createAiConfig(int stage) {
-        int i = stage -1 + difficulty;
+        int i = stage + difficulty;
         Cfg.Ai aiCfg = new Cfg.Ai();
 
         aiCfg.downKeyMin   = downKeyMinAi[i]   / 100f;

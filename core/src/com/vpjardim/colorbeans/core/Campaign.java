@@ -34,7 +34,7 @@ public class Campaign extends MapManager {
         aiMapNames = new Array(12);
 
         int start = G.game.data.campaignCurrentStage;
-        int end = 12;
+        int end = 11;
 
         // #debugCode
         if (G.game.dbg.on) {
@@ -45,7 +45,7 @@ public class Campaign extends MapManager {
         for (int i = start; i <= end; i++) {
             mapCfgs.add(G.game.data.createMapConfig(i));
             aiCfgs.add(G.game.data.createAiConfig(i));
-            aiMapNames.add(G.game.data.stageNames[i -1]);
+            aiMapNames.add(G.game.data.stageNames[i]);
         }
 
         G.game.input.targetsClear();
@@ -67,7 +67,7 @@ public class Campaign extends MapManager {
         // #debugCode
         if (G.game.dbg.aiPlayerCamp) {
             playerMap.ai = new Ai3();
-            playerMap.ai.init(playerMap, G.game.data.createAiConfig(12));
+            playerMap.ai.init(playerMap, G.game.data.createAiConfig(11));
             G.game.input.removeTarget(playerMap);
         }
 
@@ -99,10 +99,8 @@ public class Campaign extends MapManager {
 
     @Override
     public void mapWin(int mapIndex) {
-
         // Player (index 0) won
         if (mapIndex == 0) {
-
             Map p = maps.get(0);
             stageIndex++;
 
@@ -113,7 +111,7 @@ public class Campaign extends MapManager {
 
             if (stageIndex >= mapCfgs.size) {
                 gameStatus = GAME_ZEROED;
-                G.game.data.campaignCurrentStage = 1;
+                G.game.data.campaignCurrentStage = 0;
             }
             // Config maps to the next stage
             else {

@@ -11,10 +11,9 @@ import com.badlogic.gdx.Gdx;
  * @author Vinícius Jardim
  *         2017/01/06
  *
- *         #debugCode
+ * #debugCode
  */
 public class Dbg {
-
     public boolean on = false;
 
     // Used to change game speed
@@ -62,7 +61,7 @@ public class Dbg {
         mapShapes = null;
         clearMaps = null;
         uiTable = false;
-        campEnd = 12;
+        campEnd = 11;
         aiPlayerCamp = false;
         aiDisableMap1 = false;
         aiTraining = null;
