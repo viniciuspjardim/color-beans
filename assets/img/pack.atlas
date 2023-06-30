@@ -1025,6 +1025,40 @@ game/ribbon_red
   orig: 377, 247
   offset: 0, 0
   index: -1
+game/slider_knob
+  rotate: false
+  xy: 995, 988
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+game/slider_track_bg
+  rotate: false
+  xy: 904, 812
+  size: 16, 12
+  split: 5, 5, 5, 5
+  pad: 4, 4, 3, 3
+  orig: 16, 12
+  offset: 0, 0
+  index: -1
+game/slider_track_off
+  rotate: false
+  xy: 381, 520
+  size: 16, 12
+  split: 5, 5, 5, 5
+  pad: 4, 4, 3, 3
+  orig: 16, 12
+  offset: 0, 0
+  index: -1
+game/slider_track_on
+  rotate: false
+  xy: 901, 537
+  size: 16, 12
+  split: 5, 5, 5, 5
+  pad: 4, 4, 3, 3
+  orig: 16, 12
+  offset: 0, 0
+  index: -1
 game/title
   rotate: false
   xy: 516, 902

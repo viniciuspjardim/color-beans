@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -50,8 +51,6 @@ public class ConfigScreen extends ScreenBase {
     private TextField difficultyTF;
     private TextField stageTF;
     private TextField trainingSpeedTF;
-    private TextField musicVolumeTF;
-    private TextField effectsVolumeTF;
     private EventListener specialKeyDown;
 
     public ConfigScreen() {
@@ -99,14 +98,6 @@ public class ConfigScreen extends ScreenBase {
         // ==== Labels ====
         Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
 
-        Label playersL = new Label("Players:", labelStyle);
-
-        Label difficultyL = new Label("Difficulty (1 - 5):", labelStyle);
-        Label stageL = new Label("Current Stage (1 - 12):", labelStyle);
-        Label trainingSpeedL = new Label("Training Speed (1 - 12):", labelStyle);
-        Label musicVolumeL = new Label("Music Volume (0 - 10):", labelStyle);
-        Label effectsVolumeL = new Label("Effects Volume (0 - 10):", labelStyle);
-
         player1 = new TextField("", G.game.skin, "tField");
         player2 = new TextField("", G.game.skin, "tField");
         player3 = new TextField("", G.game.skin, "tField");
@@ -115,8 +106,29 @@ public class ConfigScreen extends ScreenBase {
         difficultyTF = new TextField(Integer.toString(G.game.data.difficulty + 1), G.game.skin, "tField");
         stageTF = new TextField(Integer.toString(G.game.data.campaignCurrentStage), G.game.skin, "tField");
         trainingSpeedTF = new TextField(Integer.toString(G.game.data.trainingSpeed), G.game.skin, "tField");
-        musicVolumeTF = new TextField(Integer.toString((int)(G.game.data.musicVolume * 10)), G.game.skin, "tField");
-        effectsVolumeTF = new TextField(Integer.toString((int)(G.game.data.effectsVolume * 10)), G.game.skin, "tField");
+
+        Slider musicVolumeS = new Slider(0f, 100f, 5f, false, G.game.skin, "slider");
+        musicVolumeS.setValue(G.game.data.musicVolume * 100f);
+        Label musicVolumeL = new Label(Integer.toString((int) musicVolumeS.getValue()), labelStyle);
+
+        musicVolumeS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.data.musicVolume = musicVolumeS.getValue() / 100f;
+                musicVolumeL.setText(Integer.toString((int) musicVolumeS.getValue()));
+            }
+        });
+
+        Slider effectsVolumeS = new Slider(0f, 100f, 5f, false, G.game.skin, "slider");
+        effectsVolumeS.setValue(G.game.data.effectsVolume * 100f);
+        Label effectsVolumeL = new Label(Integer.toString((int) effectsVolumeS.getValue()), labelStyle);
+        effectsVolumeS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.data.effectsVolume = effectsVolumeS.getValue() / 100f;
+                effectsVolumeL.setText(Integer.toString((int) effectsVolumeS.getValue()));
+            }
+        });
 
         final Array<Cfg.Player> pls = G.game.data.players;
 
@@ -218,8 +230,6 @@ public class ConfigScreen extends ScreenBase {
         float bttW = G.style.buttWidth;
         float padM = G.style.padMedium;
 
-        playersL.setAlignment(Align.topLeft);
-
         titleT.pad(padM);
         contentT.defaults().align(Align.left);
 
@@ -237,7 +247,7 @@ public class ConfigScreen extends ScreenBase {
         tabT.add(inputButt).width(200);
         tabT.add(videoButt).width(200);
 
-        gameT.add(playersL).padTop(8);
+        gameT.add(new Label("Players:", labelStyle)).padTop(8);
         gameT.row();
         gameT.add(player1).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
@@ -248,29 +258,31 @@ public class ConfigScreen extends ScreenBase {
         gameT.add(player4).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
-        gameT.add(difficultyL).padTop(20);
+        gameT.add(new Label("Difficulty (1 - 5):", labelStyle)).padTop(20);
         gameT.row();
         gameT.add(difficultyTF).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
-        gameT.add(stageL).padTop(8);
+        gameT.add(new Label("Current Stage (1 - 12):", labelStyle)).padTop(8);
         gameT.row();
         gameT.add(stageTF).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
-        gameT.add(trainingSpeedL).padTop(8);
+        gameT.add(new Label("Training Speed (1 - 12):", labelStyle)).padTop(8);
         gameT.row();
         gameT.add(trainingSpeedTF).expandX().fill().pad(0, 20, 0, 20);
         gameT.row();
 
-        videoT.add(musicVolumeL).padTop(8);
+        videoT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        videoT.add(musicVolumeL).padTop(24).padRight(30).align(Align.right);
         videoT.row();
-        videoT.add(musicVolumeTF).expandX().fill().pad(0, 20, 0, 20);
+        videoT.add(musicVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
         videoT.row();
 
-        videoT.add(effectsVolumeL).padTop(8);
+        videoT.add(new Label("Effects Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        videoT.add(effectsVolumeL).padTop(24).padRight(30).align(Align.right);
         videoT.row();
-        videoT.add(effectsVolumeTF).expandX().fill().pad(0, 20, 0, 20);
+        videoT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
         videoT.row();
 
         inputLoop();
@@ -425,20 +437,6 @@ public class ConfigScreen extends ScreenBase {
 
             if (trainingSpeed >= 1 && trainingSpeed <= 12)
                 G.game.data.trainingSpeed = trainingSpeed;
-        } catch (NumberFormatException error) {}
-
-        try {
-            int musicVolume = Integer.parseInt(musicVolumeTF.getText());
-
-            if (musicVolume >= 0 && musicVolume <= 10)
-                G.game.data.musicVolume = musicVolume / 10f;
-        } catch (NumberFormatException error) {}
-
-        try {
-            int effectsVolume = Integer.parseInt(effectsVolumeTF.getText());
-
-            if (effectsVolume >= 0 && effectsVolume <= 10)
-                G.game.data.effectsVolume = effectsVolume / 10f;
         } catch (NumberFormatException error) {}
 
         int controllerCount = 0;

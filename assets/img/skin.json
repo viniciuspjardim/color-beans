@@ -43,6 +43,15 @@
         }
     },
 
+    com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+        slider: {
+            background: "game/slider_track_bg",
+            knobBefore: "game/slider_track_on",
+            knobAfter: "game/slider_track_off",
+            knob: "game/slider_knob"
+        }
+    },
+
     com.badlogic.gdx.graphics.g2d.NinePatch: {
         tbg: "game/tbg_yellow"
     },
