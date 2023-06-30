@@ -8,9 +8,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.Event;
@@ -47,6 +49,7 @@ public class CreditsScreen extends ScreenBase {
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         stage = new Stage(viewport, G.game.batch);
+        G.game.input.addProcessor(stage);
 
         Table containerT = new Table(G.game.skin);
         containerT.setFillParent(true);
@@ -62,7 +65,23 @@ public class CreditsScreen extends ScreenBase {
         Label.LabelStyle valueRegLS = G.game.skin.get("labelDef", Label.LabelStyle.class);
         Label.LabelStyle valueLS = G.game.skin.get("labelCredits", Label.LabelStyle.class);
 
-        contentT.add(new Label("Code And Art:", keyLS));
+        Label repositoryL = new Label("github.com/viniciuspjardim/color-beans", valueRegLS);
+        repositoryL.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.net.openURI("https://github.com/viniciuspjardim/color-beans");
+            }
+        });
+
+        Label backL = new Label("** Press any key or click to go back **", keyLS);
+        backL.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action = ScreenBase.ACT_NEXT;
+            }
+        });
+
+        contentT.add(new Label("Code and art:", keyLS));
         contentT.row();
         contentT.add(new Label("Vinícius Jardim", valueLS)).padTop(8);
         contentT.row();
@@ -76,14 +95,14 @@ public class CreditsScreen extends ScreenBase {
         contentT.add(new Label("André Jardim", valueLS)).padTop(8);
         contentT.row();
 
-        contentT.add(new Label("Color Beans Is A Clone From:", keyLS)).padTop(32);
+        contentT.add(new Label("Color Beans is a clone from:", keyLS)).padTop(32);
         contentT.row();
         contentT.add(new Label("SEGA's Puyo Puyo", valueRegLS)).padTop(8);
         contentT.row();
 
-        contentT.add(new Label("More Info At:", keyLS)).padTop(32);
+        contentT.add(new Label("More info at:", keyLS)).padTop(32);
         contentT.row();
-        contentT.add(new Label("github.com/viniciuspjardim/color-beans", valueRegLS)).padTop(8);
+        contentT.add(repositoryL).padTop(8);
         contentT.row();
 
         contentT.add(new Label("****", keyLS)).padTop(32);
@@ -91,7 +110,7 @@ public class CreditsScreen extends ScreenBase {
 
         contentT.add(new Label("Thank You For Playing!", valueLS)).padTop(32);
         contentT.row();
-        contentT.add(new Label("Press Any Key Or Click To Go Back.", keyLS)).padTop(8);
+        contentT.add(backL).padTop(8);
         contentT.row();
 
         stage.addActor(containerT);
@@ -112,10 +131,6 @@ public class CreditsScreen extends ScreenBase {
 
         stage.act(delta);
         stage.draw();
-
-        if (Gdx.input.justTouched()) {
-            action = ScreenBase.ACT_NEXT;
-        }
     }
 
     @Override
