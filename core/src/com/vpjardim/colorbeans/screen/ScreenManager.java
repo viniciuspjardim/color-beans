@@ -32,13 +32,11 @@ public class ScreenManager {
     }
 
     public void render() {
-
         G.delta = Gdx.graphics.getDeltaTime();
 
         // #debugCode
         // Warn frames longer than a max time
         if (G.game.dbg.delta == Dbg.DELTA_REAL) {
-
             int fps = Math.round(1f / Gdx.graphics.getRawDeltaTime());
 
             if (G.game.dbg.lagWarn && fps < 50) {
@@ -107,6 +105,8 @@ public class ScreenManager {
             else if (currScreen instanceof ConfigScreen) {
                 if (currScreen.action == ConfigScreen.ACT_MENU)
                     G.game.setScreen(new MenuScreen());
+                else if (currScreen.action == ConfigScreen.ACT_CREDITS)
+                    G.game.setScreen(new CreditsScreen());
             } else if (currScreen instanceof PlayScreen) {
                 if (currScreen.action == PlayScreen.ACT_MENU)
                     G.game.setScreen(new MenuScreen());

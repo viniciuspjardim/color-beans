@@ -40,6 +40,7 @@ import com.vpjardim.colorbeans.views.InputActor;
  */
 public class ConfigScreen extends ScreenBase {
     public static final int ACT_MENU = 10;
+    public static final int ACT_CREDITS = 11;
 
     private Stage stage;
     private Table inputT;
@@ -152,6 +153,14 @@ public class ConfigScreen extends ScreenBase {
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.data.effectsVolume = effectsVolumeS.getValue() / 100f;
                 effectsVolumeL.setText(Integer.toString((int) effectsVolumeS.getValue()));
+            }
+        });
+
+        Label versionL = new Label("Version 0.1.10", labelStyle);
+        versionL.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action = ACT_CREDITS;
             }
         });
 
@@ -300,6 +309,8 @@ public class ConfigScreen extends ScreenBase {
         gameT.row();
         gameT.add(trainingSpeedS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
         gameT.row();
+
+        gameT.add(versionL).pad(36).colspan(2);
 
         videoT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
         videoT.add(musicVolumeL).padTop(24).padRight(30).align(Align.right);
