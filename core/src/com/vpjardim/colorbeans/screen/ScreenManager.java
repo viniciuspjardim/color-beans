@@ -81,6 +81,30 @@ public class ScreenManager {
             G.game.batch.end();
         }
 
+        // #debugCode
+        if (!G.loading && G.game.dbg.input) {
+            G.game.batch.setProjectionMatrix(currScreen.cam.combined);
+            G.game.batch.begin();
+            BitmapFont font = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
+
+            float lineHeight = G.style.fontSizeMedium * 2f;
+            float x = G.width * 0.85f;
+
+            font.draw(G.game.batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
+                    x, G.height - G.style.fontSizeMedium);
+
+            font.draw(G.game.batch, "Inputs: " + G.game.input.getInputs().size,
+                    x, G.height - (lineHeight * 2));
+
+            font.draw(G.game.batch, "Targets: " + G.game.input.getTargets().size,
+                    x, G.height - (lineHeight * 3));
+
+            font.draw(G.game.batch, "Multiplexer: " + G.game.input.getMultiplexSize(),
+                    x, G.height - (lineHeight * 4));
+
+            G.game.batch.end();
+        }
+
         // When the screen is done we change to the
         // next screen
         if (currScreen.isFinished()) {

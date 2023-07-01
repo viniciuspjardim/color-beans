@@ -13,7 +13,6 @@ package com.vpjardim.colorbeans.input;
  *         2015/11/01
  */
 public interface TargetBase {
-
     void setInput(InputBase input);
 
     void keyDown(int key);

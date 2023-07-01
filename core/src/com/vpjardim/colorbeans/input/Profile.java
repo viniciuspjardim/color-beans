@@ -72,6 +72,21 @@ public class Profile {
         button4 = UNDEFINED;
     }
 
+    public Profile copy() {
+        Profile copy = new Profile();
+        copy.up = up;
+        copy.right = right;
+        copy.down = down;
+        copy.left = left;
+        copy.start = start;
+        copy.button1 = button1;
+        copy.button2 = button2;
+        copy.button3 = button3;
+        copy.button4 = button4;
+
+        return copy;
+    }
+
     public boolean hasKey(int key) {
         return key == up || key == right || key == down || key == left || key == start ||
                 key == button1 || key == button2 || key == button3 || key == button4;

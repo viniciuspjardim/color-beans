@@ -52,9 +52,11 @@ public class InputManager {
         return targets;
     }
 
-    public void loadInputs() {
-        inputsClear();
+    public int getMultiplexSize() {
+        return multiplex.size();
+    }
 
+    public void loadInputs() {
         multiplex.addProcessor(specialButtons);
         multiplex.addProcessor(new GestureDetector(debugInput));
 
@@ -69,7 +71,7 @@ public class InputManager {
             if (i < G.game.data.ctrlProfs.size)
                 input.setProfile(G.game.data.ctrlProfs.get(i));
             else
-                input.setProfile(new Profile());
+                input.setProfile(G.game.data.ctrlProfs.get(0).copy());
 
             input.gdxController = Controllers.getControllers().get(i);
             input.gdxController.addListener(input);

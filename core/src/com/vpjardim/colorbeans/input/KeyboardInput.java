@@ -65,6 +65,11 @@ public class KeyboardInput implements InputBase, InputProcessor {
     }
 
     @Override
+    public TargetBase getTarget() {
+        return target;
+    }
+
+    @Override
     public int getId() {
         return id;
     }

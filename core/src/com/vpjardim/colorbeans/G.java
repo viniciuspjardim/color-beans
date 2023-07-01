@@ -106,6 +106,7 @@ public class G extends Game {
         // dbg.clearMaps = new boolean[] { true, false, false, false };
         // dbg.campEnd = 9;
         // dbg.delta = Dbg.DELTA_0_5X;
+        // dbg.input = true;
         // dbg.fps = true;
         // dbg.fpsStat = true;
         // dbg.logLevel = Application.LOG_DEBUG;

@@ -73,6 +73,11 @@ public class AiInput implements InputBase {
     }
 
     @Override
+    public TargetBase getTarget() {
+        return map;
+    }
+
+    @Override
     public int getId() {
         throw new UnsupportedOperationException("Ai Input does not have an id");
     }

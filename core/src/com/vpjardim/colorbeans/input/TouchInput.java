@@ -89,6 +89,11 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     }
 
     @Override
+    public TargetBase getTarget() {
+        return target;
+    }
+
+    @Override
     public int getId() {
         return id;
     }
@@ -180,7 +185,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-
         // #debugCode
         Dbg.dbg(Dbg.tag(this), "pan ->   x = " + x + ";  y = " + y + "; dTouchX = " +
                 deltaX + "; dTouchY = " + deltaY);

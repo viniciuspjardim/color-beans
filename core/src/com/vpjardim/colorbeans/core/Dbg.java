@@ -28,6 +28,7 @@ public class Dbg {
     public static final int DELTA_8X = 9;
 
     public int delta;
+    public boolean input;
     public boolean fps;
     public boolean fpsText;
     public boolean lagWarn;
@@ -53,6 +54,7 @@ public class Dbg {
         on = false;
 
         delta = DELTA_REAL;
+        input = false;
         fps = false;
         fpsText = false;
         lagWarn = false;

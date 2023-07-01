@@ -42,6 +42,8 @@ public interface InputBase {
 
     Profile getProfile();
 
+    TargetBase getTarget();
+
     int getId();
 
     void update();

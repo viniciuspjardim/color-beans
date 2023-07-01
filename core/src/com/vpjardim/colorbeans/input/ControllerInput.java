@@ -67,6 +67,11 @@ public class ControllerInput implements InputBase, ControllerListener {
     }
 
     @Override
+    public TargetBase getTarget() {
+        return target;
+    }
+
+    @Override
     public int getId() {
         return id;
     }
