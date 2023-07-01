@@ -82,7 +82,7 @@ public class ScreenBase implements Screen, TargetBase {
     @Override
     public void dispose() {
         if (specialKeyDown != null) {
-            EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
+            EventHandler.get().removeListener("SpecialButtons.keyDown", specialKeyDown);
             specialKeyDown = null;
         }
 

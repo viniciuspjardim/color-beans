@@ -12,9 +12,7 @@ import com.badlogic.gdx.utils.ObjectMap;
  *         2018/04/14
  */
 public class DefaultHandler implements EventHandler {
-
     public static final DefaultHandler defaultHandler = new DefaultHandler();
-
     private final ObjectMap<String, Array<EventListener>> listeners;
 
     public DefaultHandler() {
@@ -23,7 +21,6 @@ public class DefaultHandler implements EventHandler {
 
     @Override
     public void addListener(String type, EventListener eListener) {
-
         Array<EventListener> typeListeners;
 
         if (listeners.get(type) == null) {

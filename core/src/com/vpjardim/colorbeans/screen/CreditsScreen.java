@@ -42,7 +42,7 @@ public class CreditsScreen extends ScreenBase {
             }
         };
 
-        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         Table containerT = new Table(G.game.skin);
         containerT.setFillParent(true);

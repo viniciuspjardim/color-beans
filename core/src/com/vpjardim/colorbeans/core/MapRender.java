@@ -94,8 +94,7 @@ public class MapRender {
             }
         };
 
-        // TODO: remove listener when object disposed
-        EventHandler.getHandler().addListener("DebugInput.tap", debugInput);
+        EventHandler.get().addListener("DebugInput.tap", debugInput);
     }
 
     /**
@@ -326,5 +325,9 @@ public class MapRender {
 
     private int rand() {
         return (Math.abs(rand.nextInt()) % 12) + 1;
+    }
+
+    public void dispose() {
+        EventHandler.get().removeListener("DebugInput.tap", debugInput);
     }
 }

@@ -43,7 +43,7 @@ public class MenuScreen extends ScreenBase {
             }
         };
 
-        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         Table outerT = new Table(G.game.skin);
         table = new Table(G.game.skin);

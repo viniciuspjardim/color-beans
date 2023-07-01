@@ -87,8 +87,8 @@ public class PlayScreen extends ScreenBase {
                 menuVisible = true;
         };
 
-        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
-        EventHandler.getHandler().addListener("DebugInput.tap", debugInput);
+        EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.get().addListener("DebugInput.tap", debugInput);
 
         transition = new TweenManager();
         Tween.registerAccessor(OrthographicCamera.class, new CamAccessor());
@@ -307,6 +307,12 @@ public class PlayScreen extends ScreenBase {
         if (fb != null)
             fb.dispose();
 
-        EventHandler.getHandler().removeListener("DebugInput.tap", debugInput);
+        if (manager.render != null) {
+            for (MapRender r : manager.render) {
+                r.dispose();
+            }
+        }
+
+        EventHandler.get().removeListener("DebugInput.tap", debugInput);
     }
 }

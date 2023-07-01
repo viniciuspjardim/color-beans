@@ -59,7 +59,7 @@ public class ConfigScreen extends ScreenBase {
             }
         };
 
-        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         // ==== Tables ====
         Table outerT = new Table(G.game.skin);
@@ -366,7 +366,6 @@ public class ConfigScreen extends ScreenBase {
                 public void clicked(InputEvent event, float x, float y) {
                     controllerActor.setPosition(0);
                     controllerActor.addCallBack(new ControllerActor.KeysSetListener() {
-
                         @Override
                         public void finished(Profile profile) {
                             input.setProfile(profile);

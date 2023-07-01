@@ -26,7 +26,7 @@ public class DebugInput extends GestureDetector.GestureAdapter {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        EventHandler.getHandler().addEvent("DebugInput.tap", () -> new Data(x, y, button));
+        EventHandler.get().addEvent("DebugInput.tap", () -> new Data(x, y, button));
         return false;
     }
 }

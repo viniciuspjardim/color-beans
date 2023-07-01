@@ -37,7 +37,7 @@ public class ScoreScreen extends ScreenBase {
             }
         };
 
-        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         // ==== Tables ====
         Table outerT = new Table(G.game.skin);
