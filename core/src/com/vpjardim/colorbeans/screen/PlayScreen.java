@@ -153,7 +153,7 @@ public class PlayScreen extends ScreenBase {
         super.render(delta);
 
         transition.update(delta);
-        G.game.beansAnim.update();
+        G.game.bgBeans.update();
 
         manager.winLost();
 
@@ -162,8 +162,9 @@ public class PlayScreen extends ScreenBase {
         }
 
         // Draw background
+        G.game.batch.setProjectionMatrix(menuCam.combined);
         G.game.batch.begin();
-        G.game.beansAnim.render();
+        G.game.bgBeans.render();
         G.game.batch.end();
 
         G.game.batch.setProjectionMatrix(cam.combined);
@@ -234,7 +235,7 @@ public class PlayScreen extends ScreenBase {
 
         menuViewport.update(width, height, true);
         manager.resize();
-        G.game.beansAnim.resize();
+        G.game.bgBeans.resize();
 
         updateCache();
     }

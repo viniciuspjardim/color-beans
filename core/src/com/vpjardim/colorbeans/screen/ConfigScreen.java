@@ -409,10 +409,10 @@ public class ConfigScreen extends ScreenBase {
     public void render(float delta) {
         super.render(delta);
 
-        G.game.beansAnim.update();
+        G.game.bgBeans.update();
 
         G.game.batch.begin();
-        G.game.beansAnim.render();
+        G.game.bgBeans.render();
         G.game.batch.end();
 
         if (dirtInputT) {
@@ -445,7 +445,7 @@ public class ConfigScreen extends ScreenBase {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        G.game.beansAnim.resize();
+        G.game.bgBeans.resize();
     }
 
     @Override

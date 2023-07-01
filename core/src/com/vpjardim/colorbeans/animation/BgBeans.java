@@ -16,7 +16,7 @@ import com.vpjardim.colorbeans.G;
  *         2017/08/08
  */
 
-public class MenuBeans {
+public class BgBeans {
     private final float MAX_OPACITY = 10F;
     private final float FRAME_TIME = 1f / 12f; // 12 frames per second
 
@@ -49,7 +49,7 @@ public class MenuBeans {
     private int heightMax;
     private int beansCount;
 
-    public MenuBeans() {
+    public BgBeans() {
         resize();
 
         for (int i = 0; i < beansCount; i++) {
@@ -144,7 +144,6 @@ public class MenuBeans {
     }
 
     public void render() {
-
         TextureAtlas.AtlasRegion tile;
 
         if(animatedBean != null) {

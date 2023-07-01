@@ -116,10 +116,10 @@ public class CreditsScreen extends ScreenBase {
     @Override
     public void render(float delta) {
         super.render(delta);
-        G.game.beansAnim.update();
+        G.game.bgBeans.update();
 
         G.game.batch.begin();
-        G.game.beansAnim.render();
+        G.game.bgBeans.render();
         G.game.batch.end();
 
         stage.act(delta);

@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.vpjardim.colorbeans.animation.MenuBeans;
+import com.vpjardim.colorbeans.animation.BgBeans;
 import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.ScoreTable;
@@ -71,7 +71,7 @@ public class G extends Game {
     public Skin skin;
     public ScoreTable score;
     public Audio audio;
-    public MenuBeans beansAnim;
+    public BgBeans bgBeans;
 
     // #debugCode
     public Dbg dbg;
@@ -96,7 +96,7 @@ public class G extends Game {
         G.height = Gdx.graphics.getHeight();
         G.style = new Style();
 
-        beansAnim = new MenuBeans();
+        bgBeans = new BgBeans();
 
         dbg = new Dbg();
 
