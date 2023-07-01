@@ -8,7 +8,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -20,7 +19,6 @@ import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
-import com.vpjardim.colorbeans.screen.ScreenBase;
 import com.vpjardim.colorbeans.screen.ScreenManager;
 
 import aurelienribon.tweenengine.Tween;
@@ -118,7 +116,6 @@ public class G extends Game {
 
         screens = new ScreenManager();
         screens.create();
-        ScreenBase.bgColor = new Color(0x00002000); // Dark blue;
     }
 
     @Override

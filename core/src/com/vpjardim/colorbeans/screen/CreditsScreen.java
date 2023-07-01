@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -17,15 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
-import com.vpjardim.colorbeans.events.EventListener;
 
 /**
  * @author Vinícius Jardim
  *         2016/12/13
  */
 public class CreditsScreen extends ScreenBase {
-    private Stage stage;
-    private EventListener specialKeyDown;
     private Pixmap tableBgPixmap;
     private TextureRegionDrawable tableBg;
 
@@ -47,9 +43,6 @@ public class CreditsScreen extends ScreenBase {
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
-
-        stage = new Stage(viewport, G.game.batch);
-        G.game.input.addProcessor(stage);
 
         Table containerT = new Table(G.game.skin);
         containerT.setFillParent(true);
@@ -137,9 +130,7 @@ public class CreditsScreen extends ScreenBase {
     public void dispose() {
         super.dispose();
 
-        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
         // Only dispose what does not come from game.assets. Do not dispose skin.
-        stage.dispose();
         tableBgPixmap.dispose();
         tableBg.getRegion().getTexture().dispose();
     }

@@ -6,7 +6,6 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -20,22 +19,14 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
-import com.vpjardim.colorbeans.events.EventListener;
 
 /**
  * @author Vinícius Jardim
  *         2016/09/03
  */
 public class ScoreScreen extends ScreenBase {
-
-    // TODO: finish score screen
-
-    private Stage stage;
-    private EventListener specialKeyDown;
-
     @Override
     public void show() {
-
         super.show();
 
         specialKeyDown = (Event e) -> {
@@ -47,9 +38,6 @@ public class ScoreScreen extends ScreenBase {
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
-
-        stage = new Stage(viewport, G.game.batch);
-        G.game.input.addProcessor(stage);
 
         // ==== Tables ====
         Table outerT = new Table(G.game.skin);
@@ -170,8 +158,6 @@ public class ScoreScreen extends ScreenBase {
 
         trainingT.add(trainingL).expand().fill();
 
-        G.game.input.targetsClear();
-
         // Loop through scores and assemble each row
         int cont = 1;
         for (ScoreTable.Row row : G.game.score.getRows()) {
@@ -230,9 +216,5 @@ public class ScoreScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
-        G.game.input.removeProcessor(stage);
-        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
-        // Only dispose what does not come from game.assets. Do not dispose skin.
-        stage.dispose();
     }
 }

@@ -6,12 +6,14 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.events.EventHandler;
+import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
@@ -23,14 +25,11 @@ public class ScreenBase implements Screen, TargetBase {
     public static final int ACT_RUNNING = 1;
     public static final int ACT_NEXT = 2;
 
-    public static Color bgColor;
-
     protected int action;
     protected OrthographicCamera cam;
     protected Viewport viewport;
-
-    // TODO: review usage of this field, when false it disable esc and print screen buttons
-    protected boolean manageInput = true;
+    protected Stage stage;
+    protected EventListener specialKeyDown;
 
     public float time;
 
@@ -49,16 +48,15 @@ public class ScreenBase implements Screen, TargetBase {
         viewport = new ScreenViewport(cam);
         viewport.apply(true);
 
-        if (manageInput) {
-            G.game.input.targetsClear();
-            G.game.input.addTarget(this);
-            G.game.input.linkAll();
+        if (G.game.batch != null) {
+            stage = new Stage(viewport, G.game.batch);
+            G.game.input.addProcessor(stage);
         }
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(ScreenBase.bgColor.r, ScreenBase.bgColor.g, ScreenBase.bgColor.b, 1f);
+        Gdx.gl.glClearColor(0f, 0f, 0.125f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         time += delta;
@@ -83,7 +81,16 @@ public class ScreenBase implements Screen, TargetBase {
 
     @Override
     public void dispose() {
-        G.game.input.targetsClear();
+        if (specialKeyDown != null) {
+            EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
+            specialKeyDown = null;
+        }
+
+        if (stage != null) {
+            G.game.input.removeProcessor(stage);
+            stage.dispose();
+            stage = null;
+        }
     }
 
     @Override

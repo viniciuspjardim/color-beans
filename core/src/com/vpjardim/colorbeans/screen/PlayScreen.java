@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -45,23 +44,19 @@ public class PlayScreen extends ScreenBase {
     public static final int ACT_CREDITS = 11;
 
     public MapManager manager;
-
     private FrameBuffer fb;
     private Sprite bgSprite;
     private OrthographicCamera menuCam;
     private Viewport menuViewport;
-    private Stage stage;
     private Table table;
     private boolean menuVisible;
     private TweenManager transition;
-    private EventListener specialKeyDown;
     // # debugCode
     private EventListener debugInput;
 
     private TouchInput touchInput;
 
     public PlayScreen(MapManager man) {
-        manageInput = false;
         manager = man;
     }
 
@@ -107,8 +102,6 @@ public class PlayScreen extends ScreenBase {
         menuCam = new OrthographicCamera();
         menuViewport = new ScreenViewport(menuCam);
         viewport.apply(true);
-        stage = new Stage(menuViewport, G.game.batch);
-        G.game.input.addProcessor(stage);
 
         table = new Table(G.game.skin);
         table.setFillParent(true);
@@ -196,7 +189,6 @@ public class PlayScreen extends ScreenBase {
 
         // If it has a TouchInput draw the box and the arrow of the input
         if (touchInput != null && touchInput.draw) {
-
             G.game.sr.setProjectionMatrix(cam.combined);
             G.game.sr.setAutoShapeType(true);
             G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -278,7 +270,7 @@ public class PlayScreen extends ScreenBase {
 
         fb.begin();
 
-        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 0f);
+        Gdx.gl.glClearColor(0f, 0f, 0.125f, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         G.game.batch.begin();
@@ -315,11 +307,6 @@ public class PlayScreen extends ScreenBase {
         if (fb != null)
             fb.dispose();
 
-        G.game.input.removeProcessor(stage);
-        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
         EventHandler.getHandler().removeListener("DebugInput.tap", debugInput);
-
-        // Only dispose what does not come from game.assets. Do not dispose skin.
-        stage.dispose();
     }
 }

@@ -35,13 +35,8 @@ import com.vpjardim.colorbeans.input.InputManager;
 public class LoadingScreen extends ScreenBase {
     private int frameCount = 0;
     private String atlasStr;
-
     private Texture loadingTexture;
     private final Color BAR_COLOR = new Color(0x4048ccff);
-
-    public LoadingScreen() {
-        manageInput = false;
-    }
 
     @Override
     public void show() {

@@ -6,7 +6,6 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -25,7 +24,6 @@ import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
-import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.ControllerInput;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.KeyboardInput;
@@ -42,18 +40,12 @@ public class ConfigScreen extends ScreenBase {
     public static final int ACT_MENU = 10;
     public static final int ACT_CREDITS = 11;
 
-    private Stage stage;
     private Table inputT;
     private boolean dirtInputT = false;
     private TextField player1;
     private TextField player2;
     private TextField player3;
     private TextField player4;
-    private EventListener specialKeyDown;
-
-    public ConfigScreen() {
-        manageInput = false;
-    }
 
     @Override
     public void show() {
@@ -68,9 +60,6 @@ public class ConfigScreen extends ScreenBase {
         };
 
         EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
-
-        stage = new Stage(viewport, G.game.batch);
-        G.game.input.addProcessor(stage);
 
         // ==== Tables ====
         Table outerT = new Table(G.game.skin);
@@ -340,8 +329,6 @@ public class ConfigScreen extends ScreenBase {
         dirtInputT = false;
         inputT.clearChildren();
 
-        G.game.input.targetsClear();
-
         final ControllerActor controllerActor = new ControllerActor();
         inputT.add(controllerActor).colspan(4).align(Align.center);
         inputT.row();
@@ -364,7 +351,6 @@ public class ConfigScreen extends ScreenBase {
             Dbg.inf(Dbg.tagO(this), input.getId() + "");
             inputActor.setNumber(input.getId());
             inputT.add(inputActor);
-            G.game.input.addTarget(inputActor);
 
             final TextButton setBtt = new TextButton("Edit",
                     G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
@@ -418,8 +404,6 @@ public class ConfigScreen extends ScreenBase {
 
             inputT.row();
         }
-
-        G.game.input.linkAll();
     }
 
     @Override
@@ -442,7 +426,6 @@ public class ConfigScreen extends ScreenBase {
     @Override
     public void hide() {
         final Array<Cfg.Player> pls = G.game.data.players;
-
         pls.clear();
 
         if (!player1.getText().equals(""))
@@ -457,32 +440,6 @@ public class ConfigScreen extends ScreenBase {
         if (!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
 
-        int controllerCount = 0;
-        int keyboardCount = 0;
-
-        for (int i = 0; i < G.game.input.getInputs().size; i++) {
-            final InputBase input = G.game.input.getInputs().get(i);
-
-            if (input instanceof ControllerInput) {
-                // If exists replace, otherwise add it
-                if (G.game.data.ctrlProfs.size > controllerCount)
-                    G.game.data.ctrlProfs.set(controllerCount, input.getProfile());
-                else
-                    G.game.data.ctrlProfs.add(input.getProfile());
-
-                controllerCount++;
-            }
-            else if (input instanceof KeyboardInput) {
-                // If exists replace, otherwise add it
-                if (G.game.data.kbProfs.size > keyboardCount)
-                    G.game.data.kbProfs.set(keyboardCount, input.getProfile());
-                else
-                    G.game.data.kbProfs.add(input.getProfile());
-
-                keyboardCount++;
-            }
-        }
-
         Db.save(G.game.data);
     }
 
@@ -495,11 +452,5 @@ public class ConfigScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
-
-        G.game.input.removeProcessor(stage);
-        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
-
-        // Only dispose what does not come from game.assets. Do not dispose skin.
-        stage.dispose();
     }
 }

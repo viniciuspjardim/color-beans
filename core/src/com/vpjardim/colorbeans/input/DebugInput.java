@@ -12,14 +12,10 @@ import com.vpjardim.colorbeans.events.EventHandler;
  *         2018/10/14
  */
 public class DebugInput extends GestureDetector.GestureAdapter {
-
     public static class Data {
         public float x;
         public float y;
         public int button;
-
-        public Data() {
-        }
 
         public Data(float x, float y, int button) {
             this.x = x;

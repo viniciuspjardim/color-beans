@@ -7,7 +7,6 @@ package com.vpjardim.colorbeans.input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
-import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Dbg;
 
 /**
@@ -15,14 +14,11 @@ import com.vpjardim.colorbeans.core.Dbg;
  *         2016/02/13
  */
 public class ControllerConnection implements ControllerListener {
-
     @Override
     public void connected(Controller controller) {
         // #debugCode
         Dbg.inf(Dbg.tag(this), "Controller " + controller.getName() + " connected; n = " +
                 Controllers.getControllers().size);
-        G.game.input.loadInputs();
-        G.game.input.linkAll();
     }
 
     @Override
@@ -30,8 +26,6 @@ public class ControllerConnection implements ControllerListener {
         // #debugCode
         Dbg.inf(Dbg.tag(this), "Controller " + controller.getName() + " disconnected; n = " +
                 Controllers.getControllers().size);
-        G.game.input.loadInputs();
-        G.game.input.linkAll();
     }
 
     @Override
