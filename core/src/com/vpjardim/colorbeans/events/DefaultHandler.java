@@ -40,7 +40,7 @@ public class DefaultHandler implements EventHandler {
     }
 
     @Override
-    public void addEvent(String type, Event e) {
+    public void emit(String type, Event e) {
         if (listeners.get(type) != null) {
             for (EventListener eListener : listeners.get(type)) {
                 eListener.handleEvent(e);

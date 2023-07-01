@@ -5,8 +5,6 @@
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.utils.Array;
-import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.EventHandler;
 
 /**
@@ -16,27 +14,13 @@ import com.vpjardim.colorbeans.events.EventHandler;
 public class SpecialButtons extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
-        Array<TargetBase> targets = G.game.input.getTargets();
-
-        if (targets != null && targets.size > 0) {
-            targets.get(0).keyDown(keycode);
-        }
-
-        EventHandler.get().addEvent("SpecialButtons.keyDown", () -> keycode);
-
+        EventHandler.get().emit("SpecialButtons.keyDown", () -> keycode);
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        Array<TargetBase> targets = G.game.input.getTargets();
-
-        if (targets != null && targets.size > 0) {
-            targets.get(0).keyUp(keycode);
-        }
-
-        EventHandler.get().addEvent("SpecialButtons.keyUp", () -> keycode);
-
+        EventHandler.get().emit("SpecialButtons.keyUp", () -> keycode);
         return false;
     }
 }
