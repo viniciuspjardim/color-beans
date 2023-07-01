@@ -38,6 +38,10 @@ public class LoadingScreen extends ScreenBase {
     private Texture loadingTexture;
     private final Color BAR_COLOR = new Color(0x4048ccff);
 
+    public LoadingScreen() {
+        manageInput = false;
+    }
+
     @Override
     public void show() {
         super.show();

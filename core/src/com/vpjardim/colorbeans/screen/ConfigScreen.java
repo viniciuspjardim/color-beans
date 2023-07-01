@@ -47,6 +47,10 @@ public class ConfigScreen extends ScreenBase {
     private TextField player3;
     private TextField player4;
 
+    public ConfigScreen() {
+        manageInput = false;
+    }
+
     @Override
     public void show() {
         super.show();
@@ -329,6 +333,8 @@ public class ConfigScreen extends ScreenBase {
         dirtInputT = false;
         inputT.clearChildren();
 
+        G.game.input.targetsClear();
+
         final ControllerActor controllerActor = new ControllerActor();
         inputT.add(controllerActor).colspan(4).align(Align.center);
         inputT.row();
@@ -351,6 +357,7 @@ public class ConfigScreen extends ScreenBase {
             Dbg.inf(Dbg.tagO(this), input.getId() + "");
             inputActor.setNumber(input.getId());
             inputT.add(inputActor);
+            G.game.input.addTarget(inputActor);
 
             final TextButton setBtt = new TextButton("Edit",
                     G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
@@ -403,6 +410,8 @@ public class ConfigScreen extends ScreenBase {
 
             inputT.row();
         }
+
+        G.game.input.linkAll();
     }
 
     @Override
@@ -438,6 +447,32 @@ public class ConfigScreen extends ScreenBase {
             pls.add(new Cfg.Player(player3.getText()));
         if (!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
+
+        int controllerCount = 0;
+        int keyboardCount = 0;
+
+        for (int i = 0; i < G.game.input.getInputs().size; i++) {
+            final InputBase input = G.game.input.getInputs().get(i);
+
+            if (input instanceof ControllerInput) {
+                // If exists replace, otherwise add it
+                if (G.game.data.ctrlProfs.size > controllerCount)
+                    G.game.data.ctrlProfs.set(controllerCount, input.getProfile());
+                else
+                    G.game.data.ctrlProfs.add(input.getProfile());
+
+                controllerCount++;
+            }
+            else if (input instanceof KeyboardInput) {
+                // If exists replace, otherwise add it
+                if (G.game.data.kbProfs.size > keyboardCount)
+                    G.game.data.kbProfs.set(keyboardCount, input.getProfile());
+                else
+                    G.game.data.kbProfs.add(input.getProfile());
+
+                keyboardCount++;
+            }
+        }
 
         Db.save(G.game.data);
     }

@@ -30,6 +30,7 @@ public class ScreenBase implements Screen, TargetBase {
     protected Viewport viewport;
     protected Stage stage;
     protected EventListener specialKeyDown;
+    protected boolean manageInput = true;
 
     public float time;
 
@@ -51,6 +52,12 @@ public class ScreenBase implements Screen, TargetBase {
         if (G.game.batch != null) {
             stage = new Stage(viewport, G.game.batch);
             G.game.input.addProcessor(stage);
+        }
+
+        if (manageInput) {
+            G.game.input.targetsClear();
+            G.game.input.addTarget(this);
+            G.game.input.linkAll();
         }
     }
 
@@ -91,6 +98,8 @@ public class ScreenBase implements Screen, TargetBase {
             stage.dispose();
             stage = null;
         }
+        
+        G.game.input.targetsClear();
     }
 
     @Override

@@ -57,6 +57,7 @@ public class PlayScreen extends ScreenBase {
     private TouchInput touchInput;
 
     public PlayScreen(MapManager man) {
+        manageInput = false;
         manager = man;
     }
 

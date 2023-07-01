@@ -53,6 +53,8 @@ public class InputManager {
     }
 
     public void loadInputs() {
+        inputsClear();
+
         multiplex.addProcessor(specialButtons);
         multiplex.addProcessor(new GestureDetector(debugInput));
 
@@ -98,6 +100,14 @@ public class InputManager {
         }
     }
 
+    public void addTarget(TargetBase target) {
+        targets.add(target);
+    }
+
+    public void removeTarget(TargetBase target) {
+        targets.removeValue(target, true);
+    }
+
     public void moveInput(int index, int value) {
         if (value != 1 && value != -1)
             return;
@@ -111,11 +121,56 @@ public class InputManager {
         inputs.swap(index, neighborIndex);
     }
 
+    public void linkAll() {
+        int max = Math.min(inputs.size, targets.size);
+
+        for (int i = 0; i < max; i++) {
+            link(inputs.get(i), targets.get(i));
+        }
+    }
+
+    public static void link(InputBase input, TargetBase target) {
+        input.setTarget(target);
+        target.setInput(input);
+    }
+
     public void addProcessor(InputProcessor input) {
         multiplex.addProcessor(input);
     }
 
     public void removeProcessor(InputProcessor input) {
         multiplex.removeProcessor(input);
+    }
+
+    public void inputsClear() {
+        // Clear targets references for inputs
+        for (TargetBase t : targets) {
+            t.setInput(null);
+        }
+
+        // Clear inputs references for targets
+        for (InputBase i : inputs) {
+            i.setTarget(null);
+        }
+
+        // Clear references for all inputs
+        inputs.clear();
+    }
+
+    public void targetsClear() {
+        maxId = 1;
+
+        // Clear targets references for inputs
+        for (TargetBase t : targets) {
+            t.setInput(null);
+        }
+
+        // Clear inputs references for targets
+        for (InputBase i : inputs) {
+            i.setTarget(null);
+        }
+
+        // Clear references for all targets
+        targets.clear();
     }
 }

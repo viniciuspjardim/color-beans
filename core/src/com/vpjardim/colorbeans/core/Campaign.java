@@ -48,6 +48,8 @@ public class Campaign extends MapManager {
             aiMapNames.add(G.game.data.stageNames[i]);
         }
 
+        G.game.input.targetsClear();
+
         MapRender r;
 
         Map playerMap = new Map(this);
@@ -60,11 +62,13 @@ public class Campaign extends MapManager {
         // Config player's map to the first stage
         playerMap.setCfg(mapCfgs.get(stageIndex));
         playerMap.name = G.game.data.players.first().name;
+        G.game.input.addTarget(playerMap);
 
         // #debugCode
         if (G.game.dbg.aiPlayerCamp) {
             playerMap.ai = new Ai3();
             playerMap.ai.init(playerMap, G.game.data.createAiConfig(11));
+            G.game.input.removeTarget(playerMap);
         }
 
         Map aiMap = new Map(this);
@@ -89,6 +93,8 @@ public class Campaign extends MapManager {
             playerMap.debugShape(G.game.dbg.mapShapes[0]);
             aiMap.debugShape(G.game.dbg.mapShapes[1]);
         }
+
+        G.game.input.linkAll();
     }
 
     @Override
