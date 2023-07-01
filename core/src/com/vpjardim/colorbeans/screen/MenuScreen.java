@@ -8,7 +8,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.utils.Align;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
-import com.vpjardim.colorbeans.events.EventListener;
 
 /**
  * @author Vinícius Jardim
@@ -29,11 +27,9 @@ public class MenuScreen extends ScreenBase {
     public static final int ACT_SCORE = 12;
     public static final int ACT_CONFIG = 13;
 
-    private Stage stage;
     private Table table;
     private Label label;
     private TextureAtlas.AtlasRegion titleRegion;
-    private EventListener specialKeyDown;
 
     @Override
     public void show() {
@@ -47,10 +43,7 @@ public class MenuScreen extends ScreenBase {
             }
         };
 
-        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
-
-        stage = new Stage(viewport, G.game.batch);
-        G.game.input.addProcessor(stage);
+        EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         Table outerT = new Table(G.game.skin);
         table = new Table(G.game.skin);
@@ -145,10 +138,10 @@ public class MenuScreen extends ScreenBase {
     public void render(float delta) {
         super.render(delta);
 
-        G.game.beansAnim.update();
+        G.game.bgBeans.update();
 
         G.game.batch.begin();
-        G.game.beansAnim.render();
+        G.game.bgBeans.render();
         G.game.batch.end();
 
         stage.act(delta);
@@ -172,15 +165,11 @@ public class MenuScreen extends ScreenBase {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        G.game.beansAnim.resize();
+        G.game.bgBeans.resize();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        G.game.input.removeProcessor(stage);
-        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
-        // Only dispose what does not come from game.assets. Do not dispose skin.
-        stage.dispose();
     }
 }

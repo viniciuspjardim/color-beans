@@ -12,7 +12,6 @@ import com.vpjardim.colorbeans.core.Dbg;
  *         2015/07/15
  */
 public class KeyboardInput implements InputBase, InputProcessor {
-
     private TargetBase target;
     public Profile p;
     private int id;

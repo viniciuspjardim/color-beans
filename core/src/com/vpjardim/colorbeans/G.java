@@ -8,19 +8,17 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.vpjardim.colorbeans.animation.MenuBeans;
+import com.vpjardim.colorbeans.animation.BgBeans;
 import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
-import com.vpjardim.colorbeans.screen.ScreenBase;
 import com.vpjardim.colorbeans.screen.ScreenManager;
 
 import aurelienribon.tweenengine.Tween;
@@ -73,7 +71,7 @@ public class G extends Game {
     public Skin skin;
     public ScoreTable score;
     public Audio audio;
-    public MenuBeans beansAnim;
+    public BgBeans bgBeans;
 
     // #debugCode
     public Dbg dbg;
@@ -98,7 +96,7 @@ public class G extends Game {
         G.height = Gdx.graphics.getHeight();
         G.style = new Style();
 
-        beansAnim = new MenuBeans();
+        bgBeans = new BgBeans();
 
         dbg = new Dbg();
 
@@ -118,7 +116,6 @@ public class G extends Game {
 
         screens = new ScreenManager();
         screens.create();
-        ScreenBase.bgColor = new Color(0x00002000); // Dark blue;
     }
 
     @Override

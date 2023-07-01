@@ -9,9 +9,8 @@ package com.vpjardim.colorbeans.events;
  *         2018/04/14
  */
 public interface EventHandler {
-
     /** Returns default EventHandler instance */
-    static EventHandler getHandler() {
+    static EventHandler get() {
         return DefaultHandler.defaultHandler;
     }
 
@@ -19,5 +18,5 @@ public interface EventHandler {
 
     void removeListener(String type, EventListener eListener);
 
-    void addEvent(String type, Event e);
+    void emit(String type, Event e);
 }

@@ -4,7 +4,6 @@
 
 package com.vpjardim.colorbeans.screen;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -24,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.animation.CamAccessor;
 import com.vpjardim.colorbeans.core.Audio;
+import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.core.ScoreTable;
@@ -45,16 +44,13 @@ public class PlayScreen extends ScreenBase {
     public static final int ACT_CREDITS = 11;
 
     public MapManager manager;
-
     private FrameBuffer fb;
     private Sprite bgSprite;
     private OrthographicCamera menuCam;
     private Viewport menuViewport;
-    private Stage stage;
     private Table table;
     private boolean menuVisible;
     private TweenManager transition;
-    private EventListener specialKeyDown;
     // # debugCode
     private EventListener debugInput;
 
@@ -74,26 +70,23 @@ public class PlayScreen extends ScreenBase {
             int key = (Integer) e.getAttribute();
 
             if (G.isBackKey(key)) {
-                // In WebGL this event is called four times it no pauses if we use btStartDown()
-                if (Gdx.app.getType() == Application.ApplicationType.WebGL) {
-                    manager.pause(0, true);
-                } else {
-                    manager.maps.first().btStartDown();
-                    menuVisible = true;
-                }
+                Dbg.dbg("BackKey", "SpecialButtons.keyDown: " + key);
+                manager.togglePaused();
+                menuVisible = true;
             }
         };
 
         // Tap event
         debugInput = (Event e) -> {
-            if (manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
+            if (G.game.dbg.on) {
                 menuVisible = false;
-            else if (manager.pauseStatus == MapManager.PAUSED_ALL && !menuVisible && !G.game.dbg.on)
-                menuVisible = true;
+            } else {
+                menuVisible = !menuVisible;
+            }
         };
 
-        EventHandler.getHandler().addListener("SpecialButtons.keyDown", specialKeyDown);
-        EventHandler.getHandler().addListener("DebugInput.tap", debugInput);
+        EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.get().addListener("DebugInput.tap", debugInput);
 
         transition = new TweenManager();
         Tween.registerAccessor(OrthographicCamera.class, new CamAccessor());
@@ -107,8 +100,6 @@ public class PlayScreen extends ScreenBase {
         menuCam = new OrthographicCamera();
         menuViewport = new ScreenViewport(menuCam);
         viewport.apply(true);
-        stage = new Stage(menuViewport, G.game.batch);
-        G.game.input.addProcessor(stage);
 
         table = new Table(G.game.skin);
         table.setFillParent(true);
@@ -124,7 +115,7 @@ public class PlayScreen extends ScreenBase {
         resumeButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                manager.pause(0, false);
+                manager.setPaused(false);
                 menuVisible = true;
             }
         });
@@ -163,7 +154,7 @@ public class PlayScreen extends ScreenBase {
         super.render(delta);
 
         transition.update(delta);
-        G.game.beansAnim.update();
+        G.game.bgBeans.update();
 
         manager.winLost();
 
@@ -172,8 +163,9 @@ public class PlayScreen extends ScreenBase {
         }
 
         // Draw background
+        G.game.batch.setProjectionMatrix(menuCam.combined);
         G.game.batch.begin();
-        G.game.beansAnim.render();
+        G.game.bgBeans.render();
         G.game.batch.end();
 
         G.game.batch.setProjectionMatrix(cam.combined);
@@ -192,11 +184,10 @@ public class PlayScreen extends ScreenBase {
         stage.act(delta);
         stage.draw();
 
-        table.setVisible(manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible);
+        table.setVisible(manager.isPaused() && menuVisible);
 
         // If it has a TouchInput draw the box and the arrow of the input
         if (touchInput != null && touchInput.draw) {
-
             G.game.sr.setProjectionMatrix(cam.combined);
             G.game.sr.setAutoShapeType(true);
             G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -245,7 +236,7 @@ public class PlayScreen extends ScreenBase {
 
         menuViewport.update(width, height, true);
         manager.resize();
-        G.game.beansAnim.resize();
+        G.game.bgBeans.resize();
 
         updateCache();
     }
@@ -278,7 +269,7 @@ public class PlayScreen extends ScreenBase {
 
         fb.begin();
 
-        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 0f);
+        Gdx.gl.glClearColor(0f, 0f, 0.125f, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         G.game.batch.begin();
@@ -295,7 +286,7 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void pause() {
-        manager.pause(0, true);
+        manager.setPaused(true);
     }
 
     @Override
@@ -315,11 +306,12 @@ public class PlayScreen extends ScreenBase {
         if (fb != null)
             fb.dispose();
 
-        G.game.input.removeProcessor(stage);
-        EventHandler.getHandler().removeListener("SpecialButtons.keyDown", specialKeyDown);
-        EventHandler.getHandler().removeListener("DebugInput.tap", debugInput);
+        if (manager.render != null) {
+            for (MapRender r : manager.render) {
+                r.dispose();
+            }
+        }
 
-        // Only dispose what does not come from game.assets. Do not dispose skin.
-        stage.dispose();
+        EventHandler.get().removeListener("DebugInput.tap", debugInput);
     }
 }

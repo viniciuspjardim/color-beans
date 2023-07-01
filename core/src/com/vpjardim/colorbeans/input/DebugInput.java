@@ -12,14 +12,10 @@ import com.vpjardim.colorbeans.events.EventHandler;
  *         2018/10/14
  */
 public class DebugInput extends GestureDetector.GestureAdapter {
-
     public static class Data {
         public float x;
         public float y;
         public int button;
-
-        public Data() {
-        }
 
         public Data(float x, float y, int button) {
             this.x = x;
@@ -30,7 +26,7 @@ public class DebugInput extends GestureDetector.GestureAdapter {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        EventHandler.getHandler().addEvent("DebugInput.tap", () -> new Data(x, y, button));
+        EventHandler.get().emit("DebugInput.tap", () -> new Data(x, y, button));
         return false;
     }
 }
