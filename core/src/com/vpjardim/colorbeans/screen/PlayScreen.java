@@ -4,7 +4,6 @@
 
 package com.vpjardim.colorbeans.screen;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -23,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.animation.CamAccessor;
 import com.vpjardim.colorbeans.core.Audio;
+import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.core.ScoreTable;
@@ -69,22 +69,19 @@ public class PlayScreen extends ScreenBase {
             int key = (Integer) e.getAttribute();
 
             if (G.isBackKey(key)) {
-                // In WebGL this event is called four times it no pauses if we use btStartDown()
-                if (Gdx.app.getType() == Application.ApplicationType.WebGL) {
-                    manager.pause(0, true);
-                } else {
-                    manager.maps.first().btStartDown();
-                    menuVisible = true;
-                }
+                Dbg.dbg("BackKey", "SpecialButtons.keyDown: " + key);
+                manager.togglePaused();
+                menuVisible = true;
             }
         };
 
         // Tap event
         debugInput = (Event e) -> {
-            if (manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible)
+            if (G.game.dbg.on) {
                 menuVisible = false;
-            else if (manager.pauseStatus == MapManager.PAUSED_ALL && !menuVisible && !G.game.dbg.on)
-                menuVisible = true;
+            } else {
+                menuVisible = !menuVisible;
+            }
         };
 
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
@@ -117,7 +114,7 @@ public class PlayScreen extends ScreenBase {
         resumeButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                manager.pause(0, false);
+                manager.setPaused(false);
                 menuVisible = true;
             }
         });
@@ -185,7 +182,7 @@ public class PlayScreen extends ScreenBase {
         stage.act(delta);
         stage.draw();
 
-        table.setVisible(manager.pauseStatus == MapManager.PAUSED_ALL && menuVisible);
+        table.setVisible(manager.isPaused() && menuVisible);
 
         // If it has a TouchInput draw the box and the arrow of the input
         if (touchInput != null && touchInput.draw) {
@@ -287,7 +284,7 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void pause() {
-        manager.pause(0, true);
+        manager.setPaused(true);
     }
 
     @Override

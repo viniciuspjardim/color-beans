@@ -160,17 +160,14 @@ public class Db {
         };
 
         campGame.nPlayers = 2;
-        campGame.pauseAct = Cfg.Game.PAUSE_ALL;
         campGame.finishOnWin = true;
         campGame.lostAct = Cfg.Game.LOST_AUTO_RESTART;
 
         loopGame.nPlayers = 2;
-        loopGame.pauseAct = Cfg.Game.PAUSE_ALL;
         loopGame.finishOnWin = false;
         loopGame.lostAct = Cfg.Game.LOST_AUTO_RESTART;
 
         trainingGame.nPlayers = 1;
-        trainingGame.pauseAct = Cfg.Game.PAUSE_ALL;
         trainingGame.finishOnWin = false;
         trainingGame.lostAct = Cfg.Game.LOST_RESTART_PAUSED;
     }

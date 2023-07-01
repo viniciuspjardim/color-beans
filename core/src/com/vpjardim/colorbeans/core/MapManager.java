@@ -14,9 +14,6 @@ import com.vpjardim.colorbeans.Map;
  *         2016/09/02
  */
 public abstract class MapManager {
-    public static final int PAUSED_NONE = 1;
-    public static final int PAUSED_ALL = 2;
-    public static final int PAUSED_MIXED = 3;
     public static final int GAME_CONTINUE = 1;
     public static final int GAME_ZEROED = 2;
 
@@ -26,7 +23,7 @@ public abstract class MapManager {
     public Array<MapRender> render;
     public Map winnerMap;
     public int gameStatus = GAME_CONTINUE;
-    public int pauseStatus = PAUSED_NONE;
+    private boolean paused = false;
 
     public abstract void init();
 
@@ -129,7 +126,7 @@ public abstract class MapManager {
                     m.recycle(true); // TODO: remove and test. It's done in MState
                     m.state.changeState(Map.MState.GRAVITY_FALL);
 
-                    pause(m.index, paused);
+                    setPaused(paused);
                 }
                 winnerMap = null;
 
@@ -144,40 +141,21 @@ public abstract class MapManager {
         }
     }
 
-    public void pause(int mapIndex, boolean paused) {
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
         if (paused) {
             G.game.audio.pauseMusic();
         } else {
             G.game.audio.playMusic();
         }
 
-        if (gameCfg.pauseAct == Cfg.Game.PAUSE_SELF) {
-            Map m = maps.get(mapIndex);
-            m.pause = paused;
-        } else if (gameCfg.pauseAct == Cfg.Game.PAUSE_ALL) {
-            for (int i = 0; i < maps.size; i++) {
-                Map m = maps.get(i);
-                m.pause = paused;
-            }
-        }
-
-        updatePausedStatus();
+        this.paused = paused;
     }
 
-    public void updatePausedStatus() {
-        int pausedCont = 0;
-
-        for (int i = 0; i < maps.size; i++) {
-            Map m = maps.get(i);
-            if (m.pause)
-                pausedCont++;
-        }
-
-        if (pausedCont == 0)
-            pauseStatus = PAUSED_NONE;
-        else if (pausedCont == maps.size)
-            pauseStatus = PAUSED_ALL;
-        else
-            pauseStatus = PAUSED_MIXED;
+    public void togglePaused() {
+        setPaused(!paused);
     }
 }

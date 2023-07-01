@@ -24,7 +24,6 @@ import com.vpjardim.colorbeans.input.DebugInput;
  *         2016/09/02
  */
 public class MapRender {
-
     public Map m;
 
     /**
@@ -58,19 +57,16 @@ public class MapRender {
     private EventListener debugInput;
 
     public MapRender() {
-
         if (!G.game.dbg.on)
             return;
 
         // Tap event listener: changes block color on tap event when debugging
         debugInput = (Event e) -> {
-
             // On android, only change beans color when it's paused
-            boolean changeColor = m != null && ((Gdx.app.getType() == Application.ApplicationType.Android && m.pause) ||
+            boolean changeColor = m != null && ((Gdx.app.getType() == Application.ApplicationType.Android && m.manager.isPaused()) ||
                     Gdx.app.getType() == Application.ApplicationType.Desktop);
 
             if (changeColor) {
-
                 DebugInput.Data evData = (DebugInput.Data) e.getAttribute();
                 evData.y = G.height - evData.y;
 
@@ -102,16 +98,13 @@ public class MapRender {
      * the screen is resized)
      */
     public void cacheBg() {
-
         TextureAtlas.AtlasRegion tile;
         rand.setState(seed0, seed1);
 
         // ===== Draw map dark bg bricks =====
 
         for (int i = 0; i < m.b.length; i++) {
-
             for (int j = Map.OUT_ROW; j < m.b[i].length + 1; j++) {
-
                 tile = G.game.atlas.findRegion("beans/brick", rand() % 3 + 10);
 
                 G.game.batch.draw(
@@ -140,9 +133,7 @@ public class MapRender {
         // ==== Draw side border: light bricks =====
 
         for (int i = -2; i < m.b.length + 1; i++) {
-
             for (int j = Map.OUT_ROW; j < m.b[0].length; j++) {
-
                 if (i >= 0 && i < m.b.length)
                     continue;
 
@@ -187,14 +178,11 @@ public class MapRender {
     }
 
     public void renderBatch() {
-
         TextureAtlas.AtlasRegion tile;
 
         // ===== Draw map blocks =====
         for (int i = 0; i < m.b.length; i++) {
-
             for (int j = Map.OUT_ROW; j < m.b[i].length; j++) {
-
                 Block block = m.b[i][j];
 
                 if (!m.b[i][j].visible)
@@ -248,7 +236,6 @@ public class MapRender {
         }
 
         for (int i = -2; i < m.b.length + 1; i++) {
-
             tile = G.game.atlas.findRegion("beans/brick", rand() % 9 + 1);
 
             float beansPy;

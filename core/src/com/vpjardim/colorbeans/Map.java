@@ -151,7 +151,7 @@ public class Map implements TargetBase {
                 }
 
                 // Waiting til next frame if the game is paused
-                if (map.pause)
+                if (map.manager.isPaused())
                     return;
 
                 // Waiting animation to end
@@ -228,7 +228,7 @@ public class Map implements TargetBase {
                 }
 
                 // Waiting til next frame if the game is paused
-                if (map.pause)
+                if (map.manager.isPaused())
                     return;
 
                 // Waiting animation to end
@@ -298,7 +298,7 @@ public class Map implements TargetBase {
                 }
 
                 // Waiting til next frame if the game is paused
-                if (map.pause)
+                if (map.manager.isPaused())
                     return;
 
                 // processing input and input animation
@@ -536,9 +536,6 @@ public class Map implements TargetBase {
 
     // ====== State control variables =====>
 
-    /** True if game is paused */
-    public boolean pause = false;
-
     /** True if the game is over */
     public boolean gameOver = false;
 
@@ -697,12 +694,7 @@ public class Map implements TargetBase {
         }
     }
 
-    public void recycle() {
-        recycle(false);
-    }
-
     public void recycle(boolean keepCampaignData) {
-
         // TODO: review this whole method because some variables might not being
         // recycled
 
@@ -1282,8 +1274,7 @@ public class Map implements TargetBase {
     }
 
     public void update() {
-
-        if (!pause) {
+        if (!manager.isPaused()) {
             matchTimer += G.delta;
             speedTimer += G.delta;
         }
@@ -1377,30 +1368,30 @@ public class Map implements TargetBase {
     @Override
     public void btStartDown() {
         if (!isInState(MState.OVER) && !isInState(MState.DONE))
-            manager.pause(index, !pause);
+            manager.togglePaused();
     }
 
     @Override
     public void bt1Down() {
-        if (!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
+        if (!manager.isPaused() && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void bt2Down() {
-        if (!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
+        if (!manager.isPaused() && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
             pb.rotateCounterclockwise(true);
     }
 
     @Override
     public void bt3Down() {
-        if (!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
+        if (!manager.isPaused() && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 
     @Override
     public void bt4Down() {
-        if (!pause && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
+        if (!manager.isPaused() && isInState(MState.PLAYER_FALL) && rPlayMoveTimer <= 0f)
             pb.rotateClockwise(true);
     }
 

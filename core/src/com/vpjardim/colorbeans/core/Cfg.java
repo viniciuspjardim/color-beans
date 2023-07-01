@@ -11,13 +11,10 @@ package com.vpjardim.colorbeans.core;
 public class Cfg {
 
     public static class Game {
-        public static final int PAUSE_SELF = 1;
-        public static final int PAUSE_ALL = 2;
-        public static final int LOST_RESTART_PAUSED = 2;
-        public static final int LOST_AUTO_RESTART = 3;
+        public static final int LOST_RESTART_PAUSED = 1;
+        public static final int LOST_AUTO_RESTART = 2;
 
         public int nPlayers;
-        public int pauseAct;
         public boolean finishOnWin;
         public int lostAct;
     }
@@ -44,7 +41,6 @@ public class Cfg {
      * intervals.
      */
     public static class Ai {
-
         /**
          * Minimum fall percent in which down key will be pressed. It happens in the end
          * of the fall
