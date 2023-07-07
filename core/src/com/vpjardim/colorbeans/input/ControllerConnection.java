@@ -33,14 +33,8 @@ public class ControllerConnection implements ControllerListener {
 
         // TODO: add to the controller the first target without input.
         // TODO: move the controller up, before other inputs.
-        // TODO: fix the input id, getting the last one don't work because it can be reordered.
 
-        if (inputs.size > 0) {
-            input.setId(inputs.get(inputs.size - 1).getId() + 1);
-        } else {
-            input.setId(1);
-        }
-
+        input.setId(G.game.input.getMaxId() + 1);
         inputs.add(input);
     }
 
@@ -52,15 +46,21 @@ public class ControllerConnection implements ControllerListener {
 
         Array<InputBase> inputs = G.game.input.getInputs();
 
-        for (InputBase i : inputs) {
-            if (i instanceof ControllerInput) {
-                ControllerInput c = (ControllerInput) i;
+        for (InputBase input : inputs) {
+            if (input instanceof ControllerInput) {
+                ControllerInput c = (ControllerInput) input;
 
                 if (c.gdxController == controller) {
-                    TargetBase target = i.getTarget();
+                    TargetBase target = input.getTarget();
 
-                    target.setInput(null);
-                    inputs.removeValue(i, true);
+                    if (target != null) {
+                        target.setInput(null);
+                    }
+
+                    input.setTarget(null);
+                    inputs.removeValue(input, true);
+
+                    return;
                 }
             }
         }

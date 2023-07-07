@@ -110,6 +110,18 @@ public class InputManager {
         targets.removeValue(target, true);
     }
 
+    public int getMaxId() {
+        int maxId = 0;
+
+        for (InputBase input : inputs) {
+            if (input.getId() > maxId) {
+                maxId = input.getId();
+            }
+        }
+
+        return maxId;
+    }
+
     public void moveInput(int index, int value) {
         if (value != 1 && value != -1)
             return;
@@ -142,21 +154,6 @@ public class InputManager {
 
     public void removeProcessor(InputProcessor input) {
         multiplex.removeProcessor(input);
-    }
-
-    public void inputsClear() {
-        // Clear targets references for inputs
-        for (TargetBase t : targets) {
-            t.setInput(null);
-        }
-
-        // Clear inputs references for targets
-        for (InputBase i : inputs) {
-            i.setTarget(null);
-        }
-
-        // Clear references for all inputs
-        inputs.clear();
     }
 
     public void targetsClear() {

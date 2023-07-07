@@ -83,7 +83,6 @@ public class G extends Game {
     @Override
     public void create() {
         // Most things are loaded in the LoadingScreen class. See explanation there.
-
         game = (G) Gdx.app.getApplicationListener();
 
         Gdx.input.setCatchKey(Keys.BACK, true);
