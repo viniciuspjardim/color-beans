@@ -88,11 +88,37 @@ public class ConfigScreen extends ScreenBase {
 
         // ==== Labels ====
         Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
+        final Array<Cfg.Player> pls = G.game.data.players;
 
         player1 = new TextField("", G.game.skin, "tField");
         player2 = new TextField("", G.game.skin, "tField");
         player3 = new TextField("", G.game.skin, "tField");
         player4 = new TextField("", G.game.skin, "tField");
+
+        Slider coopS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
+        coopS.setValue(G.game.data.coopCampaign ? 1f : 0f);
+        coopS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.data.coopCampaign = coopS.getValue() == 1f;
+                if (G.game.data.coopCampaign && player1.getText().equals("")) {
+                    player1.setText("Player");
+                }
+                if (G.game.data.coopCampaign && player2.getText().equals("")) {
+                    player2.setText("Player2");
+                }
+            }
+        });
+
+        player2.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (G.game.data.coopCampaign && player2.getText().equals("")) {
+                    G.game.data.coopCampaign = false;
+                    coopS.setValue(0f);
+                }
+            }
+        });
 
         Slider difficultyS = new Slider(0f, 4f, 1f, false, G.game.skin, "slider");
         difficultyS.setValue(G.game.data.difficulty);
@@ -156,8 +182,6 @@ public class ConfigScreen extends ScreenBase {
                 action = ACT_CREDITS;
             }
         });
-
-        final Array<Cfg.Player> pls = G.game.data.players;
 
         if (pls.size >= 1)
             player1.setText(pls.get(0).name);
@@ -283,6 +307,10 @@ public class ConfigScreen extends ScreenBase {
         gameT.add(player3).expandX().fill().pad(0, 20, 0, 20).colspan(2);
         gameT.row();
         gameT.add(player4).expandX().fill().pad(0, 20, 0, 20).colspan(2);
+        gameT.row();
+
+        gameT.add(new Label("Co-Op Campaign With Two Players:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        gameT.add(coopS).width(92).padTop(24).padRight(30).align(Align.right);
         gameT.row();
 
         gameT.add(new Label("Difficulty:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
@@ -447,6 +475,10 @@ public class ConfigScreen extends ScreenBase {
             pls.add(new Cfg.Player(player3.getText()));
         if (!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
+
+        if (G.game.data.coopCampaign && pls.size < 2) {
+            pls.add(new Cfg.Player("Player2"));
+        }
 
         int controllerCount = 0;
         int keyboardCount = 0;

@@ -49,6 +49,12 @@
             knobBefore: "game/slider_track_on",
             knobAfter: "game/slider_track_off",
             knob: "game/slider_knob"
+        },
+        checkBox: {
+            background: "game/check_box",
+            knobBefore: "game/slider_track_on",
+            knobAfter: "game/slider_track_off",
+            knob: "game/slider_knob"
         }
     },
 

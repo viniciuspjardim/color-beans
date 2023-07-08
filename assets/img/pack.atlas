@@ -815,7 +815,7 @@ filter: MipMapLinearNearest, Linear
 repeat: none
 game/b_blue_down
   rotate: false
-  xy: 774, 772
+  xy: 381, 534
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -824,7 +824,7 @@ game/b_blue_down
   index: -1
 game/b_blue_up
   rotate: false
-  xy: 381, 534
+  xy: 774, 772
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -833,7 +833,7 @@ game/b_blue_up
   index: -1
 game/b_gray_down
   rotate: false
-  xy: 511, 421
+  xy: 260, 285
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -842,7 +842,7 @@ game/b_gray_down
   index: -1
 game/b_gray_up
   rotate: false
-  xy: 641, 421
+  xy: 260, 155
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -851,7 +851,7 @@ game/b_gray_up
   index: -1
 game/b_green_down
   rotate: false
-  xy: 771, 421
+  xy: 256, 25
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -860,7 +860,7 @@ game/b_green_down
   index: -1
 game/b_green_up
   rotate: false
-  xy: 514, 291
+  xy: 511, 421
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -869,7 +869,7 @@ game/b_green_up
   index: -1
 game/b_red_down
   rotate: false
-  xy: 644, 291
+  xy: 386, 25
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -878,7 +878,7 @@ game/b_red_down
   index: -1
 game/b_red_up
   rotate: false
-  xy: 774, 291
+  xy: 390, 291
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -887,7 +887,7 @@ game/b_red_up
   index: -1
 game/b_yellow_down
   rotate: false
-  xy: 514, 161
+  xy: 390, 161
   size: 128, 128
   split: 62, 62, 52, 64
   pad: 20, 22, 30, 42
@@ -896,7 +896,7 @@ game/b_yellow_down
   index: -1
 game/b_yellow_up
   rotate: false
-  xy: 644, 161
+  xy: 520, 291
   size: 128, 128
   split: 62, 62, 46, 72
   pad: 20, 22, 22, 50
@@ -905,46 +905,76 @@ game/b_yellow_up
   index: -1
 game/c_shade
   rotate: false
-  xy: 774, 161
+  xy: 520, 161
   size: 128, 128
   orig: 512, 352
   offset: 51, 195
   index: 1
 game/c_shade
   rotate: false
-  xy: 256, 109
+  xy: 516, 31
   size: 128, 128
   orig: 512, 352
   offset: 98, 147
   index: 2
 game/c_shade
   rotate: false
-  xy: 386, 31
+  xy: 646, 31
   size: 128, 128
   orig: 512, 352
   offset: 51, 100
   index: 3
 game/c_shade
   rotate: false
-  xy: 516, 31
+  xy: 650, 298
   size: 128, 128
   orig: 512, 352
   offset: 4, 147
   index: 4
 game/c_shade
   rotate: false
-  xy: 646, 31
+  xy: 650, 168
   size: 128, 128
   orig: 512, 352
   offset: 191, 96
   index: 5
 game/c_shade
   rotate: false
-  xy: 776, 31
+  xy: 780, 298
   size: 128, 128
   orig: 512, 352
   offset: 333, 195
   index: 6
+game/c_shade
+  rotate: false
+  xy: 780, 168
+  size: 128, 128
+  orig: 512, 352
+  offset: 380, 147
+  index: 7
+game/c_shade
+  rotate: false
+  xy: 776, 38
+  size: 128, 128
+  orig: 512, 352
+  offset: 333, 100
+  index: 8
+game/check_box
+  rotate: false
+  xy: 381, 474
+  size: 58, 58
+  split: 18, 18, 18, 18
+  pad: 16, 16, 16, 16
+  orig: 58, 58
+  offset: 0, 0
+  index: -1
+game/checked
+  rotate: false
+  xy: 774, 734
+  size: 38, 36
+  orig: 41, 36
+  offset: 2, 0
+  index: -1
 game/controller
   rotate: false
   xy: 2, 664
@@ -968,7 +998,7 @@ game/controller_small
   index: 2
 game/cursor
   rotate: false
-  xy: 774, 726
+  xy: 995, 968
   size: 4, 44
   orig: 4, 44
   offset: 0, 0
@@ -1004,15 +1034,15 @@ game/number_bg
   index: -1
 game/phone_small
   rotate: false
-  xy: 770, 551
-  size: 252, 173
+  xy: 770, 577
+  size: 252, 147
   orig: 256, 176
   offset: 2, 3
   index: 1
 game/phone_small
   rotate: false
-  xy: 260, 240
-  size: 252, 173
+  xy: 770, 428
+  size: 252, 147
   orig: 256, 176
   offset: 2, 3
   index: 2
@@ -1027,14 +1057,14 @@ game/ribbon_red
   index: -1
 game/slider_knob
   rotate: false
-  xy: 995, 988
+  xy: 904, 800
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 game/slider_track_bg
   rotate: false
-  xy: 904, 812
+  xy: 641, 537
   size: 16, 12
   split: 5, 5, 5, 5
   pad: 4, 4, 3, 3
@@ -1043,7 +1073,7 @@ game/slider_track_bg
   index: -1
 game/slider_track_off
   rotate: false
-  xy: 381, 520
+  xy: 910, 414
   size: 16, 12
   split: 5, 5, 5, 5
   pad: 4, 4, 3, 3
@@ -1052,7 +1082,7 @@ game/slider_track_off
   index: -1
 game/slider_track_on
   rotate: false
-  xy: 901, 537
+  xy: 64, 50
   size: 16, 12
   split: 5, 5, 5, 5
   pad: 4, 4, 3, 3
@@ -1068,7 +1098,7 @@ game/title
   index: -1
 
 pack5.png
-size: 1024, 256
+size: 512, 256
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
 repeat: none
@@ -1077,25 +1107,11 @@ game/c_shade
   xy: 2, 2
   size: 128, 128
   orig: 512, 352
-  offset: 380, 147
-  index: 7
-game/c_shade
-  rotate: false
-  xy: 132, 2
-  size: 128, 128
-  orig: 512, 352
-  offset: 333, 100
-  index: 8
-game/c_shade
-  rotate: false
-  xy: 262, 2
-  size: 128, 128
-  orig: 512, 352
   offset: 286, 147
   index: 9
 game/tbg_yellow
   rotate: false
-  xy: 392, 2
+  xy: 132, 2
   size: 128, 128
   split: 56, 56, 48, 56
   pad: 27, 27, 24, 36

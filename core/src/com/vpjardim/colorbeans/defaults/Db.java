@@ -123,6 +123,7 @@ public class Db {
 
     public Array<Cfg.Player> players = new Array<>();
 
+    public boolean coopCampaign = false;
     public int difficulty = 2; // 0 to 4
     public int campaignCurrentStage = 0; // 0 to 11
     public int trainingSpeed = 0; // 0 to 11
