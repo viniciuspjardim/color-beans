@@ -420,6 +420,10 @@ public class Map implements TargetBase {
         }
     }
 
+    public static boolean lost(Map m) {
+        return m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE);
+    }
+
     /** Map width (number of block columns): 7 default */
     public static final int N_COL = 7;
 

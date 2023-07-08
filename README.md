@@ -14,11 +14,12 @@ This game is made using the [libGDX framework](https://github.com/libgdx/libgdx)
 
 #### Features:
 
+* Campaign with twelve stages where the player duels the AI.
+* Co-op campaign mode with two players against the AI.
+* Five levels of difficulty.
+* Support for different screen sizes and rotations.
+* Up to 4 players battling in the training mode.
 * High resolution sprites.
-* Campaign mode where the player duels the AI.
-* Twelve stages of progressive difficulty in the campaign mode.
-* Support for different screen sizes and screen rotation.
-* Up to 4 local players in split screen mode.
 * Multiple players using the same keyboard.
 * Support for gamepads, even in the browser.
 * Custom touch input for mobile devices.

@@ -15,7 +15,6 @@ import com.vpjardim.colorbeans.ai.ai3.Ai3;
  *         2016/11/06
  */
 public class Training extends MapManager {
-
     @Override
     public void init() {
         gameCfg = G.game.data.trainingGame;
@@ -67,13 +66,8 @@ public class Training extends MapManager {
 
     @Override
     public void mapWin(int mapIndex) {
-
         Map m = maps.get(mapIndex);
         G.game.score.addRow(ScoreTable.GMODE_TRAINING, m.name, true, m.score, m.scoreSum,
                 m.matchTimer);
-    }
-
-    @Override
-    public void mapLost(int mapIndex) {
     }
 }

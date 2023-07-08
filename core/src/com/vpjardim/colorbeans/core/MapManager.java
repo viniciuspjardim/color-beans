@@ -21,7 +21,6 @@ public abstract class MapManager {
     public Array<Map> maps;
     public Array<Map> opps;
     public Array<MapRender> render;
-    public Map winnerMap;
     public int gameStatus = GAME_CONTINUE;
     private boolean paused = false;
 
@@ -75,9 +74,8 @@ public abstract class MapManager {
 
     public abstract void mapWin(int mapIndex);
 
-    public abstract void mapLost(int mapIndex);
-
     public void winLost() {
+        Map winnerMap = null;
         int mapsAnimating = 0;
         int mapsPlaying = 0;
         Map mapPlaying = null;
@@ -101,16 +99,9 @@ public abstract class MapManager {
             winnerMap = mapPlaying;
         }
 
-        // Wait until animation is over to call mapWin / mapLost events if there is a
-        // winner
+        // Wait until animation is over to call mapWin
         if (winnerMap != null && mapsAnimating == 0) {
             mapWin(winnerMap.index);
-
-            for (Map m : maps) {
-                if (winnerMap.index == m.index)
-                    continue;
-                mapLost(m.index);
-            }
         }
 
         // Maps animations ended
@@ -128,7 +119,6 @@ public abstract class MapManager {
 
                     setPaused(paused);
                 }
-                winnerMap = null;
 
                 // #debugCode
                 if (G.game.dbg.mapShapes != null) {
