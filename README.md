@@ -10,7 +10,7 @@ This game is made using the [libGDX framework](https://github.com/libgdx/libgdx)
 
 [Play In The Browser Now (Alpha)](https://www.viniciusjardim.com/p/color-beans)
 
-[Color Beans on YouTube](https://www.youtube.com/watch?v=Y23elA1GUTA) 
+[Color Beans on YouTube](https://www.youtube.com/watch?v=Y23elA1GUTA)
 
 #### Features:
 
