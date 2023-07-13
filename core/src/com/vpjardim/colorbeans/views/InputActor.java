@@ -20,10 +20,6 @@ import com.vpjardim.colorbeans.input.TargetBase;
  *         2017/05/08
  */
 public class InputActor extends Actor implements TargetBase {
-
-    // TODO: fix bug where keyboard key events make the controller InputActor to
-    // animate
-
     public static final int CONTROLLER = 1;
     public static final int KEYBOARD = 2;
     public static final int TOUCH = 3;
@@ -35,9 +31,9 @@ public class InputActor extends Actor implements TargetBase {
     private final GlyphLayout gl = new GlyphLayout();
     private final Profile profile;
     private int number;
+    private final float scale = 0.75f;
 
     public InputActor(int type, Profile profile) {
-
         if (type == CONTROLLER)
             bodies = G.game.atlas.findRegions("game/controller_small");
         else if (type == KEYBOARD)
@@ -53,7 +49,7 @@ public class InputActor extends Actor implements TargetBase {
         this.profile = profile;
 
         body = bodies.first();
-        setSize(body.originalWidth, body.originalHeight);
+        setSize(body.originalWidth * scale, body.originalHeight * scale);
         number = 0;
     }
 
@@ -63,17 +59,15 @@ public class InputActor extends Actor implements TargetBase {
 
     @Override
     public void draw(Batch batch, float alpha) {
-
         float x = getX();
         float y = getY();
-        float width = body.packedWidth;
-        float height = body.packedHeight;
+        float width = body.packedWidth * scale;
+        float height = body.packedHeight * scale;
 
         batch.draw(body, x, y, width, height);
 
         // Draw the input number id
         if (number > 0) {
-
             float scaleX = width / body.originalWidth;
             float scaleY = height / body.originalHeight;
 
@@ -101,14 +95,12 @@ public class InputActor extends Actor implements TargetBase {
 
     @Override
     public void keyDown(int key) {
-
         if (profile == null || profile.hasKey(key))
             body = bodies.get(1);
     }
 
     @Override
     public void keyUp(int key) {
-
         if (profile == null || profile.hasKey(key))
             body = bodies.first();
     }
