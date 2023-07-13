@@ -373,19 +373,25 @@ public class ConfigScreen extends ScreenBase {
             final InputBase input = G.game.input.getInputs().get(i);
             final InputActor inputActor;
 
-            if (input instanceof ControllerInput)
+            final Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
+            final Label keyMapL = new Label("0", labelStyle);
+
+            if (input instanceof ControllerInput) {
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
-            else if (input instanceof KeyboardInput)
+            }
+            else if (input instanceof KeyboardInput) {
                 inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
-            else if (input instanceof TouchInput)
+                keyMapL.setText(Profile.keyboardKeyNames(input.getProfile()));
+            }
+            else if (input instanceof TouchInput) {
                 inputActor = new InputActor(InputActor.TOUCH, null);
-            else
+            }
+            else {
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
+            }
 
             Dbg.inf(Dbg.tagO(this), input.getId() + "");
             inputActor.setNumber(input.getId());
-            inputT.add(inputActor);
-            G.game.input.addTarget(inputActor);
 
             final TextButton setBtt = new TextButton("Edit",
                     G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
@@ -396,6 +402,20 @@ public class ConfigScreen extends ScreenBase {
             final TextButton downBtt = new TextButton("Down",
                     G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
 
+            G.game.input.addTarget(inputActor);
+
+            inputT.add(inputActor).padTop(20);
+            inputT.add(setBtt).padTop(20);
+            inputT.add(upBtt).padTop(20);
+            inputT.add(downBtt).padTop(20);
+
+            if (!keyMapL.textEquals("0")) {
+                inputT.row();
+                inputT.add(keyMapL).colspan(4).align(Align.left);
+            }
+
+            inputT.row();
+
             setBtt.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -405,6 +425,10 @@ public class ConfigScreen extends ScreenBase {
                         public void finished(Profile profile) {
                             input.setProfile(profile);
                             input.setTarget(inputActor);
+
+                            if (!keyMapL.textEquals("0")) {
+                                keyMapL.setText(Profile.keyboardKeyNames(profile));
+                            }
 
                             // #debugCode
                             Dbg.dbg(Dbg.tag(ConfigScreen.this), "Key config finished");
@@ -431,12 +455,6 @@ public class ConfigScreen extends ScreenBase {
                     dirtInputT = true;
                 }
             });
-
-            inputT.add(setBtt);
-            inputT.add(upBtt);
-            inputT.add(downBtt);
-
-            inputT.row();
         }
 
         G.game.input.linkAll();

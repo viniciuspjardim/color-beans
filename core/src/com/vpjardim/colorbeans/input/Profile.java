@@ -4,6 +4,7 @@
 
 package com.vpjardim.colorbeans.input;
 
+import com.badlogic.gdx.Input;
 import com.vpjardim.colorbeans.core.Dbg;
 
 /**
@@ -103,5 +104,19 @@ public class Profile {
         Dbg.inf("Profile", "button2 -> " + this.button2);
         Dbg.inf("Profile", "button3 -> " + this.button3);
         Dbg.inf("Profile", "button4 -> " + this.button4);
+    }
+
+    public static String keyboardKeyNames(Profile p) {
+        String keyNames = Input.Keys.toString(p.up) + ", " +
+                Input.Keys.toString(p.right) + ", " +
+                Input.Keys.toString(p.down) + ", " +
+                Input.Keys.toString(p.left) + ", " +
+                Input.Keys.toString(p.start) + ", " +
+                Input.Keys.toString(p.button1) + ", " +
+                Input.Keys.toString(p.button2) + ", " +
+                Input.Keys.toString(p.button3) + ", " +
+                Input.Keys.toString(p.button4);
+
+        return keyNames.replace("Numpad ", "");
     }
 }
