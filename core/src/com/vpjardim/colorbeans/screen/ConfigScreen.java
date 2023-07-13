@@ -72,7 +72,7 @@ public class ConfigScreen extends ScreenBase {
         Table tabT = new Table(G.game.skin);
         Table gameT = new Table(G.game.skin);
         inputT = new Table(G.game.skin);
-        Table videoT = new Table(G.game.skin);
+        Table audVidT = new Table(G.game.skin);
 
         outerT.setFillParent(true);
         titleT.setBackground("tbg");
@@ -84,7 +84,7 @@ public class ConfigScreen extends ScreenBase {
         tabT.setDebug(G.game.dbg.uiTable);
         gameT.setDebug(G.game.dbg.uiTable);
         inputT.setDebug(G.game.dbg.uiTable);
-        videoT.setDebug(G.game.dbg.uiTable);
+        audVidT.setDebug(G.game.dbg.uiTable);
 
         // ==== Labels ====
         Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
@@ -217,7 +217,7 @@ public class ConfigScreen extends ScreenBase {
         // ==== Scrolls ====
         final ScrollPane gameScroll = new ScrollPane(gameT);
         final ScrollPane inputScroll = new ScrollPane(inputT);
-        final ScrollPane videoScroll = new ScrollPane(videoT);
+        final ScrollPane videoScroll = new ScrollPane(audVidT);
 
         gameScroll.setScrollingDisabled(true, false);
         inputScroll.setScrollingDisabled(true, false);
@@ -333,17 +333,17 @@ public class ConfigScreen extends ScreenBase {
 
         gameT.add(versionL).pad(36).colspan(2);
 
-        videoT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        videoT.add(musicVolumeL).padTop(24).padRight(30).align(Align.right);
-        videoT.row();
-        videoT.add(musicVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        videoT.row();
+        audVidT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        audVidT.add(musicVolumeL).padTop(24).padRight(30).align(Align.right);
+        audVidT.row();
+        audVidT.add(musicVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
+        audVidT.row();
 
-        videoT.add(new Label("Effects Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        videoT.add(effectsVolumeL).padTop(24).padRight(30).align(Align.right);
-        videoT.row();
-        videoT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        videoT.row();
+        audVidT.add(new Label("Effects Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        audVidT.add(effectsVolumeL).padTop(24).padRight(30).align(Align.right);
+        audVidT.row();
+        audVidT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
+        audVidT.row();
 
         inputLoop();
 
@@ -393,7 +393,7 @@ public class ConfigScreen extends ScreenBase {
             Dbg.inf(Dbg.tagO(this), input.getId() + "");
             inputActor.setNumber(input.getId());
 
-            final TextButton setBtt = new TextButton("Edit",
+            final TextButton editBtt = new TextButton("Edit",
                     G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
 
             final TextButton upBtt = new TextButton("Up",
@@ -405,7 +405,7 @@ public class ConfigScreen extends ScreenBase {
             G.game.input.addTarget(inputActor);
 
             inputT.add(inputActor).padTop(20);
-            inputT.add(setBtt).padTop(20);
+            inputT.add(editBtt).padTop(20);
             inputT.add(upBtt).padTop(20);
             inputT.add(downBtt).padTop(20);
 
@@ -416,7 +416,7 @@ public class ConfigScreen extends ScreenBase {
 
             inputT.row();
 
-            setBtt.addListener(new ClickListener() {
+            editBtt.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     controllerActor.setPosition(0);
