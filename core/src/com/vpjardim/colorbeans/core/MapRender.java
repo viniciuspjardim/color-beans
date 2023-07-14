@@ -74,9 +74,6 @@ public class MapRender {
                 int bTapY = (int) ((evData.y - (G.height - py)) / size);
                 bTapY = Map.OUT_ROW + Map.N_ROW - bTapY - 1;
 
-                // Dbg.dbg(Dbg.tag(this), "tap button = " + evData.button);
-                // Dbg.dbg(Dbg.tag(this), "tap => x = " + bTapX + "; y = " + bTapY);
-
                 if (bTapX >= 0 && bTapX < Map.N_COL && bTapY >= 0 && bTapY < Map.N_ROW + Map.OUT_ROW) {
                     Block b = m.b[bTapX][bTapY];
                     int color = b.color + (evData.button == 0 ? 1 : -1);
@@ -224,7 +221,6 @@ public class MapRender {
         rand.setState(seed0, seed1);
 
         for (int i = -2; i < m.b.length + 1; i++) {
-
             tile = G.game.atlas.findRegion("beans/brick", rand() % 9 + 1);
 
             G.game.batch.draw(

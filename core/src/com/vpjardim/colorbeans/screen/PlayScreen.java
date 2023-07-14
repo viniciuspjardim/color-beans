@@ -4,7 +4,6 @@
 
 package com.vpjardim.colorbeans.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -268,9 +267,6 @@ public class PlayScreen extends ScreenBase {
         fb = fbb.build();
 
         fb.begin();
-
-        Gdx.gl.glClearColor(0f, 0f, 0.125f, 0f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         G.game.batch.begin();
         for (MapRender r : manager.render) {
