@@ -30,28 +30,27 @@ public class Style {
     }
 
     public void setDefaults() {
-        fontSizeVSmall = 12;
-        fontSizeSmall = 18;
-        fontSizeMedium = 24;
-        fontSizeBig = 36;
-        fontSizeVBig = 48;
-        fontSizeXBig = 60;
+        fontSizeVSmall = 10;
+        fontSizeSmall = 16;
+        fontSizeMedium = 20;
+        fontSizeBig = 30;
+        fontSizeVBig = 42;
+        fontSizeXBig = 52;
 
         padSmall = 8;
-        padMedium = 18;
-        padBig = 26;
-        padVBig = 40;
+        padMedium = 16;
+        padBig = 20;
+        padVBig = 32;
 
-        buttWidth = 270;
+        buttWidth = 240;
 
-        ribbonWidth = 441;
-        ribbonHeight = 256;
+        ribbonWidth = 360;
+        ribbonHeight = 212;
         ribbonSide = 168;
-        menuBgPad = 8;
+        menuBgPad = 47;
     }
 
     public void scale(float scale) {
-
         fontSizeVSmall = Math.round(fontSizeVSmall * scale);
         fontSizeSmall = Math.round(fontSizeSmall * scale);
         fontSizeMedium = Math.round(fontSizeMedium * scale);

@@ -34,15 +34,6 @@
         }
     },
 
-    com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
-        tField: {
-            font: dimbo_white,
-            fontColor: white,
-            background: "game/input",
-            cursor: "game/cursor"
-        }
-    },
-
     com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
         slider: {
             background: "game/slider_track_bg",
@@ -86,6 +77,15 @@
         labelCredits: {
             font: dimbo_white,
             fontColor: white
+        }
+    },
+
+    com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+        tField: {
+            font: roboto,
+            fontColor: orange800,
+            background: "game/input",
+            cursor: "game/cursor"
         }
     }
 }

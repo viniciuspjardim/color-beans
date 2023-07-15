@@ -4,6 +4,7 @@
 
 package com.vpjardim.colorbeans.views;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -31,7 +32,6 @@ public class InputActor extends Actor implements TargetBase {
     private final GlyphLayout gl = new GlyphLayout();
     private final Profile profile;
     private int number;
-    private final float scale = 0.75f;
 
     public InputActor(int type, Profile profile) {
         if (type == CONTROLLER)
@@ -49,7 +49,7 @@ public class InputActor extends Actor implements TargetBase {
         this.profile = profile;
 
         body = bodies.first();
-        setSize(body.originalWidth * scale, body.originalHeight * scale);
+        setSize(body.originalWidth, body.originalHeight);
         number = 0;
     }
 
@@ -61,8 +61,8 @@ public class InputActor extends Actor implements TargetBase {
     public void draw(Batch batch, float alpha) {
         float x = getX();
         float y = getY();
-        float width = body.packedWidth * scale;
-        float height = body.packedHeight * scale;
+        float width = body.packedWidth;
+        float height = body.packedHeight;
 
         batch.draw(body, x, y, width, height);
 
@@ -74,11 +74,11 @@ public class InputActor extends Actor implements TargetBase {
             float offsetX = (body.originalWidth - numberBg.packedWidth) * scaleX;
             float offsetY = (body.originalHeight - numberBg.packedHeight) * scaleY;
 
-            // TODO: why offset in the draw method not working?
             batch.draw(numberBg, x + offsetX, y + offsetY, 0, 0,
                     numberBg.packedWidth, numberBg.packedHeight, scaleX, scaleY, 0);
 
             BitmapFont font = G.game.data.font3;
+            font.setColor(Color.WHITE);
             String txt = Integer.toString(number);
             gl.setText(font, txt);
 

@@ -31,11 +31,10 @@ public class ControllerActor extends Actor implements TargetBase {
     private float time = 0f;
     private final int[] keys;
     private KeysSetListener callback;
-    private final float scale = 0.6f;
 
     public ControllerActor() {
         body = G.game.atlas.findRegion("game/controller");
-        setSize(body.originalWidth * scale, body.originalHeight * scale);
+        setSize(body.originalWidth, body.originalHeight);
         this.keys = new int[9];
         recycle();
     }
@@ -53,8 +52,8 @@ public class ControllerActor extends Actor implements TargetBase {
     public void draw(Batch batch, float alpha) {
         float x = getX();
         float y = getY();
-        float width = body.originalWidth * scale;
-        float height = body.originalHeight * scale;
+        float width = body.originalWidth;
+        float height = body.originalHeight;
         int tile = position + 1;
 
         batch.draw(body, x, y, width, height);

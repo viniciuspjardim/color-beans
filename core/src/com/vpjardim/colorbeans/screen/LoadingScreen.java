@@ -72,7 +72,7 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.shadowColor = new Color(0x00000040);
         param.fontParameters.shadowOffsetX = 0;
-        param.fontParameters.shadowOffsetY = 2;
+        param.fontParameters.shadowOffsetY = 1;
         param.fontParameters.borderColor = new Color(0x000000ff);
         param.fontParameters.borderWidth = 1;
         G.game.assets.load("roboto_shadow.ttf", BitmapFont.class, param);
@@ -82,7 +82,7 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = Color.WHITE;
         param.fontParameters.borderColor = Color.BLACK;
-        param.fontParameters.borderWidth = 2;
+        param.fontParameters.borderWidth = 1;
         G.game.assets.load("dimbo_white.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -93,14 +93,12 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.borderWidth = 6;
         G.game.assets.load("dimbo_gtitle.ttf", BitmapFont.class, param);
 
-        // TODO: fix the font shadow offset when not full screen. It should be smaller
-
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         param.fontFileName = "font/dimbo.ttf";
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = new Color(0xab002cff);
         param.fontParameters.shadowColor = new Color(0x660016ff);
-        param.fontParameters.shadowOffsetY = -3;
+        param.fontParameters.shadowOffsetY = -1;
         G.game.assets.load("dimbo_brown.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -108,7 +106,7 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = new Color(0x78001cff);
         param.fontParameters.shadowColor = new Color(0x44000fff);
-        param.fontParameters.shadowOffsetY = -3;
+        param.fontParameters.shadowOffsetY = -1;
         G.game.assets.load("dimbo_dbrown.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -116,7 +114,7 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = new Color(0x432d63ff);
         param.fontParameters.shadowColor = new Color(0x311732ff);
-        param.fontParameters.shadowOffsetY = -3;
+        param.fontParameters.shadowOffsetY = -1;
         G.game.assets.load("dimbo_purple.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -124,7 +122,7 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = new Color(0x2e5111ff);
         param.fontParameters.shadowColor = new Color(0x262909ff);
-        param.fontParameters.shadowOffsetY = -3;
+        param.fontParameters.shadowOffsetY = -1;
         G.game.assets.load("dimbo_green.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -132,7 +130,7 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = new Color(0x565656ff);
         param.fontParameters.shadowColor = new Color(0x3b2c2cff);
-        param.fontParameters.shadowOffsetY = -3;
+        param.fontParameters.shadowOffsetY = -1;
         G.game.assets.load("dimbo_gray.ttf", BitmapFont.class, param);
 
         G.game.data = Db.load();

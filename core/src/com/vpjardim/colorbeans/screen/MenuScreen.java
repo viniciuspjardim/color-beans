@@ -109,7 +109,7 @@ public class MenuScreen extends ScreenBase {
         outerT.add(table);
         outerT.add();
 
-        table.add().width(G.style.ribbonWidth).height(G.style.ribbonHeight * 0.88f).pad(0, padS, padS, padS);
+        table.add().width(G.style.ribbonWidth).height(G.style.ribbonHeight * 0.85f);
         table.row();
         table.add(playButt);
         table.row();

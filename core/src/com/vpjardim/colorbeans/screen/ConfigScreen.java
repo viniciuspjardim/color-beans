@@ -72,7 +72,7 @@ public class ConfigScreen extends ScreenBase {
         Table tabT = new Table(G.game.skin);
         Table gameT = new Table(G.game.skin);
         inputT = new Table(G.game.skin);
-        Table audVidT = new Table(G.game.skin);
+        Table otherT = new Table(G.game.skin);
 
         outerT.setFillParent(true);
         titleT.setBackground("tbg");
@@ -84,7 +84,7 @@ public class ConfigScreen extends ScreenBase {
         tabT.setDebug(G.game.dbg.uiTable);
         gameT.setDebug(G.game.dbg.uiTable);
         inputT.setDebug(G.game.dbg.uiTable);
-        audVidT.setDebug(G.game.dbg.uiTable);
+        otherT.setDebug(G.game.dbg.uiTable);
 
         // ==== Labels ====
         Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
@@ -202,7 +202,7 @@ public class ConfigScreen extends ScreenBase {
         final TextButton inputButt = new TextButton("Input",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
-        final TextButton videoButt = new TextButton("Aud / Vid",
+        final TextButton otherButt = new TextButton("Other",
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
         // Let only one tab button be checked at a time
@@ -212,16 +212,16 @@ public class ConfigScreen extends ScreenBase {
 
         logicGroup.add(gameButt);
         logicGroup.add(inputButt);
-        logicGroup.add(videoButt);
+        logicGroup.add(otherButt);
 
         // ==== Scrolls ====
         final ScrollPane gameScroll = new ScrollPane(gameT);
         final ScrollPane inputScroll = new ScrollPane(inputT);
-        final ScrollPane videoScroll = new ScrollPane(audVidT);
+        final ScrollPane otherScroll = new ScrollPane(otherT);
 
         gameScroll.setScrollingDisabled(true, false);
         inputScroll.setScrollingDisabled(true, false);
-        videoScroll.setScrollingDisabled(true, false);
+        otherScroll.setScrollingDisabled(true, false);
 
         // ==== Listeners ====
         backBtt.addListener(new ClickListener() {
@@ -235,14 +235,13 @@ public class ConfigScreen extends ScreenBase {
         final Stack tabs = new Stack();
         tabs.add(inputScroll);
         tabs.add(gameScroll);
-        tabs.add(videoScroll);
+        tabs.add(otherScroll);
 
         // Listen to changes in the tab button checked states
         // Set visibility of the tab content to match the checked state
         final ChangeListener tabListener = new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
                 TextButton.TextButtonStyle buttOff = G.game.skin.get(
                         "bttRed", TextButton.TextButtonStyle.class);
 
@@ -251,7 +250,7 @@ public class ConfigScreen extends ScreenBase {
 
                 gameScroll.setVisible(gameButt.isChecked());
                 inputScroll.setVisible(inputButt.isChecked());
-                videoScroll.setVisible(videoButt.isChecked());
+                otherScroll.setVisible(otherButt.isChecked());
 
                 if (gameButt.isChecked())
                     gameButt.setStyle(buttOn);
@@ -263,10 +262,10 @@ public class ConfigScreen extends ScreenBase {
                 else
                     inputButt.setStyle(buttOff);
 
-                if (videoButt.isChecked())
-                    videoButt.setStyle(buttOn);
+                if (otherButt.isChecked())
+                    otherButt.setStyle(buttOn);
                 else
-                    videoButt.setStyle(buttOff);
+                    otherButt.setStyle(buttOff);
             }
         };
 
@@ -275,7 +274,7 @@ public class ConfigScreen extends ScreenBase {
 
         gameButt.addListener(tabListener);
         inputButt.addListener(tabListener);
-        videoButt.addListener(tabListener);
+        otherButt.addListener(tabListener);
 
         // ==== Align, Pad / widths / heights ====
         float bttW = G.style.buttWidth;
@@ -294,9 +293,11 @@ public class ConfigScreen extends ScreenBase {
         contentT.row();
         contentT.add(tabs).expand().fill();
 
-        tabT.add(gameButt).width(200);
-        tabT.add(inputButt).width(200);
-        tabT.add(videoButt).width(200);
+        float bttMinWidth = G.style.buttWidth * 0.5f;
+
+        tabT.add(gameButt).minWidth(bttMinWidth);
+        tabT.add(inputButt).minWidth(bttMinWidth);
+        tabT.add(otherButt).minWidth(bttMinWidth);
 
         gameT.add(new Label("Players:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
         gameT.row();
@@ -309,7 +310,7 @@ public class ConfigScreen extends ScreenBase {
         gameT.add(player4).expandX().fill().pad(0, 20, 0, 20).colspan(2);
         gameT.row();
 
-        gameT.add(new Label("Co-Op Campaign With Two Players:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        gameT.add(new Label("Co-Op Campaign (2 Players):", labelStyle)).padTop(24).padLeft(28).align(Align.left);
         gameT.add(coopS).width(92).padTop(24).padRight(30).align(Align.right);
         gameT.row();
 
@@ -333,24 +334,24 @@ public class ConfigScreen extends ScreenBase {
 
         gameT.add(versionL).pad(36).colspan(2);
 
-        audVidT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        audVidT.add(musicVolumeL).padTop(24).padRight(30).align(Align.right);
-        audVidT.row();
-        audVidT.add(musicVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        audVidT.row();
+        otherT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        otherT.add(musicVolumeL).padTop(24).padRight(30).align(Align.right);
+        otherT.row();
+        otherT.add(musicVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
+        otherT.row();
 
-        audVidT.add(new Label("Effects Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        audVidT.add(effectsVolumeL).padTop(24).padRight(30).align(Align.right);
-        audVidT.row();
-        audVidT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        audVidT.row();
+        otherT.add(new Label("Effects Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        otherT.add(effectsVolumeL).padTop(24).padRight(30).align(Align.right);
+        otherT.row();
+        otherT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
+        otherT.row();
 
         inputLoop();
 
-        float width = G.width <= 1080? G.width -40 : 800;
+        float width = G.width <= 1080? G.width * 0.9f : 600;
 
         outerT.add();
-        outerT.add(titleT).width(width).height(G.height -40f);
+        outerT.add(titleT).width(width).maxHeight(G.height * 0.9f).minHeight(G.height * 0.75f);
         outerT.add();
 
         stage.addActor(outerT);

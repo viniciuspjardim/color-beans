@@ -132,22 +132,22 @@ public class ScoreScreen extends ScreenBase {
         trainingButt.addListener(tabListener);
 
         // ==== Align, Pad / widths / heights ====
-        float bttW = 200;
+        float bttMinWidth = G.style.buttWidth * 0.7f;
         float padM = G.style.padMedium;
 
         campaignL.setAlignment(Align.center);
         trainingL.setAlignment(Align.center);
 
         titleT.pad(padM);
-        titleT.defaults().minWidth(bttW);
+        titleT.defaults().minWidth(bttMinWidth);
         contentT.defaults().align(Align.left);
-        tabT.defaults().minWidth(bttW);
+        tabT.defaults().minWidth(bttMinWidth);
 
         // ==== Assembling from outer to inner components ====
         titleT.row();
         titleT.add(contentT).expand().fill();
         titleT.row();
-        titleT.add(backBtt);
+        titleT.add(backBtt).width(G.style.buttWidth);
 
         contentT.add(tabT).align(Align.center);
         contentT.row();
@@ -165,15 +165,15 @@ public class ScoreScreen extends ScreenBase {
 
             label = new Label(Integer.toString(cont), labelStyle);
             label.setAlignment(Align.center);
-            campaignT.add(label).width(bttW);
+            campaignT.add(label).width(bttMinWidth);
 
             label = new Label(row.nick, labelStyle);
             label.setAlignment(Align.center);
-            campaignT.add(label).width(bttW);
+            campaignT.add(label).width(bttMinWidth);
 
             label = new Label(Integer.toString(row.score), labelStyle);
             label.setAlignment(Align.center);
-            campaignT.add(label).width(bttW);
+            campaignT.add(label).width(bttMinWidth);
 
             campaignT.row().pad(padM, 0, 0, 0);
             cont++;
@@ -183,10 +183,10 @@ public class ScoreScreen extends ScreenBase {
             campaignT.add(campaignL).expand().fill();
         }
 
-        float width = G.width <= 1080? G.width -40 : 800;
+        float width = G.width <= 1080? G.width * 0.9f : 600;
 
         outerT.add();
-        outerT.add(titleT).width(width).height(G.height -40f);
+        outerT.add(titleT).width(width).maxHeight(G.height * 0.9f).minHeight(G.height * 0.75f);
         outerT.add();
 
         stage.addActor(outerT);
