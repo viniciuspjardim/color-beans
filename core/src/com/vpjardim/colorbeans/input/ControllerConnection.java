@@ -10,6 +10,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Dbg;
+import com.vpjardim.colorbeans.events.EventHandler;
 
 /**
  * @author Vinícius Jardim
@@ -36,6 +37,8 @@ public class ControllerConnection implements ControllerListener {
 
         input.setId(G.game.input.getMaxId() + 1);
         inputs.add(input);
+
+        EventHandler.get().emit("ControllerConnection.event", null);
     }
 
     @Override
@@ -59,6 +62,8 @@ public class ControllerConnection implements ControllerListener {
 
                     input.setTarget(null);
                     inputs.removeValue(input, true);
+
+                    EventHandler.get().emit("ControllerConnection.event", null);
 
                     return;
                 }

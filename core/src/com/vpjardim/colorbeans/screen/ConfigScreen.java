@@ -24,6 +24,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
+import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.ControllerInput;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.KeyboardInput;
@@ -47,6 +48,8 @@ public class ConfigScreen extends ScreenBase {
     private TextField player3;
     private TextField player4;
 
+    protected EventListener controllerEvent;
+
     public ConfigScreen() {
         manageInput = false;
     }
@@ -63,7 +66,12 @@ public class ConfigScreen extends ScreenBase {
             }
         };
 
+        controllerEvent = (Event e) -> {
+            dirtInputT = true;
+        };
+
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
+        EventHandler.get().addListener("ControllerConnection.event", controllerEvent);
 
         // ==== Tables ====
         Table outerT = new Table(G.game.skin);
@@ -558,5 +566,8 @@ public class ConfigScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
+
+        EventHandler.get().removeListener("ControllerConnection.event", controllerEvent);
+        controllerEvent = null;
     }
 }
