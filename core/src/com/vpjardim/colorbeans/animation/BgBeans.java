@@ -6,9 +6,6 @@ package com.vpjardim.colorbeans.animation;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
-import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.G;
 
 /**
@@ -17,152 +14,197 @@ import com.vpjardim.colorbeans.G;
  */
 
 public class BgBeans {
-    private final float MAX_OPACITY = 10F;
-    private final float FRAME_TIME = 1f / 12f; // 12 frames per second
+    private final static float FRAME_TIME = 1f / 12f; // 12 frames per second
+    private final static int MAX_ROWS = 10;
+    private final static int MAX_COLS = 30;
+
+    private final static int NONE = 0;
+    private final static int FADE_IN = 1;
+    private final static int FADE_OUT = 2;
+    private final static int SHAKE = 3;
+
+    private final static int[] tiles = { 0, 2, 3, 4};
+    private final static int[] animationTiles = { 0, 4, 0, 3};
 
     private static class Bean {
-        public int x;
-        public int y;
-        public float opacity;
-        public float opacitySign;
-        public int color;
-        public int tile;
-        public float animationTime;
-    }
+        public float px = 0f;
+        public float py = 0f;
+        public int color = 0;
+        public float opacity = 0f;
+        public int tile = 0;
 
-    static int[] tiles = { 0, 2, 3, 4};
-    static int[] animationTiles = { 0, 4, 0, 3};
+        public int animationType = NONE;
+        public float shakeTime = 0f;
 
-    private final Pool<Bean> pool = new Pool<Bean>(240) {
-        @Override
-        protected Bean newObject() {
-            return new Bean();
+        public boolean isLinked() {
+            return tile == 1 || tile >= 10;
         }
-    };
 
-    private final Array<Bean> beans = new Array<>();
-    private Bean animatedBean;
-    private float time = 0f;
-    private float newBeanAnimationTimer = 0f;
-    private float size;
-    private int widthMax;
-    private int heightMax;
-    private int beansCount;
+        public void update() {
+            if (animationType == NONE) return;
 
-    public BgBeans() {
-        resize();
+            if (animationType == FADE_IN) {
+                if (opacity > 1) {
+                    animationType = NONE;
+                    opacity = 1f;
+                    shakeTime = 0f;
 
-        for (int i = 0; i < beansCount; i++) {
-            Bean bean = pool.obtain();
+                    return;
+                }
 
-            bean.x = MathUtils.random(widthMax);
-            bean.y = MathUtils.random(heightMax);
-            bean.opacity = MathUtils.random(MAX_OPACITY);
-            bean.opacitySign = MathUtils.randomBoolean() ? 1 : -1;
-            bean.color = MathUtils.random(Block.CLR_A, 5);
-            bean.tile = tiles[MathUtils.random(3)];
-            bean.animationTime = 0f;
+                opacity += G.delta * 0.4f;
+            } else if (animationType == FADE_OUT) {
+                if (opacity < 0f) {
+                    animationType = NONE;
+                    opacity = 0f;
+                    shakeTime = 0f;
 
-            if (!hasCollision(bean)) {
-                beans.add(bean);
-            } else {
-                pool.free(bean);
+                    return;
+                }
+
+                opacity -= G.delta * 0.4f;
+            } else if (animationType == SHAKE) {
+                if (shakeTime < 0f) {
+                    animationType = NONE;
+                    opacity = 1f;
+                    shakeTime = 0f;
+
+                    return;
+                }
+
+                tile = animationTiles[(int) (shakeTime / FRAME_TIME) % 4];
+                shakeTime -= G.delta;
             }
         }
+    }
+
+    private final Bean[][] beans = new Bean[MAX_ROWS][MAX_COLS];
+    private float size;
+    private int croppedCols = 24;
+    private float animationTime = 0f;
+
+    public BgBeans() {
+        for (int i = 0; i < MAX_ROWS; i++) {
+            for (int j = 0; j < MAX_COLS; j++) {
+                Bean bean = new Bean();
+                beans[i][j] = bean;
+
+                if (MathUtils.random(1f) > 0.75f) {
+                    bean.opacity = 0f;
+                    continue;
+                }
+
+                bean.color = MathUtils.random(1, 5);
+                bean.opacity = 1f;
+                bean.tile = tiles[MathUtils.random(3)];
+            }
+        }
+
+        for (int i = 0; i < MAX_ROWS; i++) {
+            for (int j = 0; j < MAX_COLS; j++) {
+                beanLinks(i, j);
+            }
+        }
+
+        resize();
     }
 
     public void resize() {
-        size = G.height / 10f;
-        widthMax = (int) (G.width / size);
-        heightMax = (int) (G.height / size);
-        beansCount = widthMax * heightMax;
+        size = G.height / (float) MAX_ROWS;
+        croppedCols = Math.min((int) Math.ceil(G.width / size), MAX_COLS);
+
+        for (int i = 0; i < MAX_ROWS; i++) {
+            for (int j = 0; j < MAX_COLS; j++) {
+                beans[i][j].px = j * size;
+                beans[i][j].py = i * size;
+            }
+        }
     }
 
-    private boolean hasCollision(Bean newBean) {
-        for (int i = 0; i < beans.size; i++) {
-            Bean bean = beans.get(i);
+    private void animate() {
+        Bean bean = randomBean();
+        animationTime += G.delta;
 
-            if (newBean.x == bean.x && newBean.y == bean.y) {
-                return true;
+        if (bean.animationType == NONE && animationTime > 2f) {
+            if (bean.opacity == 0f) {
+                bean.animationType = FADE_IN;
+                bean.color = MathUtils.random(1, 5);
+                bean.tile = tiles[MathUtils.random(3)];
+            } else if (bean.opacity == 1f && MathUtils.random(1f) > 0.75f ) {
+                bean.animationType = FADE_OUT;
+                if (bean.isLinked()) {
+                    bean.tile = 0;
+                }
+            } else if (bean.opacity == 1f && !bean.isLinked()) {
+                bean.animationType = SHAKE;
+                bean.shakeTime = MathUtils.random(3, 6) * FRAME_TIME * animationTiles.length;
+            }
+
+            animationTime = MathUtils.random(1.2f);
+        }
+
+        for (int i = 0; i < MAX_ROWS; i++) {
+            for (int j = 0; j < croppedCols; j++) {
+                beans[i][j].update();
             }
         }
 
-        return false;
-    }
-
-    public void update() {
-        time += G.delta;
-        newBeanAnimationTimer += G.delta;
-
-        // Insert new block in the screen if it's time
-        if (time >= 0.5f) {
-            time = MathUtils.random(0.25f);
-            Bean bean = pool.obtain();
-
-            bean.x = MathUtils.random(widthMax);
-            bean.y = MathUtils.random(heightMax);
-            bean.opacity = MathUtils.random(0f);
-            bean.opacitySign = 1f;
-            bean.color = MathUtils.random(Block.CLR_A, 5);
-            bean.tile = tiles[MathUtils.random(3)];
-            bean.animationTime = 0f;
-
-            if (!hasCollision(bean)) {
-                beans.add(bean);
-            } else {
-                pool.free(bean);
+        for (int i = 0; i < MAX_ROWS; i++) {
+            for (int j = 0; j < croppedCols; j++) {
+                beanLinks(i, j);
             }
         }
+    }
 
-        // Update beans opacity
-        for (int i = 0; i < beans.size; i++) {
-            Bean bean = beans.get(i);
+    private Bean randomBean() {
+        int i = MathUtils.random(MAX_ROWS - 1);
+        int j = MathUtils.random(croppedCols - 1);
 
-            // If opacity is maximum, revert sign to decrease it
-            if (bean.opacity > MAX_OPACITY) {
-                bean.opacitySign = -1;
-            }
+        return beans[i][j];
+    }
 
-            // Find bean to animate
-            if (bean.opacity >= MAX_OPACITY / 2f && animatedBean == null && newBeanAnimationTimer > 8f) {
-                newBeanAnimationTimer = MathUtils.random(4f);
+    private void beanLinks(int i, int j) {
+        Bean bean = beans[i][j];
 
-                animatedBean = bean;
-                animatedBean.tile = 0;
-                animatedBean.animationTime = FRAME_TIME * MathUtils.random(16);
-                animatedBean.opacity = 1f;
-            }
+        int color = bean.color;
+        int tile = 0;
 
-            bean.opacity += (G.delta * 0.1f * bean.opacitySign);
+        if (bean.opacity < 1f) {
+            return;
+        }
 
-            // It's no longer visible
-            if (bean.opacity < 0) {
-                beans.removeIndex(i);
-                pool.free(bean);
-            }
+        // Check the 4 adjacent blocks if they are linked to center one
+        if (i + 1 < beans.length && beans[i + 1][j].color == color && beans[i + 1][j].opacity == 1f)
+            tile += 1000;
+        if (j + 1 < beans[i].length && beans[i][j + 1].color == color && beans[i][j + 1].opacity == 1f)
+            tile += 100;
+        if (i - 1 >= 0 && beans[i - 1][j].color == color && beans[i - 1][j].opacity == 1f)
+            tile += 10;
+        if (j - 1 >= 0 && beans[i][j - 1].color == color && beans[i][j - 1].opacity == 1f)
+            tile += 1;
+
+        if (tile > 0) {
+            bean.tile = tile;
+        } else if (bean.isLinked()) {
+            bean.tile = tile;
         }
     }
 
     public void render() {
+        animate();
+
         TextureAtlas.AtlasRegion tile;
 
-        if(animatedBean != null) {
-            // The total animation has 4 frames and can repeat 6 times. So it's 24 frames max.
-            if(animatedBean.animationTime > FRAME_TIME * 24f) {
-                animatedBean.tile = 0;
-                animatedBean.animationTime = 0f;
-                animatedBean = null;
-            } else {
-                animatedBean.animationTime += G.delta;
-                animatedBean.tile = animationTiles[(int) (animatedBean.animationTime / FRAME_TIME) % 4];
-            }
-        }
+        for (int i = 0; i < MAX_ROWS; i++) {
+            for (int j = 0; j < croppedCols; j++) {
+                Bean bean = beans[i][j];
 
-        for (int i = 0; i < beans.size; i++) {
-            Bean bean = beans.get(i);
-            tile = G.game.data.BEANS_REG.get(bean.color * 10000 + bean.tile);
-            G.game.batch.setColor(1f, 1f, 1f, Math.min(bean.opacity, 0.16f));
-            G.game.batch.draw(tile, bean.x * size, bean.y * size, size, size);
+                if (bean.color == 0) continue;
+
+                tile = G.game.data.BEANS_REG.get(bean.color * 10000 + bean.tile);
+                G.game.batch.setColor(1f, 1f, 1f, bean.opacity * 0.14f);
+                G.game.batch.draw(tile, bean.px, bean.py, size, size);
+            }
         }
 
         G.game.batch.setColor(1f, 1f, 1f, 1f);

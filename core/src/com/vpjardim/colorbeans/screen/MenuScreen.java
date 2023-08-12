@@ -138,8 +138,6 @@ public class MenuScreen extends ScreenBase {
     public void render(float delta) {
         super.render(delta);
 
-        G.game.bgBeans.update();
-
         G.game.batch.begin();
         G.game.bgBeans.render();
         G.game.batch.end();

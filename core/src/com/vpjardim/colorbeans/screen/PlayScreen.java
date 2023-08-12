@@ -153,8 +153,6 @@ public class PlayScreen extends ScreenBase {
         super.render(delta);
 
         transition.update(delta);
-        G.game.bgBeans.update();
-
         manager.winLost();
 
         for (MapRender r : manager.render) {

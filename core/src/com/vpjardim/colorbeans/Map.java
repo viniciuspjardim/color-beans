@@ -1019,7 +1019,6 @@ public class Map implements TargetBase {
     }
 
     private void mapLinks() {
-
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {
                 blockLinks(i, j);
@@ -1029,7 +1028,6 @@ public class Map implements TargetBase {
 
     /** Updates the links with the block's 4 neighbours */
     private void blockLinks(int col, int row) {
-
         Block block = b[col][row];
 
         if (block.isEmpty() || block.isTrash())
@@ -1057,7 +1055,6 @@ public class Map implements TargetBase {
 
     /** Removes the side links with the current block because it will move */
     public void removeSideLinks(int col, int row) {
-
         // Left block, right link
         if (col - 1 >= 0 && b[col - 1][row].tile / 100 % 10 == 1)
             b[col - 1][row].tile -= 100;
