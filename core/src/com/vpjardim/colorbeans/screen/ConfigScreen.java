@@ -248,6 +248,9 @@ public class ConfigScreen extends ScreenBase {
                 TextButton.TextButtonStyle buttOn = G.game.skin.get(
                         "bttGreen", TextButton.TextButtonStyle.class);
 
+                updatePlayers();
+                dirtInputT = true;
+
                 gameScroll.setVisible(gameButt.isChecked());
                 inputScroll.setVisible(inputButt.isChecked());
                 otherScroll.setVisible(otherButt.isChecked());
@@ -361,6 +364,7 @@ public class ConfigScreen extends ScreenBase {
     private void inputLoop() {
         dirtInputT = false;
         inputT.clearChildren();
+        final Array<Cfg.Player> pls = G.game.data.players;
 
         G.game.input.targetsClear();
 
@@ -377,12 +381,16 @@ public class ConfigScreen extends ScreenBase {
             final Label.LabelStyle labelStyle = G.game.skin.get("robotoMenu", Label.LabelStyle.class);
             final Label keyMapL = new Label("0", labelStyle);
 
+            if (i < pls.size) {
+                keyMapL.setText(pls.get(i).name);
+            }
+
             if (input instanceof ControllerInput) {
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
             }
             else if (input instanceof KeyboardInput) {
                 inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
-                keyMapL.setText(Profile.keyboardKeyNames(input.getProfile()));
+                keyMapL.setText((i < pls.size ? pls.get(i).name + " - " : "") + Profile.keyboardKeyNames(input.getProfile()));
             }
             else if (input instanceof TouchInput) {
                 inputActor = new InputActor(InputActor.TOUCH, null);
@@ -426,10 +434,7 @@ public class ConfigScreen extends ScreenBase {
                         public void finished(Profile profile) {
                             input.setProfile(profile);
                             input.setTarget(inputActor);
-
-                            if (!keyMapL.textEquals("0")) {
-                                keyMapL.setText(Profile.keyboardKeyNames(profile));
-                            }
+                            dirtInputT = true;
 
                             // #debugCode
                             Dbg.dbg(Dbg.tag(ConfigScreen.this), "Key config finished");
@@ -476,8 +481,7 @@ public class ConfigScreen extends ScreenBase {
         stage.draw();
     }
 
-    @Override
-    public void hide() {
+    public void updatePlayers() {
         final Array<Cfg.Player> pls = G.game.data.players;
         pls.clear();
 
@@ -493,9 +497,28 @@ public class ConfigScreen extends ScreenBase {
         if (!player4.getText().equals(""))
             pls.add(new Cfg.Player(player4.getText()));
 
-        if (G.game.data.coopCampaign && pls.size < 2) {
-            pls.add(new Cfg.Player("Player2"));
+        if (stage != null) {
+            stage.unfocusAll();
         }
+
+        player1.setText("");
+        player2.setText("");
+        player3.setText("");
+        player4.setText("");
+
+        if (pls.size >= 1)
+            player1.setText(pls.get(0).name);
+        if (pls.size >= 2)
+            player2.setText(pls.get(1).name);
+        if (pls.size >= 3)
+            player3.setText(pls.get(2).name);
+        if (pls.size >= 4)
+            player4.setText(pls.get(3).name);
+    }
+
+    @Override
+    public void hide() {
+        updatePlayers();
 
         int controllerCount = 0;
         int keyboardCount = 0;
