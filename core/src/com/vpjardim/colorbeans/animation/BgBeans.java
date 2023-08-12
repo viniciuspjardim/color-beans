@@ -113,6 +113,10 @@ public class BgBeans {
         size = G.height / (float) MAX_ROWS;
         croppedCols = Math.min((int) Math.ceil(G.width / size), MAX_COLS);
 
+        if (croppedCols < 6) {
+            croppedCols = 6;
+        }
+
         for (int i = 0; i < MAX_ROWS; i++) {
             for (int j = 0; j < MAX_COLS; j++) {
                 beans[i][j].px = j * size;
