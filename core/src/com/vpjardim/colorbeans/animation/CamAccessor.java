@@ -1,6 +1,7 @@
 package com.vpjardim.colorbeans.animation;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import aurelienribon.tweenengine.TweenAccessor;
 
 public class CamAccessor implements TweenAccessor<OrthographicCamera> {

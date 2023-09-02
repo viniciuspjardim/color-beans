@@ -1,5 +1,7 @@
 package com.vpjardim.colorbeans.input;
 
+import static com.badlogic.gdx.Gdx.input;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
@@ -8,8 +10,6 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
-
-import static com.badlogic.gdx.Gdx.input;
 
 public class InputManager {
     private final InputMultiplexer multiplex;
