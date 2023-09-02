@@ -54,7 +54,6 @@ public class ControllerActor extends Actor implements TargetBase {
             time = 0f;
 
         if (tile >= 1 && tile <= 9 && blinkOn) {
-
             TextureAtlas.AtlasRegion shade = G.game.atlas.findRegion("game/c_shade", tile);
 
             float scaleX = width / shade.originalWidth;

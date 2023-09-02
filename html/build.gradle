@@ -1,7 +1,7 @@
 gwt {
-    gwtVersion='2.8.2' // Should match the gwt version used for building the gwt backend
-    maxHeapSize="2G" // Default 256m is not enough for gwt compiler. GWT is HUNGRY
-    minHeapSize="1G"
+    gwtVersion = '2.8.2' // Should match the gwt version used for building the gwt backend
+    maxHeapSize = "2G" // Default 256m is not enough for gwt compiler. GWT is HUNGRY
+    minHeapSize = "1G"
 
     src = files(file("src/")) // Needs to be in front of "modules" below.
     modules 'com.vpjardim.colorbeans.GdxDefinition'
@@ -24,7 +24,7 @@ gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
 gretty.contextPath = "/"
 gretty.portPropertiesFileName = "TEMP_PORTS.properties"
 
-task startHttpServer () {
+task startHttpServer() {
     dependsOn draftCompileGwt
 
     doFirst {
@@ -52,7 +52,7 @@ task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
     interactive false
 }
 
-task superDev (type: GwtSuperDev) {
+task superDev(type: GwtSuperDev) {
     dependsOn startHttpServer
     doFirst {
         gwt.modules = gwt.devModules
@@ -69,7 +69,7 @@ task dist(dependsOn: [clean, compileGwt]) {
         copy {
             from "webapp"
             into "build/dist"
-            }
+        }
         copy {
             from "war"
             into "build/dist"
@@ -89,6 +89,6 @@ tasks.checkGwt.dependsOn(addSource)
 checkGwt.war = file("war")
 
 sourceCompatibility = 1.8
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.java.srcDirs = ["src/"]
 
 eclipse.project.name = appName + "-html"

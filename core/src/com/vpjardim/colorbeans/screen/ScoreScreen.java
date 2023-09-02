@@ -95,7 +95,6 @@ public class ScoreScreen extends ScreenBase {
         final ChangeListener tabListener = new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
                 TextButton.TextButtonStyle buttOff = G.game.skin.get(
                         "bttRed", TextButton.TextButtonStyle.class);
 
@@ -175,7 +174,7 @@ public class ScoreScreen extends ScreenBase {
             campaignT.add(campaignL).expand().fill();
         }
 
-        float width = G.width <= 1080? G.width * 0.9f : 600;
+        float width = G.width <= 1080 ? G.width * 0.9f : 600;
 
         outerT.add();
         outerT.add(titleT).width(width).maxHeight(G.height * 0.9f).minHeight(G.height * 0.75f);

@@ -12,9 +12,8 @@ import com.google.gwt.user.client.ui.Panel;
 import com.vpjardim.colorbeans.G;
 
 public class HtmlLauncher extends GwtApplication {
-
     @Override
-    public GwtApplicationConfiguration getConfig () {
+    public GwtApplicationConfiguration getConfig() {
         GwtApplicationConfiguration config = new GwtApplicationConfiguration(true);
         config.padHorizontal = 0;
         config.padVertical = 0;
@@ -23,12 +22,12 @@ public class HtmlLauncher extends GwtApplication {
     }
 
     @Override
-    public ApplicationListener createApplicationListener () {
+    public ApplicationListener createApplicationListener() {
         return new G();
     }
 
     @Override
-    public void onModuleLoad () {
+    public void onModuleLoad() {
         FreetypeInjector.inject(new OnCompletion() {
             public void run () {
                 // Replace HtmlLauncher with the class name

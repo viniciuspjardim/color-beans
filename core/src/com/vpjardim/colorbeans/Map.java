@@ -23,7 +23,7 @@ import com.vpjardim.colorbeans.input.TargetBase;
  * formed, the color beans/blocks will be deleted to make room to the falling
  * ones ({@link PlayerBlocks}). If there isn't enough room (the player blocks
  * are obstructed) it's game over.
- * 
+ *
  * <pre>
  *
  * Examples of color group (uses the 4 neighborhood):
@@ -44,13 +44,13 @@ import com.vpjardim.colorbeans.input.TargetBase;
  * Ex 5: all blues are deleted;
  * Ex 6: all blues and all reds are deleted.
  * </pre>
- *
+ * <p>
  * Blocks in the same color group have the same {@link Block#label}
- *
+ * <p>
  * The game can have one or more maps depending on the number of players. One
  * player can disturb other player's map by doing combos that will send trash
  * blocks to the other map.
- * 
+ *
  * <pre>
  *
  * ==== Standard matrix: row x col ====
@@ -70,11 +70,11 @@ import com.vpjardim.colorbeans.input.TargetBase;
  *  |x x x x x x |0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  * Y|x x x x x x |3 0 0 0 0 0 0 0 0 0 0 0 0 0 4
  * </pre>
- *
+ * <p>
  * At the Game, the matrix has a kind of rotation to render and logics: make the
  * first column a row (top becomes left, bottom becomes right), then make the
  * next column as the next row and so on.
- * 
+ *
  * <pre>
  *
  * ==== Game matrix: col x row ====
@@ -106,7 +106,6 @@ import com.vpjardim.colorbeans.input.TargetBase;
  * </pre>
  */
 public class Map implements TargetBase {
-
     // ====== Static members =====>
 
     /**
@@ -114,7 +113,6 @@ public class Map implements TargetBase {
      * actions required by each state
      */
     public enum MState implements State<Map> {
-
         /**
          * The initial state of the Map. When the blocks fall by gravity (not controlled
          * by the player). It calls gravityFallCalc() and if there are animations they
@@ -122,7 +120,6 @@ public class Map implements TargetBase {
          * to 3 different states: LABEL_CALC, TRASH_ADD, PLAYER_FALL
          */
         GRAVITY_FALL() {
-
             @Override
             public void enter(Map map) {
                 // #debugCode
@@ -136,7 +133,6 @@ public class Map implements TargetBase {
 
             @Override
             public void update(Map map) {
-
                 // Case the player of this map won the game
                 if (map.gameWin) {
                     map.state.changeState(MState.DONE);
@@ -195,7 +191,6 @@ public class Map implements TargetBase {
          * might be deleted and the ones above them must fall by gravity
          */
         LABEL_CALC() {
-
             @Override
             public void enter(Map map) {
                 // #debugCode
@@ -244,7 +239,6 @@ public class Map implements TargetBase {
          * it goes back to the GRAVITY_FALL state
          */
         PLAYER_FALL() {
-
             @Override
             public void enter(Map map) {
                 // #debugCode
@@ -282,7 +276,6 @@ public class Map implements TargetBase {
 
             @Override
             public void update(Map map) {
-
                 // Case the player of this map won the game
                 if (map.gameWin) {
                     map.state.changeState(MState.DONE);
@@ -319,7 +312,6 @@ public class Map implements TargetBase {
          * blocks to add && it is trash blocks turn
          */
         TRASH_ADD() {
-
             @Override
             public void enter(Map map) {
                 // #debugCode
@@ -345,7 +337,6 @@ public class Map implements TargetBase {
          * state
          */
         OVER() {
-
             @Override
             public void enter(Map map) {
                 // #debugCode
@@ -360,7 +351,6 @@ public class Map implements TargetBase {
 
             @Override
             public void update(Map map) {
-
                 // Waiting animation to end
                 if (map.anim.gameOver())
                     return;
@@ -378,7 +368,6 @@ public class Map implements TargetBase {
          * this map ended
          */
         DONE() {
-
             @Override
             public void enter(Map map) {
                 // #debugCode
@@ -467,14 +456,14 @@ public class Map implements TargetBase {
 
     /**
      * Labels equivalence
-     * 
+     *
      * @see #labelCalc()
      */
     private final transient Array<IntSet> le;
 
     /**
      * Labels count: the number of blocks per label
-     * 
+     *
      * @see #mergeEquivalentLabels()
      */
     private final transient IntMap<Integer> lc;
@@ -663,7 +652,6 @@ public class Map implements TargetBase {
     // <===== End of default times, timers and other speed control variables ======
 
     public Map(MapManager manager) {
-
         this.manager = manager;
 
         state = new DefaultStateMachine<>(this, MState.GRAVITY_FALL);
@@ -794,10 +782,8 @@ public class Map implements TargetBase {
      * fall i.e. the ones that have empty space below it
      */
     private void gravityFallCalc() {
-
         // Loop through the columns 0(left) to 6(right)
         for (int col = 0; col < b.length; col++) {
-
             // Number of empty rows blocks in this column
             int nEmpty = 0;
 
@@ -808,9 +794,7 @@ public class Map implements TargetBase {
                 // If it`s not empty then swap: the block goes down
                 // and the empty goes up
                 if (!b[col][row].isEmpty()) {
-
                     if (nEmpty > 0) {
-
                         b[col][row].setGravityFallTrajectory(row, row + nEmpty);
 
                         Block swap = b[col][row + nEmpty];
@@ -835,21 +819,17 @@ public class Map implements TargetBase {
      * processing algorithm to detect objects
      */
     private void labelCalc() {
-
         recycleLabelEquivalence();
 
         int label = 1;
 
         // cols 0 -> 6
         for (int col = 0; col < b.length; col++) {
-
             // row 0 -> 14 + OUT_ROW
             for (int row = 0; row < b[col].length; row++) {
-
                 // Empty blocks and trash blocks don`t group at first:
                 // put a zero label
                 if (!b[col][row].isColor()) {
-
                     b[col][row].label = 0;
                     continue;
                 }
@@ -868,7 +848,6 @@ public class Map implements TargetBase {
 
                 // If it has the same color of the upper block
                 if (upper >= 0 && b[col][upper].color == b[col][row].color) {
-
                     sameColorUpper = true;
 
                     // If it has the same color of the left block add a label
@@ -895,7 +874,6 @@ public class Map implements TargetBase {
 
     /** Adding to {@link #le} two labels that are equivalent */
     private void addLabelEquivalence(int labelA, int labelB) {
-
         // If they are equal they not need to be marked
         // as equivalent
         if (labelA == labelB)
@@ -930,18 +908,13 @@ public class Map implements TargetBase {
      * equivalent labels and increment {@link #lc}: the number of blocks per label
      */
     private void mergeEquivalentLabels() {
-
         for (int i = 0; i < b.length; i++) {
-
             for (int j = 0; j < b[i].length; j++) {
-
                 if (b[i][j].label == 0)
                     continue;
 
                 for (IntSet s : le) {
-
                     if (s.contains(b[i][j].label)) {
-
                         b[i][j].label = s.first();
                     }
                 }
@@ -960,16 +933,12 @@ public class Map implements TargetBase {
      * {@link #deleteSize}).
      */
     private void labelDelete() {
-
         for (int i = 0; i < b.length; i++) {
-
             for (int j = 0; j < b[i].length; j++) {
-
                 if (b[i][j].label == 0)
                     continue;
 
                 if (lc.get(b[i][j].label) >= deleteSize) {
-
                     // Color bonus: Marking the colors that will be deleted.
                     colorBonusArr[b[i][j].color - 1] = true;
 
@@ -998,10 +967,10 @@ public class Map implements TargetBase {
      * collection
      */
     private void recycleLabelEquivalence() {
-
         for (IntSet s : le) {
             s.clear();
         }
+
         lc.clear();
     }
 
@@ -1141,9 +1110,7 @@ public class Map implements TargetBase {
     }
 
     private void groupBonusCalc() {
-
         for (IntMap.Entry<Integer> entry : lc.entries()) {
-
             // Group bonus: add to groupBonus the value of group bonus table
             if (entry.value > 4)
                 groupBonus += G.game.data.getGroupBonus(entry.value);
@@ -1151,7 +1118,6 @@ public class Map implements TargetBase {
     }
 
     private void cleanScoreCalc() {
-
         groupBonus = 0;
         for (int i = 0; i < colorBonusArr.length; i++) {
             colorBonusArr[i] = false;
@@ -1160,7 +1126,6 @@ public class Map implements TargetBase {
 
     /** Throw trash blocks in the opponent map */
     private void throwTrashBlocks() {
-
         Dbg.dbg(Dbg.tagO(this), "throwTrashBlocks() method call. blocksDeleted = " + blocksDeleted);
 
         if (blocksDeleted <= 0)
@@ -1186,7 +1151,7 @@ public class Map implements TargetBase {
 
         int toAdd = Math.min(trashBlocksToAdd, maxTrashOnce);
         trashBlocksToAdd -= toAdd;
-        trashShakePower = ((float)toAdd / maxTrashOnce) * 0.15f + 0.1f;
+        trashShakePower = ((float) toAdd / maxTrashOnce) * 0.15f + 0.1f;
 
         // row OUT_ROW -1 -> 0
         for (int row = OUT_ROW - 1; row >= 0; row--) {
@@ -1197,18 +1162,15 @@ public class Map implements TargetBase {
     }
 
     private int addTrashBlocksRow(int rowIndex, int nTrashBlocks) {
-
         int randSeed = MathUtils.random(0, N_COL - 1);
 
         for (int col = 0; col < N_COL; col++) {
-
             if (nTrashBlocks <= 0)
                 break;
 
             int randIndex = (randSeed + col) % N_COL;
 
             if (!b[randIndex][rowIndex].isTrash()) {
-
                 b[randIndex][rowIndex].setColor(Block.CLR_T);
                 nTrashBlocks--;
             }
@@ -1228,7 +1190,6 @@ public class Map implements TargetBase {
     }
 
     private void gameOver() {
-
         if (!b[N_COL / 2][OUT_ROW].isEmpty()) {
             gameOver = true;
         }
@@ -1236,7 +1197,6 @@ public class Map implements TargetBase {
 
     /** Control {@link PlayerBlocks} speed that can change during tha game */
     private void timing() {
-
         // Updates vertical fall time (less is faster)
         if (speedIndex < speedArr.length && speedTimer >= speedArr[speedIndex]) {
             vPlayMoveWait = speedArr[speedIndex + 1];
@@ -1249,7 +1209,6 @@ public class Map implements TargetBase {
     }
 
     private void shuffleColAcceleration(float intensity) {
-
         float max = gravityFallAcceleration * intensity;
 
         for (int i = 0; i < colAcceleration.length; i++) {
@@ -1382,7 +1341,6 @@ public class Map implements TargetBase {
     }
 
     public void debugShape(int shape) {
-
         // Small combo
         if (shape == 1) {
             b[0][14 + OUT_ROW].setColor(1);

@@ -8,7 +8,6 @@ import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.core.Cfg;
 
 public class Ai1 extends AiCommon {
-
     // TODO: idea to improve Ai heuristics
     // The Ai can have 2 score functions the fire function and the build function.
     // The fire is similar to what we have i.e score proportional to de deleted
@@ -29,7 +28,6 @@ public class Ai1 extends AiCommon {
 
     @Override
     protected void entryPoint2() {
-
         int color1 = m.pb.b2.color; // upper block
         int color2 = m.pb.b1.color; // lower block
         float bestMoveScore = AiMap.MOVE_ILLEGAL;
@@ -38,7 +36,6 @@ public class Ai1 extends AiCommon {
 
         // Loop through moves array to find the best move
         for (int i = 0; i < movesArr.size; i++) {
-
             moves.setMove(movesArr.get(i));
 
             aiMap.init(AiMap.getByteBlocks(aiMap.b, m.b), m.deleteSize, Map.OUT_ROW);
@@ -49,7 +46,7 @@ public class Ai1 extends AiCommon {
             // If less the zero is a illegal or lost move
             if (result < 0f)
                 score = result;
-            // Zero or grater is a legal move, then calc the score
+                // Zero or grater is a legal move, then calc the score
             else
                 score = scoreCalc();
 
@@ -67,7 +64,6 @@ public class Ai1 extends AiCommon {
     }
 
     private float scoreCalc() {
-
         int center = aiMap.b.length / 2;
 
         float score = 0;
@@ -86,7 +82,6 @@ public class Ai1 extends AiCommon {
         for (int i = 0; i + center < aiMap.b.length; i++) {
             // j: distance from the top
             for (int j = 0; j < 3; j++) {
-
                 if (aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
                     score -= 50 * Math.pow(0.75, i + j);
                 if (aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)

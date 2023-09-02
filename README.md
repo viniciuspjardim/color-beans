@@ -2,11 +2,17 @@
 
 ![bean](android/res/drawable-xhdpi/ic_launcher.png)
 
-Color Beans is a Tetris-like blocks game. While in Tetris the goal is to complete rows of blocks, in Color Beans the goal is to link beans of the same color. If there are at least four beans of the same color linked together, they will be freed and the player will score. This game is a clone of SEGA's Dr. Robotnik's Mean Bean Machine (called Puyo Puyo in Japan), but it does not use any assets or code from the original game. I made this project for learning and for fun, as it was one of the first games I ever played!
+Color Beans is a Tetris-like blocks game. While in Tetris the goal is to complete rows of blocks, in
+Color Beans the goal is to link beans of the same color. If there are at least four beans of the
+same color linked together, they will be freed and the player will score. This game is a clone of
+SEGA's Dr. Robotnik's Mean Bean Machine (called Puyo Puyo in Japan), but it does not use any assets
+or code from the original game. I made this project for learning and for fun, as it was one of the
+first games I ever played!
 
 ## About
 
-This game is made using the [libGDX framework](https://github.com/libgdx/libgdx) and it's cross-platform. It should run on Windows, Linux, macOS, Android, iOS and WebGL enabled browsers.
+This game is made using the [libGDX framework](https://github.com/libgdx/libgdx) and it's
+cross-platform. It should run on Windows, Linux, macOS, Android, iOS and WebGL enabled browsers.
 
 [Play In The Browser Now (Alpha)](https://www.viniciusjardim.com/p/color-beans)
 

@@ -18,7 +18,7 @@ public class DesktopLauncher {
             }
         }
 
-		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
         config.setWindowIcon("icon/desk256.png", "icon/desk64.png", "icon/desk32.png");
 
@@ -32,5 +32,5 @@ public class DesktopLauncher {
         }
 
         new Lwjgl3Application(new G(), config);
-	}
+    }
 }

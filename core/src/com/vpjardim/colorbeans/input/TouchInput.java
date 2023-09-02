@@ -44,7 +44,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
     /** Change the state of the given key to the isDown value */
     public void keyEvent(int key, boolean isDown) {
-
         // If the key is already in the given isDown state, do nothing
         if (InputBase.getKeyMapKey(keyMap, key) == isDown)
             return;
@@ -56,7 +55,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
     @Override
     public void setTarget(TargetBase target) {
-
         this.target = target;
         div = new float[Map.N_COL + 1];
 
@@ -130,7 +128,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     }
 
     private void move() {
-
         // Horizontal delta
         int deltaH = moveCurr - map.pb.b1x;
 
@@ -153,7 +150,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-
         // TODO: tap represents a touch down and touch up event. Currently we are only
         // triggering the key down event
 
@@ -274,7 +270,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     }
 
     private void findCurrent() {
-
         float touchCurr = dTouchX + touchX;
 
         for (int i = 1; i < div.length - 1; i++) {

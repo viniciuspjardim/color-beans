@@ -1,11 +1,8 @@
 {
   "java.configuration.updateBuildConfiguration": "interactive",
-
   "files.insertFinalNewline": true,
-
   "editor.tabSize": 4,
   "editor.formatOnSave": true,
-
   "cSpell.words": [
     "Lwjgl",
     "vsync"

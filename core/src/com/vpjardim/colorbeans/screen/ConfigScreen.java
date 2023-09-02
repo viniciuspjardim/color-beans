@@ -349,7 +349,7 @@ public class ConfigScreen extends ScreenBase {
 
         inputLoop();
 
-        float width = G.width <= 1080? G.width * 0.9f : 600;
+        float width = G.width <= 1080 ? G.width * 0.9f : 600;
 
         outerT.add();
         outerT.add(titleT).width(width).maxHeight(G.height * 0.9f).minHeight(G.height * 0.75f);
@@ -385,15 +385,12 @@ public class ConfigScreen extends ScreenBase {
 
             if (input instanceof ControllerInput) {
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
-            }
-            else if (input instanceof KeyboardInput) {
+            } else if (input instanceof KeyboardInput) {
                 inputActor = new InputActor(InputActor.KEYBOARD, input.getProfile());
                 keyMapL.setText((i < pls.size ? pls.get(i).name + " - " : "") + Profile.keyboardKeyNames(input.getProfile()));
-            }
-            else if (input instanceof TouchInput) {
+            } else if (input instanceof TouchInput) {
                 inputActor = new InputActor(InputActor.TOUCH, null);
-            }
-            else {
+            } else {
                 inputActor = new InputActor(InputActor.CONTROLLER, null);
             }
 
@@ -528,8 +525,7 @@ public class ConfigScreen extends ScreenBase {
                     G.game.data.ctrlProfs.add(input.getProfile());
 
                 controllerCount++;
-            }
-            else if (input instanceof KeyboardInput) {
+            } else if (input instanceof KeyboardInput) {
                 // If exists replace, otherwise add it
                 if (G.game.data.kbProfs.size > keyboardCount)
                     G.game.data.kbProfs.set(keyboardCount, input.getProfile());

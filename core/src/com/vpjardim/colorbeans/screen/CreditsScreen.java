@@ -21,7 +21,7 @@ public class CreditsScreen extends ScreenBase {
     public void show() {
         super.show();
 
-        tableBgPixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
+        tableBgPixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         tableBgPixmap.setColor(0x00000080);
         tableBgPixmap.fill();
         tableBg = new TextureRegionDrawable(new TextureRegion(new Texture(tableBgPixmap)));

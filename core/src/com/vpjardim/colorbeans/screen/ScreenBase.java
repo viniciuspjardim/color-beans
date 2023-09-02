@@ -89,7 +89,7 @@ public class ScreenBase implements Screen, TargetBase {
             stage.dispose();
             stage = null;
         }
-        
+
         G.game.input.targetsClear();
     }
 

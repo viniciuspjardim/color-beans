@@ -26,7 +26,7 @@ public class PlayerBlocks {
     /**
      * Current rotation shape.
      * Rotations around the center block:
-     * 
+     *
      * <pre>
      *   0
      * 3 C 1
@@ -228,7 +228,6 @@ public class PlayerBlocks {
         if (m.vPlayMoveTimer <= 0f) {
             // Looking if there is a collision on row bellow b1y
             if (!collide(b1x, b1y + 1)) {
-
                 m.vPlayMoveTimer += m.vPlayMoveWait2;
                 setFallStartEnd(b1y, b1y + 1);
                 b1y++;

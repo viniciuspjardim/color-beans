@@ -195,9 +195,7 @@ public class AiMap implements Pool.Poolable {
                 // If it`s not empty then swap: the block goes down
                 // and the empty goes up
                 if (b[col][row] != Block.EMPTY) {
-
                     if (nEmpty > 0) {
-
                         byte swap = b[col][row + nEmpty];
                         b[col][row + nEmpty] = b[col][row];
                         b[col][row] = swap;
@@ -220,7 +218,6 @@ public class AiMap implements Pool.Poolable {
         for (int col = 0; col < b.length; col++) {
             // row 0 -> 14 + OUT_ROW
             for (int row = 0; row < b[col].length; row++) {
-
                 // Empty blocks and trash blocks don`t group at first:
                 // put a zero label
                 if (!Block.isColor(b[col][row])) {

@@ -17,10 +17,11 @@ import com.vpjardim.colorbeans.input.Profile;
 
 /**
  * The default data and the preferences values used in the game.
- *
+ * <p>
  * The transient fields are default values, they can't be edited in the options
  * screen or in the config file. The non transient fields are the user
  * preferences and are going to be persisted in a JSON file.
+ * </p>
  */
 public class Db {
     // Initialized after loading screen finished loading
@@ -70,7 +71,7 @@ public class Db {
 
     /** AI move speed (down key), higher is harder */
     public final transient int[] downKeyMinAi = {
-            0, 0, 0,  0, 10, 20, 30, 40, 50, 60, 70, 80,  90, 100, 100, 100,
+            0, 0, 0, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 100,
     };
 
     /** AI move speed (down key), higher is harder */
@@ -80,7 +81,7 @@ public class Db {
 
     /** AI doubt, lower it fells more confident */
     public final transient int[] doubtMinAi = {
-             90, 80, 60, 50, 40, 30, 20, 15, 10,  5,  3, 2, 1, 0, 0, 0,
+            90, 80, 60, 50, 40, 30, 20, 15, 10, 5, 3, 2, 1, 0, 0, 0,
     };
 
     /** AI doubt, lower it fells more confident */
@@ -90,7 +91,7 @@ public class Db {
 
     /** AI doubt frequency, lower it fells more confident */
     public final transient int[] doubtFreqMinAi = {
-            18, 16, 14, 12, 10,  8, 7,  6, 5, 4, 3, 2, 1, 0, 0, 0,
+            18, 16, 14, 12, 10, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0,
     };
 
     /** AI doubt frequency, lower it fells more confident */
@@ -148,7 +149,7 @@ public class Db {
         COLORS.put(8, "beans/magenta");
         COLORS.put(9, "beans/transparent");
 
-        ri = new int[] {
+        ri = new int[]{
                 0, 1, 2, 3, 4, 10, 11, 100, 101, 110, 111, 1000, 1001, 1010, 1011, 1100, 1101, 1110,
                 1111,
         };
@@ -292,8 +293,8 @@ public class Db {
         int i = stage + difficulty;
         Cfg.Map mapCfg = new Cfg.Map();
 
-        mapCfg.moveTime = new float[] {
-                0,  fallTimes[i]     / 100f,
+        mapCfg.moveTime = new float[]{
+                0, fallTimes[i] / 100f,
                 15, fallTimes[i + 1] / 100f,
                 15, fallTimes[i + 2] / 100f,
                 15, fallTimes[i + 3] / 100f,
@@ -312,14 +313,14 @@ public class Db {
         int i = stage + difficulty;
         Cfg.Ai aiCfg = new Cfg.Ai();
 
-        aiCfg.downKeyMin   = downKeyMinAi[i]   / 100f;
-        aiCfg.downKeyMax   = downKeyMaxAi[i]   / 100f;
-        aiCfg.doubtMin     = doubtMinAi[i]     / 100f;
-        aiCfg.doubtMax     = doubtMaxAi[i]     / 100f;
+        aiCfg.downKeyMin = downKeyMinAi[i] / 100f;
+        aiCfg.downKeyMax = downKeyMaxAi[i] / 100f;
+        aiCfg.doubtMin = doubtMinAi[i] / 100f;
+        aiCfg.doubtMax = doubtMaxAi[i] / 100f;
         aiCfg.doubtFreqMin = doubtFreqMinAi[i] / 100f;
         aiCfg.doubtFreqMax = doubtFreqMaxAi[i] / 100f;
-        aiCfg.randomness   = randomnessAi[i]   / 100f;
-        aiCfg.trashMoves   = trashMovesAi[i]   / 100f;
+        aiCfg.randomness = randomnessAi[i] / 100f;
+        aiCfg.trashMoves = trashMovesAi[i] / 100f;
 
         // #debugCode
         Dbg.dbg("createAiConfig ", "stage: " + stage + "; downKeyMin: " +

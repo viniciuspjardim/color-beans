@@ -27,7 +27,6 @@ public class AiInput implements InputBase {
 
     /** Change the state of the given key to the isDown value */
     public void keyEvent(int key, boolean isDown) {
-
         // If the key is already in the given isDown state, do nothing
         if (InputBase.getKeyMapKey(keyMap, key) == isDown)
             return;
@@ -113,7 +112,6 @@ public class AiInput implements InputBase {
     }
 
     public void move() {
-
         // Horizontal delta
         int deltaH = hMove - map.pb.b1x;
 
@@ -140,7 +138,7 @@ public class AiInput implements InputBase {
             // Rotate counterclockwise
             if (deltaR == 3)
                 map.bt1Down();
-            // Rotate clockwise
+                // Rotate clockwise
             else
                 map.bt3Down();
         }
@@ -163,7 +161,6 @@ public class AiInput implements InputBase {
      *                 fall faster
      */
     public void setMove(int hMove, int rotation, boolean fastFall) {
-
         // Move if map is not null
         this.move = map != null;
         this.hMove = hMove;
@@ -178,7 +175,6 @@ public class AiInput implements InputBase {
     }
 
     public void cleanMove() {
-
         keyMap = 0;
         keyMapOld = 0;
         move = false;

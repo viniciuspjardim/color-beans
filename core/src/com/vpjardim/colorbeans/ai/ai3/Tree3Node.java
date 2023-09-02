@@ -106,7 +106,6 @@ public class Tree3Node implements Pool.Poolable {
 
     @Override
     public void reset() {
-
         for (int i = 0; i < children.size; i++) {
             Tree3Node.pool.free(children.get(i));
         }

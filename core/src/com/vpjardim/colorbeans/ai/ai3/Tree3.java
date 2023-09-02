@@ -62,8 +62,7 @@ public class Tree3 {
     }
 
     public void initProcess(byte[][] map, int deleteSize, int outRow, ScoreFormula formula,
-            int color1, int color2, int nColor1, int nColor2) {
-
+                            int color1, int color2, int nColor1, int nColor2) {
         this.formula = formula;
         this.color1 = color1;
         this.color2 = color2;
@@ -84,12 +83,10 @@ public class Tree3 {
     }
 
     public void process() {
-
         startTime = TimeUtils.millis();
 
         for (; levelPos < 1; levelPos++) {
             for (; cachePos < cacheA.size; cachePos++) {
-
                 if (!hasTime())
                     return;
 

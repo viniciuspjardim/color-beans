@@ -31,15 +31,16 @@ public class Block {
      * Each digit represents if there is a link (1) or not (0). There are 3 tiles
      * that don't have links and don't follow this rule: the white bordered (2), the
      * stretched (3) and the squeezed (4)
-     * 
+     *
      * <pre>
      *   A
      * D X B
      *   C
      * </pre>
-     * 
+     * <p>
      * Example: 101. There are links only in B and D (no leading zeros needed cause
      * it's a integer)
+     * </p>
      */
     public int tile;
 
@@ -92,7 +93,6 @@ public class Block {
     }
 
     public void recycle() {
-
         color = EMPTY;
         tile = 0;
         visible = false;

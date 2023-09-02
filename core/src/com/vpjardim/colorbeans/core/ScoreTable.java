@@ -31,7 +31,6 @@ public class ScoreTable {
 
     public void addRow(int gameMode, String nick, boolean win, int score, int scoreSum,
                        float time) {
-
         ScoreTable.Row row = new ScoreTable.Row();
 
         row.gameMode = gameMode;

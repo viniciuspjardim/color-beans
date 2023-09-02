@@ -182,7 +182,6 @@ public class Animations {
         b.py -= shift * 2;
 
         if (b.py <= 0f) {
-
             animating = false;
             b.recycleFall();
         }
@@ -280,13 +279,10 @@ public class Animations {
             blockTime = 0f;
             animating = false;
         } else if (blockTime <= m.delWait3) {
-
             b.visible = true;
         } else if (blockTime <= 2 * m.delWait3) {
-
             b.visible = false;
         } else if (blockTime <= 3 * m.delWait3) {
-
             b.visible = true;
         }
 
@@ -320,7 +316,6 @@ public class Animations {
         b.py = -shift;
 
         if (b.py <= -Map.N_ROW) {
-
             animating = false;
             // b.recycleFall();
         }

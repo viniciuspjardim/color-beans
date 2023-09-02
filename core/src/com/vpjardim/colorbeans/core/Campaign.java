@@ -127,7 +127,7 @@ public class Campaign extends MapManager {
         }
 
         Map p1 = maps.get(0);
-        Map p2 = maps.size == 3? maps.get(2) : null; // index 1 is the AI.
+        Map p2 = maps.size == 3 ? maps.get(2) : null; // index 1 is the AI.
 
         G.game.score.addRow(ScoreTable.GMODE_CAMPAIGN, p1.name, true, p1.score, p1.scoreSum,
                 p1.matchTimer);
@@ -138,7 +138,7 @@ public class Campaign extends MapManager {
         }
 
         // Config maps to the next stage
-        if(gameStatus != GAME_ZEROED) {
+        if (gameStatus != GAME_ZEROED) {
             p1.setCfg(mapCfgs.get(stageIndex));
 
             if (p2 != null) {
@@ -180,7 +180,7 @@ public class Campaign extends MapManager {
                 p2.gameWin = true;
                 winnerMaps.add(p2);
             }
-        // Players lost
+            // Players lost
         } else if (Map.lost(p1) && (p2 == null || Map.lost(p2))) {
             aiMap.gameWin = true;
             winnerMaps.add(aiMap);

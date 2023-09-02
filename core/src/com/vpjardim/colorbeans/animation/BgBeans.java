@@ -14,8 +14,8 @@ public class BgBeans {
     private final static int FADE_OUT = 2;
     private final static int SHAKE = 3;
 
-    private final static int[] tiles = { 0, 2, 3, 4};
-    private final static int[] animationTiles = { 0, 4, 0, 3};
+    private final static int[] tiles = {0, 2, 3, 4};
+    private final static int[] animationTiles = {0, 4, 0, 3};
 
     private static class Bean {
         public float px = 0f;
@@ -125,7 +125,7 @@ public class BgBeans {
                 bean.animationType = FADE_IN;
                 bean.color = MathUtils.random(1, 5);
                 bean.tile = tiles[MathUtils.random(3)];
-            } else if (bean.opacity == 1f && MathUtils.random(1f) > 0.75f ) {
+            } else if (bean.opacity == 1f && MathUtils.random(1f) > 0.75f) {
                 bean.animationType = FADE_OUT;
                 if (bean.isLinked()) {
                     bean.tile = 0;

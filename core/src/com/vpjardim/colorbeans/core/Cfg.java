@@ -19,7 +19,8 @@ public class Cfg {
         public String name;
 
         /** This constructor is required to be deserialized from JSON */
-        public Player() { }
+        public Player() {
+        }
 
         public Player(String name) {
             this.name = name;

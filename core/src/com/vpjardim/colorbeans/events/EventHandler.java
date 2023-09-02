@@ -7,6 +7,8 @@ public interface EventHandler {
     }
 
     void addListener(String type, EventListener eListener);
+
     void removeListener(String type, EventListener eListener);
+
     void emit(String type, Event e);
 }

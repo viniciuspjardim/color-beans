@@ -90,7 +90,6 @@ public class Moves {
     }
 
     public IntArray getArray(int color1, int color2) {
-
         if (color1 < Block.CLR_A)
             return movesAll;
         if (color1 == color2)

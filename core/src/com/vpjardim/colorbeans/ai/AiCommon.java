@@ -112,7 +112,6 @@ public abstract class AiCommon implements AiBase {
 
         // If there is fake doubt and the final move is not yet set...
         if (cfg.doubtMax > 0f && !isFinalMoveSet) {
-
             // Do not fake doubt while the down key is pressed
             float doubt = Math.min(doubtRand, slowFallMax * 0.8f);
             float deltaH = fallAmount - lastMoveSwitch;
