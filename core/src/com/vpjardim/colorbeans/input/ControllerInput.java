@@ -1,17 +1,9 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.vpjardim.colorbeans.core.Dbg;
 
-/**
- * @author Vinícius Jardim
- *         2015/04/03
- */
 public class ControllerInput implements InputBase, ControllerListener {
     private TargetBase target;
     public Profile p;

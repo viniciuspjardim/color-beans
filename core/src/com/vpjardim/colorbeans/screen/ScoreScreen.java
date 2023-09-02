@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -20,10 +16,6 @@ import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 
-/**
- * @author Vinícius Jardim
- *         2016/09/03
- */
 public class ScoreScreen extends ScreenBase {
     @Override
     public void show() {

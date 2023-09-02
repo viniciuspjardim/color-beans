@@ -1,15 +1,6 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.core;
 
-/**
- * @author Vinícius Jardim
- *         2016/09/02
- */
 public class Cfg {
-
     public static class Game {
         public static final int LOST_RESTART_PAUSED = 1;
         public static final int LOST_AUTO_RESTART = 2;

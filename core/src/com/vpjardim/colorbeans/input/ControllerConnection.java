@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.controllers.Controller;
@@ -12,10 +8,6 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.events.EventHandler;
 
-/**
- * @author Vinícius Jardim
- *         2016/02/13
- */
 public class ControllerConnection implements ControllerListener {
     @Override
     public void connected(Controller controller) {

@@ -1,17 +1,8 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.animation;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.vpjardim.colorbeans.G;
-
-/**
- * @author Vinícius Jardim
- *         2017/08/08
- */
 
 public class BgBeans {
     private final static float FRAME_TIME = 1f / 12f; // 12 frames per second

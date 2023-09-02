@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.views;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,11 +7,6 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.Profile;
 import com.vpjardim.colorbeans.input.TargetBase;
-
-/**
- * @author Vinícius Jardim
- *         2017/05/08
- */
 
 public class ControllerActor extends Actor implements TargetBase {
     public interface KeysSetListener {

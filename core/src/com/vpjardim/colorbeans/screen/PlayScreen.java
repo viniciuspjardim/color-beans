@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.audio.Music;
@@ -34,10 +30,6 @@ import com.vpjardim.colorbeans.input.TouchInput;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 
-/**
- * @author Vinícius Jardim
- *         2016/09/02
- */
 public class PlayScreen extends ScreenBase {
     public static final int ACT_MENU = 10;
     public static final int ACT_CREDITS = 11;

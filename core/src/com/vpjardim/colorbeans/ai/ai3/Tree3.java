@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.ai.ai3;
 
 import com.badlogic.gdx.utils.Array;
@@ -11,12 +7,7 @@ import com.vpjardim.colorbeans.ai.AiMap;
 import com.vpjardim.colorbeans.ai.Moves;
 import com.vpjardim.colorbeans.ai.ScoreFormula;
 
-/**
- * @author Vinícius Jardim
- *         2016/05/24
- */
 public class Tree3 {
-
     public Moves moves;
     public ScoreFormula formula;
 

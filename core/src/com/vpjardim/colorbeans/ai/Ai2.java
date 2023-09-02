@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.ai;
 
 import com.badlogic.gdx.math.MathUtils;
@@ -12,14 +8,8 @@ import com.vpjardim.colorbeans.ai.ai3.Tree3Node;
 import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.input.InputBase;
 
-/**
- * TODO: too slow, not usable
- *
- * @author Vinícius Jardim
- *         2016/04/29
- */
+/** TODO: too slow, not usable */
 public class Ai2 implements AiBase {
-
     private Map m;
     private Moves moves;
     private Tree3Node root;

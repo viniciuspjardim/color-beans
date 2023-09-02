@@ -1,17 +1,9 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.core;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.vpjardim.colorbeans.G;
 
-/**
- * @author Vinícius Jardim
- *         2018/06/06
- */
 public class Audio {
     public static final String MUSIC1 = "audio/music1.ogg";
 

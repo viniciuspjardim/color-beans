@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.ai.ai3;
 
 import com.badlogic.gdx.utils.Array;
@@ -10,12 +6,7 @@ import com.vpjardim.colorbeans.ai.AiMap;
 import com.vpjardim.colorbeans.ai.ScoreFormula;
 import com.vpjardim.colorbeans.core.Dbg;
 
-/**
- * @author Vinícius Jardim
- *         2016/04/30
- */
 public class Tree3Node implements Pool.Poolable {
-
     public static Pool<Tree3Node> pool = new Pool<Tree3Node>(676) {
         @Override
         protected Tree3Node newObject() {

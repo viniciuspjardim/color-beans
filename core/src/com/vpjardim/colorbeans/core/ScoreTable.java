@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.core;
 
 import com.badlogic.gdx.Gdx;
@@ -12,12 +8,7 @@ import com.badlogic.gdx.utils.Sort;
 
 import java.util.Comparator;
 
-/**
- * @author Vinícius Jardim
- *         2016/09/03
- */
 public class ScoreTable {
-
     // TODO: create a match id and to link multiple players to one match
     // This way it is possible to see multiple opponents score in one match
 

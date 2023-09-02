@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.ai;
 
 import com.badlogic.gdx.utils.Array;
@@ -12,12 +8,7 @@ import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.ai.ai3.Ai3;
 import com.vpjardim.colorbeans.core.Dbg;
 
-/**
- * @author Vinícius Jardim
- *         2016/02/09
- */
 public class AiMap implements Pool.Poolable {
-
     public static int objCount = 0;
 
     public static final float MOVE_ILLEGAL = -999999999f;

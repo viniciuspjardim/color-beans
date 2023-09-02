@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.core;
 
 import com.badlogic.gdx.math.MathUtils;
@@ -9,10 +5,6 @@ import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 
-/**
- * @author Vinícius Jardim
- *         2016/09/02
- */
 public abstract class MapManager {
     public static final int GAME_CONTINUE = 1;
     public static final int GAME_ZEROED = 2;

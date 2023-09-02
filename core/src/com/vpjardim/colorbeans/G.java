@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans;
 
 import com.badlogic.gdx.Game;
@@ -48,9 +44,6 @@ import aurelienribon.tweenengine.Tween;
  * 0 |x  >  .  .  .|
  *    0
  * </pre>
- *
- * @author Vinícius Jardim
- *         2015/03/21
  */
 public class G extends Game {
     public static G game;

@@ -1,16 +1,9 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
 /**
  * Any screen or object that need to be controlled by an input method should
  * implement this interface telling what actions needs to be done on each input
  * event
- *
- * @author Vinícius Jardim
- *         2015/11/01
  */
 public interface TargetBase {
     void setInput(InputBase input);

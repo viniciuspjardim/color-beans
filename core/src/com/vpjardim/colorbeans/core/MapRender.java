@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.core;
 
 import com.badlogic.gdx.Application;
@@ -19,10 +15,6 @@ import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.DebugInput;
 
-/**
- * @author Vinícius Jardim
- *         2016/09/02
- */
 public class MapRender {
     public Map m;
 

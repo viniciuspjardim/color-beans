@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans;
 
 /**
@@ -12,12 +8,8 @@ package com.vpjardim.colorbeans;
  * beans. Each bean is grouped to all 4-neighborhood beans that has the same
  * color creating chains. Each chain has a unique number stored in
  * {@link #label} field.
- *
- * @author Vinícius Jardim
- *         2015/03/21
  */
 public class Block {
-
     /** Empty space: no block */
     public static final int EMPTY = 0;
 

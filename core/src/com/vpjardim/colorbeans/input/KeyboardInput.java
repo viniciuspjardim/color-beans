@@ -1,16 +1,8 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.InputProcessor;
 import com.vpjardim.colorbeans.core.Dbg;
 
-/**
- * @author Vinícius Jardim
- *         2015/07/15
- */
 public class KeyboardInput implements InputBase, InputProcessor {
     private TargetBase target;
     public Profile p;

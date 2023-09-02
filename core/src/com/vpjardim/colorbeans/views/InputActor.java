@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.views;
 
 import com.badlogic.gdx.graphics.Color;
@@ -16,10 +12,6 @@ import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.Profile;
 import com.vpjardim.colorbeans.input.TargetBase;
 
-/**
- * @author Vinícius Jardim
- *         2017/05/08
- */
 public class InputActor extends Actor implements TargetBase {
     public static final int CONTROLLER = 1;
     public static final int KEYBOARD = 2;

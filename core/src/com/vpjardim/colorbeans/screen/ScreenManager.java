@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
@@ -14,10 +10,6 @@ import com.vpjardim.colorbeans.core.Training;
 
 import aurelienribon.tweenengine.TweenManager;
 
-/**
- * @author Vinícius Jardim
- *         2015/12/05
- */
 public class ScreenManager {
     private final FPSLogger fps;
     private final TweenManager transition;

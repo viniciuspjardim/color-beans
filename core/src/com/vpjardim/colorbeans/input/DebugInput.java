@@ -1,16 +1,8 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.input.GestureDetector;
 import com.vpjardim.colorbeans.events.EventHandler;
 
-/**
- * @author Vinícius Jardim
- *         2018/10/14
- */
 public class DebugInput extends GestureDetector.GestureAdapter {
     public static class Data {
         public float x;

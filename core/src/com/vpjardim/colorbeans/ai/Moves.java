@@ -1,18 +1,9 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.ai;
 
 import com.badlogic.gdx.utils.IntArray;
 import com.vpjardim.colorbeans.Block;
 
-/**
- * @author Vinícius Jardim
- *         2016/05/02
- */
 public class Moves {
-
     /** All moves */
     private IntArray movesAll;
     /** Moves for 2 different colors */
@@ -26,7 +17,6 @@ public class Moves {
     public int rotation;
 
     public void init(int nCol) {
-
         movesAll = new IntArray(325);
         moves2C = new IntArray(26);
         moves1C = new IntArray(13);
@@ -34,7 +24,6 @@ public class Moves {
         // === All colors ===
         for (int color1 = 1; color1 < 6; color1++) {
             for (int color2 = color1; color2 < 6; color2++) {
-
                 // No rotation (vertical)
                 for (int i = 0; i < nCol; i++)
                     movesAll.add(getMove(color1, color2, i, 0));

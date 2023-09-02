@@ -1,16 +1,8 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.events;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
-/**
- * @author Vinícius Jardim
- *         2018/04/14
- */
 public class DefaultHandler implements EventHandler {
     public static final DefaultHandler defaultHandler = new DefaultHandler();
     private final ObjectMap<String, Array<EventListener>> listeners;

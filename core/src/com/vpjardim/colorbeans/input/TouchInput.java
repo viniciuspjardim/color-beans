@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.input.GestureDetector;
@@ -9,10 +5,6 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.core.Dbg;
 
-/**
- * @author Vinícius Jardim
- *         2017/02/10
- */
 public class TouchInput extends GestureDetector.GestureAdapter implements InputBase {
     private TargetBase target;
     private Map map;

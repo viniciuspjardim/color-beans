@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
@@ -26,12 +22,6 @@ import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.input.InputManager;
 
-/**
- * Just a black screen waiting load to be done
- *
- * @author Vinícius Jardim
- *         2016/06/10
- */
 public class LoadingScreen extends ScreenBase {
     private int frameCount = 0;
     private String atlasStr;

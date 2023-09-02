@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.core;
 
 import com.badlogic.gdx.math.MathUtils;
@@ -10,10 +6,6 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.ai3.Ai3;
 
-/**
- * @author Vinícius Jardim
- *         2016/09/02
- */
 public class Campaign extends MapManager {
     // #debugCode all over the class
 

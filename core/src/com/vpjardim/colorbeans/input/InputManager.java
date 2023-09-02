@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.Gdx;
@@ -15,10 +11,6 @@ import com.vpjardim.colorbeans.G;
 
 import static com.badlogic.gdx.Gdx.input;
 
-/**
- * @author Vinícius Jardim
- *         2015/12/05
- */
 public class InputManager {
     private final InputMultiplexer multiplex;
     private final Array<InputBase> inputs;

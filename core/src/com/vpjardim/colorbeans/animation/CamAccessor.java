@@ -1,16 +1,7 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.animation;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import aurelienribon.tweenengine.TweenAccessor;
-
-/**
- * @author Vinícius Jardim
- *         2017/07/22
- */
 
 public class CamAccessor implements TweenAccessor<OrthographicCamera> {
     public static final int POSITION = 0;

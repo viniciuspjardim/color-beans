@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
@@ -17,10 +13,6 @@ import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
-/**
- * @author Vinícius Jardim
- *         2015/12/05
- */
 public class ScreenBase implements Screen, TargetBase {
     public static final int ACT_RUNNING = 1;
     public static final int ACT_NEXT = 2;

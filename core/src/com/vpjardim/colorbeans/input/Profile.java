@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
 import com.badlogic.gdx.Input;
@@ -13,9 +9,6 @@ import com.vpjardim.colorbeans.core.Dbg;
  * For example:
  * Keyboard key A (key code 29 in desktop). If A is assigned in game as the UP
  * key, it will be represented internally as with the key code 0.
- *
- * @author Vinícius Jardim
- *         2017/04/30
  */
 public class Profile {
     public static final int UNDEFINED = -1;

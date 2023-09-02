@@ -1,13 +1,5 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.input;
 
-/**
- * @author Vinícius Jardim
- *         2015/07/13
- */
 public interface InputBase {
     int UP_KEY = 0;
     int RIGHT_KEY = 1;

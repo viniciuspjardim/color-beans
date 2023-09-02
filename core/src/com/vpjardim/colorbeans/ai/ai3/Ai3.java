@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.ai.ai3;
 
 import com.badlogic.gdx.math.MathUtils;
@@ -14,12 +10,7 @@ import com.vpjardim.colorbeans.ai.ScoreFormula;
 import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.input.InputBase;
 
-/**
- * @author Vinícius Jardim
- *         2016/05/30
- */
 public class Ai3 extends AiCommon {
-
     // TODO: persist the last ai move: when the game resume, because the ai has a
     // small random factor, the new ai calc might lead to another move witch might
     // don't have enough time to complete;

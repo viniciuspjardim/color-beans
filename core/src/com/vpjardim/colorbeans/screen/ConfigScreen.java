@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -33,10 +29,6 @@ import com.vpjardim.colorbeans.input.TouchInput;
 import com.vpjardim.colorbeans.views.ControllerActor;
 import com.vpjardim.colorbeans.views.InputActor;
 
-/**
- * @author Vinícius Jardim
- *         2017/01/03
- */
 public class ConfigScreen extends ScreenBase {
     public static final int ACT_MENU = 10;
     public static final int ACT_CREDITS = 11;

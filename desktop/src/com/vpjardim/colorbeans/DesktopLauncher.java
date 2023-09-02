@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
@@ -9,10 +5,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 
-/**
- * @author Vinícius Jardim
- *         2015/03/21
- */
 public class DesktopLauncher {
     public static void main(String[] args) {
         boolean fullScreen = true;

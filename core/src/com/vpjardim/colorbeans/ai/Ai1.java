@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.ai;
 
 import com.badlogic.gdx.math.MathUtils;
@@ -11,10 +7,6 @@ import com.vpjardim.colorbeans.Block;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.core.Cfg;
 
-/**
- * @author Vinícius Jardim
- *         2016/04/09
- */
 public class Ai1 extends AiCommon {
 
     // TODO: idea to improve Ai heuristics

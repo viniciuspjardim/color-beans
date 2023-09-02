@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.defaults;
 
 import com.badlogic.gdx.Application;
@@ -25,9 +21,6 @@ import com.vpjardim.colorbeans.input.Profile;
  * The transient fields are default values, they can't be edited in the options
  * screen or in the config file. The non transient fields are the user
  * preferences and are going to be persisted in a JSON file.
- *
- * @author Vinícius Jardim
- *         2016/09/02
  */
 public class Db {
     // Initialized after loading screen finished loading

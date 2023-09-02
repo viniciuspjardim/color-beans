@@ -1,17 +1,9 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.input.InputBase;
 
-/**
- * @author Vinícius Jardim
- *         2015/03/21
- */
 public class PlayerBlocks {
 
     public transient Map m;

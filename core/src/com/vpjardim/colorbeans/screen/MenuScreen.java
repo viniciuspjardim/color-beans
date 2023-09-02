@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Application;
@@ -17,10 +13,6 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 
-/**
- * @author Vinícius Jardim
- *         2015/12/06
- */
 public class MenuScreen extends ScreenBase {
     public static final int ACT_PLAY = 10;
     public static final int ACT_TRAINING = 11;

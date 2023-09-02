@@ -1,7 +1,3 @@
-/*
- * Copyright 2015-2018 Vinícius Petrocione Jardim. All rights reserved
- */
-
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
@@ -17,10 +13,6 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 
-/**
- * @author Vinícius Jardim
- *         2016/12/13
- */
 public class CreditsScreen extends ScreenBase {
     private Pixmap tableBgPixmap;
     private TextureRegionDrawable tableBg;
