@@ -29,7 +29,7 @@ public class HtmlLauncher extends GwtApplication {
     @Override
     public void onModuleLoad() {
         FreetypeInjector.inject(new OnCompletion() {
-            public void run () {
+            public void run() {
                 // Replace HtmlLauncher with the class name
                 // If your class is called FooBar.java than the line should be FooBar.super.onModuleLoad();
                 HtmlLauncher.super.onModuleLoad();
