@@ -21,7 +21,6 @@ import com.vpjardim.colorbeans.input.Profile;
  * The transient fields are default values, they can't be edited in the options
  * screen or in the config file. The non transient fields are the user
  * preferences and are going to be persisted in a JSON file.
- * </p>
  */
 public class Db {
     // Initialized after loading screen finished loading

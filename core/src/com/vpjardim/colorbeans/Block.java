@@ -40,7 +40,6 @@ public class Block {
      * <p>
      * Example: 101. There are links only in B and D (no leading zeros needed cause
      * it's a integer)
-     * </p>
      */
     public int tile;
 
