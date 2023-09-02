@@ -5,30 +5,21 @@ import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.input.InputBase;
 
 public class PlayerBlocks {
-
     public transient Map m;
-
     /** Block 1: center block */
-    public Block b1;
-
+    public final Block b1;
     /** Block 2: this block rotates around the center block */
-    public Block b2;
-
+    public final Block b2;
     /** Block 1 color at the next ply */
     public int nextB1;
-
     /** Block 2 color at the next ply */
     public int nextB2;
-
     /** Width position (x) on the map of center block */
     public int b1x;
-
     /** Height position (y) on the map of center block */
     public int b1y;
-
     /** Width position (x) on the map of block 2 */
     public int b2x;
-
     /** Height position (y) on the map of block 2 */
     public int b2y;
 
@@ -66,7 +57,6 @@ public class PlayerBlocks {
     }
 
     public void init() {
-
         b1.recycle();
         b2.recycle();
 
@@ -102,7 +92,6 @@ public class PlayerBlocks {
      * position
      */
     public boolean collide(int mapCol, int mapRow) {
-
         // Center block check
         if (!m.isEmpty(mapCol, mapRow))
             return true;
@@ -115,7 +104,6 @@ public class PlayerBlocks {
     }
 
     public boolean moveHorizontal(int value) {
-
         if (!collide(b1x + value, b1y)) {
             b1x += value;
             moveX = value;
@@ -126,7 +114,6 @@ public class PlayerBlocks {
     }
 
     public boolean moveDueCollision() {
-
         // Should not collide
         if (rotation == 0) {
             Dbg.print("processCollision: rotation == 0");
@@ -153,7 +140,6 @@ public class PlayerBlocks {
     }
 
     public void rotateClockwise(boolean detectCollision) {
-
         int prevRotation = rotation;
 
         rotation = rotation + 1;
@@ -163,9 +149,9 @@ public class PlayerBlocks {
         updateB2pos();
 
         if (detectCollision && collide()) {
-            if (moveDueCollision()) {
-            } else
+            if (!moveDueCollision()) {
                 rotateCounterclockwise(false);
+            }
         }
 
         if (detectCollision && prevRotation != rotation) {
@@ -174,7 +160,6 @@ public class PlayerBlocks {
     }
 
     public void rotateCounterclockwise(boolean detectCollision) {
-
         int prevRotation = rotation;
 
         rotation = rotation - 1;
@@ -184,9 +169,9 @@ public class PlayerBlocks {
         updateB2pos();
 
         if (detectCollision && collide()) {
-            if (moveDueCollision()) {
-            } else
+            if (!moveDueCollision()) {
                 rotateClockwise(false);
+            }
         }
 
         if (detectCollision && prevRotation != rotation) {
@@ -196,7 +181,6 @@ public class PlayerBlocks {
 
     /** Update block 2 position according to rotation and center block position */
     public void updateB2pos() {
-
         if (rotation == 0) {
             b2x = b1x;
             b2y = b1y - 1;
@@ -214,7 +198,6 @@ public class PlayerBlocks {
 
     /** Insert the player blocks in the map blocks array */
     public void insert() {
-
         if (b1y < 0 || b2y < 0) {
             m.lost = true;
             return;
@@ -239,12 +222,10 @@ public class PlayerBlocks {
     }
 
     public void playerFallCalc() {
-
         m.vPlayMoveTimer -= G.delta;
         boolean downKey = m.input != null && m.input.getKey(InputBase.DOWN_KEY);
 
         if (m.vPlayMoveTimer <= 0f) {
-
             // Looking if there is a collision on row bellow b1y
             if (!collide(b1x, b1y + 1)) {
 
@@ -256,7 +237,6 @@ public class PlayerBlocks {
             // Wait some time before insert the player blocks.
             // The player can use this time to do his last moves
             else if (!downKey && m.vPlayMoveTimer >= -m.beforeInsertWait) {
-
             } else {
                 insert();
                 init();
@@ -272,16 +252,5 @@ public class PlayerBlocks {
         b1.py = val;
         b2.moveY = val;
         b2.py = val;
-    }
-
-    /**
-     * Needs to be called before render when the map is loaded from a serialized
-     * source. This because some references and objects are not serialized and it
-     * needs to be setup
-     */
-    public void deserialize(Map m) {
-        this.m = m;
-        b1.deserialize(m);
-        b2.deserialize(m);
     }
 }

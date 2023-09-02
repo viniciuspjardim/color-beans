@@ -15,7 +15,6 @@ public class InputManager {
     private final InputMultiplexer multiplex;
     private final Array<InputBase> inputs;
     private final Array<TargetBase> targets;
-    private final ControllerConnection ctrlConn;
     private final SpecialButtons specialButtons;
     private final DebugInput debugInput;
 
@@ -24,12 +23,12 @@ public class InputManager {
     public InputManager() {
         inputs = new Array<>();
         targets = new Array<>();
-        ctrlConn = new ControllerConnection();
         specialButtons = new SpecialButtons();
         // #debugCode
         debugInput = new DebugInput();
 
         // Manage controller connections and disconnections
+        ControllerConnection ctrlConn = new ControllerConnection();
         Controllers.addListener(ctrlConn);
 
         multiplex = new InputMultiplexer();

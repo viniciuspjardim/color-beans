@@ -40,18 +40,18 @@ public class Db {
     public final transient Cfg.Game trainingGame = new Cfg.Game();
 
     /**
-     * Chain power from 1 to 24+. Ref: https://puyonexus.com/wiki/Chain_Power_Table
+     * Chain power from 1 to 24+ <a href="https://puyonexus.com/wiki/Chain_Power_Table">Info</a>
      */
     public final transient int[] chainPowerTable = {
             0, 8, 16, 32, 64, 128, 256, 512, 999,
     };
 
-    /** Color bonus from 1 to 8. Ref: https://puyonexus.com/wiki/Scoring */
+    /** Color bonus from 1 to 8 <a href="https://puyonexus.com/wiki/Scoring">Info</a> */
     public final transient int[] colorBonusTable = {
             0, 3, 6, 12, 24,
     };
 
-    /** Group bonus from 4 to 11+. Ref: https://puyonexus.com/wiki/Scoring */
+    /** Group bonus from 4 to 11+ <a href="https://puyonexus.com/wiki/Scoring">Info</a> */
     public final transient int[] groupBonusTable = {
             0, 2, 3, 4, 5, 6, 7, 10,
     };
@@ -114,7 +114,7 @@ public class Db {
 
     // Non 'final transient' fields ->
 
-    public Array<Cfg.Player> players = new Array<>();
+    public final Array<Cfg.Player> players = new Array<>();
 
     public boolean coopCampaign = false;
     public int difficulty = 2; // 0 to 4
@@ -127,14 +127,14 @@ public class Db {
      * The keyboard profiles are used to enable 2 or more players play in the same
      * keyboard
      */
-    public Array<Profile> kbProfs = new Array<>();
+    public final Array<Profile> kbProfs = new Array<>();
 
     /**
      * The controller profiles are used to enable 2 or more players in controllers
      * with different keys configuration. For example, controllers of different
      * manufactures
      */
-    public Array<Profile> ctrlProfs = new Array<>();
+    public final Array<Profile> ctrlProfs = new Array<>();
 
     /** Init constants (default values) */
     public Db() {
@@ -252,7 +252,7 @@ public class Db {
         font3 = G.game.assets.get("roboto.ttf", BitmapFont.class);
 
         for (int i = 0; i < ri.length; i++) {
-            BEANS_REG.put(1 * 10000 + ri[i], G.game.atlas.findRegion("beans/red", ri[i]));
+            BEANS_REG.put(10000 + ri[i], G.game.atlas.findRegion("beans/red", ri[i]));
             BEANS_REG.put(2 * 10000 + ri[i], G.game.atlas.findRegion("beans/blue", ri[i]));
             BEANS_REG.put(3 * 10000 + ri[i], G.game.atlas.findRegion("beans/green", ri[i]));
             BEANS_REG.put(4 * 10000 + ri[i], G.game.atlas.findRegion("beans/yellow", ri[i]));
@@ -329,11 +329,11 @@ public class Db {
         return aiCfg;
     }
 
-    public static boolean save(Db data) {
+    public static void save(Db data) {
         boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
 
         if (!isLocAvailable)
-            return true;
+            return;
 
         try {
             Json json = new Json();
@@ -342,11 +342,8 @@ public class Db {
             String jsonTxt = json.prettyPrint(data);
             FileHandle file = Gdx.files.local("state/cfg.json");
             file.writeString(jsonTxt, false);
-
-            return true;
         } catch (GdxRuntimeException e) {
             e.printStackTrace();
-            return false;
         }
     }
 

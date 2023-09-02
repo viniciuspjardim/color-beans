@@ -8,27 +8,23 @@ import com.vpjardim.colorbeans.ai.Moves;
 import com.vpjardim.colorbeans.ai.ScoreFormula;
 
 public class Tree3 {
-    public Moves moves;
+    public final Moves moves;
     public ScoreFormula formula;
-
     public Tree3Node root;
     public Tree3Node bestNode;
-    public long limitTime;
+    public final long limitTime;
     public long startTime;
     public boolean processFinished;
-
     public Array<Tree3Node> cacheA;
     public Array<Tree3Node> cacheB;
     public int levelPos;
     public int cachePos;
-
     public int color1;
     public int color2;
     public int nColor1;
     public int nColor2;
 
     public Tree3(int nCol) {
-
         moves = new Moves();
         moves.init(nCol);
         limitTime = 8;
@@ -39,7 +35,6 @@ public class Tree3 {
     }
 
     public void reset() {
-
         if (root != null)
             Tree3Node.pool.free(root);
 
@@ -109,11 +104,9 @@ public class Tree3 {
     }
 
     public void addChild(Tree3Node node, int c1, int c2) {
-
         IntArray movesArr = moves.getArray(c1, c2);
 
         for (int i = 0; i < movesArr.size; i++) {
-
             moves.setMove(movesArr.get(i));
             Tree3Node childNode = node.addChild(c1, c2, moves.position, moves.rotation);
             childNode.setScoreFormula(formula);
@@ -133,11 +126,9 @@ public class Tree3 {
     }
 
     public void addChild(Tree3Node node) {
-
         IntArray movesArr = moves.getArray();
 
         for (int i = 0; i < movesArr.size; i++) {
-
             moves.setMove(movesArr.get(i));
             Tree3Node childNode = node.addChild(moves.color1, moves.color2, moves.position, moves.rotation);
             childNode.setScoreFormula(formula);
@@ -157,7 +148,6 @@ public class Tree3 {
     }
 
     public Tree3Node bestRootChild() {
-
         Tree3Node curr = bestNode;
 
         while (curr.parent.parent != null) {

@@ -28,10 +28,6 @@ public class Ai1 extends AiCommon {
     }
 
     @Override
-    protected void entryPoint1() {
-    }
-
-    @Override
     protected void entryPoint2() {
 
         int color1 = m.pb.b2.color; // upper block

@@ -14,13 +14,7 @@ public class ScoreTable {
 
     public static final int GMODE_CAMPAIGN = 1;
     public static final int GMODE_TRAINING = 2;
-
-    private static final Comparator compare = new Comparator<ScoreTable.Row>() {
-        @Override
-        public int compare(ScoreTable.Row r1, ScoreTable.Row r2) {
-            return r2.score - r1.score;
-        }
-    };
+    private static final Comparator<Row> compare = (r1, r2) -> r2.score - r1.score;
 
     private final Array<ScoreTable.Row> rows = new Array<>(true, 20);
     private boolean sorted = true;

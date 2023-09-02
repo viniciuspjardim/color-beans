@@ -27,7 +27,7 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     /** 1 to the keys that had an event after last update */
     private short event = 0;
 
-    public int width = 400;
+    public final int width = 400;
     public float[] div;
     public boolean hPanning = false;
     public boolean vPanning = false;
@@ -263,8 +263,7 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
     }
 
     private void updateDiv() {
-
-        float colWidth = width / Map.N_COL;
+        float colWidth = (float) width / Map.N_COL;
         float x = touchX - (moveStart * colWidth) - colWidth / 2f;
         div[0] = x;
         div[div.length - 1] = x + width;

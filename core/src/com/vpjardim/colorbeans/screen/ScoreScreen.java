@@ -65,7 +65,7 @@ public class ScoreScreen extends ScreenBase {
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
         // Let only one tab button be checked at a time
-        ButtonGroup logicGroup = new ButtonGroup();
+        ButtonGroup<TextButton> logicGroup = new ButtonGroup<>();
         logicGroup.setMinCheckCount(1);
         logicGroup.setMaxCheckCount(1);
         logicGroup.add(campaignButt);

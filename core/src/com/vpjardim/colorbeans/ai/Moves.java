@@ -73,10 +73,6 @@ public class Moves {
         return (color1 * 100000) + (color2 * 1000) + (position * 10) + rotation;
     }
 
-    public int getMove() {
-        return Moves.getMove(color1, color2, position, rotation);
-    }
-
     /**
      * @param move number in the format AABBPPR (AA = color1, BB color2, PP =
      *             position, R =

@@ -213,7 +213,6 @@ public class Map implements TargetBase {
 
             @Override
             public void update(Map map) {
-
                 // Case the player of this map won the game
                 if (map.gameWin) {
                     map.state.changeState(MState.DONE);
@@ -385,8 +384,6 @@ public class Map implements TargetBase {
                 // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = DONE");
 
-                map.matchTimerSum += map.matchTimer;
-
                 if (map.gameWin) {
                     map.winsCount++;
                     map.scoreSum += map.score;
@@ -449,13 +446,13 @@ public class Map implements TargetBase {
     public transient StateMachine<Map, MState> state;
 
     /** Animations logics */
-    public Animations anim;
+    public final Animations anim;
 
     /** Blocks in the map */
-    public Block[][] b;
+    public final Block[][] b;
 
     /** Blocks falling (controlled by the player) */
-    public PlayerBlocks pb;
+    public final PlayerBlocks pb;
 
     /**
      * Abstract input method: a controller, touch screen, keyboard etc from which
@@ -473,20 +470,20 @@ public class Map implements TargetBase {
      * 
      * @see #labelCalc()
      */
-    private transient Array<IntSet> le;
+    private final transient Array<IntSet> le;
 
     /**
      * Labels count: the number of blocks per label
      * 
      * @see #mergeEquivalentLabels()
      */
-    private transient IntMap<Integer> lc;
+    private final transient IntMap<Integer> lc;
 
     /**
      * If there is at least this number of blocks with the same {@link Block#label}
      * (color group), the blocks of this label will be deleted. 4 default.
      */
-    public int deleteSize = 4;
+    public final int deleteSize = 4;
 
     /** Number of blocks deleted */
     private int blocksDeleted = 0;
@@ -495,7 +492,7 @@ public class Map implements TargetBase {
      * Max trash blocks that can be put in the map in one turn. The others will wait
      * the next turns
      */
-    public int maxTrashOnce = N_COL * 5;
+    public final int maxTrashOnce = N_COL * 5;
 
     // <===== End of block's logic ======
 
@@ -525,7 +522,7 @@ public class Map implements TargetBase {
      * Each index represents a color, colors set as true will be counted to color
      * bonus
      */
-    public boolean[] colorBonusArr;
+    public final boolean[] colorBonusArr;
 
     public int groupBonus;
 
@@ -567,8 +564,6 @@ public class Map implements TargetBase {
     /** Match time. Only non paused time is computed */
     public float matchTimer = 0f;
 
-    public float matchTimerSum = 0f;
-
     /** Time at the current speed */
     public float speedTimer = 0f;
 
@@ -585,34 +580,34 @@ public class Map implements TargetBase {
      * Multiplier (times faster) for {@link PlayerBlocks PlayerBlock's} speed when
      * the player press the down key of the controller/input
      */
-    public float vPlayMoveMultip = 8f;
+    public final float vPlayMoveMultip = 8f;
 
     /**
      * Acceleration of the gravity fall blocks in rows per second squared: 80
      * default
      */
-    public float gravityFallAcceleration = 80f;
+    public final float gravityFallAcceleration = 80f;
 
     /**
      * Used to make each column of blocks fall at random speed (for prettier
      * animation)
      */
-    public float[] colAcceleration;
+    public final float[] colAcceleration;
 
     /** Used to make each column of blocks shake when trash blocks fall down */
-    public float[] colShakeTimer;
+    public final float[] colShakeTimer;
 
     /**
      * Default time to wait before insert the player blocks. The player can use this
      * time to do his last moves
      */
-    public float beforeInsertWait = 0.2f;
+    public final float beforeInsertWait = 0.2f;
 
     /**
      * Default time to wait before changing from the {@link Map.MState#GRAVITY_FALL
      * GRAVITY_FALL} state to the next state
      */
-    public float afterGravityFallWait = 0.34f;
+    public final float afterGravityFallWait = 0.34f;
 
     /**
      * Remaining time to wait before changing from the
@@ -621,10 +616,10 @@ public class Map implements TargetBase {
     public float afterGravityFallTimer = afterGravityFallWait;
 
     /** Default time to wait before current {@link PlayerBlocks} starts to fall */
-    public float beforePlayerFallWait = 0.025f;
+    public final float beforePlayerFallWait = 0.025f;
 
     /** Default time to wait before next {@link PlayerBlocks} rotation */
-    public float rPlayMoveWait = 0.1f;
+    public final float rPlayMoveWait = 0.1f;
 
     /** Remaining time to wait before next {@link PlayerBlocks} rotation */
     public float rPlayMoveTimer = 0f;
@@ -633,7 +628,7 @@ public class Map implements TargetBase {
      * Default time to wait before next {@link PlayerBlocks} horizontal move (when
      * player press the right/left arrows in the controller/input)
      */
-    public float hPlayMoveWait = 0.1f;
+    public final float hPlayMoveWait = 0.1f;
 
     /** Remaining time to wait before next {@link PlayerBlocks} horizontal move */
     public float hPlayMoveTimer = 0f;
@@ -658,10 +653,10 @@ public class Map implements TargetBase {
     public float vPlayMoveTimer = vPlayMoveWait;
 
     /** Default time to wait before delete the block */
-    public float deleteWait = 0.5f;
+    public final float deleteWait = 0.5f;
 
     /** A third of {@link #deleteWait} */
-    public float delWait3 = deleteWait / 3f;
+    public final float delWait3 = deleteWait / 3f;
 
     public int trashSound = TRASH_SOUND_NO;
 
@@ -727,7 +722,6 @@ public class Map implements TargetBase {
             winsCount = 0;
             lostCount = 0;
             scoreSum = 0;
-            matchTimerSum = 0f;
         }
         score = 0;
         scoreStr = "0";
@@ -1067,12 +1061,10 @@ public class Map implements TargetBase {
 
     /**
      * Example in test6 from tests.Test class. Other resources:
-     * https://puyonexus.com/wiki/Scoring
-     * https://www.youtube.com/watch?v=a-1b3IA2ujA
-     * http://www.cheatcc.com/xb/sg/dr_robotniks_mean_bean_machine.txt
+     * <a href="https://puyonexus.com/wiki/Scoring">Scoring</a>
+     * <a href="https://www.youtube.com/watch?v=a-1b3IA2ujA">Video Example</a>
      */
     private void scoreCalc() {
-
         // TODO: score increment while blocks fall fast (down key is pressed)
 
         int block = blocksDeleted - scoredBlocks;
@@ -1085,7 +1077,7 @@ public class Map implements TargetBase {
         }
 
         int a = block * 10;
-        int b = +G.game.data.getChainPower(chainPowerCount)
+        int b = G.game.data.getChainPower(chainPowerCount)
                 + G.game.data.getColorBonus(colorBonusCount)
                 + groupBonus;
 
@@ -1186,7 +1178,6 @@ public class Map implements TargetBase {
 
     /** Add trash blocks (thrown by the opponent) in this map */
     private void addTrashBlocks() {
-
         Dbg.dbg(Dbg.tagO(this),
                 "throwTrashBlocks() method call. trashBlocksToAdd = " + trashBlocksToAdd);
 
@@ -1195,11 +1186,10 @@ public class Map implements TargetBase {
 
         int toAdd = Math.min(trashBlocksToAdd, maxTrashOnce);
         trashBlocksToAdd -= toAdd;
-        trashShakePower = (toAdd / maxTrashOnce) * 0.15f + 0.1f;
+        trashShakePower = ((float)toAdd / maxTrashOnce) * 0.15f + 0.1f;
 
         // row OUT_ROW -1 -> 0
         for (int row = OUT_ROW - 1; row >= 0; row--) {
-
             toAdd = addTrashBlocksRow(row, toAdd);
             if (toAdd <= 0)
                 return;
@@ -1278,36 +1268,9 @@ public class Map implements TargetBase {
             ai.update();
     }
 
-    /**
-     * Needs to be called before render when the map is loaded from a serialized
-     * source. This because some references and objects are not serialized and it
-     * needs to be setup
-     */
-    public void deserialize(MapManager manager) {
-
-        this.manager = manager;
-        pb.deserialize(this);
-        anim.deserialize(this);
-        le = new Array<>();
-        lc = new IntMap<>();
-
-        if (pb.b1x != N_COL / 2 || pb.b1y != OUT_ROW - 1 || pb.rotation != 0)
-            state = new DefaultStateMachine<>(this, MState.PLAYER_FALL);
-        else
-            state = new DefaultStateMachine<>(this, MState.GRAVITY_FALL);
-
-        for (int i = 0; i < b.length; i++) {
-            for (int j = 0; j < b[i].length; j++) {
-                b[i][j].deserialize(this);
-            }
-        }
-    }
-
     /** Updates inputs and inputs and related animations */
     private void inputUpdate() {
-
         if (input != null) {
-
             input.update();
 
             boolean rightKey = input.getKey(InputBase.RIGHT_KEY);
@@ -1420,11 +1383,8 @@ public class Map implements TargetBase {
 
     public void debugShape(int shape) {
 
-        // Nothing
-        if (shape == 0) {
-        }
         // Small combo
-        else if (shape == 1) {
+        if (shape == 1) {
             b[0][14 + OUT_ROW].setColor(1);
             b[0][13 + OUT_ROW].setColor(1);
             b[0][12 + OUT_ROW].setColor(1);
@@ -1646,14 +1606,12 @@ public class Map implements TargetBase {
         }
     }
 
+    /** #debugCode */
     public void print() {
-
         // row 0 -> 14 + OUT_ROW
         for (int row = 0; row < b[0].length; row++) {
-
             // col 0 -> 6
             for (int col = 0; col < b.length; col++) {
-
                 System.out.print(b[col][row].color + " ");
             }
             Dbg.print("");

@@ -7,7 +7,7 @@ import com.vpjardim.colorbeans.ai.ScoreFormula;
 import com.vpjardim.colorbeans.core.Dbg;
 
 public class Tree3Node implements Pool.Poolable {
-    public static Pool<Tree3Node> pool = new Pool<Tree3Node>(676) {
+    public static final Pool<Tree3Node> pool = new Pool<Tree3Node>(676) {
         @Override
         protected Tree3Node newObject() {
             return new Tree3Node();
@@ -73,7 +73,6 @@ public class Tree3Node implements Pool.Poolable {
     }
 
     public void process(Tree3Node parent) {
-
         float result = aiMap.process(color1, color2, position, rotation);
 
         // If less the zero is a illegal or lost move
@@ -98,16 +97,11 @@ public class Tree3Node implements Pool.Poolable {
     }
 
     public Tree3Node addChild(int color1, int color2, int position, int rotation) {
-
         Tree3Node child = Tree3Node.pool.obtain();
         child.init(this, color1, color2, position, rotation);
         children.add(child);
 
         return child;
-    }
-
-    public Tree3Node getBestChild() {
-        return children.get(bCIndex);
     }
 
     @Override

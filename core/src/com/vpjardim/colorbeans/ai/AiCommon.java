@@ -51,18 +51,13 @@ public abstract class AiCommon implements AiBase {
         return input;
     }
 
-    protected abstract void entryPoint1();
-
     protected abstract void entryPoint2();
 
     protected abstract void entryPoint3();
 
     @Override
     public void update() {
-
         downKey = false;
-
-        entryPoint1();
 
         // Is in the PLAYER_FALL state
         if (m.isInState(Map.MState.PLAYER_FALL)) {

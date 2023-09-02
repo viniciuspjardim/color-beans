@@ -39,7 +39,7 @@ public class MapRender {
     /** Size in pixels of each block (equals the diameter) */
     public float size;
 
-    public GlyphLayout gl = new GlyphLayout();
+    public final GlyphLayout gl = new GlyphLayout();
 
     private final RandomXS128 rand = new RandomXS128();
     private final long seed0 = rand.getState(0);
@@ -60,10 +60,10 @@ public class MapRender {
 
             if (changeColor) {
                 DebugInput.Data evData = (DebugInput.Data) e.getAttribute();
-                evData.y = G.height - evData.y;
+                float eventY = G.height - evData.y;
 
                 int bTapX = (int) ((evData.x - px) / size);
-                int bTapY = (int) ((evData.y - (G.height - py)) / size);
+                int bTapY = (int) ((eventY - (G.height - py)) / size);
                 bTapY = Map.OUT_ROW + Map.N_ROW - bTapY - 1;
 
                 if (bTapX >= 0 && bTapX < Map.N_COL && bTapY >= 0 && bTapY < Map.N_ROW + Map.OUT_ROW) {

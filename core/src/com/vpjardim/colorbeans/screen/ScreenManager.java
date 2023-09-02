@@ -29,7 +29,7 @@ public class ScreenManager {
         // #debugCode
         // Warn frames longer than a max time
         if (G.game.dbg.delta == Dbg.DELTA_REAL) {
-            int fps = Math.round(1f / Gdx.graphics.getRawDeltaTime());
+            int fps = Math.round(1f / Gdx.graphics.getDeltaTime());
 
             if (G.game.dbg.lagWarn && fps < 50) {
                 Dbg.inf("LagWarn", fps + " fps");

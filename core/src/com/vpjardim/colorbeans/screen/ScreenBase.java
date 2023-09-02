@@ -23,7 +23,6 @@ public class ScreenBase implements Screen, TargetBase {
     protected Stage stage;
     protected EventListener specialKeyDown;
     protected boolean manageInput = true;
-
     public float time;
 
     public ScreenBase() {

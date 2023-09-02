@@ -34,7 +34,7 @@ public class PlayScreen extends ScreenBase {
     public static final int ACT_MENU = 10;
     public static final int ACT_CREDITS = 11;
 
-    public MapManager manager;
+    public final MapManager manager;
     private FrameBuffer fb;
     private Sprite bgSprite;
     private OrthographicCamera menuCam;

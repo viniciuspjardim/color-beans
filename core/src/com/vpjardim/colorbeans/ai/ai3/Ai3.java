@@ -21,17 +21,13 @@ public class Ai3 extends AiCommon {
     // right place.
 
     // #debugCode
-    public static boolean debug = false;
+    public static final boolean debug = false;
     private Tree3 tree;
 
     @Override
     public void init(Map map, Cfg.Ai cfg) {
         super.init(map, cfg);
         tree = new Tree3(Map.N_COL);
-    }
-
-    @Override
-    protected void entryPoint1() {
     }
 
     @Override
@@ -65,46 +61,41 @@ public class Ai3 extends AiCommon {
         return input;
     }
 
-    public static ScoreFormula formula1 = new ScoreFormula() {
+    public static final ScoreFormula formula1 = aiMap -> {
+        int center = aiMap.b.length / 2;
 
-        @Override
-        public float calc(AiMap aiMap) {
-            int center = aiMap.b.length / 2;
-
-            // The blocks are obstructed. This move lead to game over.
-            if (aiMap.b[center][aiMap.outRow] != Block.EMPTY ||
-                    aiMap.b[center][aiMap.outRow + 1] != Block.EMPTY) {
-                return AiMap.MOVE_LOST;
-            }
-
-            float score = 0;
-
-            // Score for color groups
-            for (IntMap.Entry<Integer> entry : aiMap.lc.entries()) {
-                score += (entry.value * entry.value) - 1;
-            }
-
-            // Score for deleted groups
-            score += (aiMap.blocksDeleted * aiMap.blocksDeleted) + (aiMap.trashBlocks * 5);
-
-            // Bad position because the blocks are reaching the top and may cause
-            // obstruction in the following plays.
-            // i: distance from the center
-            for (int i = 0; i + center < aiMap.b.length; i++) {
-                // j: distance from the top
-                for (int j = 0; j < 3; j++) {
-
-                    if (aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
-                        score -= 100 * Math.pow(0.75, i + j);
-                    if (aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)
-                        score -= 100 * Math.pow(0.75, i + j);
-                }
-            }
-
-            // Random small number to avoid even scores
-            score += MathUtils.random(0f, 0.1f);
-
-            return score;
+        // The blocks are obstructed. This move lead to game over.
+        if (aiMap.b[center][aiMap.outRow] != Block.EMPTY ||
+                aiMap.b[center][aiMap.outRow + 1] != Block.EMPTY) {
+            return AiMap.MOVE_LOST;
         }
+
+        float score = 0;
+
+        // Score for color groups
+        for (IntMap.Entry<Integer> entry : aiMap.lc.entries()) {
+            score += (entry.value * entry.value) - 1;
+        }
+
+        // Score for deleted groups
+        score += (aiMap.blocksDeleted * aiMap.blocksDeleted) + (aiMap.trashBlocks * 5);
+
+        // Bad position because the blocks are reaching the top and may cause
+        // obstruction in the following plays.
+        // i: distance from the center
+        for (int i = 0; i + center < aiMap.b.length; i++) {
+            // j: distance from the top
+            for (int j = 0; j < 3; j++) {
+                if (aiMap.b[i + center][j + aiMap.outRow] != Block.EMPTY)
+                    score -= 100 * Math.pow(0.75, i + j);
+                if (aiMap.b[-i + center][j + aiMap.outRow] != Block.EMPTY)
+                    score -= 100 * Math.pow(0.75, i + j);
+            }
+        }
+
+        // Random small number to avoid even scores
+        score += MathUtils.random(0f, 0.1f);
+
+        return score;
     };
 }

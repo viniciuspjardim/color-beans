@@ -13,7 +13,6 @@ public class Animations {
 
     /** @return true if it's animating - animation not finished yet */
     public boolean gravityFall() {
-
         boolean animating = false;
 
         for (int i = 0; i < m.b.length; i++) {
@@ -22,15 +21,14 @@ public class Animations {
                 continue;
 
             for (int j = 0; j < m.b[i].length; j++) {
-                animating = animating | blockGravityFall(m.b[i][j], i, j);
+                animating = animating | blockGravityFall(m.b[i][j], i);
             }
         }
 
         return animating;
     }
 
-    private boolean blockGravityFall(Block b, int col, int row) {
-
+    private boolean blockGravityFall(Block b, int col) {
         if (b.py == 0f || b.isEmpty())
             return false;
 
@@ -48,7 +46,6 @@ public class Animations {
         b.py = b.moveY - shift;
 
         if (b.py <= 0f) {
-
             animating = false;
             b.recycleFall();
             b.deformTime = m.afterGravityFallWait;
@@ -68,7 +65,6 @@ public class Animations {
 
     /** @return true if it's animating - animation not finished yet */
     public boolean deform() {
-
         boolean animating = false;
 
         for (int i = 0; i < m.b.length; i++) {
@@ -81,7 +77,6 @@ public class Animations {
     }
 
     private boolean blockDeform(Block b) {
-
         if (b.deformTime == 0f || b.isEmpty())
             return false;
 
@@ -97,7 +92,7 @@ public class Animations {
             animating = false;
             b.deformTime = 0f;
             b.tile = 0;
-        } else if (b.deformTime <= deformTime * 1f / 7f) {
+        } else if (b.deformTime <= deformTime / 7f) {
             b.tile = 3;
         } else if (b.deformTime <= deformTime * 2f / 7f) {
             b.tile = 0;
@@ -118,7 +113,6 @@ public class Animations {
 
     /** @return true if it's animating - animation not finished yet */
     public boolean shake() {
-
         boolean animating = false;
 
         for (int i = 0; i < m.b.length; i++) {
@@ -129,7 +123,6 @@ public class Animations {
     }
 
     private boolean colShake(int col) {
-
         if (m.colShakeTimer[col] == 0f)
             return false;
 
@@ -138,7 +131,6 @@ public class Animations {
         float time = m.colShakeTimer[col] / m.afterGravityFallWait;
 
         for (int row = 0; row < m.b[col].length; row++) {
-
             if (m.b[col][row].isEmpty())
                 continue;
 
@@ -151,15 +143,15 @@ public class Animations {
             } else if (time < 1f / 6f)
                 m.b[col][row].py = -0.06f + 0.06f * ((-time + 1f / 6f) * 6f); // from -0.06 to 0 = 0.06
             else if (time < 2f / 6f)
-                m.b[col][row].py = +0.15f - 0.21f * ((-time + 2f / 6f) * 6f); // from 0.15 to -0.06 = -0.21
+                m.b[col][row].py = 0.15f - 0.21f * ((-time + 2f / 6f) * 6f); // from 0.15 to -0.06 = -0.21
             else if (time < 3f / 6f)
                 m.b[col][row].py = -0.3f + 0.45f * ((-time + 3f / 6f) * 6f); // from -0.3 to 0.15 = 0.45
             else if (time < 4f / 6f)
-                m.b[col][row].py = +0.75f - 1.05f * ((-time + 4f / 6f) * 6f); // from 0.75 to -0.3 = -1.05
+                m.b[col][row].py = 0.75f - 1.05f * ((-time + 4f / 6f) * 6f); // from 0.75 to -0.3 = -1.05
             else if (time < 5f / 6f)
                 m.b[col][row].py = -1f + 1.75f * ((-time + 5f / 6f) * 6f); // from -1 to 0.75 = 1.75
             else if (time < 1f)
-                m.b[col][row].py = +0f - 1f * ((-time + 1f) * 6f); // from 0 to -1 = -1
+                m.b[col][row].py = 0f - ((-time + 1f) * 6f); // from 0 to -1 = -1
 
             m.b[col][row].py *= m.trashShakePower;
         }
@@ -169,7 +161,6 @@ public class Animations {
 
     /** @return true if it's animating - animation not finished yet */
     public boolean playerFall() {
-
         boolean animating = false;
 
         animating = animating | blockPlayerFall(m.pb.b1);
@@ -179,7 +170,6 @@ public class Animations {
     }
 
     private boolean blockPlayerFall(Block b) {
-
         if (b.py == 0f || b.isEmpty())
             return false;
 
@@ -201,7 +191,6 @@ public class Animations {
     }
 
     public void playHorizontal() {
-
         if (m.pb.moveX == 0)
             return;
 
@@ -217,7 +206,6 @@ public class Animations {
     }
 
     private boolean blockPlayHorizontal(Block b) {
-
         if (m.hPlayMoveTimer < m.hPlayMoveWait / 2f) {
             b.px = 0;
             return false;
@@ -229,7 +217,6 @@ public class Animations {
     }
 
     public void playRotation() {
-
         float fRotation = (float) m.pb.rotation;
 
         if (fRotation == m.pb.rotationAnim)
@@ -269,7 +256,6 @@ public class Animations {
 
     /** @return true if it's animating - animation not finished yet */
     public boolean labelDelete() {
-
         boolean animating = false;
 
         for (int i = 0; i < m.b.length; i++) {
@@ -282,7 +268,6 @@ public class Animations {
     }
 
     private boolean blockLabelDelete(Block b) {
-
         if (b.toDelete == 0f || b.isEmpty())
             return false;
 
@@ -291,7 +276,6 @@ public class Animations {
         float blockTime = b.toDelete - G.delta;
 
         if (blockTime <= 0f) {
-
             b.recycle();
             blockTime = 0f;
             animating = false;
@@ -313,7 +297,6 @@ public class Animations {
 
     /** @return true if it's animating - animation not finished yet */
     public boolean gameOver() {
-
         boolean animating = false;
 
         for (int i = 0; i < m.b.length; i++) {
@@ -327,7 +310,6 @@ public class Animations {
     }
 
     private boolean blockGameOver(Block b, int col) {
-
         boolean animating = true;
 
         b.moveTime += G.delta;
@@ -344,14 +326,5 @@ public class Animations {
         }
 
         return animating;
-    }
-
-    /**
-     * Needs to be called before render when the map is loaded from a serialized
-     * source. This because some references and objects are not serialized and it
-     * needs to be setup
-     */
-    public void deserialize(Map m) {
-        this.m = m;
     }
 }

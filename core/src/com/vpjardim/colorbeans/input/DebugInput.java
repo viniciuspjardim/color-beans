@@ -5,9 +5,9 @@ import com.vpjardim.colorbeans.events.EventHandler;
 
 public class DebugInput extends GestureDetector.GestureAdapter {
     public static class Data {
-        public float x;
-        public float y;
-        public int button;
+        public final float x;
+        public final float y;
+        public final int button;
 
         public Data(float x, float y, int button) {
             this.x = x;

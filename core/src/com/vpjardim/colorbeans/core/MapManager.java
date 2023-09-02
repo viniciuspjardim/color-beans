@@ -22,7 +22,7 @@ public abstract class MapManager {
         // Calculating side size
 
         float sideX = G.width / (((Map.N_COL + 2f) * maps.size) + 1);
-        float sideY = G.height / (Map.N_ROW + 1);
+        float sideY = G.height / (Map.N_ROW + 1f);
 
         float side = Math.min(sideX, sideY);
 

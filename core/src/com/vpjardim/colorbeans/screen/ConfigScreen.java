@@ -58,9 +58,7 @@ public class ConfigScreen extends ScreenBase {
             }
         };
 
-        controllerEvent = (Event e) -> {
-            dirtInputT = true;
-        };
+        controllerEvent = (Event e) -> dirtInputT = true;
 
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
         EventHandler.get().addListener("ControllerConnection.event", controllerEvent);
@@ -206,7 +204,7 @@ public class ConfigScreen extends ScreenBase {
                 G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
 
         // Let only one tab button be checked at a time
-        ButtonGroup logicGroup = new ButtonGroup();
+        ButtonGroup<TextButton> logicGroup = new ButtonGroup<>();
         logicGroup.setMinCheckCount(1);
         logicGroup.setMaxCheckCount(1);
 
@@ -429,17 +427,14 @@ public class ConfigScreen extends ScreenBase {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     controllerActor.setPosition(0);
-                    controllerActor.addCallBack(new ControllerActor.KeysSetListener() {
-                        @Override
-                        public void finished(Profile profile) {
-                            input.setProfile(profile);
-                            input.setTarget(inputActor);
-                            dirtInputT = true;
+                    controllerActor.addCallBack(profile -> {
+                        input.setProfile(profile);
+                        input.setTarget(inputActor);
+                        dirtInputT = true;
 
-                            // #debugCode
-                            Dbg.dbg(Dbg.tag(ConfigScreen.this), "Key config finished");
-                            profile.log();
-                        }
+                        // #debugCode
+                        Dbg.dbg(Dbg.tag(ConfigScreen.this), "Key config finished");
+                        profile.log();
                     });
                     input.setTarget(controllerActor);
                 }
@@ -450,7 +445,6 @@ public class ConfigScreen extends ScreenBase {
                 public void clicked(InputEvent event, float x, float y) {
                     G.game.input.moveInput(index, -1);
                     dirtInputT = true;
-
                 }
             });
 

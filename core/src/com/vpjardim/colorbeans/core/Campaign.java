@@ -13,7 +13,7 @@ public class Campaign extends MapManager {
     public Array<Cfg.Map> mapCfgs;
     public Array<Cfg.Ai> aiCfgs;
     public Array<String> aiMapNames;
-    public Array<Map> winnerMaps = new Array<>();
+    public final Array<Map> winnerMaps = new Array<>();
 
     @Override
     public void init() {
@@ -25,7 +25,7 @@ public class Campaign extends MapManager {
         stageIndex = 0;
         mapCfgs = new Array<>(12);
         aiCfgs = new Array<>(12);
-        aiMapNames = new Array(12);
+        aiMapNames = new Array<>(12);
 
         int start = G.game.data.campaignCurrentStage;
         int end = 11;
