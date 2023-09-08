@@ -2,6 +2,7 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -405,6 +406,17 @@ public class ConfigScreen extends ScreenBase {
 
             final TextButton downBtt = new TextButton("Down",
                     G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
+
+            if (i == 0) {
+                upBtt.setTouchable(Touchable.disabled);
+                upBtt.setColor(1f, 1f, 1f, 0.6f);
+                upBtt.setStyle(G.game.skin.get("bttGray", TextButton.TextButtonStyle.class));
+            }
+            if (i == G.game.input.getInputs().size - 1) {
+                downBtt.setTouchable(Touchable.disabled);
+                downBtt.setColor(1f, 1f, 1f, 0.6f);
+                downBtt.setStyle(G.game.skin.get("bttGray", TextButton.TextButtonStyle.class));
+            }
 
             G.game.input.addTarget(inputActor);
 
