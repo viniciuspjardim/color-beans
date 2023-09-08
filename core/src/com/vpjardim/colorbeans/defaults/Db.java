@@ -120,8 +120,8 @@ public class Db {
     public int difficulty = 2; // 0 to 4
     public int campaignCurrentStage = 0; // 0 to 11
     public int trainingSpeed = 0; // 0 to 11
-    public float musicVolume = 0.4f; // 0 to 1
-    public float effectsVolume = 0.8f; // 0 to 1
+    public float musicVolume = 0.25f; // 0 to 1
+    public float effectsVolume = 0.5f; // 0 to 1
 
     /**
      * The keyboard profiles are used to enable 2 or more players play in the same
