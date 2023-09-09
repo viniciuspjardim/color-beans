@@ -50,7 +50,8 @@
     },
 
     com.badlogic.gdx.graphics.g2d.NinePatch: {
-        tbg: "game/tbg_yellow"
+        bgYellow: "game/bg_yellow",
+        bgBlack: "game/bg_black"
     },
 
     com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {

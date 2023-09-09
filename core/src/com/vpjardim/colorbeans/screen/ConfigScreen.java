@@ -74,7 +74,7 @@ public class ConfigScreen extends ScreenBase {
         Table otherT = new Table(G.game.skin);
 
         outerT.setFillParent(true);
-        titleT.setBackground("tbg");
+        titleT.setBackground("bgYellow");
 
         // #debugCode
         outerT.setDebug(G.game.dbg.uiTable);

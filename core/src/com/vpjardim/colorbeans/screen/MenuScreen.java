@@ -41,7 +41,7 @@ public class MenuScreen extends ScreenBase {
         table = new Table(G.game.skin);
 
         outerT.setFillParent(true);
-        table.setBackground("tbg");
+        table.setBackground("bgYellow");
 
         TextButton playButt, trainingButt, scoreButt, optionsButt, exitButt;
 

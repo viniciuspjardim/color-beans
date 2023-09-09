@@ -1,30 +1,18 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 
 public class CreditsScreen extends ScreenBase {
-    private Pixmap tableBgPixmap;
-    private TextureRegionDrawable tableBg;
-
     @Override
     public void show() {
         super.show();
-
-        tableBgPixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        tableBgPixmap.setColor(0x00000080);
-        tableBgPixmap.fill();
-        tableBg = new TextureRegionDrawable(new TextureRegion(new Texture(tableBgPixmap)));
 
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
@@ -41,7 +29,7 @@ public class CreditsScreen extends ScreenBase {
 
         Table contentT = new Table(G.game.skin);
 
-        contentT.background(tableBg);
+        contentT.background("bgBlack");
         contentT.pad(32f, 96f, 32f, 96f);
 
         containerT.add(contentT);
@@ -120,10 +108,6 @@ public class CreditsScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
-
-        // Only dispose what does not come from game.assets. Do not dispose skin.
-        tableBgPixmap.dispose();
-        tableBg.getRegion().getTexture().dispose();
     }
 
     @Override

@@ -39,7 +39,7 @@ public class PlayScreen extends ScreenBase {
     private Sprite bgSprite;
     private OrthographicCamera menuCam;
     private Viewport menuViewport;
-    private Table table;
+    private Table containerT;
     private boolean menuVisible;
     private TweenManager transition;
     // # debugCode
@@ -62,8 +62,8 @@ public class PlayScreen extends ScreenBase {
 
             if (G.isBackKey(key)) {
                 Dbg.dbg("BackKey", "SpecialButtons.keyDown: " + key);
-                manager.togglePaused();
                 menuVisible = true;
+                manager.togglePaused();
             }
         };
 
@@ -71,7 +71,7 @@ public class PlayScreen extends ScreenBase {
         debugInput = (Event e) -> {
             if (G.game.dbg.on) {
                 menuVisible = false;
-            } else {
+            } else if (manager.isPaused()) {
                 menuVisible = !menuVisible;
             }
         };
@@ -92,8 +92,15 @@ public class PlayScreen extends ScreenBase {
         menuViewport = new ScreenViewport(menuCam);
         viewport.apply(true);
 
-        table = new Table(G.game.skin);
-        table.setFillParent(true);
+        containerT = new Table(G.game.skin);
+        containerT.setFillParent(true);
+
+        Table contentT = new Table(G.game.skin);
+        contentT.background("bgBlack");
+        contentT.pad(54f, 48f, 54f, 48f);
+        contentT.setBackground("bgBlack");
+
+        containerT.add(contentT);
         menuVisible = true;
 
         G.game.audio.configMusic(Audio.MUSIC1, true, true);
@@ -123,12 +130,12 @@ public class PlayScreen extends ScreenBase {
         float bttW = G.style.buttWidth;
         float padM = G.style.padMedium;
 
-        table.add(resumeButt).width(bttW).pad(padM);
-        table.row();
-        table.add(menuButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
+        contentT.add(resumeButt).width(bttW).pad(padM);
+        contentT.row();
+        contentT.add(menuButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
-        stage.addActor(table);
-        table.setDebug(G.game.dbg.uiTable); // #debugCode
+        stage.addActor(containerT);
+        containerT.setDebug(G.game.dbg.uiTable); // #debugCode
 
         manager.init();
 
@@ -173,7 +180,7 @@ public class PlayScreen extends ScreenBase {
         stage.act(delta);
         stage.draw();
 
-        table.setVisible(manager.isPaused() && menuVisible);
+        containerT.setVisible(manager.isPaused() && menuVisible);
 
         // If it has a TouchInput draw the box and the arrow of the input
         if (touchInput != null && touchInput.draw) {
@@ -272,6 +279,7 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void pause() {
+        menuVisible = true;
         manager.setPaused(true);
     }
 

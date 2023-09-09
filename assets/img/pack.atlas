@@ -903,6 +903,23 @@ game/b_yellow_up
   orig: 96, 96
   offset: 0, 0
   index: -1
+game/bg_black
+  rotate: false
+  xy: 2, 2
+  size: 56, 56
+  split: 14, 14, 14, 14
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+game/bg_yellow
+  rotate: false
+  xy: 585, 625
+  size: 96, 96
+  split: 42, 42, 36, 42
+  pad: 20, 20, 18, 27
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
 game/c_shade
   rotate: false
   xy: 287, 659
@@ -919,49 +936,49 @@ game/c_shade
   index: 9
 game/c_shade
   rotate: false
-  xy: 585, 625
+  xy: 683, 625
   size: 96, 96
   orig: 384, 264
   offset: 38, 146
   index: 1
 game/c_shade
   rotate: false
-  xy: 683, 625
+  xy: 807, 922
   size: 96, 96
   orig: 384, 264
   offset: 38, 75
   index: 3
 game/c_shade
   rotate: false
-  xy: 582, 527
+  xy: 905, 922
   size: 96, 96
   orig: 384, 264
   offset: 3, 110
   index: 4
 game/c_shade
   rotate: false
-  xy: 680, 527
+  xy: 774, 824
   size: 96, 96
   orig: 384, 264
   offset: 143, 72
   index: 5
 game/c_shade
   rotate: false
-  xy: 774, 922
+  xy: 872, 824
   size: 96, 96
   orig: 384, 264
   offset: 250, 146
   index: 6
 game/c_shade
   rotate: false
-  xy: 774, 824
+  xy: 781, 726
   size: 96, 96
   orig: 384, 264
   offset: 285, 110
   index: 7
 game/c_shade
   rotate: false
-  xy: 872, 922
+  xy: 781, 628
   size: 96, 96
   orig: 384, 264
   offset: 250, 75
@@ -977,7 +994,7 @@ game/check_box
   index: -1
 game/checked
   rotate: false
-  xy: 970, 991
+  xy: 970, 893
   size: 29, 27
   orig: 31, 27
   offset: 1, 0
@@ -1012,7 +1029,7 @@ game/cursor
   index: -1
 game/input
   rotate: false
-  xy: 2, 2
+  xy: 749, 962
   size: 56, 56
   split: 14, 14, 14, 14
   orig: 56, 56
@@ -1071,7 +1088,7 @@ game/slider_knob
   index: -1
 game/slider_track_bg
   rotate: false
-  xy: 749, 1009
+  xy: 749, 951
   size: 12, 9
   split: 4, 4, 4, 4
   pad: 3, 3, 2, 2
@@ -1080,7 +1097,7 @@ game/slider_track_bg
   index: -1
 game/slider_track_off
   rotate: false
-  xy: 335, 648
+  xy: 1003, 1009
   size: 12, 9
   split: 4, 4, 4, 4
   pad: 3, 3, 2, 2
@@ -1089,20 +1106,11 @@ game/slider_track_off
   index: -1
 game/slider_track_on
   rotate: false
-  xy: 60, 3
+  xy: 879, 813
   size: 12, 9
   split: 4, 4, 4, 4
   pad: 3, 3, 2, 2
   orig: 12, 9
-  offset: 0, 0
-  index: -1
-game/tbg_yellow
-  rotate: false
-  xy: 872, 824
-  size: 96, 96
-  split: 42, 42, 36, 42
-  pad: 20, 20, 18, 27
-  orig: 96, 96
   offset: 0, 0
   index: -1
 game/title

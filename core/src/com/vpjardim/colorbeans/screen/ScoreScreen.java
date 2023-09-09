@@ -40,7 +40,7 @@ public class ScoreScreen extends ScreenBase {
         Table trainingT = new Table(G.game.skin);
 
         outerT.setFillParent(true);
-        titleT.setBackground("tbg");
+        titleT.setBackground("bgYellow");
 
         // #debugCode
         outerT.setDebug(G.game.dbg.uiTable);
