@@ -81,7 +81,7 @@ public class CreditsScreen extends ScreenBase {
         contentT.add(new Label("****", keyLS)).padTop(32);
         contentT.row();
 
-        contentT.add(new Label("Thank You For Playing!", valueLS)).padTop(32);
+        contentT.add(new Label("Thanks for playing!", valueLS)).padTop(32);
         contentT.row();
         contentT.add(backL).padTop(8);
         contentT.row();
