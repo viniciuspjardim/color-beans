@@ -59,7 +59,7 @@ task superDev(type: GwtSuperDev) {
     }
 }
 
-task dist(dependsOn: [clean, compileGwt]) {
+task distGWT(dependsOn: [clean, compileGwt]) {
     doLast {
         file("build/dist").mkdirs()
         copy {

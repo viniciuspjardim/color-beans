@@ -29,7 +29,7 @@ task debug(dependsOn: classes, type: JavaExec) {
     debug = true
 }
 
-task dist(type: Jar) {
+task distDesktop(type: Jar) {
     duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     manifest {
         attributes "Main-Class": project.mainClassName
@@ -42,6 +42,6 @@ task dist(type: Jar) {
 }
 
 
-dist.dependsOn classes
+distDesktop.dependsOn classes
 
 eclipse.project.name = appName + "-desktop"
