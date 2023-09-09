@@ -409,13 +409,9 @@ public class ConfigScreen extends ScreenBase {
 
             if (i == 0) {
                 upBtt.setTouchable(Touchable.disabled);
-                upBtt.setColor(1f, 1f, 1f, 0.6f);
-                upBtt.setStyle(G.game.skin.get("bttGray", TextButton.TextButtonStyle.class));
             }
             if (i == G.game.input.getInputs().size - 1) {
                 downBtt.setTouchable(Touchable.disabled);
-                downBtt.setColor(1f, 1f, 1f, 0.6f);
-                downBtt.setStyle(G.game.skin.get("bttGray", TextButton.TextButtonStyle.class));
             }
 
             G.game.input.addTarget(inputActor);
