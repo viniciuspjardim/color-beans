@@ -46,7 +46,7 @@ public class CreditsScreen extends ScreenBase {
             }
         });
 
-        Label backL = new Label("** Press any key or click to go back **", keyLS);
+        Label backL = new Label("** Press any key or click here to go back **", keyLS);
         backL.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
