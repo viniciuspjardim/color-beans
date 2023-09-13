@@ -20,15 +20,12 @@ public class ControllerConnection implements ControllerListener {
         ControllerInput input = new ControllerInput();
 
         input.setProfile(G.game.data.ctrlProfs.get(0).copy());
-
         input.gdxController = controller;
         input.gdxController.addListener(input);
-
-        // TODO: add to the controller the first target without input.
-        // TODO: move the controller up, before other inputs.
-
         input.setId(G.game.input.getMaxId() + 1);
+
         inputs.add(input);
+        G.game.input.moveInputToTop(input);
 
         EventHandler.get().emit("ControllerConnection.event", null);
     }

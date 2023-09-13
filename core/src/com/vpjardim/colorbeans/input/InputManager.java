@@ -126,6 +126,18 @@ public class InputManager {
         inputs.swap(index, neighborIndex);
     }
 
+    public void moveInputToTop(InputBase input) {
+        int index = inputs.indexOf(input, true);
+
+        if (index < 1) {
+            return;
+        }
+
+        for (; index > 0; index--) {
+            moveInput(index, -1);
+        }
+    }
+
     public void linkAll() {
         int max = Math.min(inputs.size, targets.size);
 
