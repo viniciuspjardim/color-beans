@@ -105,7 +105,7 @@ public class G extends Game {
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
         // dbg.aiTraining = new int[] { 3, 3, 3, 3 };
-        // dbg.on();
+        dbg.on();
 
         screens = new ScreenManager();
         screens.create();

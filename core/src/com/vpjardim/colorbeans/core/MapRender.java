@@ -68,13 +68,26 @@ public class MapRender {
 
                 if (bTapX >= 0 && bTapX < Map.N_COL && bTapY >= 0 && bTapY < Map.N_ROW + Map.OUT_ROW) {
                     Block b = m.b[bTapX][bTapY];
-                    int color = b.color + (evData.button == 0 ? 1 : -1);
+                    int color = G.game.dbg.selectedColor;
+
+                    boolean blockOrColorMatch =
+                            color == b.color ||
+                            (G.game.dbg.selectedBlockX == bTapX && G.game.dbg.selectedBlockY == bTapY);
+
+                    // Increment / decrement the color on the same block or the same color
+                    if (blockOrColorMatch)
+                        color = b.color + (evData.button == 0 ? 1 : -1);
+
                     if (color > Block.CLR_T || color == 0)
                         b.setEmpty();
                     else if (color < 0)
                         b.setColor(Block.CLR_T);
                     else
                         b.setColor(color);
+
+                    G.game.dbg.selectedColor = color;
+                    G.game.dbg.selectedBlockX = bTapX;
+                    G.game.dbg.selectedBlockY = bTapY;
                 }
             }
         };

@@ -31,8 +31,6 @@ public class Db {
     public transient BitmapFont font3;
 
     // Initialized inside the constructor ->
-
-    public final transient IntMap<String> COLORS = new IntMap<>();
     public final transient int[] ri;
 
     public final transient Cfg.Game campGame = new Cfg.Game();
@@ -138,16 +136,6 @@ public class Db {
 
     /** Init constants (default values) */
     public Db() {
-        COLORS.put(1, "beans/red");
-        COLORS.put(2, "beans/blue");
-        COLORS.put(3, "beans/green");
-        COLORS.put(4, "beans/yellow");
-        COLORS.put(5, "beans/purple");
-        COLORS.put(6, "beans/dblue");
-        COLORS.put(7, "beans/orange");
-        COLORS.put(8, "beans/magenta");
-        COLORS.put(9, "beans/transparent");
-
         ri = new int[]{
                 0, 1, 2, 3, 4, 10, 11, 100, 101, 110, 111, 1000, 1001, 1010, 1011, 1100, 1101, 1110,
                 1111,
@@ -257,7 +245,7 @@ public class Db {
             BEANS_REG.put(3 * 10000 + ri[i], G.game.atlas.findRegion("beans/green", ri[i]));
             BEANS_REG.put(4 * 10000 + ri[i], G.game.atlas.findRegion("beans/yellow", ri[i]));
             BEANS_REG.put(5 * 10000 + ri[i], G.game.atlas.findRegion("beans/purple", ri[i]));
-            BEANS_REG.put(9 * 10000 + ri[i], G.game.atlas.findRegion("beans/transparent", ri[i]));
+            BEANS_REG.put(6 * 10000 + ri[i], G.game.atlas.findRegion("beans/transparent", ri[i]));
         }
     }
 

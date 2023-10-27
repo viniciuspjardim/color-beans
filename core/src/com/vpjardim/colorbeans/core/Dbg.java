@@ -2,6 +2,7 @@ package com.vpjardim.colorbeans.core;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.vpjardim.colorbeans.Block;
 
 /** #debugCode */
 public class Dbg {
@@ -36,6 +37,9 @@ public class Dbg {
     public boolean aiPlayerCamp;
     public boolean aiDisableMap1;
     public int[] aiTraining;
+    public int selectedColor;
+    public int selectedBlockX;
+    public int selectedBlockY;
 
     public Dbg() {
         off();
@@ -58,6 +62,9 @@ public class Dbg {
         aiPlayerCamp = false;
         aiDisableMap1 = false;
         aiTraining = null;
+        selectedColor = Block.CLR_A;
+        selectedBlockX = -1;
+        selectedBlockY = -1;
 
         Gdx.app.setLogLevel(logLevel);
     }

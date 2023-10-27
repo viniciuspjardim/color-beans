@@ -20,7 +20,7 @@ public class Block {
     public static final int CLR_N = 5;
 
     /** Color of the trash block */
-    public static final int CLR_T = 9;
+    public static final int CLR_T = 6;
 
     public transient Map m;
 
