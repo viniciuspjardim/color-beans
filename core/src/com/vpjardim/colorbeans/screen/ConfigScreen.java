@@ -106,6 +106,11 @@ public class ConfigScreen extends ScreenBase {
                 if (G.game.data.coopCampaign && player2.getText().equals("")) {
                     player2.setText("Player2");
                 }
+
+                // Activate debug menu if coop slider is switched N times.
+                // Note: this function is called twice when the value of the slider change.
+                G.game.dbg.tapsCount++;
+                Dbg.inf("tapsCount", G.game.dbg.tapsCount + "");
             }
         });
 
@@ -171,6 +176,15 @@ public class ConfigScreen extends ScreenBase {
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.data.effectsVolume = effectsVolumeS.getValue() / 100f;
                 effectsVolumeL.setText(Integer.toString((int) effectsVolumeS.getValue()));
+            }
+        });
+
+        Slider debugS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
+        debugS.setValue(G.game.dbg.on ? 1f : 0f);
+        debugS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.dbg.on = debugS.getValue() == 1f;
             }
         });
 
@@ -347,6 +361,14 @@ public class ConfigScreen extends ScreenBase {
         otherT.row();
         otherT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
         otherT.row();
+
+        // Activate debug options if coop slider is switched 4 times
+        // Note: the number below is 8 because the event on the coopS is firing twice each time.
+        if (G.game.dbg.tapsCount >= 8) {
+            otherT.add(new Label("Debug:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+            otherT.add(debugS).width(92).padTop(24).padRight(30).align(Align.right);
+            otherT.row();
+        }
 
         inputLoop();
 

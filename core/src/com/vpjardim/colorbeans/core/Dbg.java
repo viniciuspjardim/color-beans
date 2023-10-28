@@ -6,8 +6,6 @@ import com.vpjardim.colorbeans.Block;
 
 /** #debugCode */
 public class Dbg {
-    public boolean on = false;
-
     // Used to change game speed
     public static final int DELTA_REAL = 1;
     public static final int DELTA_0_02X = 2;
@@ -19,6 +17,8 @@ public class Dbg {
     public static final int DELTA_4X = 8;
     public static final int DELTA_8X = 9;
 
+    public int tapsCount;
+    public boolean on;
     public int delta;
     public boolean input;
     public boolean fps;
@@ -44,8 +44,8 @@ public class Dbg {
     }
 
     public void off() {
+        tapsCount = 0;
         on = false;
-
         delta = DELTA_REAL;
         input = false;
         fps = false;
