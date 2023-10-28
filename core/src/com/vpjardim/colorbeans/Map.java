@@ -974,7 +974,7 @@ public class Map implements TargetBase {
         lc.clear();
     }
 
-    private void mapLinks() {
+    public void mapLinks() {
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {
                 blockLinks(i, j);

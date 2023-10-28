@@ -59,35 +59,36 @@ public class MapRender {
                     Gdx.app.getType() == Application.ApplicationType.Desktop);
 
             if (changeColor) {
-                DebugInput.Data evData = (DebugInput.Data) e.getAttribute();
-                float eventY = G.height - evData.y;
+                DebugInput.Data eventData = (DebugInput.Data) e.getAttribute();
+                float eventY = G.height - eventData.y;
 
-                int bTapX = (int) ((evData.x - px) / size);
+                int bTapX = (int) ((eventData.x - px) / size);
                 int bTapY = (int) ((eventY - (G.height - py)) / size);
                 bTapY = Map.OUT_ROW + Map.N_ROW - bTapY - 1;
 
                 if (bTapX >= 0 && bTapX < Map.N_COL && bTapY >= 0 && bTapY < Map.N_ROW + Map.OUT_ROW) {
                     Block b = m.b[bTapX][bTapY];
-                    int color = G.game.dbg.selectedColor;
+                    int selectedColor = G.game.dbg.selectedColor;
 
-                    boolean blockOrColorMatch =
-                            color == b.color ||
-                            (G.game.dbg.selectedBlockX == bTapX && G.game.dbg.selectedBlockY == bTapY);
+                    // Change the color if the selected color is the same of tapped block
+                    if (selectedColor == b.color) {
+                        selectedColor = b.color + (eventData.button == 0 ? 1 : -1);
 
-                    // Increment / decrement the color on the same block or the same color
-                    if (blockOrColorMatch)
-                        color = b.color + (evData.button == 0 ? 1 : -1);
+                        if (selectedColor > Block.CLR_T) {
+                            selectedColor = Block.EMPTY;
+                        } else if (selectedColor < Block.EMPTY) {
+                            selectedColor = Block.CLR_T;
+                        }
+                    }
 
-                    if (color > Block.CLR_T || color == 0)
+                    if (selectedColor == Block.EMPTY) {
                         b.setEmpty();
-                    else if (color < 0)
-                        b.setColor(Block.CLR_T);
-                    else
-                        b.setColor(color);
+                    } else {
+                        b.setColor(selectedColor);
+                    }
 
-                    G.game.dbg.selectedColor = color;
-                    G.game.dbg.selectedBlockX = bTapX;
-                    G.game.dbg.selectedBlockY = bTapY;
+                    m.mapLinks();
+                    G.game.dbg.selectedColor = selectedColor;
                 }
             }
         };
