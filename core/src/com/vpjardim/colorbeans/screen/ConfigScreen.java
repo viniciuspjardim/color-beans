@@ -33,6 +33,8 @@ import com.vpjardim.colorbeans.views.InputActor;
 public class ConfigScreen extends ScreenBase {
     public static final int ACT_MENU = 10;
     public static final int ACT_CREDITS = 11;
+    public static final int DBG_TO_ACTIVATE = 8;
+    public static final int DBG_ACTIVATED = 9;
 
     private Table inputT;
     private boolean dirtInputT = false;
@@ -107,10 +109,15 @@ public class ConfigScreen extends ScreenBase {
                     player2.setText("Player2");
                 }
 
-                // Activate debug menu if coop slider is switched N times.
+                // Activate debug menu if coop slider is switched DBG_TO_ACTIVATE times.
                 // Note: this function is called twice when the value of the slider change.
-                G.game.dbg.tapsCount++;
-                Dbg.inf("tapsCount", G.game.dbg.tapsCount + "");
+                if (G.game.dbg.tapsCount < DBG_TO_ACTIVATE) {
+                    G.game.dbg.tapsCount++;
+                }
+                if (G.game.dbg.tapsCount == DBG_TO_ACTIVATE) {
+                    addDebugFields(otherT, labelStyle);
+                }
+                Dbg.inf("debug tapsCount", G.game.dbg.tapsCount + "");
             }
         });
 
@@ -176,15 +183,6 @@ public class ConfigScreen extends ScreenBase {
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.data.effectsVolume = effectsVolumeS.getValue() / 100f;
                 effectsVolumeL.setText(Integer.toString((int) effectsVolumeS.getValue()));
-            }
-        });
-
-        Slider debugS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
-        debugS.setValue(G.game.dbg.on ? 1f : 0f);
-        debugS.addCaptureListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                G.game.dbg.on = debugS.getValue() == 1f;
             }
         });
 
@@ -362,12 +360,8 @@ public class ConfigScreen extends ScreenBase {
         otherT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
         otherT.row();
 
-        // Activate debug options if coop slider is switched 4 times
-        // Note: the number below is 8 because the event on the coopS is firing twice each time.
-        if (G.game.dbg.tapsCount >= 8) {
-            otherT.add(new Label("Debug:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-            otherT.add(debugS).width(92).padTop(24).padRight(30).align(Align.right);
-            otherT.row();
+        if (G.game.dbg.tapsCount == DBG_ACTIVATED) {
+            addDebugFields(otherT, labelStyle);
         }
 
         inputLoop();
@@ -485,6 +479,42 @@ public class ConfigScreen extends ScreenBase {
         }
 
         G.game.input.linkAll();
+    }
+
+    public void addDebugFields(Table otherT, Label.LabelStyle labelStyle) {
+        // Activate debug options if coop slider is switched 4 times
+        // Note: the number 8 is because the event on the coopS is firing twice each time.
+        G.game.dbg.tapsCount = DBG_ACTIVATED;
+
+        Slider debugS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
+        debugS.setValue(G.game.dbg.on ? 1f : 0f);
+        debugS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.dbg.on = debugS.getValue() == 1f;
+            }
+        });
+
+        Slider logLevelS = new Slider(0f, 3f, 1f, false, G.game.skin, "slider");
+        logLevelS.setValue((float)G.game.dbg.logLevel);
+        Label logLevelL = new Label(Integer.toString((int) logLevelS.getValue()), labelStyle);
+        logLevelS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.dbg.setLogLevel((int) logLevelS.getValue());
+                logLevelL.setText(G.game.dbg.logLevel);
+            }
+        });
+
+        otherT.add(new Label("Debug:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        otherT.add(debugS).width(92).padTop(24).padRight(30).align(Align.right);
+        otherT.row();
+
+        otherT.add(new Label("Log Level:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        otherT.add(logLevelL).padTop(24).padRight(30).align(Align.right);
+        otherT.row();
+        otherT.add(logLevelS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
+        otherT.row();
     }
 
     @Override

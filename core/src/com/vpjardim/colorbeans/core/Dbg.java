@@ -70,6 +70,11 @@ public class Dbg {
         Gdx.app.setLogLevel(logLevel);
     }
 
+    public void setLogLevel(int level) {
+        logLevel = level;
+        Gdx.app.setLogLevel(logLevel);
+    }
+
     public static void print(String str) {
         System.out.println(str);
     }
