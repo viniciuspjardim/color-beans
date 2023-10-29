@@ -1,7 +1,7 @@
 package com.vpjardim.colorbeans.core;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -54,11 +54,11 @@ public class MapRender {
 
         // Tap event listener: changes block color on tap event when debugging
         debugInput = (Event e) -> {
-            // On android, only change beans color when it's paused
-            boolean changeColor = m != null && ((Gdx.app.getType() == Application.ApplicationType.Android && m.manager.isPaused()) ||
-                    Gdx.app.getType() == Application.ApplicationType.Desktop);
+            // On touch screen, only change beans color when it's paused
+            boolean multiTouch = Gdx.input.isPeripheralAvailable(Input.Peripheral.MultitouchScreen);
+            boolean changeColor = !multiTouch || m.manager.isPaused();
 
-            if (changeColor) {
+            if (changeColor && m != null) {
                 DebugInput.Data eventData = (DebugInput.Data) e.getAttribute();
                 float eventY = G.height - eventData.y;
 
