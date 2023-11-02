@@ -86,7 +86,7 @@ public class Dbg {
     }
 
     public void off() {
-        tapsCount = 9;
+        tapsCount = 0;
         on = false;
         delta = -1f;
         input = false;
