@@ -1346,10 +1346,10 @@ public class Map implements TargetBase {
             b[0][14 + OUT_ROW].setColor(1);
             b[0][13 + OUT_ROW].setColor(1);
             b[0][12 + OUT_ROW].setColor(1);
-            b[0][11 + OUT_ROW].setColor(9);
-            b[0][10 + OUT_ROW].setColor(9);
-            b[0][9 + OUT_ROW].setColor(9);
-            b[0][8 + OUT_ROW].setColor(9);
+            b[0][11 + OUT_ROW].setColor(6);
+            b[0][10 + OUT_ROW].setColor(6);
+            b[0][9 + OUT_ROW].setColor(6);
+            b[0][8 + OUT_ROW].setColor(6);
 
             b[1][14 + OUT_ROW].setColor(2);
             b[1][13 + OUT_ROW].setColor(2);
@@ -1357,17 +1357,17 @@ public class Map implements TargetBase {
             b[1][11 + OUT_ROW].setColor(1);
             b[1][10 + OUT_ROW].setColor(1);
             b[1][9 + OUT_ROW].setColor(1);
-            b[1][8 + OUT_ROW].setColor(9);
+            b[1][8 + OUT_ROW].setColor(6);
         }
         // Combo
         else if (shape == 2) {
             b[0][14 + OUT_ROW].setColor(1);
             b[0][13 + OUT_ROW].setColor(1);
             b[0][12 + OUT_ROW].setColor(1);
-            b[0][11 + OUT_ROW].setColor(9);
-            b[0][10 + OUT_ROW].setColor(9);
-            b[0][9 + OUT_ROW].setColor(9);
-            b[0][8 + OUT_ROW].setColor(9);
+            b[0][11 + OUT_ROW].setColor(6);
+            b[0][10 + OUT_ROW].setColor(6);
+            b[0][9 + OUT_ROW].setColor(6);
+            b[0][8 + OUT_ROW].setColor(6);
 
             b[1][14 + OUT_ROW].setColor(2);
             b[1][13 + OUT_ROW].setColor(2);
@@ -1375,7 +1375,7 @@ public class Map implements TargetBase {
             b[1][11 + OUT_ROW].setColor(1);
             b[1][10 + OUT_ROW].setColor(1);
             b[1][9 + OUT_ROW].setColor(1);
-            b[1][8 + OUT_ROW].setColor(9);
+            b[1][8 + OUT_ROW].setColor(6);
 
             b[2][14 + OUT_ROW].setColor(3);
             b[2][13 + OUT_ROW].setColor(3);
@@ -1383,7 +1383,7 @@ public class Map implements TargetBase {
             b[2][11 + OUT_ROW].setColor(2);
             b[2][10 + OUT_ROW].setColor(2);
             b[2][9 + OUT_ROW].setColor(2);
-            b[2][8 + OUT_ROW].setColor(9);
+            b[2][8 + OUT_ROW].setColor(6);
 
             b[3][14 + OUT_ROW].setColor(4);
             b[3][13 + OUT_ROW].setColor(4);
@@ -1391,17 +1391,17 @@ public class Map implements TargetBase {
             b[3][11 + OUT_ROW].setColor(3);
             b[3][10 + OUT_ROW].setColor(3);
             b[3][9 + OUT_ROW].setColor(3);
-            b[3][8 + OUT_ROW].setColor(9);
+            b[3][8 + OUT_ROW].setColor(6);
         }
         // Big combo
         else if (shape == 3) {
             b[0][14 + OUT_ROW].setColor(1);
             b[0][13 + OUT_ROW].setColor(1);
             b[0][12 + OUT_ROW].setColor(1);
-            b[0][11 + OUT_ROW].setColor(9);
-            b[0][10 + OUT_ROW].setColor(9);
-            b[0][9 + OUT_ROW].setColor(9);
-            b[0][8 + OUT_ROW].setColor(9);
+            b[0][11 + OUT_ROW].setColor(6);
+            b[0][10 + OUT_ROW].setColor(6);
+            b[0][9 + OUT_ROW].setColor(6);
+            b[0][8 + OUT_ROW].setColor(6);
 
             b[1][14 + OUT_ROW].setColor(2);
             b[1][13 + OUT_ROW].setColor(2);
@@ -1409,7 +1409,7 @@ public class Map implements TargetBase {
             b[1][11 + OUT_ROW].setColor(1);
             b[1][10 + OUT_ROW].setColor(1);
             b[1][9 + OUT_ROW].setColor(1);
-            b[1][8 + OUT_ROW].setColor(9);
+            b[1][8 + OUT_ROW].setColor(6);
 
             b[2][14 + OUT_ROW].setColor(3);
             b[2][13 + OUT_ROW].setColor(3);
@@ -1417,7 +1417,7 @@ public class Map implements TargetBase {
             b[2][11 + OUT_ROW].setColor(2);
             b[2][10 + OUT_ROW].setColor(2);
             b[2][9 + OUT_ROW].setColor(2);
-            b[2][8 + OUT_ROW].setColor(9);
+            b[2][8 + OUT_ROW].setColor(6);
 
             b[3][14 + OUT_ROW].setColor(4);
             b[3][13 + OUT_ROW].setColor(4);
@@ -1425,7 +1425,7 @@ public class Map implements TargetBase {
             b[3][11 + OUT_ROW].setColor(3);
             b[3][10 + OUT_ROW].setColor(3);
             b[3][9 + OUT_ROW].setColor(3);
-            b[3][8 + OUT_ROW].setColor(9);
+            b[3][8 + OUT_ROW].setColor(6);
 
             b[4][14 + OUT_ROW].setColor(5);
             b[4][13 + OUT_ROW].setColor(5);
@@ -1433,7 +1433,7 @@ public class Map implements TargetBase {
             b[4][11 + OUT_ROW].setColor(4);
             b[4][10 + OUT_ROW].setColor(4);
             b[4][9 + OUT_ROW].setColor(4);
-            b[4][8 + OUT_ROW].setColor(9);
+            b[4][8 + OUT_ROW].setColor(6);
         }
         // Stair: 2 block per step
         else if (shape == 4) {

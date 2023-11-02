@@ -512,14 +512,26 @@ public class ConfigScreen extends ScreenBase {
 
         Slider deltaS = new Slider(0f, 8f, 0.1f, false, G.game.skin, "slider");
         deltaS.setValue(G.game.dbg.delta);
-        String labelTex = deltaS.getValue() == 0f ? "Off" : deltaS.getValue() + "X";
-        Label deltaL = new Label(labelTex, labelStyle);
+        String deltaValueTex = deltaS.getValue() == 0f ? "Off" : deltaS.getValue() + "X";
+        Label deltaL = new Label(deltaValueTex, labelStyle);
         deltaS.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.delta = deltaS.getValue();
-                String labelTex = deltaS.getValue() == 0f ? "Off" : deltaS.getValue() + "X";
-                deltaL.setText(labelTex);
+                String deltaValueTex = deltaS.getValue() == 0f ? "Off" : deltaS.getValue() + "X";
+                deltaL.setText(deltaValueTex);
+            }
+        });
+
+        Label commandL = new Label("Empty", labelStyle);
+        TextField commandTF = new TextField("", G.game.skin, "tField");
+        TextButton commandBT = new TextButton("Ok",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        commandBT.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                String result = G.game.dbg.parseCommand(commandTF.getText());
+                commandL.setText(result);
             }
         });
 
@@ -544,6 +556,11 @@ public class ConfigScreen extends ScreenBase {
         otherT.add(new Label("Frame Time:", labelStyle)).padTop(16).padLeft(28).align(Align.left);
         otherT.add(deltaL).padTop(16).padRight(30).align(Align.right).row();
         otherT.add(deltaS).expandX().fill().pad(4, 20, 0, 20).colspan(2).row();
+
+        otherT.add(new Label("Command (key=v1,v2,v3,v4):", labelStyle)).padTop(16).padLeft(28).align(Align.left);
+        otherT.add(commandL).padTop(16).padRight(30).align(Align.right).row();
+        otherT.add(commandTF).expandX().fillX().pad(4, 20, 0, 0);
+        otherT.add(commandBT).pad(4, 8, 0, 0);
     }
 
     @Override
