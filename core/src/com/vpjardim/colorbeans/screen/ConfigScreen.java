@@ -298,13 +298,10 @@ public class ConfigScreen extends ScreenBase {
         contentT.defaults().align(Align.left);
 
         // ==== Assembling from outer to inner components ====
-        titleT.row();
-        titleT.add(contentT).expand().fill();
-        titleT.row();
+        titleT.add(contentT).expand().fill().row();
         titleT.add(backBtt).width(bttW);
 
-        contentT.add(tabT).align(Align.center);
-        contentT.row();
+        contentT.add(tabT).align(Align.center).row();
         contentT.add(tabs).expand().fill();
 
         float bttMinWidth = G.style.buttWidth * 0.5f;
@@ -313,52 +310,36 @@ public class ConfigScreen extends ScreenBase {
         tabT.add(inputButt).minWidth(bttMinWidth);
         tabT.add(otherButt).minWidth(bttMinWidth);
 
-        gameT.add(new Label("Players:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
-        gameT.row();
-        gameT.add(player1).expandX().fill().pad(0, 20, 0, 20).colspan(2);
-        gameT.row();
-        gameT.add(player2).expandX().fill().pad(0, 20, 0, 20).colspan(2);
-        gameT.row();
-        gameT.add(player3).expandX().fill().pad(0, 20, 0, 20).colspan(2);
-        gameT.row();
-        gameT.add(player4).expandX().fill().pad(0, 20, 0, 20).colspan(2);
-        gameT.row();
+        gameT.add(new Label("Players:", labelStyle)).padTop(8).padLeft(28).align(Align.left).row();
+        gameT.add(player1).expandX().fill().pad(0, 20, 0, 20).colspan(2).row();
+        gameT.add(player2).expandX().fill().pad(0, 20, 0, 20).colspan(2).row();
+        gameT.add(player3).expandX().fill().pad(0, 20, 0, 20).colspan(2).row();
+        gameT.add(player4).expandX().fill().pad(0, 20, 0, 20).colspan(2).row();
 
         gameT.add(new Label("Co-Op Campaign (2 Players):", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        gameT.add(coopS).width(92).padTop(24).padRight(30).align(Align.right);
-        gameT.row();
+        gameT.add(coopS).width(92).padTop(24).padRight(30).align(Align.right).row();
 
         gameT.add(new Label("Difficulty:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        gameT.add(difficultyL).padTop(24).padRight(30).align(Align.right);
-        gameT.row();
-        gameT.add(difficultyS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        gameT.row();
+        gameT.add(difficultyL).padTop(24).padRight(30).align(Align.right).row();
+        gameT.add(difficultyS).expandX().fill().pad(4, 20, 0, 20).colspan(2).row();
 
         gameT.add(new Label("Current Stage:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        gameT.add(currentStageL).padTop(24).padRight(30).align(Align.right);
-        gameT.row();
-        gameT.add(currentStageS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        gameT.row();
+        gameT.add(currentStageL).padTop(24).padRight(30).align(Align.right).row();
+        gameT.add(currentStageS).expandX().fill().pad(4, 20, 0, 20).colspan(2).row();
 
         gameT.add(new Label("Training Speed:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        gameT.add(trainingSpeedL).padTop(24).padRight(30).align(Align.right);
-        gameT.row();
-        gameT.add(trainingSpeedS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        gameT.row();
+        gameT.add(trainingSpeedL).padTop(24).padRight(30).align(Align.right).row();
+        gameT.add(trainingSpeedS).expandX().fill().pad(4, 20, 0, 20).colspan(2).row();
 
         gameT.add(versionL).pad(36).colspan(2);
 
         otherT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        otherT.add(musicVolumeL).padTop(24).padRight(30).align(Align.right);
-        otherT.row();
-        otherT.add(musicVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        otherT.row();
+        otherT.add(musicVolumeL).padTop(24).padRight(30).align(Align.right).row();
+        otherT.add(musicVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2).row();
 
         otherT.add(new Label("Effects Volume:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        otherT.add(effectsVolumeL).padTop(24).padRight(30).align(Align.right);
-        otherT.row();
-        otherT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        otherT.row();
+        otherT.add(effectsVolumeL).padTop(24).padRight(30).align(Align.right).row();
+        otherT.add(effectsVolumeS).expandX().fill().pad(4, 20, 0, 20).colspan(2).row();
 
         if (G.game.dbg.tapsCount == DBG_ACTIVATED) {
             addDebugFields(otherT, labelStyle);
@@ -384,8 +365,7 @@ public class ConfigScreen extends ScreenBase {
         G.game.input.targetsClear();
 
         final ControllerActor controllerActor = new ControllerActor();
-        inputT.add(controllerActor).colspan(4).align(Align.center);
-        inputT.row();
+        inputT.add(controllerActor).colspan(4).align(Align.center).row();
 
         // Loop through inputs and show edit keys button for each one
         for (int i = 0; i < G.game.input.getInputs().size; i++) {
@@ -435,14 +415,11 @@ public class ConfigScreen extends ScreenBase {
             inputT.add(inputActor).padTop(20);
             inputT.add(editBtt).padTop(20);
             inputT.add(upBtt).padTop(20);
-            inputT.add(downBtt).padTop(20);
+            inputT.add(downBtt).padTop(20).row();
 
             if (!keyMapL.textEquals("0")) {
-                inputT.row();
-                inputT.add(keyMapL).colspan(4).align(Align.left);
+                inputT.add(keyMapL).colspan(4).align(Align.left).row();
             }
-
-            inputT.row();
 
             editBtt.addListener(new ClickListener() {
                 @Override
@@ -533,47 +510,40 @@ public class ConfigScreen extends ScreenBase {
             }
         });
 
-        Slider deltaS = new Slider(0f, 8f, 0.2f, false, G.game.skin, "slider");
+        Slider deltaS = new Slider(0f, 8f, 0.1f, false, G.game.skin, "slider");
         deltaS.setValue(G.game.dbg.delta);
-        Label deltaL = new Label(deltaS.getValue() + "X", labelStyle);
+        String labelTex = deltaS.getValue() == 0f ? "Off" : deltaS.getValue() + "X";
+        Label deltaL = new Label(labelTex, labelStyle);
         deltaS.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.delta = deltaS.getValue();
-                deltaL.setText(deltaS.getValue() + "X");
+                String labelTex = deltaS.getValue() == 0f ? "Off" : deltaS.getValue() + "X";
+                deltaL.setText(labelTex);
             }
         });
 
-        otherT.add(new Label("**** Debug Options ****", labelStyle)).padTop(36).padLeft(28).align(Align.center).colspan(2);
-        otherT.row();
+        otherT.add(new Label("**** Debug Options ****", labelStyle)).padTop(36).padLeft(28).align(Align.center).colspan(2).row();
 
         otherT.add(new Label("Display FPS:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        otherT.add(fpsS).width(92).padTop(24).padRight(30).align(Align.right);
-        otherT.row();
+        otherT.add(fpsS).width(92).padTop(24).padRight(30).align(Align.right).row();
 
         otherT.add(new Label("Debug Beans:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
-        otherT.add(debugS).width(92).padTop(8).padRight(30).align(Align.right);
-        otherT.row();
+        otherT.add(debugS).width(92).padTop(8).padRight(30).align(Align.right).row();
 
         otherT.add(new Label("Debug UI:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
-        otherT.add(uiS).width(92).padTop(8).padRight(30).align(Align.right);
-        otherT.row();
+        otherT.add(uiS).width(92).padTop(8).padRight(30).align(Align.right).row();
 
         otherT.add(new Label("Debug Input:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
-        otherT.add(inputS).width(92).padTop(8).padRight(30).align(Align.right);
-        otherT.row();
+        otherT.add(inputS).width(92).padTop(8).padRight(30).align(Align.right).row();
 
-        otherT.add(new Label("Log Level:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        otherT.add(logLevelL).padTop(24).padRight(30).align(Align.right);
-        otherT.row();
-        otherT.add(logLevelS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        otherT.row();
+        otherT.add(new Label("Log Level:", labelStyle)).padTop(16).padLeft(28).align(Align.left);
+        otherT.add(logLevelL).padTop(16).padRight(30).align(Align.right).row();
+        otherT.add(logLevelS).expandX().fill().pad(4, 20, 0, 20).colspan(2).row();
 
-        otherT.add(new Label("Frame Time:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        otherT.add(deltaL).padTop(24).padRight(30).align(Align.right);
-        otherT.row();
-        otherT.add(deltaS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
-        otherT.row();
+        otherT.add(new Label("Frame Time:", labelStyle)).padTop(16).padLeft(28).align(Align.left);
+        otherT.add(deltaL).padTop(16).padRight(30).align(Align.right).row();
+        otherT.add(deltaS).expandX().fill().pad(4, 20, 0, 20).colspan(2).row();
     }
 
     @Override
