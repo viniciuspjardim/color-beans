@@ -6,25 +6,12 @@ import com.vpjardim.colorbeans.Block;
 
 /** #debugCode */
 public class Dbg {
-    // Used to change game speed
-    public static final int DELTA_REAL = 1;
-    public static final int DELTA_0_02X = 2;
-    public static final int DELTA_0_1X = 3;
-    public static final int DELTA_0_25X = 4;
-    public static final int DELTA_0_5X = 5;
-    public static final int DELTA_1X = 6;
-    public static final int DELTA_2X = 7;
-    public static final int DELTA_4X = 8;
-    public static final int DELTA_8X = 9;
-
     public int tapsCount;
     public boolean on;
-    public int delta;
+    public float delta;
     public boolean input;
     public boolean fps;
     public boolean fpsText;
-    public boolean lagWarn;
-    public boolean fpsStat;
     /**
      * LOG_NONE = []; LOG_ERROR [error]; LOG_INFO [error, log]; LOG_DEBUG [error,
      * log, debug]
@@ -46,12 +33,10 @@ public class Dbg {
     public void off() {
         tapsCount = 0;
         on = false;
-        delta = DELTA_REAL;
+        delta = -1f;
         input = false;
         fps = false;
         fpsText = false;
-        lagWarn = false;
-        fpsStat = false;
         logLevel = Application.LOG_NONE;
         mapShapes = null;
         clearMaps = null;

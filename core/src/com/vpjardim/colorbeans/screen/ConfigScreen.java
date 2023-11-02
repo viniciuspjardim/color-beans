@@ -486,12 +486,39 @@ public class ConfigScreen extends ScreenBase {
         // Note: the number 8 is because the event on the coopS is firing twice each time.
         G.game.dbg.tapsCount = DBG_ACTIVATED;
 
+        Slider fpsS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
+        fpsS.setValue(G.game.dbg.fps ? 1f : 0f);
+        fpsS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.dbg.fps = fpsS.getValue() == 1f;
+            }
+        });
+
         Slider debugS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
         debugS.setValue(G.game.dbg.on ? 1f : 0f);
         debugS.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.on = debugS.getValue() == 1f;
+            }
+        });
+
+        Slider uiS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
+        uiS.setValue(G.game.dbg.uiTable ? 1f : 0f);
+        uiS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.dbg.uiTable = uiS.getValue() == 1f;
+            }
+        });
+
+        Slider inputS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
+        inputS.setValue(G.game.dbg.input ? 1f : 0f);
+        inputS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.dbg.input = inputS.getValue() == 1f;
             }
         });
 
@@ -506,14 +533,46 @@ public class ConfigScreen extends ScreenBase {
             }
         });
 
-        otherT.add(new Label("Debug:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
-        otherT.add(debugS).width(92).padTop(24).padRight(30).align(Align.right);
+        Slider deltaS = new Slider(0f, 8f, 0.2f, false, G.game.skin, "slider");
+        deltaS.setValue(G.game.dbg.delta);
+        Label deltaL = new Label(deltaS.getValue() + "X", labelStyle);
+        deltaS.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                G.game.dbg.delta = deltaS.getValue();
+                deltaL.setText(deltaS.getValue() + "X");
+            }
+        });
+
+        otherT.add(new Label("**** Debug Options ****", labelStyle)).padTop(36).padLeft(28).align(Align.center).colspan(2);
+        otherT.row();
+
+        otherT.add(new Label("Display FPS:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        otherT.add(fpsS).width(92).padTop(24).padRight(30).align(Align.right);
+        otherT.row();
+
+        otherT.add(new Label("Debug Beans:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
+        otherT.add(debugS).width(92).padTop(8).padRight(30).align(Align.right);
+        otherT.row();
+
+        otherT.add(new Label("Debug UI:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
+        otherT.add(uiS).width(92).padTop(8).padRight(30).align(Align.right);
+        otherT.row();
+
+        otherT.add(new Label("Debug Input:", labelStyle)).padTop(8).padLeft(28).align(Align.left);
+        otherT.add(inputS).width(92).padTop(8).padRight(30).align(Align.right);
         otherT.row();
 
         otherT.add(new Label("Log Level:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
         otherT.add(logLevelL).padTop(24).padRight(30).align(Align.right);
         otherT.row();
         otherT.add(logLevelS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
+        otherT.row();
+
+        otherT.add(new Label("Frame Time:", labelStyle)).padTop(24).padLeft(28).align(Align.left);
+        otherT.add(deltaL).padTop(24).padRight(30).align(Align.right);
+        otherT.row();
+        otherT.add(deltaS).expandX().fill().pad(4, 20, 0, 20).colspan(2);
         otherT.row();
     }
 

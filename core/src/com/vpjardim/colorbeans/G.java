@@ -97,10 +97,9 @@ public class G extends Game {
         // dbg.mapShapes = new int[] { 3, 12, 3, 0 };
         // dbg.clearMaps = new boolean[] { true, false, false, false };
         // dbg.campEnd = 9;
-        // dbg.delta = Dbg.DELTA_0_5X;
+        // dbg.delta = 0.5f;
         // dbg.input = true;
         // dbg.fps = true;
-        // dbg.fpsStat = true;
         // dbg.logLevel = 3;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
