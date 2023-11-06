@@ -10,19 +10,10 @@ public class Dbg {
         String key;
         String[] values;
 
-        String error;
-
         public static Dbg.KV parseCommand(String command) {
-            try {
-                String[] keyValues = command.split("=");
-                String[] values = keyValues[1].split(",");
-                if (values.length < 4) {
-                    throw new Exception("It should have a value for each map");
-                }
-                return new Dbg.KV(keyValues[0].trim(), values);
-            } catch (Exception e) {
-                return new Dbg.KV("Error");
-            }
+            String[] keyValues = command.split("=");
+            String[] values = keyValues[1].split(",");
+            return new Dbg.KV(keyValues[0].trim(), values);
         }
 
         public KV(String key, String[] values) {
@@ -30,34 +21,26 @@ public class Dbg {
             this.values = values;
         }
 
-        public KV(String error) {
-            this.error = error;
+        public int[] valuesAsIntArray(int valuesLength) {
+            if (valuesLength != values.length) {
+                throw new IllegalArgumentException("Unexpected values length");
+            }
+            int[] intArray = new int[values.length];
+            for (int i = 0; i < values.length; i++) {
+                intArray[i] = Integer.parseInt(values[i].trim());
+            }
+            return intArray;
         }
 
-        public int[] valuesAsIntArray() {
-            try {
-                int[] intArray = new int[values.length];
-                for (int i = 0; i < values.length; i++) {
-                    intArray[i] = Integer.parseInt(values[i].trim());
-                }
-                return intArray;
-            } catch (Exception e) {
-                error = "Error";
-                return null;
+        public boolean[] valuesAsBooleanArray(int valuesLength) {
+            if (valuesLength != values.length) {
+                throw new IllegalArgumentException("Unexpected values length");
             }
-        }
-
-        public boolean[] valuesAsBooleanArray() {
-            try {
-                boolean[] booleanArray = new boolean[values.length];
-                for (int i = 0; i < values.length; i++) {
-                    booleanArray[i] = values[i].trim().equals("t");
-                }
-                return booleanArray;
-            } catch (Exception e) {
-                error = "Error";
-                return null;
+            boolean[] booleanArray = new boolean[values.length];
+            for (int i = 0; i < values.length; i++) {
+                booleanArray[i] = values[i].trim().equals("t");
             }
+            return booleanArray;
         }
     }
 
@@ -116,28 +99,27 @@ public class Dbg {
     }
 
     public String parseCommand(String command) {
-        KV kv = KV.parseCommand(command);
+        try {
+            KV kv = KV.parseCommand(command);
 
-        if (kv.error != null) {
-            return kv.error;
+            switch (kv.key) {
+                case "mapShapes":
+                    mapShapes = kv.valuesAsIntArray(4);
+                    break;
+                case "clearMaps":
+                    clearMaps = kv.valuesAsBooleanArray(4);
+                    break;
+                case "aiTraining":
+                    aiTraining = kv.valuesAsIntArray(4);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Command not recognized");
+            }
+
+            return kv.key;
+        } catch (Exception e) {
+            return "Error";
         }
-
-        switch (kv.key) {
-            case "mapShapes":
-                mapShapes = kv.valuesAsIntArray();
-                break;
-            case "clearMaps":
-                clearMaps = kv.valuesAsBooleanArray();
-                break;
-            case "aiTraining":
-                aiTraining = kv.valuesAsIntArray();
-                break;
-            default:
-                kv.error = "Error";
-                break;
-        }
-
-        return kv.error != null? kv.error : kv.key;
     }
 
     public static void print(String str) {
