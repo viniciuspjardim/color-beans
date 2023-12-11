@@ -100,7 +100,7 @@ public class G extends Game {
         // dbg.logLevel = 3;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
-        // dbg.aiTraining = new int[] { 3, 3, 3, 3 };
+        // dbg.aiTraining = new boolean[] { true, true, true, true };
         // dbg.on();
 
         screens = new ScreenManager();

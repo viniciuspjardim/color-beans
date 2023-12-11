@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.ai.ai3.Ai3;
+import com.vpjardim.colorbeans.ai.ai1.Ai1;
 
 public class Campaign extends MapManager {
     public int stageIndex;
@@ -56,7 +56,7 @@ public class Campaign extends MapManager {
         G.game.input.addTarget(playerMap);
 
         if (G.game.dbg.aiPlayerCamp) {
-            playerMap.ai = new Ai3();
+            playerMap.ai = new Ai1();
             playerMap.ai.init(playerMap, G.game.data.createAiConfig(11));
             G.game.input.removeTarget(playerMap);
         }
@@ -73,7 +73,7 @@ public class Campaign extends MapManager {
         aiMap.name = aiMapNames.get(stageIndex);
 
         if (!G.game.dbg.aiDisableMap1) {
-            aiMap.ai = new Ai3();
+            aiMap.ai = new Ai1();
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }
 

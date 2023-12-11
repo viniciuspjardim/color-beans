@@ -3,7 +3,7 @@ package com.vpjardim.colorbeans.core;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.ai.ai3.Ai3;
+import com.vpjardim.colorbeans.ai.ai1.Ai1;
 
 public class Training extends MapManager {
     @Override
@@ -33,8 +33,8 @@ public class Training extends MapManager {
             r.m = m;
             render.add(r);
 
-            if (G.game.dbg.aiTraining != null) {
-                m.ai = new Ai3();
+            if (G.game.dbg.aiTraining != null && G.game.dbg.aiTraining[i]) {
+                m.ai = new Ai1();
                 m.ai.init(m, G.game.data.createAiConfig(11));
                 G.game.input.removeTarget(m);
             }

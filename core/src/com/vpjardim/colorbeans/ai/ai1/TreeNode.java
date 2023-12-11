@@ -1,26 +1,26 @@
-package com.vpjardim.colorbeans.ai.ai3;
+package com.vpjardim.colorbeans.ai.ai1;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.vpjardim.colorbeans.ai.AiMap;
 import com.vpjardim.colorbeans.ai.ScoreFormula;
 
-public class Tree3Node implements Pool.Poolable {
-    public static final Pool<Tree3Node> pool = new Pool<Tree3Node>(676) {
+public class TreeNode implements Pool.Poolable {
+    public static final Pool<TreeNode> pool = new Pool<TreeNode>(676) {
         @Override
-        protected Tree3Node newObject() {
-            return new Tree3Node();
+        protected TreeNode newObject() {
+            return new TreeNode();
         }
     };
 
-    public static final Tree3Node ILLEGAL_NODE = new Tree3Node();
+    public static final TreeNode ILLEGAL_NODE = new TreeNode();
 
     static {
         ILLEGAL_NODE.scoreSum = AiMap.MOVE_ILLEGAL;
     }
 
-    public Tree3Node parent;
-    public Array<Tree3Node> children;
+    public TreeNode parent;
+    public Array<TreeNode> children;
     public AiMap aiMap;
     public ScoreFormula formula;
 
@@ -36,7 +36,7 @@ public class Tree3Node implements Pool.Poolable {
     public int position;
     public int rotation;
 
-    public Tree3Node() {
+    public TreeNode() {
         children = new Array<>(false, 325);
         init();
     }
@@ -53,7 +53,7 @@ public class Tree3Node implements Pool.Poolable {
         rotation = -1;
     }
 
-    public void init(Tree3Node parent, int color1, int color2, int position, int rotation) {
+    public void init(TreeNode parent, int color1, int color2, int position, int rotation) {
         this.parent = parent;
         this.aiMap = parent.aiMap.copy();
         this.color1 = color1;
@@ -71,7 +71,7 @@ public class Tree3Node implements Pool.Poolable {
         this.formula = formula;
     }
 
-    public void process(Tree3Node parent) {
+    public void process(TreeNode parent) {
         float result = aiMap.process(color1, color2, position, rotation);
 
         // If less the zero is a illegal or lost move
@@ -90,8 +90,8 @@ public class Tree3Node implements Pool.Poolable {
         }
     }
 
-    public Tree3Node addChild(int color1, int color2, int position, int rotation) {
-        Tree3Node child = Tree3Node.pool.obtain();
+    public TreeNode addChild(int color1, int color2, int position, int rotation) {
+        TreeNode child = TreeNode.pool.obtain();
         child.init(this, color1, color2, position, rotation);
         children.add(child);
 
@@ -101,7 +101,7 @@ public class Tree3Node implements Pool.Poolable {
     @Override
     public void reset() {
         for (int i = 0; i < children.size; i++) {
-            Tree3Node.pool.free(children.get(i));
+            TreeNode.pool.free(children.get(i));
         }
 
         children.clear();

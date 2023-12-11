@@ -1,4 +1,4 @@
-package com.vpjardim.colorbeans.ai.ai3;
+package com.vpjardim.colorbeans.ai.ai1;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.IntMap;
@@ -10,13 +10,13 @@ import com.vpjardim.colorbeans.ai.ScoreFormula;
 import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.input.InputBase;
 
-public class Ai3 extends AiCommon {
-    private Tree3 tree;
+public class Ai1 extends AiCommon {
+    private Tree tree;
 
     @Override
     public void init(Map map, Cfg.Ai cfg) {
         super.init(map, cfg);
-        tree = new Tree3(Map.N_COL);
+        tree = new Tree(Map.N_COL);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Ai3 extends AiCommon {
         if (!tree.processFinished) {
             tree.process();
         } else if (!input.move) {
-            Tree3Node bestNode = tree.bestRootChild();
+            TreeNode bestNode = tree.bestRootChild();
             bestMovePosition = bestNode.position;
             bestMoveRotation = bestNode.rotation;
             bestMoveDefined = true;

@@ -60,7 +60,7 @@ public class Dbg {
     public int campEnd;
     public boolean aiPlayerCamp;
     public boolean aiDisableMap1;
-    public int[] aiTraining;
+    public boolean[] aiTraining;
     public int selectedColor;
 
     public Dbg() {
@@ -109,7 +109,7 @@ public class Dbg {
                     clearMaps = kv.valuesAsBooleanArray(4);
                     break;
                 case "aiTraining":
-                    aiTraining = kv.valuesAsIntArray(4);
+                    aiTraining = kv.valuesAsBooleanArray(4);
                     break;
                 default:
                     throw new IllegalArgumentException("Command not recognized");
