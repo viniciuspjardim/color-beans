@@ -288,7 +288,6 @@ public class Db {
                 15, fallTimes[i + 4] / 100f,
         };
 
-        // #debugCode
         Dbg.dbg("createMapConfig", "stage: " + stage + "; moveTime: " +
                 mapCfg.moveTime[1] + " to " + mapCfg.moveTime[9] + "; difficulty: " +
                 difficulty);
@@ -309,7 +308,6 @@ public class Db {
         aiCfg.randomness = randomnessAi[i] / 100f;
         aiCfg.trashMoves = trashMovesAi[i] / 100f;
 
-        // #debugCode
         Dbg.dbg("createAiConfig ", "stage: " + stage + "; downKeyMin: " +
                 aiCfg.downKeyMin + "; trashMoves: " + aiCfg.trashMoves + "; difficulty: " +
                 difficulty);

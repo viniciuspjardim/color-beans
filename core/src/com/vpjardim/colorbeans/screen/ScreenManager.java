@@ -34,11 +34,9 @@ public class ScreenManager {
         ScreenBase currScreen = (ScreenBase) G.game.getScreen();
         currScreen.render(G.delta);
 
-        // #debugCode
         if (G.game.dbg.fpsText)
             fps.log();
 
-        // #debugCode
         if (!G.loading && G.game.dbg.fps) {
             G.game.batch.setProjectionMatrix(currScreen.cam.combined);
             G.game.batch.begin();
@@ -49,7 +47,6 @@ public class ScreenManager {
             G.game.batch.end();
         }
 
-        // #debugCode
         if (!G.loading && G.game.dbg.input) {
             G.game.batch.setProjectionMatrix(currScreen.cam.combined);
             G.game.batch.begin();

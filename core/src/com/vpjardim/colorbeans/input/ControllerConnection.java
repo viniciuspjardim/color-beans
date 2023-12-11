@@ -11,7 +11,6 @@ import com.vpjardim.colorbeans.events.EventHandler;
 public class ControllerConnection implements ControllerListener {
     @Override
     public void connected(Controller controller) {
-        // #debugCode
         Dbg.inf(Dbg.tag(this), "Controller " + controller.getName() + " connected; n = " +
                 Controllers.getControllers().size);
 
@@ -32,7 +31,6 @@ public class ControllerConnection implements ControllerListener {
 
     @Override
     public void disconnected(Controller controller) {
-        // #debugCode
         Dbg.inf(Dbg.tag(this), "Controller " + controller.getName() + " disconnected; n = " +
                 Controllers.getControllers().size);
 

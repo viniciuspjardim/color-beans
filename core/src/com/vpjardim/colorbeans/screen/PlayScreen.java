@@ -42,7 +42,6 @@ public class PlayScreen extends ScreenBase {
     private Table containerT;
     private boolean menuVisible;
     private TweenManager transition;
-    // # debugCode
     private EventListener debugInput;
 
     private TouchInput touchInput;
@@ -135,7 +134,7 @@ public class PlayScreen extends ScreenBase {
         contentT.add(menuButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
         stage.addActor(containerT);
-        containerT.setDebug(G.game.dbg.uiTable); // #debugCode
+        containerT.setDebug(G.game.dbg.uiTable);
 
         manager.init();
 

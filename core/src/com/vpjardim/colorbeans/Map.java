@@ -122,7 +122,6 @@ public class Map implements TargetBase {
         GRAVITY_FALL() {
             @Override
             public void enter(Map map) {
-                // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = GRAVITY_FALL");
 
                 map.shuffleColAcceleration(0.3f);
@@ -193,7 +192,6 @@ public class Map implements TargetBase {
         LABEL_CALC() {
             @Override
             public void enter(Map map) {
-                // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = LABEL_CALC");
 
                 map.mapLinks();
@@ -241,10 +239,8 @@ public class Map implements TargetBase {
         PLAYER_FALL() {
             @Override
             public void enter(Map map) {
-                // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = PLAYER_FALL");
 
-                // #debugCode
                 if (G.game.dbg.clearMaps != null && G.game.dbg.clearMaps[map.index]) {
                     for (int i = 0; i < map.b.length; i++) {
                         for (int j = 0; j < map.b[i].length; j++) {
@@ -300,10 +296,6 @@ public class Map implements TargetBase {
 
             @Override
             public void exit(Map map) {
-                // #debugCode
-                // AiMap aiMap = new AiMap();
-                // aiMap.init(map.b, map.deleteSize, map.OUT_ROW);
-                // aiMap.iterate(0, 0, 0, 0);
             }
         },
 
@@ -314,7 +306,6 @@ public class Map implements TargetBase {
         TRASH_ADD() {
             @Override
             public void enter(Map map) {
-                // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = TRASH_ADD");
 
                 map.addTrashBlocks();
@@ -339,7 +330,6 @@ public class Map implements TargetBase {
         OVER() {
             @Override
             public void enter(Map map) {
-                // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = OVER");
                 Dbg.inf(Dbg.tagO(map), "game over");
 
@@ -370,7 +360,6 @@ public class Map implements TargetBase {
         DONE() {
             @Override
             public void enter(Map map) {
-                // #debugCode
                 Dbg.dbg(Dbg.tagO(map), "state = DONE");
 
                 if (map.gameWin) {
@@ -1050,7 +1039,6 @@ public class Map implements TargetBase {
                 + G.game.data.getColorBonus(colorBonusCount)
                 + groupBonus;
 
-        // #debugCode
         Dbg.dbg(Dbg.tagO(this), "scoreCalc() a = " + a + "; b = " + b);
 
         if (a < 0)
@@ -1060,7 +1048,6 @@ public class Map implements TargetBase {
 
         int ab = a * b;
 
-        // #debugCode
         if (ab > 0)
             Dbg.dbg(Dbg.tagO(this), "scoreCalc() score = " + score);
 
@@ -1561,18 +1548,6 @@ public class Map implements TargetBase {
                     b[col][row].setColor(Block.CLR_T);
                 }
             }
-        }
-    }
-
-    /** #debugCode */
-    public void print() {
-        // row 0 -> 14 + OUT_ROW
-        for (int row = 0; row < b[0].length; row++) {
-            // col 0 -> 6
-            for (int col = 0; col < b.length; col++) {
-                System.out.print(b[col][row].color + " ");
-            }
-            Dbg.print("");
         }
     }
 }

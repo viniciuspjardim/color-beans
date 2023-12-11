@@ -3,7 +3,6 @@ package com.vpjardim.colorbeans.core;
 import com.badlogic.gdx.utils.Array;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.ai.Ai1;
 import com.vpjardim.colorbeans.ai.ai3.Ai3;
 
 public class Training extends MapManager {
@@ -18,7 +17,6 @@ public class Training extends MapManager {
 
         Cfg.Map mapT = G.game.data.createMapConfig(G.game.data.trainingSpeed);
 
-        // #debugCode
         if (G.game.dbg.aiTraining != null) {
             gameCfg = G.game.data.loopGame;
         }
@@ -35,20 +33,12 @@ public class Training extends MapManager {
             r.m = m;
             render.add(r);
 
-            // #debugCode
             if (G.game.dbg.aiTraining != null) {
-                if (G.game.dbg.aiTraining[i] == 1) {
-                    m.ai = new Ai1();
-                    m.ai.init(m, G.game.data.createAiConfig(11));
-                    G.game.input.removeTarget(m);
-                } else if (G.game.dbg.aiTraining[i] == 3) {
-                    m.ai = new Ai3();
-                    m.ai.init(m, G.game.data.createAiConfig(11));
-                    G.game.input.removeTarget(m);
-                }
+                m.ai = new Ai3();
+                m.ai.init(m, G.game.data.createAiConfig(11));
+                G.game.input.removeTarget(m);
             }
 
-            // #debugCode
             if (G.game.dbg.mapShapes != null)
                 m.debugShape(G.game.dbg.mapShapes[i]);
         }

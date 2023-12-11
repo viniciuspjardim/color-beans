@@ -24,7 +24,6 @@ public class InputManager {
         inputs = new Array<>();
         targets = new Array<>();
         specialButtons = new SpecialButtons();
-        // #debugCode
         debugInput = new DebugInput();
 
         // Manage controller connections and disconnections

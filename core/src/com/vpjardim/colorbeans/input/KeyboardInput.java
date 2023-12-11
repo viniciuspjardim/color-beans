@@ -105,7 +105,6 @@ public class KeyboardInput implements InputBase, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "[" + id + "] keyDown -> keycode = " + keycode);
 
         if (target == null)
@@ -159,7 +158,6 @@ public class KeyboardInput implements InputBase, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "[" + id + "] keyUp   -> keycode = " + keycode);
 
         if (target == null)

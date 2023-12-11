@@ -4,7 +4,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.vpjardim.colorbeans.Block;
 
-/** #debugCode */
 public class Dbg {
     public static class KV {
         String key;

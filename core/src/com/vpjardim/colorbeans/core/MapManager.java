@@ -112,7 +112,6 @@ public abstract class MapManager {
                     setPaused(paused);
                 }
 
-                // #debugCode
                 if (G.game.dbg.mapShapes != null) {
                     for (int i = 0; i < maps.size; i++) {
                         Map m = maps.get(i);

@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.vpjardim.colorbeans.ai.AiMap;
 import com.vpjardim.colorbeans.ai.ScoreFormula;
-import com.vpjardim.colorbeans.core.Dbg;
 
 public class Tree3Node implements Pool.Poolable {
     public static final Pool<Tree3Node> pool = new Pool<Tree3Node>(676) {
@@ -89,11 +88,6 @@ public class Tree3Node implements Pool.Poolable {
             parent.bCScoreSum = scoreSum;
             parent.bCIndex = parent.children.size - 1;
         }
-
-        // #debugCode
-        if (Ai3.debug) {
-            Dbg.print("scoreSum = " + scoreSum);
-        }
     }
 
     public Tree3Node addChild(int color1, int color2, int position, int rotation) {
@@ -118,14 +112,5 @@ public class Tree3Node implements Pool.Poolable {
         }
 
         init();
-    }
-
-    // #debugCode
-    public void print() {
-        System.out.print("<" + scoreSum);
-        for (int i = 0; i < children.size; i++) {
-            children.get(i).print();
-        }
-        System.out.print(">");
     }
 }

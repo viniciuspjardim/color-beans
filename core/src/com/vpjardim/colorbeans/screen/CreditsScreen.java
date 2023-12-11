@@ -88,7 +88,6 @@ public class CreditsScreen extends ScreenBase {
 
         stage.addActor(containerT);
 
-        // #debugCode
         containerT.setDebug(G.game.dbg.uiTable);
         contentT.setDebug(G.game.dbg.uiTable);
     }

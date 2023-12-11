@@ -78,7 +78,6 @@ public class ConfigScreen extends ScreenBase {
         outerT.setFillParent(true);
         titleT.setBackground("bgYellow");
 
-        // #debugCode
         outerT.setDebug(G.game.dbg.uiTable);
         titleT.setDebug(G.game.dbg.uiTable);
         contentT.setDebug(G.game.dbg.uiTable);
@@ -354,7 +353,7 @@ public class ConfigScreen extends ScreenBase {
         outerT.add();
 
         stage.addActor(outerT);
-        titleT.setDebug(G.game.dbg.uiTable); // #debugCode
+        titleT.setDebug(G.game.dbg.uiTable);
     }
 
     private void inputLoop() {
@@ -430,7 +429,6 @@ public class ConfigScreen extends ScreenBase {
                         input.setTarget(inputActor);
                         dirtInputT = true;
 
-                        // #debugCode
                         Dbg.dbg(Dbg.tag(ConfigScreen.this), "Key config finished");
                         profile.log();
                     });

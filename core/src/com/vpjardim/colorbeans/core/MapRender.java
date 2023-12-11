@@ -17,35 +17,26 @@ import com.vpjardim.colorbeans.input.DebugInput;
 
 public class MapRender {
     public Map m;
-
     /**
      * Map top-left corner position in X axis: useful to position multiple maps in
      * one screen
      */
     public float px;
-
     /**
      * Map top-left corner position in Y axis: useful to position multiple maps in
      * one screen
      */
     public float py;
-
     /** Next blocks position in X axis */
     public float nextPx;
-
     /** Next blocks position in Y axis */
     public float nextPy;
-
     /** Size in pixels of each block (equals the diameter) */
     public float size;
-
     public final GlyphLayout gl = new GlyphLayout();
-
     private final RandomXS128 rand = new RandomXS128();
     private final long seed0 = rand.getState(0);
     private final long seed1 = rand.getState(1);
-
-    // # debugCode
     private EventListener debugInput;
 
     public MapRender() {

@@ -5,8 +5,6 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.Pool;
 import com.vpjardim.colorbeans.Block;
-import com.vpjardim.colorbeans.ai.ai3.Ai3;
-import com.vpjardim.colorbeans.core.Dbg;
 
 public class AiMap implements Pool.Poolable {
     public static int objCount = 0;
@@ -97,8 +95,6 @@ public class AiMap implements Pool.Poolable {
      *                 map.
      */
     public float process(int color1, int color2, int position, int rotation) {
-        // #debugCode in all the method
-
         // Done detect insert collisions/obstructed moves
         // When Ai tries to put the player blocks on a obstructed position
         // Done detect move that will lead to lost state
@@ -131,12 +127,6 @@ public class AiMap implements Pool.Poolable {
 
             b[position][outRow] = (byte) color1; // upper goes down
             b[position + 1][outRow] = (byte) color2; // center goes right
-        }
-
-        if (Ai3.debug) {
-            Dbg.print("================");
-            Dbg.print("pos = " + position + "; rot = " + rotation);
-            print();
         }
 
         do {
@@ -351,24 +341,6 @@ public class AiMap implements Pool.Poolable {
         }
 
         lc.clear();
-    }
-
-    // #debugCode
-    public void print() {
-        Dbg.print("Blocks print ->");
-
-        // row 0 -> 14 + OUT_ROW
-        for (int row = 7; row < b[0].length; row++) {
-            // col 0 -> 6
-            for (int col = 0; col < b.length; col++) {
-                System.out.print(b[col][row] + " ");
-            }
-
-            Dbg.print("");
-
-            if (row == outRow - 1)
-                Dbg.print("---");
-        }
     }
 
     @Override

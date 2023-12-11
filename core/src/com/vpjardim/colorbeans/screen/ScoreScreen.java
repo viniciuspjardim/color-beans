@@ -42,7 +42,6 @@ public class ScoreScreen extends ScreenBase {
         outerT.setFillParent(true);
         titleT.setBackground("bgYellow");
 
-        // #debugCode
         outerT.setDebug(G.game.dbg.uiTable);
         titleT.setDebug(G.game.dbg.uiTable);
         contentT.setDebug(G.game.dbg.uiTable);
@@ -181,7 +180,7 @@ public class ScoreScreen extends ScreenBase {
         outerT.add();
 
         stage.addActor(outerT);
-        titleT.setDebug(G.game.dbg.uiTable); // #debugCode
+        titleT.setDebug(G.game.dbg.uiTable);
     }
 
     @Override

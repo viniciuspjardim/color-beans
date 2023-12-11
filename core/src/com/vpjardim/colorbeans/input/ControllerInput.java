@@ -106,7 +106,6 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public boolean buttonDown(Controller controller, int keycode) {
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "[" + id + "] buttonDown -> keycode = " + keycode);
 
         if (target == null)
@@ -150,7 +149,6 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public boolean buttonUp(Controller controller, int keycode) {
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "[" + id + "] buttonUp   -> keycode = " + keycode);
 
         if (target == null)
@@ -199,7 +197,6 @@ public class ControllerInput implements InputBase, ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "[" + id + "] axisMoved -> axisIndex = " + axisIndex + "; value = " + value);
 
         int val = Math.round(value);

@@ -85,8 +85,6 @@ public class Profile {
         return key == up || key == right || key == down || key == left || key == start ||
                 key == button1 || key == button2 || key == button3 || key == button4;
     }
-
-    // #debugCode
     public void log() {
         Dbg.inf("Profile", "up -> " + this.up);
         Dbg.inf("Profile", "right -> " + this.right);

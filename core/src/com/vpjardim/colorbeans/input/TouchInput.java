@@ -150,10 +150,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        // TODO: tap represents a touch down and touch up event. Currently we are only
-        // triggering the key down event
-
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "tap -> x = " + x + "; y = " + y + "; count = " + count +
                 "; button = " + button);
 
@@ -173,15 +169,12 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "pan ->   x = " + x + ";  y = " + y + "; dTouchX = " +
                 deltaX + "; dTouchY = " + deltaY);
 
         // If not panning, resetting values
         if (!hPanning && !vPanning) {
             move = false;
-            hPanning = false;
-            vPanning = false;
             touchX = x;
             touchY = y;
             dTouchX = 0f;
@@ -219,7 +212,6 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
             keyEvent(InputBase.DOWN_KEY, InputBase.DOWN);
         }
 
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "pan2 -> tx = " + touchX + "; ty = " + touchY +
                 "; dTouchX = " + this.dTouchX + "; dTouchY = " + this.dTouchY);
 
@@ -228,20 +220,12 @@ public class TouchInput extends GestureDetector.GestureAdapter implements InputB
 
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
-        // #debugCode
         Dbg.dbg(Dbg.tag(this), "panStop -> x = " + x + "; y = " + y);
 
         keyEvent(InputBase.UP_KEY, InputBase.UP);
-        // target.btUpUp();
-
         keyEvent(InputBase.RIGHT_KEY, InputBase.UP);
-        // target.btRightUp();
-
         keyEvent(InputBase.DOWN_KEY, InputBase.UP);
-        // target.btDownUp();
-
         keyEvent(InputBase.LEFT_KEY, InputBase.UP);
-        // target.btLeftUp();
 
         hPanning = false;
         vPanning = false;

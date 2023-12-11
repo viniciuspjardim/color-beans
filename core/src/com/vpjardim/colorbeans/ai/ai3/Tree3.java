@@ -161,9 +161,4 @@ public class Tree3 {
         cacheB.clear();
         cachePos = 0;
     }
-
-    // #debugCode
-    public void print() {
-        root.print();
-    }
 }

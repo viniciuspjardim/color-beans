@@ -11,17 +11,6 @@ import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.input.InputBase;
 
 public class Ai3 extends AiCommon {
-    // TODO: persist the last ai move: when the game resume, because the ai has a
-    // small random factor, the new ai calc might lead to another move witch might
-    // don't have enough time to complete;
-
-    // TODO: debug, sometimes seems it did not executed the best move;
-
-    // DONE: other bug is the it perform sort of a random move before move to the
-    // right place.
-
-    // #debugCode
-    public static final boolean debug = false;
     private Tree3 tree;
 
     @Override

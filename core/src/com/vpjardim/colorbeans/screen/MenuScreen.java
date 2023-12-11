@@ -123,7 +123,7 @@ public class MenuScreen extends ScreenBase {
         titleRegion = G.game.atlas.findRegion("game/title");
 
         stage.addActor(outerT);
-        table.setDebug(G.game.dbg.uiTable); // #debugCode
+        table.setDebug(G.game.dbg.uiTable);
     }
 
     @Override

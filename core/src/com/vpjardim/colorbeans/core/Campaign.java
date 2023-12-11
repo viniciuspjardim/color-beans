@@ -7,8 +7,6 @@ import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.ai3.Ai3;
 
 public class Campaign extends MapManager {
-    // #debugCode all over the class
-
     public int stageIndex;
     public Array<Cfg.Map> mapCfgs;
     public Array<Cfg.Ai> aiCfgs;
@@ -30,7 +28,6 @@ public class Campaign extends MapManager {
         int start = G.game.data.campaignCurrentStage;
         int end = 11;
 
-        // #debugCode
         if (G.game.dbg.on) {
             end = G.game.dbg.campEnd;
         }
@@ -58,7 +55,6 @@ public class Campaign extends MapManager {
         playerMap.name = G.game.data.players.first().name;
         G.game.input.addTarget(playerMap);
 
-        // #debugCode
         if (G.game.dbg.aiPlayerCamp) {
             playerMap.ai = new Ai3();
             playerMap.ai.init(playerMap, G.game.data.createAiConfig(11));
@@ -76,7 +72,6 @@ public class Campaign extends MapManager {
         aiMap.setCfg(mapCfgs.get(stageIndex));
         aiMap.name = aiMapNames.get(stageIndex);
 
-        // #debugCode the content is needed, just the if is debug
         if (!G.game.dbg.aiDisableMap1) {
             aiMap.ai = new Ai3();
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
@@ -94,12 +89,10 @@ public class Campaign extends MapManager {
             player2Map.name = G.game.data.players.get(1).name;
             G.game.input.addTarget(player2Map);
 
-            // #debugCode
             if (G.game.dbg.mapShapes != null)
                 player2Map.debugShape(G.game.dbg.mapShapes[2]);
         }
 
-        // #debugCode
         if (G.game.dbg.mapShapes != null) {
             playerMap.debugShape(G.game.dbg.mapShapes[0]);
             aiMap.debugShape(G.game.dbg.mapShapes[1]);
@@ -149,7 +142,6 @@ public class Campaign extends MapManager {
             aiMap.setCfg(mapCfgs.get(stageIndex));
             aiMap.name = aiMapNames.get(stageIndex);
 
-            // #DebugCode
             if (!G.game.dbg.aiDisableMap1)
                 aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }
@@ -211,7 +203,6 @@ public class Campaign extends MapManager {
                     setPaused(paused);
                 }
 
-                // #debugCode
                 if (G.game.dbg.mapShapes != null) {
                     for (int i = 0; i < maps.size; i++) {
                         Map m = maps.get(i);

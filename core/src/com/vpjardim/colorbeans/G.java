@@ -65,8 +65,6 @@ public class G extends Game {
     public ScoreTable score;
     public Audio audio;
     public BgBeans bgBeans;
-
-    // #debugCode
     public Dbg dbg;
 
     public static boolean isBackKey(int key) {
@@ -92,7 +90,6 @@ public class G extends Game {
 
         dbg = new Dbg();
 
-        // #debugCode
         // dbg.uiTable = true;
         // dbg.mapShapes = new int[] { 3, 12, 3, 0 };
         // dbg.clearMaps = new boolean[] { true, false, false, false };
