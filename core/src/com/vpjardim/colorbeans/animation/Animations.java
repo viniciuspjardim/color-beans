@@ -294,6 +294,7 @@ public class Animations {
     /** @return true if it's animating - animation not finished yet */
     public boolean gameOver() {
         boolean animating = false;
+        m.removeTopLinks();
 
         for (int i = 0; i < m.b.length; i++) {
             for (int j = 0; j < m.b[i].length; j++) {
@@ -317,7 +318,6 @@ public class Animations {
 
         if (b.py <= -Map.N_ROW) {
             animating = false;
-            // b.recycleFall();
         }
 
         return animating;

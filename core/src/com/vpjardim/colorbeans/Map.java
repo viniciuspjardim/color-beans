@@ -998,6 +998,13 @@ public class Map implements TargetBase {
         block.tile = tile;
     }
 
+    public void removeTopLinks() {
+        for (int col = 0; col < b.length; col++) {
+            if (b[col][OUT_ROW].tile / 1000 % 10 == 1)
+                b[col][OUT_ROW].tile -= 1000;
+        }
+    }
+
     /** Removes the side links with the current block because it will move */
     public void removeSideLinks(int col, int row) {
         // Left block, right link
@@ -1548,6 +1555,21 @@ public class Map implements TargetBase {
                     b[col][row].setColor(Block.CLR_T);
                 }
             }
+        }
+        // Filled to test removed top links
+        else if (shape == 13) {
+            for (int col = 0; col < b.length; col++) {
+                for (int row = OUT_ROW -1; row < b[col].length; row++) {
+                    b[col][row].setColor(col % 4 + 1);
+                }
+            }
+            for (int col = 0; col < b.length; col++) {
+                for (int row = OUT_ROW + 2; row < b[col].length; row++) {
+                    b[col][row].setColor(Block.CLR_T);
+                }
+            }
+
+            b[1][OUT_ROW + 1].setColor(1);
         }
     }
 }
