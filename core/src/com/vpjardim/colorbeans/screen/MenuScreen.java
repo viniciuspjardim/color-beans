@@ -113,7 +113,7 @@ public class MenuScreen extends ScreenBase {
         table.row();
 
         if (Gdx.app.getType() != Application.ApplicationType.WebGL) {
-            table.add(exitButt).width(bttW).pad(G.style.padMedium, padS, padS, padS);
+            table.add(exitButt);
         }
 
         table.getMaxWidth();
