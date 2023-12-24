@@ -1556,11 +1556,11 @@ public class Map implements TargetBase {
                 }
             }
         }
-        // Filled to test removed top links
+        // Test removed top and side links on game over
         else if (shape == 13) {
             for (int col = 0; col < b.length; col++) {
                 for (int row = OUT_ROW -1; row < b[col].length; row++) {
-                    b[col][row].setColor(col % 4 + 1);
+                    b[col][row].setColor(col % 5 + 1);
                 }
             }
             for (int col = 0; col < b.length; col++) {
@@ -1570,6 +1570,10 @@ public class Map implements TargetBase {
             }
 
             b[1][OUT_ROW + 1].setColor(1);
+
+            b[0][OUT_ROW + 4].setColor(5);
+            b[1][OUT_ROW + 4].setColor(5);
+            b[2][OUT_ROW + 4].setColor(5);
         }
     }
 }
