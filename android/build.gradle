@@ -1,6 +1,5 @@
 android {
-    buildToolsVersion "33.0.2"
-    compileSdkVersion 33
+    compileSdk 33
 
     // Using AndroidKeys env var to keep the path of the file that contain the data for the Android
     // Keys
