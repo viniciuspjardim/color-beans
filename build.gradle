@@ -8,22 +8,20 @@ buildscript {
     }
     dependencies {
         classpath "org.wisepersist:gwt-gradle-plugin:1.1.16"
-        classpath "org.gretty:gretty:3.0.7"
+        classpath "org.gretty:gretty:3.1.0"
         classpath "com.android.tools.build:gradle:7.4.2"
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
-
     version = "0.1.10"
     ext {
         appName = "Color Beans"
-        gdxVersion = "1.12.0"
+        gdxVersion = "1.12.1"
         gdxControllersVersion = "2.2.3"
         aiVersion = "1.8.2"
     }
-
     repositories {
         mavenLocal()
         mavenCentral()
@@ -37,7 +35,6 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "java-library"
-
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
@@ -49,7 +46,6 @@ project(":desktop") {
 
 project(":tools") {
     apply plugin: "java-library"
-
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
@@ -62,9 +58,7 @@ project(":tools") {
 
 project(":android") {
     apply plugin: "com.android.application"
-
     configurations { natives }
-
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
@@ -87,7 +81,6 @@ project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
     apply plugin: "org.gretty"
-
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
@@ -106,7 +99,6 @@ project(":html") {
 
 project(":core") {
     apply plugin: "java-library"
-
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"

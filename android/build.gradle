@@ -26,11 +26,12 @@ android {
             assets.srcDirs = ["../assets"]
             jniLibs.srcDirs = ["libs"]
         }
-
     }
+
     packagingOptions {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
+
     defaultConfig {
         applicationId "com.gmail.vpjardimdev.colorbeans"
         minSdkVersion 16
@@ -38,6 +39,7 @@ android {
         versionCode 12
         versionName "0.1.10"
     }
+
     buildTypes {
         release {
             minifyEnabled true
