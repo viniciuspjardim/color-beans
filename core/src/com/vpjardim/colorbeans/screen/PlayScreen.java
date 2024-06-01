@@ -43,7 +43,6 @@ public class PlayScreen extends ScreenBase {
     private boolean menuVisible;
     private TweenManager transition;
     private EventListener tapInput;
-
     private TouchInput touchInput;
 
     public PlayScreen(MapManager man) {
@@ -199,7 +198,7 @@ public class PlayScreen extends ScreenBase {
 
             G.game.sr.set(ShapeRenderer.ShapeType.Line);
 
-            G.game.sr.setColor(Color.RED);
+            G.game.sr.setColor(Color.LIGHT_GRAY);
             // Draw input subdivisions
             for (int i = 0; i < touchInput.div.length - 1; i++) {
                 x = touchInput.div[i];
