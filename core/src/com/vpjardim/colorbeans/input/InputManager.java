@@ -16,7 +16,7 @@ public class InputManager {
     private final Array<InputBase> inputs;
     private final Array<TargetBase> targets;
     private final SpecialButtons specialButtons;
-    private final DebugInput debugInput;
+    private final TapInput tapInput;
 
     private int maxId = 1;
 
@@ -24,7 +24,7 @@ public class InputManager {
         inputs = new Array<>();
         targets = new Array<>();
         specialButtons = new SpecialButtons();
-        debugInput = new DebugInput();
+        tapInput = new TapInput();
 
         // Manage controller connections and disconnections
         ControllerConnection ctrlConn = new ControllerConnection();
@@ -48,7 +48,7 @@ public class InputManager {
 
     public void loadInputs() {
         multiplex.addProcessor(specialButtons);
-        multiplex.addProcessor(new GestureDetector(debugInput));
+        multiplex.addProcessor(new GestureDetector(tapInput));
 
         boolean multiTouch = Gdx.input.isPeripheralAvailable(Input.Peripheral.MultitouchScreen);
         boolean hardwareKeyboard = Gdx.input.isPeripheralAvailable(Input.Peripheral.HardwareKeyboard);

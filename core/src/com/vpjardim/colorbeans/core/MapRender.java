@@ -13,7 +13,7 @@ import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
-import com.vpjardim.colorbeans.input.DebugInput;
+import com.vpjardim.colorbeans.input.TapInput;
 
 public class MapRender {
     public Map m;
@@ -37,20 +37,20 @@ public class MapRender {
     private final RandomXS128 rand = new RandomXS128();
     private final long seed0 = rand.getState(0);
     private final long seed1 = rand.getState(1);
-    private EventListener debugInput;
+    private EventListener tapInput;
 
     public MapRender() {
         if (!G.game.dbg.on)
             return;
 
         // Tap event listener: changes block color on tap event when debugging
-        debugInput = (Event e) -> {
+        tapInput = (Event e) -> {
             // On touch screen, only change beans color when it's paused
             boolean multiTouch = Gdx.input.isPeripheralAvailable(Input.Peripheral.MultitouchScreen);
             boolean changeColor = !multiTouch || m.manager.isPaused();
 
             if (changeColor && m != null) {
-                DebugInput.Data eventData = (DebugInput.Data) e.getAttribute();
+                TapInput.Data eventData = (TapInput.Data) e.getAttribute();
                 float eventY = G.height - eventData.y;
 
                 int bTapX = (int) ((eventData.x - px) / size);
@@ -84,7 +84,7 @@ public class MapRender {
             }
         };
 
-        EventHandler.get().addListener("DebugInput.tap", debugInput);
+        EventHandler.get().addListener("TapInput.tap", tapInput);
     }
 
     /**
@@ -308,6 +308,6 @@ public class MapRender {
     }
 
     public void dispose() {
-        EventHandler.get().removeListener("DebugInput.tap", debugInput);
+        EventHandler.get().removeListener("TapInput.tap", tapInput);
     }
 }

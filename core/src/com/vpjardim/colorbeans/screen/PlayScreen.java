@@ -42,7 +42,7 @@ public class PlayScreen extends ScreenBase {
     private Table containerT;
     private boolean menuVisible;
     private TweenManager transition;
-    private EventListener debugInput;
+    private EventListener tapInput;
 
     private TouchInput touchInput;
 
@@ -67,7 +67,7 @@ public class PlayScreen extends ScreenBase {
         };
 
         // Tap event
-        debugInput = (Event e) -> {
+        tapInput = (Event e) -> {
             if (G.game.dbg.on) {
                 menuVisible = false;
             } else if (manager.isPaused()) {
@@ -76,7 +76,7 @@ public class PlayScreen extends ScreenBase {
         };
 
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
-        EventHandler.get().addListener("DebugInput.tap", debugInput);
+        EventHandler.get().addListener("TapInput.tap", tapInput);
 
         transition = new TweenManager();
         Tween.registerAccessor(OrthographicCamera.class, new CamAccessor());
@@ -305,6 +305,6 @@ public class PlayScreen extends ScreenBase {
             }
         }
 
-        EventHandler.get().removeListener("DebugInput.tap", debugInput);
+        EventHandler.get().removeListener("TapInput.tap", tapInput);
     }
 }
