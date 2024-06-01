@@ -490,12 +490,12 @@ public class ConfigScreen extends ScreenBase {
             }
         });
 
-        Slider inputS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
-        inputS.setValue(G.game.dbg.input ? 1f : 0f);
-        inputS.addCaptureListener(new ChangeListener() {
+        Slider overlayS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
+        overlayS.setValue(G.game.dbg.overlay ? 1f : 0f);
+        overlayS.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                G.game.dbg.input = inputS.getValue() == 1f;
+                G.game.dbg.overlay = overlayS.getValue() == 1f;
             }
         });
 
@@ -546,8 +546,8 @@ public class ConfigScreen extends ScreenBase {
         otherT.add(new Label("Debug UI:", labelStyle)).padTop(8).padLeft(PAD_X).align(Align.left);
         otherT.add(uiS).width(92).padTop(8).padRight(PAD_X).align(Align.right).row();
 
-        otherT.add(new Label("Debug Input:", labelStyle)).padTop(8).padLeft(PAD_X).align(Align.left);
-        otherT.add(inputS).width(92).padTop(8).padRight(PAD_X).align(Align.right).row();
+        otherT.add(new Label("Debug Overlay:", labelStyle)).padTop(8).padLeft(PAD_X).align(Align.left);
+        otherT.add(overlayS).width(92).padTop(8).padRight(PAD_X).align(Align.right).row();
 
         otherT.add(new Label("Log Level:", labelStyle)).padTop(16).padLeft(PAD_X).align(Align.left);
         otherT.add(logLevelL).padTop(16).padRight(PAD_X).align(Align.right).row();

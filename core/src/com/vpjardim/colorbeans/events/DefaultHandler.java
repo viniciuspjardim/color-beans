@@ -39,4 +39,19 @@ public class DefaultHandler implements EventHandler {
             }
         }
     }
+
+    @Override
+    public int countTypes() {
+        return listeners.size;
+    }
+
+    @Override
+    public int countListeners() {
+        int count = 0;
+        for (Array<EventListener> value : listeners.values()) {
+            count += value.size;
+        }
+
+        return count;
+    }
 }

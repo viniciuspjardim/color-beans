@@ -46,7 +46,7 @@ public class Dbg {
     public int tapsCount;
     public boolean on;
     public float delta;
-    public boolean input;
+    public boolean overlay;
     public boolean fps;
     public boolean fpsText;
     /**
@@ -71,7 +71,7 @@ public class Dbg {
         tapsCount = 0;
         on = false;
         delta = -1f;
-        input = false;
+        overlay = false;
         fps = false;
         fpsText = false;
         logLevel = Application.LOG_NONE;

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Campaign;
 import com.vpjardim.colorbeans.core.Training;
+import com.vpjardim.colorbeans.events.EventHandler;
 
 import aurelienribon.tweenengine.TweenManager;
 
@@ -47,16 +48,13 @@ public class ScreenManager {
             G.game.batch.end();
         }
 
-        if (!G.loading && G.game.dbg.input) {
+        if (!G.loading && G.game.dbg.overlay) {
             G.game.batch.setProjectionMatrix(currScreen.cam.combined);
             G.game.batch.begin();
             BitmapFont font = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
 
             float lineHeight = G.style.fontSizeMedium * 2f;
             float x = G.width * 0.85f;
-
-            font.draw(G.game.batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
-                    x, G.height - G.style.fontSizeMedium);
 
             font.draw(G.game.batch, "Inputs: " + G.game.input.getInputs().size,
                     x, G.height - (lineHeight * 2));
@@ -66,6 +64,12 @@ public class ScreenManager {
 
             font.draw(G.game.batch, "Multiplexer: " + G.game.input.getMultiplexSize(),
                     x, G.height - (lineHeight * 4));
+
+            font.draw(G.game.batch, "Event types: " + EventHandler.get().countTypes(),
+                    x, G.height - (lineHeight * 5));
+
+            font.draw(G.game.batch, "Event listeners: " + EventHandler.get().countListeners(),
+                    x, G.height - (lineHeight * 6));
 
             G.game.batch.end();
         }

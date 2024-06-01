@@ -11,4 +11,8 @@ public interface EventHandler {
     void removeListener(String type, EventListener eListener);
 
     void emit(String type, Event e);
+
+    int countTypes();
+
+    int countListeners();
 }
