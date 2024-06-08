@@ -458,6 +458,16 @@ public class ConfigScreen extends ScreenBase {
         G.game.input.linkAll();
     }
 
+    public static String format(double value) {
+        final String str = Double.toString(value);
+
+        if (str.length() > 3) {
+            return str.substring(0, 3);
+        }
+
+        return str;
+    }
+
     public void addDebugFields(Table otherT, Label.LabelStyle labelStyle) {
         // Activate debug options if coop slider is switched 4 times
         // Note: the number 8 is because the event on the coopS is firing twice each time.
@@ -518,7 +528,7 @@ public class ConfigScreen extends ScreenBase {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.delta = deltaS.getValue();
-                String deltaValueTex = deltaS.getValue() == 0f ? "Off" : deltaS.getValue() + "X";
+                String deltaValueTex = deltaS.getValue() == 0f ? "Off" : format(deltaS.getValue()) + "X";
                 deltaL.setText(deltaValueTex);
             }
         });
