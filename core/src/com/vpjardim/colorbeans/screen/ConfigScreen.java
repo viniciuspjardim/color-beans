@@ -458,14 +458,18 @@ public class ConfigScreen extends ScreenBase {
         G.game.input.linkAll();
     }
 
-    public static String format(double value) {
-        final String str = Double.toString(value);
-
-        if (str.length() > 3) {
-            return str.substring(0, 3);
+    private static String formatDelta(float delta) {
+        if (delta == 0) {
+            return "Off";
         }
 
-        return str;
+        final String deltaStr = Float.toString(delta);
+
+        if (deltaStr.length() > 3) {
+            return deltaStr.substring(0, 3) + "X";
+        }
+
+        return deltaStr + "X";
     }
 
     public void addDebugFields(Table otherT, Label.LabelStyle labelStyle) {
@@ -522,14 +526,12 @@ public class ConfigScreen extends ScreenBase {
 
         Slider deltaS = new Slider(0f, 8f, 0.1f, false, G.game.skin, "slider");
         deltaS.setValue(G.game.dbg.delta);
-        String deltaValueTex = deltaS.getValue() == 0f ? "Off" : deltaS.getValue() + "X";
-        Label deltaL = new Label(deltaValueTex, labelStyle);
+        Label deltaL = new Label(formatDelta(deltaS.getValue()), labelStyle);
         deltaS.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.delta = deltaS.getValue();
-                String deltaValueTex = deltaS.getValue() == 0f ? "Off" : format(deltaS.getValue()) + "X";
-                deltaL.setText(deltaValueTex);
+                deltaL.setText(formatDelta(deltaS.getValue()));
             }
         });
 
