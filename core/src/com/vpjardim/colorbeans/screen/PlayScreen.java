@@ -230,7 +230,6 @@ public class PlayScreen extends ScreenBase {
 
         menuViewport.update(width, height, true);
         manager.resize();
-        G.game.bgBeans.resize();
 
         updateCache();
     }

@@ -153,12 +153,6 @@ public class MenuScreen extends ScreenBase {
     }
 
     @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-        G.game.bgBeans.resize();
-    }
-
-    @Override
     public void dispose() {
         super.dispose();
     }

@@ -63,6 +63,7 @@ public class ScreenBase implements Screen, TargetBase {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
+        G.game.bgBeans.resize();
     }
 
     @Override

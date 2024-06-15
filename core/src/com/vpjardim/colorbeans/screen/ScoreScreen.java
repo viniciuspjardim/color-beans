@@ -173,10 +173,22 @@ public class ScoreScreen extends ScreenBase {
             campaignT.add(campaignL).expand().fill();
         }
 
-        float width = G.width <= 1080 ? G.width * 0.9f : 600;
+        float width;
+        float screenRatio = (float) G.width / (float) G.height;
+
+        // Ultra widescreen
+        if (screenRatio > 1.7778f) {
+            width = G.width * 0.24f;
+        // Widescreen
+        } else if (screenRatio > 1.0f) {
+            width = G.width * 0.34f;
+        // Mobile or vertical tablet
+        } else {
+            width = G.width * 0.9f;
+        }
 
         outerT.add();
-        outerT.add(titleT).width(width).maxHeight(G.height * 0.9f).minHeight(G.height * 0.75f);
+        outerT.add(titleT).width(width).minHeight(G.height * 0.8f).maxHeight(G.height * 0.9f);
         outerT.add();
 
         stage.addActor(outerT);
@@ -193,12 +205,6 @@ public class ScoreScreen extends ScreenBase {
 
         stage.act(delta);
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-        G.game.bgBeans.resize();
     }
 
     @Override
