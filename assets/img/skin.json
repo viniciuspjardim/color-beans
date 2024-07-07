@@ -1,91 +1,86 @@
 {
-    com.badlogic.gdx.graphics.Color: {
-        white: { hex: ffffffff },
-        black: { hex: 000000ff },
-        orange800: { hex: 523800 },
+    Color: {
+        white: { hex: ffffffff }
+        black: { hex: 000000ff }
+        orange800: { hex: 523800 }
         white50: { hex: ffffff80 }
-    },
-
-    com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+    }
+    TextButtonStyle: {
         bttYellow: {
-            up: "game/b_yellow_up",
-            down: "game/b_yellow_down",
+            up: "game/b_yellow_up"
+            down: "game/b_yellow_down"
             font: dimbo_brown
-        },
+        }
         bttGreen: {
-            up: "game/b_green_up",
-            down: "game/b_green_down",
+            up: "game/b_green_up"
+            down: "game/b_green_down"
             font: dimbo_green
-        },
+        }
         bttBlue: {
-            up: "game/b_blue_up",
-            down: "game/b_blue_down",
+            up: "game/b_blue_up"
+            down: "game/b_blue_down"
             font: dimbo_purple
-        },
+        }
         bttRed: {
-            up: "game/b_red_up",
-            down: "game/b_red_down",
+            up: "game/b_red_up"
+            down: "game/b_red_down"
             font: dimbo_dbrown
-        },
+        }
         bttGray: {
-            up: "game/b_gray_up",
-            down: "game/b_gray_down",
+            up: "game/b_gray_up"
+            down: "game/b_gray_down"
             font: dimbo_gray
         }
-    },
-
-    com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+    }
+    SliderStyle: {
         slider: {
-            background: "game/slider_track_bg",
-            knobBefore: "game/slider_track_on",
-            knobAfter: "game/slider_track_off",
+            background: "game/slider_track_bg"
+            knobBefore: "game/slider_track_on"
+            knobAfter: "game/slider_track_off"
             knob: "game/slider_knob"
-        },
+        }
         checkBox: {
-            background: "game/check_box",
-            knobBefore: "game/slider_track_on",
-            knobAfter: "game/slider_track_off",
+            background: "game/check_box"
+            knobBefore: "game/slider_track_on"
+            knobAfter: "game/slider_track_off"
             knob: "game/slider_knob"
         }
-    },
-
+    }
     com.badlogic.gdx.graphics.g2d.NinePatch: {
-        bgYellow: "game/bg_yellow",
+        bgYellow: "game/bg_yellow"
         bgBlack: "game/bg_black"
-    },
-
-    com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+    }
+    LabelStyle: {
         labelMenu: {
-            background: "game/ribbon_red",
+            background: "game/ribbon_red"
             font: dimbo_white
-        },
+        }
         labelDef: {
-            font: roboto,
-            fontColor: white
-        },
-        robotoMenu: {
-            font: roboto,
-            fontColor: orange800
-        },
-        labelGTitle: {
-            background: "game/ribbon_red",
-            font: dimbo_gtitle
-        },
-        labelWhite50: {
-            font: roboto,
-            fontColor: white50
-        },
-        labelCredits: {
-            font: dimbo_white,
+            font: roboto
             fontColor: white
         }
-    },
-
-    com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+        robotoMenu: {
+            font: roboto
+            fontColor: orange800
+        }
+        labelGTitle: {
+            background: "game/ribbon_red"
+            font: dimbo_gtitle
+        }
+        labelWhite50: {
+            font: roboto
+            fontColor: white50
+        }
+        labelCredits: {
+            font: dimbo_white
+            fontColor: white
+        }
+    }
+    TextFieldStyle: {
         tField: {
-            font: roboto,
-            fontColor: orange800,
-            background: "game/input",
+            font: roboto
+            fontColor: orange800
+            background: "game/input"
             cursor: "game/cursor"
         }
     }
