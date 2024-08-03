@@ -21,7 +21,7 @@ public class MenuScreen extends ScreenBase {
 
     private Table table;
     private Label label;
-    private TextureAtlas.AtlasRegion titleRegion;
+    private TextureAtlas.AtlasRegion gameTitle;
 
     @Override
     public void show() {
@@ -120,7 +120,7 @@ public class MenuScreen extends ScreenBase {
 
         label = new Label(" ", labelStyle);
         label.setAlignment(Align.center);
-        titleRegion = G.game.atlas.findRegion("game/title");
+        gameTitle = G.game.atlas.findRegion("game/title");
 
         stage.addActor(outerT);
         table.setDebug(G.game.dbg.uiTable);
@@ -144,11 +144,11 @@ public class MenuScreen extends ScreenBase {
         G.game.batch.begin();
         label.draw(G.game.batch, 1f);
 
-        final float titleX = table.getX() + table.getWidth() / 2f - titleRegion.originalWidth / 2f;
-        final float titleY = label.getY() + 0.64f * label.getHeight() - titleRegion.originalHeight / 2f;
+        final float titleX = table.getX() + table.getWidth() / 2f - gameTitle.originalWidth / 2f;
+        final float titleY = label.getY() + 0.64f * label.getHeight() - gameTitle.originalHeight / 2f;
 
-        G.game.batch.draw(titleRegion, titleX, titleY, titleRegion.originalWidth,
-                titleRegion.originalHeight);
+        G.game.batch.draw(gameTitle, titleX, titleY, gameTitle.originalWidth,
+                gameTitle.originalHeight);
         G.game.batch.end();
     }
 
