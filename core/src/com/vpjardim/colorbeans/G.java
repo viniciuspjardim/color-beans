@@ -97,11 +97,12 @@ public class G extends Game {
         // dbg.delta = 0.5f;
         // dbg.input = true;
         // dbg.fps = true;
-        // dbg.logLevel = 3;
+        dbg.logLevel = 3;
         // dbg.aiPlayerCamp = true;
         // dbg.aiDisableMap1 = true;
         // dbg.aiTraining = new boolean[] { true, true, true, true };
-        // dbg.on();
+        dbg.overlay = true;
+        dbg.on();
 
         screens = new ScreenManager();
         screens.create();
