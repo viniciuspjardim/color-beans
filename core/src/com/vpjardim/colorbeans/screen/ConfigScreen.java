@@ -56,9 +56,9 @@ public class ConfigScreen extends ScreenBase {
 
     protected EventListener controllerEvent;
 
-    public ConfigScreen() {
-        manageInput = false;
-    }
+    // public ConfigScreen() {
+    //     manageInput = false;
+    // }
 
     @Override
     public void show() {
@@ -76,7 +76,6 @@ public class ConfigScreen extends ScreenBase {
 
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
         EventHandler.get().addListener("ControllerConnection.event", controllerEvent);
-
 
         outerT.setFillParent(true);
         titleT.setBackground("bgYellow");
@@ -386,7 +385,7 @@ public class ConfigScreen extends ScreenBase {
         inputT.clearChildren();
         final Array<Cfg.Player> pls = G.game.data.players;
 
-        G.game.input.targetsClear();
+        // G.game.input.targetsClear();
 
         final ControllerActor controllerActor = new ControllerActor();
         inputT.add(controllerActor).colspan(4).align(Align.center).row();
@@ -434,7 +433,7 @@ public class ConfigScreen extends ScreenBase {
                 downBtt.setTouchable(Touchable.disabled);
             }
 
-            G.game.input.addTarget(inputActor);
+            // G.game.input.addTarget(inputActor);
 
             inputT.add(inputActor).padTop(20);
             inputT.add(editBtt).padTop(20);
@@ -464,7 +463,7 @@ public class ConfigScreen extends ScreenBase {
             upBtt.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    G.game.input.moveInput(index, -1);
+                    // G.game.input.moveInput(index, -1);
                     dirtInputT = true;
                 }
             });
@@ -472,13 +471,13 @@ public class ConfigScreen extends ScreenBase {
             downBtt.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    G.game.input.moveInput(index, 1);
+                    // G.game.input.moveInput(index, 1);
                     dirtInputT = true;
                 }
             });
         }
 
-        G.game.input.linkAll();
+        // G.game.input.linkAll();
     }
 
     private static String formatDelta(float delta) {
@@ -607,7 +606,7 @@ public class ConfigScreen extends ScreenBase {
         G.game.batch.end();
 
         if (dirtInputT) {
-            inputLoop();
+            // inputLoop();
         }
         stage.act(delta);
         stage.draw();
