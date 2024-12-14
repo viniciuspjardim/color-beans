@@ -110,9 +110,9 @@ public class MenuScreen extends ScreenBase {
         table.add(scoreButt);
         table.row();
         table.add(optionsButt);
-        table.row();
 
         if (Gdx.app.getType() != Application.ApplicationType.WebGL) {
+            table.row();
             table.add(exitButt);
         }
 
@@ -124,6 +124,8 @@ public class MenuScreen extends ScreenBase {
 
         stage.addActor(outerT);
         table.setDebug(G.game.dbg.uiTable);
+        stage.act();
+        actorsIndex.buildIndex(table);
     }
 
     @Override
@@ -149,6 +151,9 @@ public class MenuScreen extends ScreenBase {
 
         G.game.batch.draw(gameTitle, titleX, titleY, gameTitle.originalWidth,
                 gameTitle.originalHeight);
+
+        actorsIndex.render();
+
         G.game.batch.end();
     }
 

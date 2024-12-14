@@ -35,10 +35,19 @@ public class ConfigScreen extends ScreenBase {
     public static final int ACT_CREDITS = 11;
     public static final int DBG_TO_ACTIVATE = 8;
     public static final int DBG_ACTIVATED = 9;
-    public static final int PAD_X = 28;
-    public static final int PAD_SLIDER_X = 24;
+    public static final int PAD_X = 38;
+    public static final int PAD_SLIDER_X = 34;
 
-    private Table inputT;
+    // ==== Tables ====
+    Table outerT = new Table(G.game.skin);
+    Table titleT = new Table(G.game.skin);
+    Table contentT = new Table(G.game.skin);
+    Table tabT = new Table(G.game.skin);
+    Table gameT = new Table(G.game.skin);
+    Table inputT = new Table(G.game.skin);
+    Table otherT = new Table(G.game.skin);
+    // private Table inputT;
+
     private boolean dirtInputT = false;
     private TextField player1;
     private TextField player2;
@@ -47,9 +56,9 @@ public class ConfigScreen extends ScreenBase {
 
     protected EventListener controllerEvent;
 
-    public ConfigScreen() {
-        manageInput = false;
-    }
+    // public ConfigScreen() {
+    //     manageInput = false;
+    // }
 
     @Override
     public void show() {
@@ -67,15 +76,6 @@ public class ConfigScreen extends ScreenBase {
 
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
         EventHandler.get().addListener("ControllerConnection.event", controllerEvent);
-
-        // ==== Tables ====
-        Table outerT = new Table(G.game.skin);
-        Table titleT = new Table(G.game.skin);
-        Table contentT = new Table(G.game.skin);
-        Table tabT = new Table(G.game.skin);
-        Table gameT = new Table(G.game.skin);
-        inputT = new Table(G.game.skin);
-        Table otherT = new Table(G.game.skin);
 
         outerT.setFillParent(true);
         titleT.setBackground("bgYellow");
@@ -267,20 +267,28 @@ public class ConfigScreen extends ScreenBase {
                 inputScroll.setVisible(inputButt.isChecked());
                 otherScroll.setVisible(otherButt.isChecked());
 
-                if (gameButt.isChecked())
+                actorsIndex.clearIndex();
+
+                if (gameButt.isChecked()) {
                     gameButt.setStyle(buttOn);
-                else
+                    actorsIndex.buildIndex(outerT, titleT, contentT, tabT, gameT);
+                } else {
                     gameButt.setStyle(buttOff);
+                }
 
-                if (inputButt.isChecked())
+                if (inputButt.isChecked()) {
                     inputButt.setStyle(buttOn);
-                else
+                    actorsIndex.buildIndex(outerT, titleT, contentT, tabT, inputT);
+                } else {
                     inputButt.setStyle(buttOff);
+                }
 
-                if (otherButt.isChecked())
+                if (otherButt.isChecked()) {
                     otherButt.setStyle(buttOn);
-                else
+                    actorsIndex.buildIndex(outerT, titleT, contentT, tabT, otherT);
+                } else {
                     otherButt.setStyle(buttOff);
+                }
             }
         };
 
@@ -368,6 +376,8 @@ public class ConfigScreen extends ScreenBase {
 
         stage.addActor(outerT);
         titleT.setDebug(G.game.dbg.uiTable);
+        stage.act();
+        actorsIndex.buildIndex(outerT, titleT, contentT, tabT, gameT);
     }
 
     private void inputLoop() {
@@ -375,7 +385,7 @@ public class ConfigScreen extends ScreenBase {
         inputT.clearChildren();
         final Array<Cfg.Player> pls = G.game.data.players;
 
-        G.game.input.targetsClear();
+        // G.game.input.targetsClear();
 
         final ControllerActor controllerActor = new ControllerActor();
         inputT.add(controllerActor).colspan(4).align(Align.center).row();
@@ -423,7 +433,7 @@ public class ConfigScreen extends ScreenBase {
                 downBtt.setTouchable(Touchable.disabled);
             }
 
-            G.game.input.addTarget(inputActor);
+            // G.game.input.addTarget(inputActor);
 
             inputT.add(inputActor).padTop(20);
             inputT.add(editBtt).padTop(20);
@@ -453,7 +463,7 @@ public class ConfigScreen extends ScreenBase {
             upBtt.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    G.game.input.moveInput(index, -1);
+                    // G.game.input.moveInput(index, -1);
                     dirtInputT = true;
                 }
             });
@@ -461,13 +471,13 @@ public class ConfigScreen extends ScreenBase {
             downBtt.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    G.game.input.moveInput(index, 1);
+                    // G.game.input.moveInput(index, 1);
                     dirtInputT = true;
                 }
             });
         }
 
-        G.game.input.linkAll();
+        // G.game.input.linkAll();
     }
 
     private static String formatDelta(float delta) {
@@ -596,10 +606,37 @@ public class ConfigScreen extends ScreenBase {
         G.game.batch.end();
 
         if (dirtInputT) {
-            inputLoop();
+            // inputLoop();
         }
         stage.act(delta);
         stage.draw();
+
+        G.game.batch.begin();
+        actorsIndex.render();
+
+        /* float padM = G.style.padMedium;
+
+        // Tab buttons
+        for (Cell row : tabT.getCells()) {
+            if (!(row.getActor() instanceof TextButton)) {
+                continue;
+            }
+
+            // float rowX = row.getActorX() + titleT.getX() + tabT.getX() + contentT.getX() - (2f * padM);
+            // float rowY = row.getActorY() + titleT.getY() + tabT.getY() + contentT.getY() + (row.getActor().getHeight() / 2f) - (padM / 2f);
+            Actor a = row.getActor();
+            float rowX = 0f;
+            float rowY = 0f;
+            while (a != null) {
+                rowX += a.getX();
+                rowY += a.getY();
+                a = a.getParent();
+            }
+
+            G.game.batch.draw(G.game.atlas.findRegion("game/number_bg"), rowX, rowY, padM, padM);
+        } */
+
+        G.game.batch.end();
     }
 
     public void updatePlayers() {

@@ -4,12 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
+import com.vpjardim.colorbeans.input.ActorsIndex;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
@@ -22,6 +27,7 @@ public class ScreenBase implements Screen, TargetBase {
     protected Viewport viewport;
     protected Stage stage;
     protected EventListener specialKeyDown;
+    protected ActorsIndex actorsIndex;
     protected boolean manageInput = true;
     public float time;
 
@@ -39,6 +45,8 @@ public class ScreenBase implements Screen, TargetBase {
         cam = new OrthographicCamera();
         viewport = new ScreenViewport(cam);
         viewport.apply(true);
+
+        actorsIndex = new ActorsIndex();
 
         if (G.game.batch != null) {
             stage = new Stage(viewport, G.game.batch);
@@ -104,22 +112,46 @@ public class ScreenBase implements Screen, TargetBase {
 
     @Override
     public void btStartDown() {
+        if (actorsIndex.getSelectedData() == null) {
+            return;
+        }
+
+        Actor actor = actorsIndex.getSelectedData().actor;
+
+        if (actor instanceof TextButton) {
+            TextButton button = (TextButton) actor;
+            InputEvent event1 = new InputEvent();
+            event1.setType(InputEvent.Type.touchDown);
+            button.fire(event1);
+            InputEvent event2 = new InputEvent();
+            event2.setType(InputEvent.Type.touchUp);
+            button.fire(event2);
+        } else if (actor instanceof Slider) {
+            Slider slider = (Slider) actor;
+            float newValue = slider.getValue() + slider.getStepSize();
+            slider.setValue(newValue);
+        }
+
     }
 
     @Override
     public void bt1Down() {
+        actorsIndex.next();
     }
 
     @Override
     public void bt2Down() {
+        actorsIndex.previous();
     }
 
     @Override
     public void bt3Down() {
+        actorsIndex.next();
     }
 
     @Override
     public void bt4Down() {
+        actorsIndex.previous();
     }
 
     @Override
