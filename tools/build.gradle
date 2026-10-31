@@ -31,3 +31,10 @@ task debug(dependsOn: classes, type: JavaExec) {
 }
 
 eclipse.project.name = appName + "-desktop"
+
+tasks.register("convertAudioForIOS", JavaExec) {
+    dependsOn classes
+    mainClass = "com.vpjardim.colorbeans.ConvertAudioForIOS"
+    classpath = sourceSets.main.runtimeClasspath
+    workingDir = rootDir
+}

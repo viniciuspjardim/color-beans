@@ -1,12 +1,13 @@
 # AGENTS.md
 
-Color Beans: a libGDX falling-block game where you match beans of the same color. Every module wraps `core`. Desktop, HTML (GWT) and Android are thin launchers around it.
+Color Beans: a libGDX falling-block game where you match beans of the same color. Every module wraps `core`. Desktop, HTML (GWT), Android and iOS (RoboVM) are thin launchers around it.
 
 ## Commands
 
 - Run on desktop: `./gradlew desktop:run` (the task already adds `-XstartOnFirstThread` on macOS)
 - Run in the browser: `./gradlew html:superDev`, then open http://localhost:8080. It also opens GWT's dev mode window; refreshing the page recompiles changed sources
-- Release builds: `./gradlew desktop:distDesktop`, `./gradlew html:distGWT` (output in `html/build/dist`), `./gradlew android:assembleRelease`
+- Run on iOS: `./gradlew ios:launchIPhoneSimulator -Probovm.device.name="iPhone 17"` (any name from `xcrun simctl list devices`). The first build takes a few minutes; RoboVM compiles the whole runtime ahead of time
+- Release builds: `./gradlew desktop:distDesktop`, `./gradlew html:distGWT` (output in `html/build/dist`), `./gradlew android:assembleRelease`, `./gradlew ios:createIPA` (needs Apple signing set up)
 
 The `AndroidKey` signing config in `android/build.gradle` is only defined when the `AndroidKeys` env var points at the folder with `AndroidKey.properties`. It is exported in `~/.zshrc`; other builds don't need it.
 
@@ -22,6 +23,7 @@ FreeType on the web comes from the third-party `gdx-freetype-gwt`, whose version
 
 ## Assets
 
+- Audio: iOS can't play Ogg Vorbis, so it ships AAC copies of `assets/audio/*.ogg` from `ios/assets/audio/`, and `LoadingScreen` maps the names on iOS. After adding or changing audio, run `./gradlew tools:convertAudioForIOS` (macOS only) and commit the `.m4a` files.
 - Sprites: edit sources in `to_pack/`, then run `tools`' `PackTextures` from the repo root. It writes to `packed/`; copy `pack.atlas` and `pack*.png` from there into `assets/img/`.
 - `to_pack/`, `packed/` and `state/` are gitignored. `state/` holds runtime saves (`cfg.json`, `scores.json`), relative to the working directory: `assets/state/` under `desktop:run`, the repo root's `state/` under the IDE run configs.
 

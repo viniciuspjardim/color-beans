@@ -27,10 +27,15 @@ public class MenuScreen extends ScreenBase {
     public void show() {
         super.show();
 
+        // Browser pages can't close themselves and iOS apps must not quit, so there's no exit
+        Application.ApplicationType appType = Gdx.app.getType();
+        final boolean canExit = appType != Application.ApplicationType.WebGL
+                && appType != Application.ApplicationType.iOS;
+
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
 
-            if (G.isBackKey(key)) {
+            if (canExit && G.isBackKey(key)) {
                 Gdx.app.exit();
             }
         };
@@ -112,7 +117,7 @@ public class MenuScreen extends ScreenBase {
         table.add(optionsButt);
         table.row();
 
-        if (Gdx.app.getType() != Application.ApplicationType.WebGL) {
+        if (canExit) {
             table.add(exitButt);
         }
 

@@ -1,4 +1,7 @@
 buildscript {
+    ext {
+        robovmVersion = "2.3.26"
+    }
     repositories {
         mavenLocal()
         mavenCentral()
@@ -8,6 +11,7 @@ buildscript {
     dependencies {
         classpath "org.docstr.gwt:org.docstr.gwt.gradle.plugin:2.2.7"
         classpath "com.android.tools.build:gradle:8.9.3"
+        classpath "com.mobidevelop.robovm:robovm-gradle-plugin:$robovmVersion"
     }
 }
 
@@ -69,6 +73,20 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
+    }
+}
+
+project(":ios") {
+    apply plugin: "java-library"
+    apply plugin: "robovm"
+    dependencies {
+        implementation project(":core")
+        api "com.mobidevelop.robovm:robovm-rt:$robovmVersion"
+        api "com.mobidevelop.robovm:robovm-cocoatouch:$robovmVersion"
+        api "com.badlogicgames.gdx:gdx-backend-robovm-metalangle:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+        api "com.badlogicgames.gdx-controllers:gdx-controllers-ios:$gdxControllersVersion"
+        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
     }
 }
 

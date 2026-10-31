@@ -1,5 +1,6 @@
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
@@ -44,9 +45,20 @@ public class LoadingScreen extends ScreenBase {
         G.style.setDefaults();
         G.style.scale(G.scale);
 
-        G.game.assets = new AssetManager();
-
         FileHandleResolver resolver = new InternalFileHandleResolver();
+
+        if (Gdx.app.getType() == Application.ApplicationType.iOS) {
+            // iOS can't decode Ogg Vorbis, so its build ships AAC copies of the .ogg files. See
+            // tools' ConvertAudioForIOS. Assets keep their .ogg names everywhere else in the code
+            G.game.assets = new AssetManager(fileName -> {
+                if (fileName.endsWith(".ogg")) {
+                    fileName = fileName.substring(0, fileName.length() - ".ogg".length()) + ".m4a";
+                }
+                return Gdx.files.internal(fileName);
+            });
+        } else {
+            G.game.assets = new AssetManager(resolver);
+        }
         G.game.assets.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
         G.game.assets.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
 

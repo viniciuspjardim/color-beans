@@ -203,7 +203,9 @@ public class Db {
             p.button2 = 97;
             p.button3 = 96;
             p.button4 = 99;
-        } else if (Gdx.app.getType() == Application.ApplicationType.WebGL) {
+        } else if (Gdx.app.getType() == Application.ApplicationType.WebGL
+                || Gdx.app.getType() == Application.ApplicationType.iOS) {
+            // Browser standard gamepad mapping and iOS MFi mapping use the same button codes
             p = new Profile();
             ctrlProfs.add(p);
             p.up = 12;
