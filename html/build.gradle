@@ -61,5 +61,7 @@ tasks.named("gwtDevMode") { mustRunAfter "distGWT" }
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 sourceSets.main.java.srcDirs = ["src/"]
+// GWT-only super-source (see FreetypeFix.gwt.xml). javac must skip it
+sourceSets.main.java.exclude "**/emu/**"
 
 eclipse.project.name = appName + "-html"

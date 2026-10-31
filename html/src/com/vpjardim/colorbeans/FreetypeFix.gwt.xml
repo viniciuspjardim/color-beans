@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE module PUBLIC
+    "-//Google Inc.//DTD Google Web Toolkit 2.11.0//EN"
+    "https://www.gwtproject.org/doctype/2.11.0/gwt-module.dtd">
+<!--
+    Overrides gdx-freetype-gwt 1.14.0's emulated FreeTypeFontGenerator. Its createGlyph creates the
+    shadow pixmap as a plain Pixmap and then casts it to FreeTypePixmap, so any font with a visible
+    shadow throws ClassCastException. emu/.../FreeTypeFontGenerator.java is the library's file with
+    that one line fixed. Must be inherited after freetype-gwt so this super-source wins. Delete it
+    once a fixed gdx-freetype-gwt is released.
+-->
+<module>
+    <super-source path="emu" />
+</module>

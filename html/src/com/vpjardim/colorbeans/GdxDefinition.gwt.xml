@@ -8,6 +8,7 @@
     <inherits name='com.badlogic.gdx.ai' />
     <inherits name='aurelienribon.tweenengine' />
     <inherits name="com.badlogic.gdx.graphics.g2d.freetype.freetype-gwt" />
+    <inherits name="com.vpjardim.colorbeans.FreetypeFix" />
 
     <inherits name='G' />
     <entry-point class='com.vpjardim.colorbeans.client.HtmlLauncher' />
