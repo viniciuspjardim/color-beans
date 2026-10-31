@@ -10,6 +10,8 @@ Color Beans: a libGDX falling-block game where you match beans of the same color
 
 Every Gradle command, desktop included, needs the `AndroidKeys` env var: `android/build.gradle` loads `$AndroidKeys/AndroidKey.properties` at configuration time. It is exported in `~/.zshrc`, which non-interactive shells skip, so if it's unset, prefix commands with `AndroidKeys=<value from ~/.zshrc>`.
 
+Use JDK 17 for Gradle: Gradle 8.5 can't run on Java 22+, and 17 is the tested version.
+
 There is no test suite. Check a change by building it and running the game.
 
 ## Core must compile under GWT
@@ -19,7 +21,7 @@ The browser build compiles `core/src` (`G.gwt.xml`) to JavaScript, so `core` can
 ## Assets
 
 - Sprites: edit sources in `to_pack/`, then run `tools`' `PackTextures` from the repo root. It writes to `packed/`; copy `pack.atlas` and `pack*.png` from there into `assets/img/`.
-- `to_pack/`, `packed/` and `state/` are gitignored. `state/` holds runtime saves (`cfg.json`, `scores.json`), relative to the working directory: `assets/state/` under `desktop:run`, the repo root's `state/` under the IntelliJ run configs.
+- `to_pack/`, `packed/` and `state/` are gitignored. `state/` holds runtime saves (`cfg.json`, `scores.json`), relative to the working directory: `assets/state/` under `desktop:run`, the repo root's `state/` under the IDE run configs.
 
 ## Code orientation
 
