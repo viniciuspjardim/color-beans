@@ -1,24 +1,27 @@
 android {
-    compileSdk 33
+    namespace = "com.vpjardim.colorbeans"
+    compileSdk = 36
 
-    // Using AndroidKeys env var to keep the path of the file that contain the data for the Android
-    // Keys
-    def keyPropFile = file("$System.env.AndroidKeys/AndroidKey.properties")
-    def keyProp = new Properties()
-    keyProp.load(new FileInputStream(keyPropFile))
+    // The AndroidKeys env var holds the path of the folder with AndroidKey.properties and the
+    // keystore. It's only needed to sign release builds, so other builds work without it
+    def keyPropFile = file("${System.env.AndroidKeys}/AndroidKey.properties")
+    if (System.env.AndroidKeys && keyPropFile.exists()) {
+        def keyProp = new Properties()
+        keyPropFile.withInputStream { keyProp.load(it) }
 
-    signingConfigs {
-        AndroidKey {
-            storeFile file("$System.env.AndroidKeys/${keyProp['storeFile']}")
-            storePassword keyProp["storePassword"]
-            keyAlias keyProp["keyAlias"]
-            keyPassword keyProp["keyPassword"]
+        signingConfigs {
+            AndroidKey {
+                storeFile = file("${System.env.AndroidKeys}/${keyProp['storeFile']}")
+                storePassword = keyProp["storePassword"]
+                keyAlias = keyProp["keyAlias"]
+                keyPassword = keyProp["keyPassword"]
+            }
         }
     }
 
     sourceSets {
         main {
-            manifest.srcFile "AndroidManifest.xml"
+            manifest.srcFile("AndroidManifest.xml")
             java.srcDirs = ["src"]
             aidl.srcDirs = ["src"]
             renderscript.srcDirs = ["src"]
@@ -28,21 +31,28 @@ android {
         }
     }
 
-    packagingOptions {
-        exclude 'META-INF/robovm/ios/robovm.xml'
+    packaging {
+        resources {
+            excludes += ["META-INF/robovm/ios/robovm.xml", "**/*.gwt.xml"]
+        }
     }
 
     defaultConfig {
-        applicationId "com.gmail.vpjardimdev.colorbeans"
-        minSdkVersion 16
-        targetSdkVersion 33
-        versionCode 12
-        versionName "0.1.10"
+        applicationId = "com.gmail.vpjardimdev.colorbeans"
+        minSdk = 21
+        targetSdk = 36
+        versionCode = 12
+        versionName = "0.1.10"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled = true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -98,7 +108,7 @@ tasks.register('run', Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", "shell", "am", "start", "-n", "com.vpjardim.colorbeans/com.vpjardim.colorbeans.AndroidLauncher"
+    commandLine "$adb", "shell", "am", "start", "-n", "com.gmail.vpjardimdev.colorbeans/com.vpjardim.colorbeans.AndroidLauncher"
 }
 
 eclipse.project.name = appName + "-android"

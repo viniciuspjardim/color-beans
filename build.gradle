@@ -3,13 +3,11 @@ buildscript {
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
     }
     dependencies {
-        classpath "org.wisepersist:gwt-gradle-plugin:1.1.16"
-        classpath "org.gretty:gretty:3.1.0"
-        classpath "com.android.tools.build:gradle:7.4.2"
+        classpath "org.docstr.gwt:org.docstr.gwt.gradle.plugin:2.2.7"
+        classpath "com.android.tools.build:gradle:8.9.3"
     }
 }
 
@@ -18,18 +16,16 @@ allprojects {
     version = "0.1.10"
     ext {
         appName = "Color Beans"
-        gdxVersion = "1.12.1"
-        gdxControllersVersion = "2.2.3"
+        gdxVersion = "1.14.2"
+        gdxControllersVersion = "2.2.4"
         aiVersion = "1.8.2"
+        gwtVersion = "2.11.0" // Must match the GWT version the libGDX GWT backend is built with
     }
     repositories {
         mavenLocal()
         mavenCentral()
         google()
-        gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://jitpack.io" }
+        maven { url = "https://jitpack.io" }
     }
 }
 
@@ -78,22 +74,22 @@ project(":android") {
 
 project(":html") {
     apply plugin: "java-library"
-    apply plugin: "gwt"
+    apply plugin: "org.docstr.gwt"
     apply plugin: "war"
-    apply plugin: "org.gretty"
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        api "com.google.jsinterop:jsinterop-annotations:2.1.0:sources"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion:sources"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion:sources"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
         api "org.mini2Dx:universal-tween-engine:6.3.3"
         api "org.mini2Dx:universal-tween-engine:6.3.3:sources"
-        api "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:1.9.10.1"
-        api "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:1.9.10.1:sources"
+        api "com.github.tommyettinger:gdx-freetype-gwt:1.14.0"
+        api "com.github.tommyettinger:gdx-freetype-gwt:1.14.0:sources"
     }
 }
 

@@ -1,94 +1,65 @@
+// GWT output, the web page and the preloaded assets all go here. superDev serves it on port 8080
+def distDir = "build/dist"
+
 gwt {
-    gwtVersion = '2.10.0' // Should match the gwt version used for building the gwt backend
+    gwtVersion = project.gwtVersion
     maxHeapSize = "2G" // Default 256m is not enough for gwt compiler. GWT is HUNGRY
     minHeapSize = "1G"
 
-    src = files(file("src/")) // Needs to be in front of "modules" below.
-    modules 'com.vpjardim.colorbeans.GdxDefinition'
-    devModules 'com.vpjardim.colorbeans.GdxDefinitionSuperdev'
-    project.webAppDirName = 'webapp'
+    modules = ["com.vpjardim.colorbeans.GdxDefinition"]
+    war = file(distDir)
 
     compiler {
         strict = true
-        disableCastChecking = true
         // The line bellow makes the code to not be minified. Useful for debugging only.
-        // style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED;
+        // style = "DETAILED"
+    }
+
+    devMode {
+        port = 8080
+        startupUrl = "http://localhost:8080/index.html"
+        modules = ["com.vpjardim.colorbeans.GdxDefinitionSuperdev"]
     }
 }
 
-import org.akhikhl.gretty.AppBeforeIntegrationTestTask
-import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
+// GWT compiles from sources, so it needs core's sources and module file (G.gwt.xml)
+gwt.extraSourceDirs.from(
+        file("src/"),
+        files(project(":core").sourceSets.main.allJava.srcDirs)
+)
 
-gretty.httpPort = 8080
-gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
-gretty.contextPath = "/"
-gretty.portPropertiesFileName = "TEMP_PORTS.properties"
+// war/ holds the assets the libGDX preloader copies during compilation. Clean it so deleted
+// assets don't linger
+clean.delete += [file("war")]
 
-task startHttpServer() {
-    dependsOn draftCompileGwt
-
-    doFirst {
-        copy {
-            from "webapp"
-            into gretty.resourceBase
-        }
-
-        copy {
-            from "war"
-            into gretty.resourceBase
-        }
-    }
-}
-
-task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
-    // The next line allows ports to be reused instead of
-    // needing a process to be manually terminated.
-    file("build/TEMP_PORTS.properties").delete()
-    // Somewhat of a hack; uses Gretty's support for wrapping a task in
-    // a start and then stop of a Jetty server that serves files while
-    // also running the SuperDev code server.
-    integrationTestTask 'superDev'
-
-    interactive false
-}
-
-task superDev(type: GwtSuperDev) {
-    dependsOn startHttpServer
-    doFirst {
-        gwt.modules = gwt.devModules
-    }
-}
-
-task distGWT(dependsOn: [clean, compileGwt]) {
+tasks.register("distGWT") {
+    dependsOn "clean", "gwtCompile"
     doLast {
-        file("build/dist").mkdirs()
-        copy {
-            from "build/gwt/out"
-            into "build/dist"
-        }
         copy {
             from "webapp"
-            into "build/dist"
+            into distDir
         }
         copy {
             from "war"
-            into "build/dist"
+            into distDir
         }
     }
 }
 
-task addSource {
-    doLast {
-        sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
-    }
+tasks.matching { it.name in ["processResources", "compileJava", "gwtCompile"] }.configureEach {
+    mustRunAfter "clean"
 }
 
-tasks.compileGwt.dependsOn(addSource)
-tasks.draftCompileGwt.dependsOn(addSource)
-tasks.checkGwt.dependsOn(addSource)
-checkGwt.war = file("war")
+// Opens GWT's dev mode window and serves the game on http://localhost:8080. Refreshing the
+// page recompiles changed sources
+tasks.register("superDev") {
+    dependsOn "distGWT", "gwtDevMode"
+}
 
-sourceCompatibility = 1.8
+tasks.named("gwtDevMode") { mustRunAfter "distGWT" }
+
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_1_8
 sourceSets.main.java.srcDirs = ["src/"]
 
 eclipse.project.name = appName + "-html"

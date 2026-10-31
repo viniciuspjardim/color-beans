@@ -5,18 +5,20 @@ Color Beans: a libGDX falling-block game where you match beans of the same color
 ## Commands
 
 - Run on desktop: `./gradlew desktop:run` (the task already adds `-XstartOnFirstThread` on macOS)
-- Run in the browser: `./gradlew html:superDev`, then open http://localhost:8080
-- Release builds: `./gradlew desktop:distDesktop`, `./gradlew html:distGWT`
+- Run in the browser: `./gradlew html:superDev`, then open http://localhost:8080. It also opens GWT's dev mode window; refreshing the page recompiles changed sources
+- Release builds: `./gradlew desktop:distDesktop`, `./gradlew html:distGWT` (output in `html/build/dist`), `./gradlew android:assembleRelease`
 
-Every Gradle command, desktop included, needs the `AndroidKeys` env var: `android/build.gradle` loads `$AndroidKeys/AndroidKey.properties` at configuration time. It is exported in `~/.zshrc`, which non-interactive shells skip, so if it's unset, prefix commands with `AndroidKeys=<value from ~/.zshrc>`.
+The `AndroidKey` signing config in `android/build.gradle` is only defined when the `AndroidKeys` env var points at the folder with `AndroidKey.properties`. It is exported in `~/.zshrc`; other builds don't need it.
 
-Use JDK 17 for Gradle: Gradle 8.5 can't run on Java 22+, and 17 is the tested version.
+Use JDK 17 for Gradle. Gradle 9 needs at least 17, and 17 is the tested version.
 
 There is no test suite. Check a change by building it and running the game.
 
 ## Core must compile under GWT
 
-The browser build compiles `core/src` (`G.gwt.xml`) to JavaScript, so `core` can only use the JRE subset GWT emulates. That rules out reflection, `String.format`, `java.io` files, threads and most of `java.util.concurrent`. Use libGDX equivalents instead (`Gdx.files`, `Json`, `Array`, `ObjectMap`). Platform-specific code goes in the launcher modules. After touching `core`, run `./gradlew html:compileGwt`; desktop builds won't catch these errors.
+The browser build compiles `core/src` (`G.gwt.xml`) to JavaScript, so `core` can only use the JRE subset GWT emulates. That rules out reflection, `String.format`, `java.io` files, threads and most of `java.util.concurrent`. Use libGDX equivalents instead (`Gdx.files`, `Json`, `Array`, `ObjectMap`). Platform-specific code goes in the launcher modules. After touching `core`, run `./gradlew html:gwtCompile`; desktop builds won't catch these errors.
+
+FreeType on the web comes from the third-party `gdx-freetype-gwt`, whose version must match libGDX's. `html/src/.../FreetypeFix.gwt.xml` patches a bug in it; see that file before upgrading either.
 
 ## Assets
 

@@ -1,4 +1,5 @@
-sourceCompatibility = 1.8
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_1_8
 sourceSets.main.java.srcDirs = ["src/"]
 sourceSets.main.resources.srcDirs = ["../assets"]
 
@@ -30,7 +31,7 @@ task debug(dependsOn: classes, type: JavaExec) {
 }
 
 task distDesktop(type: Jar) {
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes "Main-Class": project.mainClassName
     }

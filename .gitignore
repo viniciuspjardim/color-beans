@@ -107,9 +107,6 @@ nb-configuration.xml
 
 ## Gradle
 
-/gradle/
-/gradlew
-/gradlew.bat
 /local.properties
 /build/
 
