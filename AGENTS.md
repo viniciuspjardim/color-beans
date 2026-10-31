@@ -5,13 +5,11 @@ Color Beans: a libGDX falling-block game where you match beans of the same color
 ## Commands
 
 - Run on desktop: `./gradlew desktop:run` (the task already adds `-XstartOnFirstThread` on macOS)
-- Run in the browser: `./gradlew html:superDev`, then open http://localhost:8080. It also opens GWT's dev mode window; refreshing the page recompiles changed sources
-- Run on iOS: `./gradlew ios:launchIPhoneSimulator -Probovm.device.name="iPhone 17"` (any name from `xcrun simctl list devices`). The first build takes a few minutes; RoboVM compiles the whole runtime ahead of time
-- Release builds: `./gradlew desktop:distDesktop`, `./gradlew html:distGWT` (output in `html/build/dist`), `./gradlew android:assembleRelease`, `./gradlew ios:createIPA` (needs Apple signing set up)
+- Run in the browser: `./gradlew html:superDev`, then open http://localhost:8080
+- Run on iOS: `./gradlew ios:launchIPhoneSimulator -Probovm.device.name="iPhone 17"` (a name from `xcrun simctl list devices`)
+- Release builds: `./gradlew desktop:distDesktop`, `./gradlew html:distGWT`
 
-The `AndroidKey` signing config in `android/build.gradle` is only defined when the `AndroidKeys` env var points at the folder with `AndroidKey.properties`. It is exported in `~/.zshrc`; other builds don't need it.
-
-Use JDK 17 for Gradle. Gradle 9 needs at least 17, and 17 is the tested version.
+Use JDK 17 for Gradle; it's the tested version.
 
 There is no test suite. Check a change by building it and running the game.
 
@@ -19,11 +17,11 @@ There is no test suite. Check a change by building it and running the game.
 
 The browser build compiles `core/src` (`G.gwt.xml`) to JavaScript, so `core` can only use the JRE subset GWT emulates. That rules out reflection, `String.format`, `java.io` files, threads and most of `java.util.concurrent`. Use libGDX equivalents instead (`Gdx.files`, `Json`, `Array`, `ObjectMap`). Platform-specific code goes in the launcher modules. After touching `core`, run `./gradlew html:gwtCompile`; desktop builds won't catch these errors.
 
-FreeType on the web comes from the third-party `gdx-freetype-gwt`, whose version must match libGDX's. `html/src/.../FreetypeFix.gwt.xml` patches a bug in it; see that file before upgrading either.
+Before upgrading libGDX, read `html/src/com/vpjardim/colorbeans/FreetypeFix.gwt.xml`: web FreeType comes from a third-party library that must match libGDX's version, and that file patches it.
 
 ## Assets
 
-- Audio: iOS can't play Ogg Vorbis, so it ships AAC copies of `assets/audio/*.ogg` from `ios/assets/audio/`, and `LoadingScreen` maps the names on iOS. After adding or changing audio, run `./gradlew tools:convertAudioForIOS` (macOS only) and commit the `.m4a` files.
+- Audio: iOS can't play `.ogg`. After changing `assets/audio/`, run `./gradlew tools:convertAudioForIOS` and commit the `.m4a` copies it writes to `ios/assets/audio/`.
 - Sprites: edit sources in `to_pack/`, then run `tools`' `PackTextures` from the repo root. It writes to `packed/`; copy `pack.atlas` and `pack*.png` from there into `assets/img/`.
 - `to_pack/`, `packed/` and `state/` are gitignored. `state/` holds runtime saves (`cfg.json`, `scores.json`), relative to the working directory: `assets/state/` under `desktop:run`, the repo root's `state/` under the IDE run configs.
 
