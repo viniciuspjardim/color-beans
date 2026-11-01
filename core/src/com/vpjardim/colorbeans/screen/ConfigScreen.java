@@ -35,6 +35,7 @@ public class ConfigScreen extends ScreenBase {
     public static final int ACT_CREDITS = 11;
     public static final int DBG_TO_ACTIVATE = 8;
     public static final int DBG_ACTIVATED = 9;
+    /** Paddings in the design's pixels, like the Style's. Times G.scale they're in pixels */
     public static final int PAD_X = 28;
     public static final int PAD_SLIDER_X = 24;
 
@@ -306,41 +307,42 @@ public class ConfigScreen extends ScreenBase {
         contentT.add(tabs).expand().fill();
 
         float bttMinWidth = G.style.buttWidth * 0.5f;
+        float s = G.scale;
 
         tabT.add(gameButt).minWidth(bttMinWidth);
         tabT.add(inputButt).minWidth(bttMinWidth);
         tabT.add(otherButt).minWidth(bttMinWidth);
 
-        gameT.add(new Label("Players:", labelStyle)).padTop(8).padLeft(PAD_X).align(Align.left).row();
-        gameT.add(player1).expandX().fill().pad(0, PAD_X, 0, PAD_X).colspan(2).row();
-        gameT.add(player2).expandX().fill().pad(0, PAD_X, 0, PAD_X).colspan(2).row();
-        gameT.add(player3).expandX().fill().pad(0, PAD_X, 0, PAD_X).colspan(2).row();
-        gameT.add(player4).expandX().fill().pad(0, PAD_X, 0, PAD_X).colspan(2).row();
+        gameT.add(new Label("Players:", labelStyle)).padTop(8 * s).padLeft(PAD_X * s).align(Align.left).row();
+        gameT.add(player1).expandX().fill().pad(0, PAD_X * s, 0, PAD_X * s).colspan(2).row();
+        gameT.add(player2).expandX().fill().pad(0, PAD_X * s, 0, PAD_X * s).colspan(2).row();
+        gameT.add(player3).expandX().fill().pad(0, PAD_X * s, 0, PAD_X * s).colspan(2).row();
+        gameT.add(player4).expandX().fill().pad(0, PAD_X * s, 0, PAD_X * s).colspan(2).row();
 
-        gameT.add(new Label("Co-Op Campaign (2 Players):", labelStyle)).padTop(24).padLeft(PAD_X).align(Align.left);
-        gameT.add(coopS).width(92).padTop(24).padRight(PAD_X).align(Align.right).row();
+        gameT.add(new Label("Co-Op Campaign (2 Players):", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        gameT.add(coopS).width(92 * s).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
 
-        gameT.add(new Label("Difficulty:", labelStyle)).padTop(24).padLeft(PAD_X).align(Align.left);
-        gameT.add(difficultyL).padTop(24).padRight(PAD_X).align(Align.right).row();
-        gameT.add(difficultyS).expandX().fill().pad(4, PAD_SLIDER_X, 0, PAD_SLIDER_X).colspan(2).row();
+        gameT.add(new Label("Difficulty:", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        gameT.add(difficultyL).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
+        gameT.add(difficultyS).expandX().fill().pad(4 * s, PAD_SLIDER_X * s, 0, PAD_SLIDER_X * s).colspan(2).row();
 
-        gameT.add(new Label("Current Stage:", labelStyle)).padTop(24).padLeft(PAD_X).align(Align.left);
-        gameT.add(currentStageL).padTop(24).padRight(PAD_X).align(Align.right).row();
-        gameT.add(currentStageS).expandX().fill().pad(4, PAD_SLIDER_X, 0, PAD_SLIDER_X).colspan(2).row();
+        gameT.add(new Label("Current Stage:", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        gameT.add(currentStageL).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
+        gameT.add(currentStageS).expandX().fill().pad(4 * s, PAD_SLIDER_X * s, 0, PAD_SLIDER_X * s).colspan(2).row();
 
-        gameT.add(new Label("Training Speed:", labelStyle)).padTop(24).padLeft(PAD_X).align(Align.left);
-        gameT.add(trainingSpeedL).padTop(24).padRight(PAD_X).align(Align.right).row();
-        gameT.add(trainingSpeedS).expandX().fill().pad(4, PAD_SLIDER_X, 0, PAD_SLIDER_X).colspan(2).row();
+        gameT.add(new Label("Training Speed:", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        gameT.add(trainingSpeedL).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
+        gameT.add(trainingSpeedS).expandX().fill().pad(4 * s, PAD_SLIDER_X * s, 0, PAD_SLIDER_X * s).colspan(2).row();
 
-        otherT.add(new Label("Music Volume:", labelStyle)).padTop(24).padLeft(PAD_X).align(Align.left);
-        otherT.add(musicVolumeL).padTop(24).padRight(PAD_X).align(Align.right).row();
-        otherT.add(musicVolumeS).expandX().fill().pad(4, PAD_SLIDER_X, 0, PAD_SLIDER_X).colspan(2).row();
+        otherT.add(new Label("Music Volume:", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(musicVolumeL).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
+        otherT.add(musicVolumeS).expandX().fill().pad(4 * s, PAD_SLIDER_X * s, 0, PAD_SLIDER_X * s).colspan(2).row();
 
-        otherT.add(new Label("Effects Volume:", labelStyle)).padTop(24).padLeft(PAD_X).align(Align.left);
-        otherT.add(effectsVolumeL).padTop(24).padRight(PAD_X).align(Align.right).row();
-        otherT.add(effectsVolumeS).expandX().fill().pad(4, PAD_SLIDER_X, 0, PAD_SLIDER_X).colspan(2).row();
+        otherT.add(new Label("Effects Volume:", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(effectsVolumeL).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
+        otherT.add(effectsVolumeS).expandX().fill().pad(4 * s, PAD_SLIDER_X * s, 0, PAD_SLIDER_X * s).colspan(2).row();
 
-        otherT.add(versionL).pad(36, PAD_X, 0, PAD_X).colspan(2).row();
+        otherT.add(versionL).pad(36 * s, PAD_X * s, 0, PAD_X * s).colspan(2).row();
 
         if (G.game.dbg.tapsCount == DBG_ACTIVATED) {
             addDebugFields(otherT, labelStyle);
@@ -374,6 +376,7 @@ public class ConfigScreen extends ScreenBase {
         dirtInputT = false;
         inputT.clearChildren();
         final Array<Cfg.Player> pls = G.game.data.players;
+        float s = G.scale;
 
         G.game.input.targetsClear();
 
@@ -425,10 +428,10 @@ public class ConfigScreen extends ScreenBase {
 
             G.game.input.addTarget(inputActor);
 
-            inputT.add(inputActor).padTop(20);
-            inputT.add(editBtt).padTop(20);
-            inputT.add(upBtt).padTop(20);
-            inputT.add(downBtt).padTop(20).row();
+            inputT.add(inputActor).padTop(20 * s);
+            inputT.add(editBtt).padTop(20 * s);
+            inputT.add(upBtt).padTop(20 * s);
+            inputT.add(downBtt).padTop(20 * s).row();
 
             if (!keyMapL.textEquals("0")) {
                 inputT.add(keyMapL).colspan(4).align(Align.left).row();
@@ -485,6 +488,7 @@ public class ConfigScreen extends ScreenBase {
     }
 
     public void addDebugFields(Table otherT, Label.LabelStyle labelStyle) {
+        float s = G.scale;
         // Activate debug options if coop slider is switched 4 times
         // Note: the number 8 is because the event on the coopS is firing twice each time.
         G.game.dbg.tapsCount = DBG_ACTIVATED;
@@ -559,32 +563,32 @@ public class ConfigScreen extends ScreenBase {
             }
         });
 
-        otherT.add(new Label("**** Debug Options ****", labelStyle)).pad(28, PAD_X, 0, PAD_X).align(Align.center).colspan(2).row();
+        otherT.add(new Label("**** Debug Options ****", labelStyle)).pad(28 * s, PAD_X * s, 0, PAD_X * s).align(Align.center).colspan(2).row();
 
-        otherT.add(new Label("Display FPS:", labelStyle)).padTop(24).padLeft(PAD_X).align(Align.left);
-        otherT.add(fpsS).width(92).padTop(24).padRight(PAD_X).align(Align.right).row();
+        otherT.add(new Label("Display FPS:", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(fpsS).width(92 * s).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
 
-        otherT.add(new Label("Debug Beans:", labelStyle)).padTop(8).padLeft(PAD_X).align(Align.left);
-        otherT.add(debugS).width(92).padTop(8).padRight(PAD_X).align(Align.right).row();
+        otherT.add(new Label("Debug Beans:", labelStyle)).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(debugS).width(92 * s).padTop(8 * s).padRight(PAD_X * s).align(Align.right).row();
 
-        otherT.add(new Label("Debug UI:", labelStyle)).padTop(8).padLeft(PAD_X).align(Align.left);
-        otherT.add(uiS).width(92).padTop(8).padRight(PAD_X).align(Align.right).row();
+        otherT.add(new Label("Debug UI:", labelStyle)).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(uiS).width(92 * s).padTop(8 * s).padRight(PAD_X * s).align(Align.right).row();
 
-        otherT.add(new Label("Debug Overlay:", labelStyle)).padTop(8).padLeft(PAD_X).align(Align.left);
-        otherT.add(overlayS).width(92).padTop(8).padRight(PAD_X).align(Align.right).row();
+        otherT.add(new Label("Debug Overlay:", labelStyle)).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(overlayS).width(92 * s).padTop(8 * s).padRight(PAD_X * s).align(Align.right).row();
 
-        otherT.add(new Label("Log Level:", labelStyle)).padTop(16).padLeft(PAD_X).align(Align.left);
-        otherT.add(logLevelL).padTop(16).padRight(PAD_X).align(Align.right).row();
-        otherT.add(logLevelS).expandX().fill().pad(4, PAD_SLIDER_X, 0, PAD_SLIDER_X).colspan(2).row();
+        otherT.add(new Label("Log Level:", labelStyle)).padTop(16 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(logLevelL).padTop(16 * s).padRight(PAD_X * s).align(Align.right).row();
+        otherT.add(logLevelS).expandX().fill().pad(4 * s, PAD_SLIDER_X * s, 0, PAD_SLIDER_X * s).colspan(2).row();
 
-        otherT.add(new Label("Frame Time:", labelStyle)).padTop(16).padLeft(PAD_X).align(Align.left);
-        otherT.add(deltaL).padTop(16).padRight(PAD_X).align(Align.right).row();
-        otherT.add(deltaS).expandX().fill().pad(4, PAD_SLIDER_X, 0, PAD_SLIDER_X).colspan(2).row();
+        otherT.add(new Label("Frame Time:", labelStyle)).padTop(16 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(deltaL).padTop(16 * s).padRight(PAD_X * s).align(Align.right).row();
+        otherT.add(deltaS).expandX().fill().pad(4 * s, PAD_SLIDER_X * s, 0, PAD_SLIDER_X * s).colspan(2).row();
 
-        otherT.add(new Label("Command (key=v1,v2,v3,v4):", labelStyle)).padTop(16).padLeft(PAD_X).align(Align.left);
-        otherT.add(commandL).padTop(16).padRight(PAD_X).align(Align.right).row();
-        otherT.add(commandTF).expandX().fillX().pad(4, PAD_X, 0, 0);
-        otherT.add(commandBT).pad(4, 8, 0, 0);
+        otherT.add(new Label("Command (key=v1,v2,v3,v4):", labelStyle)).padTop(16 * s).padLeft(PAD_X * s).align(Align.left);
+        otherT.add(commandL).padTop(16 * s).padRight(PAD_X * s).align(Align.right).row();
+        otherT.add(commandTF).expandX().fillX().pad(4 * s, PAD_X * s, 0, 0);
+        otherT.add(commandBT).pad(4 * s, 8 * s, 0, 0);
     }
 
     @Override

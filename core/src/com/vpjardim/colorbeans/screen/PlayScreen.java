@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.core.Audio;
@@ -40,6 +41,13 @@ public class PlayScreen extends ScreenBase {
     /** Camera for the maps, in world units where a bean is 1 x 1. See {@link MapRender} */
     private OrthographicCamera worldCam;
     private ExtendViewport worldViewport;
+    /**
+     * Viewport of the buttons and the pause menu. It zooms out to {@link G#playScale},
+     * so on phones they skip the bigger UI and the maps keep their room
+     */
+    private ScreenViewport uiViewport;
+    /** Stage units in a pixel */
+    private float uiUnit;
     /** Camera position after the intro. See {@link #layout(int, int)} */
     private float camX, camY;
     /** Camera x before the intro offset, and where the slide to another map started */
@@ -72,6 +80,11 @@ public class PlayScreen extends ScreenBase {
         G.game.input.removeProcessor(stage);
         G.game.input.addProcessor(0, stage);
 
+        uiUnit = G.scale / G.playScale;
+        uiViewport = new ScreenViewport();
+        uiViewport.setUnitsPerPixel(uiUnit);
+        stage.setViewport(uiViewport);
+
         // Special key event
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
@@ -100,7 +113,7 @@ public class PlayScreen extends ScreenBase {
 
         Table contentT = new Table(G.game.skin);
         contentT.background("bgBlack");
-        contentT.pad(54f, 48f, 54f, 48f);
+        contentT.pad(54f * uiUnit, 48f * uiUnit, 54f * uiUnit, 48f * uiUnit);
         contentT.setBackground("bgBlack");
 
         containerT.add(contentT);
@@ -254,13 +267,13 @@ public class PlayScreen extends ScreenBase {
         int right = g.getSafeInsetRight();
         float pad = G.style.padMedium;
 
-        barT.pad(0f, left + pad, bottom + pad, right + pad);
+        barT.pad(0f, left * uiUnit + pad, bottom * uiUnit + pad, right * uiUnit + pad);
 
         // The maps leave room for the buttons under them. In landscape only the room
         // they don't fill, so they keep their size
         int viewW = width - left - right;
         int viewH = height - bottom - g.getSafeInsetTop();
-        int barH = MathUtils.ceil(G.style.iconButtSize + 2f * pad);
+        int barH = MathUtils.ceil((G.style.iconButtSize + 2f * pad) / uiUnit);
 
         if (!portrait)
             barH = MathUtils.clamp(MathUtils.floor(viewH - viewW * MapRender.VIEW_H / worldW), 0, barH);
@@ -338,15 +351,15 @@ public class PlayScreen extends ScreenBase {
 
         G.game.sr.end();
 
-        // Back to pixels for the menu and the touch input
-        viewport.apply();
+        uiViewport.apply();
         stage.act(delta);
         stage.draw();
 
         containerT.setVisible(manager.isPaused() && menuVisible);
 
-        // If it has a TouchInput draw the box and the arrow of the input
+        // If it has a TouchInput draw the box and the arrow of the input, in pixels
         if (touchInput != null && touchInput.draw) {
+            viewport.apply();
             G.game.sr.setProjectionMatrix(cam.combined);
             G.game.sr.setAutoShapeType(true);
             G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -392,6 +405,7 @@ public class PlayScreen extends ScreenBase {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        uiViewport.update(width, height, true);
         layout(width, height);
         // No slide when the screen turns
         slideTime = SLIDE_TIME;

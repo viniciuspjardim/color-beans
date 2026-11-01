@@ -32,9 +32,11 @@ public class CreditsScreen extends ScreenBase {
         containerT.setFillParent(true);
 
         Table contentT = new Table(G.game.skin);
+        // The paddings are in the design's pixels, like the Style's
+        float s = G.scale;
 
         contentT.background("bgBlack");
-        contentT.pad(32f, 96f, 32f, 96f);
+        contentT.pad(32f * s, 96f * s, 32f * s, 96f * s);
 
         containerT.add(contentT);
 
@@ -66,22 +68,22 @@ public class CreditsScreen extends ScreenBase {
         });
 
         contentT.add(new Label("Code, art and tests:", keyLS)).row();
-        contentT.add(new Label("Vinícius Jardim", valueLS)).padTop(8).row();
+        contentT.add(new Label("Vinícius Jardim", valueLS)).padTop(8 * s).row();
 
-        contentT.add(new Label("More tests:", keyLS)).padTop(32).row();
-        contentT.add(new Label("Anaiara Silva", valueLS)).padTop(8).row();
-        contentT.add(new Label("André Jardim", valueLS)).padTop(8).row();
+        contentT.add(new Label("More tests:", keyLS)).padTop(32 * s).row();
+        contentT.add(new Label("Anaiara Silva", valueLS)).padTop(8 * s).row();
+        contentT.add(new Label("André Jardim", valueLS)).padTop(8 * s).row();
 
-        contentT.add(new Label("Color Beans is a clone from:", keyLS)).padTop(32).row();
-        contentT.add(new Label("SEGA's Puyo Puyo", valueRegLS)).padTop(8).row();
+        contentT.add(new Label("Color Beans is a clone from:", keyLS)).padTop(32 * s).row();
+        contentT.add(new Label("SEGA's Puyo Puyo", valueRegLS)).padTop(8 * s).row();
 
-        contentT.add(new Label("More info at:", keyLS)).padTop(32).row();
-        contentT.add(repositoryL).padTop(8).row();
+        contentT.add(new Label("More info at:", keyLS)).padTop(32 * s).row();
+        contentT.add(repositoryL).padTop(8 * s).row();
 
-        contentT.add(new Label("****", keyLS)).padTop(32).row();
+        contentT.add(new Label("****", keyLS)).padTop(32 * s).row();
 
-        contentT.add(new Label("Thanks for playing!", valueLS)).padTop(32).row();
-        contentT.add(backBtt).width(G.style.buttWidth).padTop(48);
+        contentT.add(new Label("Thanks for playing!", valueLS)).padTop(32 * s).row();
+        contentT.add(backBtt).width(G.style.buttWidth).padTop(48 * s);
 
         stage.addActor(containerT);
 

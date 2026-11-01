@@ -20,7 +20,7 @@ public class MenuScreen extends ScreenBase {
     public static final int ACT_SCORE = 12;
     public static final int ACT_CONFIG = 13;
 
-    /** Part of the window the menu may take at most */
+    /** Part of the window's height the menu may take at most. It can take the whole width */
     private static final float MAX_FILL = 0.9f;
 
     private Stack menu;
@@ -164,9 +164,10 @@ public class MenuScreen extends ScreenBase {
             return;
 
         // Fonts and images were sized for the window at startup. Zoom so the menu keeps its
-        // size relative to the window, and zoom out more when it would still not fit
-        float zoom = Style.scaleFor(width, height) / G.scale;
-        float fit = MAX_FILL * Math.min(width / menu.getPrefWidth(), height / menu.getPrefHeight());
+        // size relative to the window, and zoom out more when it would still not fit. On
+        // phones it doesn't, and the ribbon's ends reach the window's sides
+        float zoom = Style.uiScaleFor(width, height) / G.scale;
+        float fit = Math.min(width / menu.getPrefWidth(), MAX_FILL * height / menu.getPrefHeight());
 
         menuViewport.setUnitsPerPixel(1f / Math.min(zoom, fit));
         menuViewport.update(width, height, true);

@@ -155,15 +155,15 @@ public class ScoreScreen extends ScreenBase {
 
             label = new Label(Integer.toString(cont), labelStyle);
             label.setAlignment(Align.center);
-            campaignT.add(label).width(bttMinWidth);
+            campaignT.add(label).prefWidth(bttMinWidth);
 
             label = new Label(row.nick, labelStyle);
             label.setAlignment(Align.center);
-            campaignT.add(label).width(bttMinWidth);
+            campaignT.add(label).prefWidth(bttMinWidth);
 
             label = new Label(Integer.toString(row.score), labelStyle);
             label.setAlignment(Align.center);
-            campaignT.add(label).width(bttMinWidth);
+            campaignT.add(label).prefWidth(bttMinWidth);
 
             campaignT.row().pad(padM, 0, 0, 0);
             cont++;

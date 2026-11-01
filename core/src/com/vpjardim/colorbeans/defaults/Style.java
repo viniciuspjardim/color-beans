@@ -1,6 +1,13 @@
 package com.vpjardim.colorbeans.defaults;
 
+import com.badlogic.gdx.Gdx;
+
 public class Style {
+    /** Screens with a short side under this many dp are phones. Android's tablet breakpoint */
+    private static final float PHONE_MAX_DP = 600f;
+    /** On phones, the least dp a design pixel takes, so the text is big enough to read */
+    private static final float PHONE_MIN_DP = 0.7f;
+
     public int fontSizeVSmall;
     public int fontSizeSmall;
     public int fontSizeMedium;
@@ -27,6 +34,36 @@ public class Style {
      */
     public static float scaleFor(float width, float height) {
         return Math.min(width / 800f, height / 1080f);
+    }
+
+    /**
+     * The UI scale: {@link #scaleFor(float, float)}, raised on phones. A phone has about
+     * as many pixels as a tablet on a much smaller screen, so fitting the design alone
+     * leaves its text too small. The screens that don't fit then zoom out or scroll
+     */
+    public static float uiScaleFor(float width, float height) {
+        float scale = scaleFor(width, height);
+        float dp = dpSize();
+
+        if (dp > 0f && Math.min(width, height) / dp < PHONE_MAX_DP)
+            scale = Math.max(scale, PHONE_MIN_DP * dp);
+
+        return scale;
+    }
+
+    /** Pixels in a dp, or 0 where it isn't known, like on desktop */
+    private static float dpSize() {
+        switch (Gdx.app.getType()) {
+            case Android:
+            case iOS:
+                return Gdx.graphics.getDensity();
+            case WebGL:
+                // Browsers take a CSS pixel as 1/96 inch. On phones it's about a dp, so this
+                // is the device pixel ratio
+                return Gdx.graphics.getPpiX() / 96f;
+            default:
+                return 0f;
+        }
     }
 
     public void setDefaults() {

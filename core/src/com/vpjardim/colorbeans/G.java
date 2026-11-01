@@ -48,7 +48,13 @@ import aurelienribon.tweenengine.Tween;
 public class G extends Game {
     public static G game;
     public static float delta;
+    /** Scale of the UI: fonts, skin images and {@link #style}. See {@link Style#uiScaleFor} */
     public static float scale;
+    /**
+     * Scale of the play screen's UI. It skips the phones' bigger UI so the maps keep their
+     * room. See {@link Style#scaleFor}
+     */
+    public static float playScale;
     public static int width;
     public static int height;
     public static boolean loading;

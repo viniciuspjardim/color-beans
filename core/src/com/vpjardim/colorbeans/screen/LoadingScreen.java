@@ -41,7 +41,8 @@ public class LoadingScreen extends ScreenBase {
     }
 
     private void loadStuff() {
-        G.scale = Style.scaleFor(G.width, G.height);
+        G.scale = Style.uiScaleFor(G.width, G.height);
+        G.playScale = Style.scaleFor(G.width, G.height);
 
         G.style.setDefaults();
         G.style.scale(G.scale);
