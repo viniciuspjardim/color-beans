@@ -58,6 +58,11 @@ public class G extends Game {
     public static int width;
     public static int height;
     public static boolean loading;
+    /**
+     * Whether it runs on a TV, set by the Android launcher. TVs have a remote instead of
+     * a touchscreen, and are held far from the player like a desktop's screen
+     */
+    public static boolean tv;
     public static Style style;
 
     public Db data;
