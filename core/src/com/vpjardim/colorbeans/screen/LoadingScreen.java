@@ -21,6 +21,7 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
+import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
 
 public class LoadingScreen extends ScreenBase {
@@ -40,7 +41,7 @@ public class LoadingScreen extends ScreenBase {
     }
 
     private void loadStuff() {
-        G.scale = G.height / 1080f;
+        G.scale = Style.scaleFor(G.width, G.height);
 
         G.style.setDefaults();
         G.style.scale(G.scale);
@@ -87,20 +88,16 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.borderWidth = 1;
         G.game.assets.load("dimbo_white.ttf", BitmapFont.class, param);
 
-        param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        param.fontFileName = "font/dimbo.ttf";
-        param.fontParameters.size = G.style.fontSizeXBig;
-        param.fontParameters.color = new Color(0xe8e2b4ff);
-        param.fontParameters.borderColor = new Color(0x7b0a41ff);
-        param.fontParameters.borderWidth = 6;
-        G.game.assets.load("dimbo_gtitle.ttf", BitmapFont.class, param);
-
+        // Button fonts. The menu zooms when the window is resized (see MenuScreen), so they
+        // need linear filtering
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         param.fontFileName = "font/dimbo.ttf";
         param.fontParameters.size = G.style.fontSizeBig;
         param.fontParameters.color = new Color(0xab002cff);
         param.fontParameters.shadowColor = new Color(0x660016ff);
         param.fontParameters.shadowOffsetY = -1;
+        param.fontParameters.minFilter = Texture.TextureFilter.Linear;
+        param.fontParameters.magFilter = Texture.TextureFilter.Linear;
         G.game.assets.load("dimbo_brown.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -109,6 +106,8 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.color = new Color(0x78001cff);
         param.fontParameters.shadowColor = new Color(0x44000fff);
         param.fontParameters.shadowOffsetY = -1;
+        param.fontParameters.minFilter = Texture.TextureFilter.Linear;
+        param.fontParameters.magFilter = Texture.TextureFilter.Linear;
         G.game.assets.load("dimbo_dbrown.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -117,6 +116,8 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.color = new Color(0x432d63ff);
         param.fontParameters.shadowColor = new Color(0x311732ff);
         param.fontParameters.shadowOffsetY = -1;
+        param.fontParameters.minFilter = Texture.TextureFilter.Linear;
+        param.fontParameters.magFilter = Texture.TextureFilter.Linear;
         G.game.assets.load("dimbo_purple.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -125,6 +126,8 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.color = new Color(0x2e5111ff);
         param.fontParameters.shadowColor = new Color(0x262909ff);
         param.fontParameters.shadowOffsetY = -1;
+        param.fontParameters.minFilter = Texture.TextureFilter.Linear;
+        param.fontParameters.magFilter = Texture.TextureFilter.Linear;
         G.game.assets.load("dimbo_green.ttf", BitmapFont.class, param);
 
         param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -133,6 +136,8 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.color = new Color(0x565656ff);
         param.fontParameters.shadowColor = new Color(0x3b2c2cff);
         param.fontParameters.shadowOffsetY = -1;
+        param.fontParameters.minFilter = Texture.TextureFilter.Linear;
+        param.fontParameters.magFilter = Texture.TextureFilter.Linear;
         G.game.assets.load("dimbo_gray.ttf", BitmapFont.class, param);
 
         // In-game text fonts. The other fonts are shared with the skin, but these get
@@ -235,7 +240,10 @@ public class LoadingScreen extends ScreenBase {
             // After loading is done we can create atlas and skin
             G.game.atlas = G.game.assets.get(atlasStr, TextureAtlas.class);
 
+            // The atlas images are drawn for a 1080 px tall screen, like the Style defaults,
+            // so they need the same scale as the rest of the UI
             G.game.skin = new Skin();
+            G.game.skin.setScale(G.scale);
             G.game.skin.addRegions(G.game.atlas);
 
             BitmapFont font;
@@ -248,9 +256,6 @@ public class LoadingScreen extends ScreenBase {
 
             font = G.game.assets.get("dimbo_white.ttf", BitmapFont.class);
             G.game.skin.add("dimbo_white", font);
-
-            font = G.game.assets.get("dimbo_gtitle.ttf", BitmapFont.class);
-            G.game.skin.add("dimbo_gtitle", font);
 
             font = G.game.assets.get("dimbo_brown.ttf", BitmapFont.class);
             G.game.skin.add("dimbo_brown", font);
