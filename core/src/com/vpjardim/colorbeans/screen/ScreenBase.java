@@ -12,6 +12,7 @@ import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
+import com.vpjardim.colorbeans.input.UiNav;
 
 public class ScreenBase implements Screen, TargetBase {
     public static final int ACT_RUNNING = 1;
@@ -21,6 +22,8 @@ public class ScreenBase implements Screen, TargetBase {
     protected OrthographicCamera cam;
     protected Viewport viewport;
     protected Stage stage;
+    /** Controller and keyboard navigation of the stage's widgets. The screens add their rows */
+    protected UiNav nav;
     protected EventListener specialKeyDown;
     protected boolean manageInput = true;
     public float time;
@@ -43,6 +46,7 @@ public class ScreenBase implements Screen, TargetBase {
         if (G.game.batch != null) {
             stage = new Stage(viewport, G.game.batch);
             G.game.input.addProcessor(stage);
+            nav = new UiNav(stage);
         }
 
         if (manageInput) {
@@ -58,6 +62,9 @@ public class ScreenBase implements Screen, TargetBase {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         time += delta;
+
+        if (nav != null)
+            nav.update(delta);
     }
 
     @Override
@@ -89,6 +96,7 @@ public class ScreenBase implements Screen, TargetBase {
             G.game.input.removeProcessor(stage);
             stage.dispose();
             stage = null;
+            nav = null;
         }
 
         G.game.input.targetsClear();

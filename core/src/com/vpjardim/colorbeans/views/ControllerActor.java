@@ -35,6 +35,11 @@ public class ControllerActor extends Actor implements TargetBase {
         time = 0f;
     }
 
+    /** Whether it's taking the keys of a new profile */
+    public boolean isMapping() {
+        return position >= 0;
+    }
+
     public void addCallBack(KeysSetListener listener) {
         callback = listener;
     }

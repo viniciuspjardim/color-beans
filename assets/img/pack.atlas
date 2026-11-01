@@ -213,7 +213,7 @@ game/controller_small
   index: 2
 game/cursor
   rotate: false
-  xy: 1003, 985
+  xy: 970, 853
   size: 3, 33
   orig: 3, 33
   offset: 0, 0
@@ -298,6 +298,13 @@ game/ribbon_red
   orig: 283, 185
   offset: 0, 0
   index: -1
+game/selected_arrow
+  rotate: false
+  xy: 1003, 983
+  size: 18, 35
+  orig: 18, 35
+  offset: 0, 0
+  index: -1
 game/slider_knob
   rotate: false
   xy: 194, 60
@@ -325,7 +332,7 @@ game/slider_track_off
   index: -1
 game/slider_track_on
   rotate: false
-  xy: 970, 877
+  xy: 287, 571
   size: 12, 9
   split: 4, 4, 4, 4
   pad: 3, 3, 2, 2

@@ -45,6 +45,14 @@ public class ConfigScreen extends ScreenBase {
     private TextField player2;
     private TextField player3;
     private TextField player4;
+    private ControllerActor controllerActor;
+
+    /** The navigation's rows, by part of the screen. See {@link #buildNav()} */
+    private Actor[] tabRow;
+    private TextButton backBtt;
+    private final Array<Actor[]> gameRows = new Array<>();
+    private final Array<Actor[]> inputRows = new Array<>();
+    private final Array<Actor[]> otherRows = new Array<>();
 
     protected EventListener controllerEvent;
 
@@ -206,7 +214,7 @@ public class ConfigScreen extends ScreenBase {
             player4.setText(pls.get(3).name);
 
         // ==== Buttons ====
-        final TextButton backBtt = new TextButton("Back",
+        backBtt = new TextButton("Back",
                 G.game.skin.get("bttYellow", TextButton.TextButtonStyle.class));
 
         final TextButton gameButt = new TextButton("Game",
@@ -319,7 +327,8 @@ public class ConfigScreen extends ScreenBase {
         gameT.add(player3).expandX().fill().pad(0, PAD_X * s, 0, PAD_X * s).colspan(2).row();
         gameT.add(player4).expandX().fill().pad(0, PAD_X * s, 0, PAD_X * s).colspan(2).row();
 
-        gameT.add(new Label("Co-Op Campaign (2 Players):", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        Label coopL = new Label("Co-Op Campaign (2 Players):", labelStyle);
+        gameT.add(coopL).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
         gameT.add(coopS).width(92 * s).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
 
         gameT.add(new Label("Difficulty:", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
@@ -343,6 +352,15 @@ public class ConfigScreen extends ScreenBase {
         otherT.add(effectsVolumeS).expandX().fill().pad(4 * s, PAD_SLIDER_X * s, 0, PAD_SLIDER_X * s).colspan(2).row();
 
         otherT.add(versionL).pad(36 * s, PAD_X * s, 0, PAD_X * s).colspan(2).row();
+
+        // The hidden tabs' rows are skipped. The input rows are added in inputLoop
+        tabRow = new Actor[] { gameButt, inputButt, otherButt };
+        gameRows.add(new Actor[] { player1 }, new Actor[] { player2 }, new Actor[] { player3 }, new Actor[] { player4 });
+        gameRows.add(new Actor[] { coopS }, new Actor[] { difficultyS }, new Actor[] { currentStageS },
+                new Actor[] { trainingSpeedS });
+        otherRows.add(new Actor[] { musicVolumeS }, new Actor[] { effectsVolumeS }, new Actor[] { versionL });
+        nav.anchor(coopS, coopL);
+        nav.back = () -> action = ACT_MENU;
 
         if (G.game.dbg.tapsCount == DBG_ACTIVATED) {
             addDebugFields(otherT, labelStyle);
@@ -380,8 +398,9 @@ public class ConfigScreen extends ScreenBase {
 
         G.game.input.targetsClear();
 
-        final ControllerActor controllerActor = new ControllerActor();
+        controllerActor = new ControllerActor();
         inputT.add(controllerActor).colspan(4).align(Align.center).row();
+        inputRows.clear();
 
         // Loop through inputs and show edit keys button for each one
         for (int i = 0; i < G.game.input.getInputs().size; i++) {
@@ -432,6 +451,7 @@ public class ConfigScreen extends ScreenBase {
             inputT.add(editBtt).padTop(20 * s);
             inputT.add(upBtt).padTop(20 * s);
             inputT.add(downBtt).padTop(20 * s).row();
+            inputRows.add(new Actor[] { editBtt, upBtt, downBtt });
 
             if (!keyMapL.textEquals("0")) {
                 inputT.add(keyMapL).colspan(4).align(Align.left).row();
@@ -471,6 +491,22 @@ public class ConfigScreen extends ScreenBase {
         }
 
         G.game.input.linkAll();
+        buildNav();
+    }
+
+    /** Adds the navigation's rows again, when the input or the debug rows change */
+    private void buildNav() {
+        nav.clear();
+        nav.row(tabRow);
+
+        for (Actor[] row : gameRows)
+            nav.row(row);
+        for (Actor[] row : inputRows)
+            nav.row(row);
+        for (Actor[] row : otherRows)
+            nav.row(row);
+
+        nav.row(backBtt);
     }
 
     private static String formatDelta(float delta) {
@@ -565,16 +601,20 @@ public class ConfigScreen extends ScreenBase {
 
         otherT.add(new Label("**** Debug Options ****", labelStyle)).pad(28 * s, PAD_X * s, 0, PAD_X * s).align(Align.center).colspan(2).row();
 
-        otherT.add(new Label("Display FPS:", labelStyle)).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
+        Label fpsL = new Label("Display FPS:", labelStyle);
+        otherT.add(fpsL).padTop(24 * s).padLeft(PAD_X * s).align(Align.left);
         otherT.add(fpsS).width(92 * s).padTop(24 * s).padRight(PAD_X * s).align(Align.right).row();
 
-        otherT.add(new Label("Debug Beans:", labelStyle)).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
+        Label debugL = new Label("Debug Beans:", labelStyle);
+        otherT.add(debugL).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
         otherT.add(debugS).width(92 * s).padTop(8 * s).padRight(PAD_X * s).align(Align.right).row();
 
-        otherT.add(new Label("Debug UI:", labelStyle)).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
+        Label uiL = new Label("Debug UI:", labelStyle);
+        otherT.add(uiL).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
         otherT.add(uiS).width(92 * s).padTop(8 * s).padRight(PAD_X * s).align(Align.right).row();
 
-        otherT.add(new Label("Debug Overlay:", labelStyle)).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
+        Label overlayL = new Label("Debug Overlay:", labelStyle);
+        otherT.add(overlayL).padTop(8 * s).padLeft(PAD_X * s).align(Align.left);
         otherT.add(overlayS).width(92 * s).padTop(8 * s).padRight(PAD_X * s).align(Align.right).row();
 
         otherT.add(new Label("Log Level:", labelStyle)).padTop(16 * s).padLeft(PAD_X * s).align(Align.left);
@@ -589,10 +629,18 @@ public class ConfigScreen extends ScreenBase {
         otherT.add(commandL).padTop(16 * s).padRight(PAD_X * s).align(Align.right).row();
         otherT.add(commandTF).expandX().fillX().pad(4 * s, PAD_X * s, 0, 0);
         otherT.add(commandBT).pad(4 * s, 8 * s, 0, 0);
+
+        otherRows.add(new Actor[] { fpsS }, new Actor[] { debugS }, new Actor[] { uiS }, new Actor[] { overlayS });
+        otherRows.add(new Actor[] { logLevelS }, new Actor[] { deltaS }, new Actor[] { commandTF, commandBT });
+        nav.anchor(fpsS, fpsL).anchor(debugS, debugL).anchor(uiS, uiL).anchor(overlayS, overlayL);
+        buildNav();
     }
 
     @Override
     public void render(float delta) {
+        // Keys pressed while editing a key profile are for the profile
+        nav.paused = controllerActor.isMapping();
+
         super.render(delta);
 
         G.game.batch.begin();
