@@ -46,6 +46,10 @@ public class ControllerInput implements InputBase, ControllerListener {
     @Override
     public void setProfile(Profile profile) {
         p = profile;
+        // A key held down with the old profile would never come up
+        keyMap = 0;
+        keyMapOld = 0;
+        event = 0;
     }
 
     @Override
@@ -108,41 +112,28 @@ public class ControllerInput implements InputBase, ControllerListener {
     public boolean buttonDown(Controller controller, int keycode) {
         Dbg.dbg(Dbg.tag(this), "[" + id + "] buttonDown -> keycode = " + keycode);
 
+        // The keys' state is kept without a target too, so the menus can read it
+        int key = p.keyOf(keycode);
+
+        if (key != Profile.UNDEFINED)
+            keyEvent(key, InputBase.DOWN);
+
+        // Always return true because there is only one key profile per controller
         if (target == null)
             return true;
 
         target.keyDown(keycode);
 
-        // Always return true because there is only one key profile per controller
-
-        if (keycode == p.up) {
-            keyEvent(InputBase.UP_KEY, InputBase.DOWN);
-            return true;
-        } else if (keycode == p.right) {
-            keyEvent(InputBase.RIGHT_KEY, InputBase.DOWN);
-            return true;
-        } else if (keycode == p.down) {
-            keyEvent(InputBase.DOWN_KEY, InputBase.DOWN);
-            return true;
-        } else if (keycode == p.left) {
-            keyEvent(InputBase.LEFT_KEY, InputBase.DOWN);
-            return true;
-        } else if (keycode == p.start) {
-            keyEvent(InputBase.START_KEY, InputBase.DOWN);
+        if (key == InputBase.START_KEY)
             target.btStartDown();
-        } else if (keycode == p.button1) {
-            keyEvent(InputBase.BUTTON1_KEY, InputBase.DOWN);
+        else if (key == InputBase.BUTTON1_KEY)
             target.bt1Down();
-        } else if (keycode == p.button2) {
-            keyEvent(InputBase.BUTTON2_KEY, InputBase.DOWN);
+        else if (key == InputBase.BUTTON2_KEY)
             target.bt2Down();
-        } else if (keycode == p.button3) {
-            keyEvent(InputBase.BUTTON3_KEY, InputBase.DOWN);
+        else if (key == InputBase.BUTTON3_KEY)
             target.bt3Down();
-        } else if (keycode == p.button4) {
-            keyEvent(InputBase.BUTTON4_KEY, InputBase.DOWN);
+        else if (key == InputBase.BUTTON4_KEY)
             target.bt4Down();
-        }
 
         return true;
     }
@@ -151,46 +142,27 @@ public class ControllerInput implements InputBase, ControllerListener {
     public boolean buttonUp(Controller controller, int keycode) {
         Dbg.dbg(Dbg.tag(this), "[" + id + "] buttonUp   -> keycode = " + keycode);
 
+        int key = p.keyOf(keycode);
+
+        if (key != Profile.UNDEFINED)
+            keyEvent(key, InputBase.UP);
+
+        // Always return true because there is only one key profile per controller
         if (target == null)
             return true;
 
         target.keyUp(keycode);
 
-        // Always return true because there is only one key profile per controller
-
-        if (keycode == p.up) {
-            keyEvent(InputBase.UP_KEY, InputBase.UP);
-            return true;
-        } else if (keycode == p.right) {
-            keyEvent(InputBase.RIGHT_KEY, InputBase.UP);
-            return true;
-        } else if (keycode == p.down) {
-            keyEvent(InputBase.DOWN_KEY, InputBase.UP);
-            return true;
-        } else if (keycode == p.left) {
-            keyEvent(InputBase.LEFT_KEY, InputBase.UP);
-            return true;
-        } else if (keycode == p.start) {
-            keyEvent(InputBase.START_KEY, InputBase.UP);
+        if (key == InputBase.START_KEY)
             target.btStartUp();
-            return true;
-        } else if (keycode == p.button1) {
-            keyEvent(InputBase.BUTTON1_KEY, InputBase.UP);
+        else if (key == InputBase.BUTTON1_KEY)
             target.bt1Up();
-            return true;
-        } else if (keycode == p.button2) {
-            keyEvent(InputBase.BUTTON2_KEY, InputBase.UP);
+        else if (key == InputBase.BUTTON2_KEY)
             target.bt2Up();
-            return true;
-        } else if (keycode == p.button3) {
-            keyEvent(InputBase.BUTTON3_KEY, InputBase.UP);
+        else if (key == InputBase.BUTTON3_KEY)
             target.bt3Up();
-            return true;
-        } else if (keycode == p.button4) {
-            keyEvent(InputBase.BUTTON4_KEY, InputBase.UP);
+        else if (key == InputBase.BUTTON4_KEY)
             target.bt4Up();
-            return true;
-        }
 
         return true;
     }
