@@ -101,6 +101,8 @@ public class MapRender {
     public boolean mini;
     /** Mini map's bottom left corner */
     public float miniX, miniY;
+    /** Bottom left corner of the mini map's slot, 1 brick wide and 2 tall */
+    private float slotX, slotY;
     /** Viewport the map is drawn with: used to find which block a debug tap hits */
     public Viewport viewport;
 
@@ -111,8 +113,8 @@ public class MapRender {
     /** Light bricks around the field: [col + PANEL_W][y + 1], see {@link #wall} */
     private final AtlasRegion[][] wallBricks = new AtlasRegion[SLOT_W + 1][Map.N_ROW + 2];
     private final AtlasRegion nextBrick;
-    /** Dark brick behind the incoming trash, which is see-through */
-    private final AtlasRegion trashBrick;
+    /** Brick behind the map when it's a mini in another map's panel */
+    private final AtlasRegion miniBrick;
     private final AtlasRegion shadowCorner;
     private final AtlasRegion shadowTop;
     private final AtlasRegion shadowLeft;
@@ -140,8 +142,22 @@ public class MapRender {
             }
         }
 
+        // The ceiling and the panel bricks with text always have the same color
+        AtlasRegion ceilingBrick = atlas.findRegion("beans/brick", 8);
+        AtlasRegion textBrick = atlas.findRegion("beans/brick", 9);
+
+        for (int col = -PANEL_W; col <= Map.N_COL; col++) {
+            wallBricks[col + PANEL_W][Map.N_ROW + 1] = ceilingBrick;
+        }
+
+        float[] textYs = { Map.N_ROW - 1f, STATS_Y, STATS_Y - 1f, STATS_Y - 2f };
+
+        for (float y : textYs) {
+            wallBricks[0][(int) y + 1] = textBrick;
+        }
+
         nextBrick = atlas.findRegion("beans/brick", 8);
-        trashBrick = atlas.findRegion("beans/brick", 12);
+        miniBrick = atlas.findRegion("beans/brick", 1);
         shadowCorner = atlas.findRegion("beans/bshadow", 1);
         shadowTop = atlas.findRegion("beans/bshadow", 2);
         shadowLeft = atlas.findRegion("beans/bshadow", 3);
@@ -203,8 +219,10 @@ public class MapRender {
         for (int i = 0; i < minis.size; i++) {
             MapRender r = minis.get(i);
             r.mini = true;
-            r.miniX = x - PANEL_W + (PANEL_W - w) / 2f;
-            r.miniY = MINIS_TOP - MINI_SLOT_H * i - (MINI_SLOT_H + h) / 2f;
+            r.slotX = x - PANEL_W;
+            r.slotY = MINIS_TOP - MINI_SLOT_H * (i + 1);
+            r.miniX = r.slotX + (PANEL_W - w) / 2f;
+            r.miniY = r.slotY + (MINI_SLOT_H - h) / 2f;
         }
     }
 
@@ -250,6 +268,14 @@ public class MapRender {
     public void render() {
         SpriteBatch batch = G.game.batch;
         IntMap<AtlasRegion> beans = G.game.data.BEANS_REG;
+
+        // ===== Draw the mini map's slot, over the other map's panel =====
+        // Here and not in renderBg, which draws that panel after it when the other
+        // map comes later
+        if (mini) {
+            batch.draw(miniBrick, slotX, slotY, PANEL_W, 1f);
+            batch.draw(miniBrick, slotX, slotY + 1f, PANEL_W, 1f);
+        }
 
         // ===== Draw map blocks =====
         for (int col = 0; col < Map.N_COL; col++) {
@@ -309,12 +335,10 @@ public class MapRender {
             float s = 0.5f;
 
             for (int i = 0; i < icons; i++) {
-                batch.draw(trashBrick, x + i * s, Map.N_ROW, s, s);
                 batch.draw(beans.get(Block.CLR_T * 10000), x + i * s, Map.N_ROW, s, s);
             }
 
             if (icons < trash) {
-                batch.draw(trashBrick, x + icons * s, Map.N_ROW, 2f * s, s);
                 setTextSize(font, TEXT_SIZE);
                 font.draw(batch, "+" + (trash - icons), x + icons * s, Map.N_ROW + (s + font.getCapHeight()) / 2f,
                         2f * s, Align.center, false);
