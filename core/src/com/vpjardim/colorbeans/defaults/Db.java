@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Json;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.core.Dbg;
+import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.input.Profile;
 
 /**
@@ -26,8 +27,10 @@ public class Db {
     // Initialized after loading screen finished loading
 
     public transient IntMap<TextureAtlas.AtlasRegion> BEANS_REG = new IntMap<>();
-    public transient BitmapFont font1;
-    public transient BitmapFont font2;
+    /** In-game text font, in world units. See {@link MapRender} */
+    public transient BitmapFont mapFont;
+    /** In-game labels font, in world units. See {@link MapRender} */
+    public transient BitmapFont mapLabelFont;
     public transient BitmapFont font3;
 
     // Initialized inside the constructor ->
@@ -237,8 +240,16 @@ public class Db {
      * loading screen
      */
     public void initAfterLoading() {
-        font1 = G.game.assets.get("dimbo_white.ttf", BitmapFont.class);
-        font2 = G.game.assets.get("roboto_shadow.ttf", BitmapFont.class);
+        mapFont = G.game.assets.get("map_dimbo.ttf", BitmapFont.class);
+        mapLabelFont = G.game.assets.get("map_roboto.ttf", BitmapFont.class);
+
+        // The maps are drawn in world units, where a bean is 1 x 1. Without these the
+        // text would be beans tall and snap to whole beans
+        for (BitmapFont font : new BitmapFont[] { mapFont, mapLabelFont }) {
+            font.getData().setScale(MapRender.TEXT_SIZE / G.style.fontSizeBig);
+            font.setUseIntegerPositions(false);
+        }
+
         font3 = G.game.assets.get("roboto.ttf", BitmapFont.class);
 
         for (int i = 0; i < ri.length; i++) {

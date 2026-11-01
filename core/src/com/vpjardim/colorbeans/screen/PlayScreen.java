@@ -2,19 +2,15 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.animation.CamAccessor;
 import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.Dbg;
@@ -35,10 +31,9 @@ public class PlayScreen extends ScreenBase {
     public static final int ACT_CREDITS = 11;
 
     public final MapManager manager;
-    private FrameBuffer fb;
-    private Sprite bgSprite;
-    private OrthographicCamera menuCam;
-    private Viewport menuViewport;
+    /** Camera for the maps, in world units where a bean is 1 x 1. See {@link MapRender} */
+    private OrthographicCamera worldCam;
+    private ExtendViewport worldViewport;
     private Table containerT;
     private boolean menuVisible;
     private TweenManager transition;
@@ -76,19 +71,6 @@ public class PlayScreen extends ScreenBase {
 
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
         EventHandler.get().addListener("TapInput.tap", tapInput);
-
-        transition = new TweenManager();
-        Tween.registerAccessor(OrthographicCamera.class, new CamAccessor());
-
-        Tween.set(cam, CamAccessor.POSITION).target(G.width / 1.5f, G.height / 2f).start(transition);
-        Tween.to(cam, CamAccessor.POSITION, 1.75f).target(G.width / 2f, G.height / 2f).start(transition);
-
-        Tween.set(cam, CamAccessor.ZOOM).target(1.2f).start(transition);
-        Tween.to(cam, CamAccessor.ZOOM, 1.75f).target(1f).start(transition);
-
-        menuCam = new OrthographicCamera();
-        menuViewport = new ScreenViewport(menuCam);
-        viewport.apply(true);
 
         containerT = new Table(G.game.skin);
         containerT.setFillParent(true);
@@ -137,6 +119,35 @@ public class PlayScreen extends ScreenBase {
 
         manager.init();
 
+        // Maps side by side. The viewport always fits them all and shows more of the
+        // background on screens with a different aspect ratio
+        int maps = manager.render.size;
+        worldCam = new OrthographicCamera();
+        worldViewport = new ExtendViewport(MapRender.SLOT_W * maps + 1f, MapRender.VIEW_H, worldCam);
+        // Sets the visible world size, used by the intro below
+        worldViewport.update(G.width, G.height, false);
+
+        for (int i = 0; i < maps; i++) {
+            MapRender r = manager.render.get(i);
+            r.x = MapRender.PANEL_W + MapRender.SLOT_W * i;
+            r.viewport = worldViewport;
+        }
+
+        // Intro: the camera slides in from the right while zooming in, ending centered
+        // on the maps
+        float centerX = worldViewport.getMinWorldWidth() / 2f;
+        float centerY = Map.N_ROW / 2f;
+
+        transition = new TweenManager();
+        Tween.registerAccessor(OrthographicCamera.class, new CamAccessor());
+
+        Tween.set(worldCam, CamAccessor.POSITION)
+                .target(centerX + worldViewport.getWorldWidth() / 6f, centerY).start(transition);
+        Tween.to(worldCam, CamAccessor.POSITION, 1.75f).target(centerX, centerY).start(transition);
+
+        Tween.set(worldCam, CamAccessor.ZOOM).target(1.2f).start(transition);
+        Tween.to(worldCam, CamAccessor.ZOOM, 1.75f).target(1f).start(transition);
+
         for (MapRender r : manager.render) {
             if (r.m.input instanceof TouchInput) {
                 touchInput = (TouchInput) r.m.input;
@@ -157,24 +168,28 @@ public class PlayScreen extends ScreenBase {
         }
 
         // Draw background
-        G.game.batch.setProjectionMatrix(menuCam.combined);
+        G.game.batch.setProjectionMatrix(cam.combined);
         G.game.batch.begin();
         G.game.bgBeans.render();
         G.game.batch.end();
 
-        G.game.batch.setProjectionMatrix(cam.combined);
+        // Draw the maps
+        worldViewport.apply();
+        G.game.batch.setProjectionMatrix(worldCam.combined);
         G.game.batch.begin();
 
-        // Draw cached background
-        bgSprite.draw(G.game.batch);
-
-        // Draw beans and other stuff
         for (MapRender r : manager.render) {
-            r.renderBatch();
+            r.renderBg();
+        }
+
+        for (MapRender r : manager.render) {
+            r.render();
         }
 
         G.game.batch.end();
 
+        // Back to pixels for the menu and the touch input
+        viewport.apply();
         stage.act(delta);
         stage.draw();
 
@@ -228,50 +243,8 @@ public class PlayScreen extends ScreenBase {
     public void resize(int width, int height) {
         super.resize(width, height);
 
-        menuViewport.update(width, height, true);
-        manager.resize();
-
-        updateCache();
-    }
-
-    /**
-     * Caches the game background to avoid loss of frame rate (especially in
-     * Android). The background is drawn only when the screen is resized
-     */
-    public void updateCache() {
-        // When the app is minimized the size of the window is 0x0 px and FrameBuffer
-        // would throw an exception if it's constructed. Because of this the cache is
-        // not updated
-        if (G.width == 0 || G.height == 0)
-            return;
-
-        G.game.batch.setProjectionMatrix(cam.combined);
-
-        // Dispose because framebuffer and sprite will be recreated
-        if (bgSprite != null)
-            bgSprite.getTexture().dispose();
-        if (fb != null)
-            fb.dispose();
-
-        // Create a framebuffer with the new size
-        GLFrameBuffer.FrameBufferBuilder fbb = new GLFrameBuffer.FrameBufferBuilder(
-                G.width, G.height);
-
-        fbb.addColorTextureAttachment(GL20.GL_RGBA, GL20.GL_RGBA, GL20.GL_UNSIGNED_BYTE);
-        fb = fbb.build();
-
-        fb.begin();
-
-        G.game.batch.begin();
-        for (MapRender r : manager.render) {
-            r.cacheBg();
-        }
-        G.game.batch.end();
-
-        fb.end();
-
-        bgSprite = new Sprite(fb.getColorBufferTexture());
-        bgSprite.flip(false, true);
+        // Don't center the camera: its position is set by the intro tween
+        worldViewport.update(width, height, false);
     }
 
     @Override
@@ -290,12 +263,6 @@ public class PlayScreen extends ScreenBase {
     @Override
     public void dispose() {
         super.dispose();
-
-        if (bgSprite != null)
-            bgSprite.getTexture().dispose();
-
-        if (fb != null)
-            fb.dispose();
 
         if (manager.render != null) {
             for (MapRender r : manager.render) {
