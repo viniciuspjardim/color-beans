@@ -1183,6 +1183,11 @@ public class Map implements TargetBase {
         return this.state.getCurrentState();
     }
 
+    /** Trash blocks the opponents threw that haven't fallen in this map yet */
+    public int getTrashBlocksToAdd() {
+        return trashBlocksToAdd;
+    }
+
     private void gameOver() {
         if (!b[N_COL / 2][OUT_ROW].isEmpty()) {
             gameOver = true;
