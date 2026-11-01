@@ -1,6 +1,7 @@
 package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -12,6 +13,9 @@ import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
 
 public class CreditsScreen extends ScreenBase {
+    /** Part of the window's width the box may take at most */
+    private static final float MAX_FILL = 0.9f;
+
     private EventListener tapInput;
 
     @Override
@@ -36,7 +40,8 @@ public class CreditsScreen extends ScreenBase {
         float s = G.scale;
 
         contentT.background("bgBlack");
-        contentT.pad(32f * s, 96f * s, 32f * s, 96f * s);
+        // The sides' padding is set once the content's width is known
+        contentT.pad(32f * s, 0f, 32f * s, 0f);
 
         containerT.add(contentT);
 
@@ -84,6 +89,11 @@ public class CreditsScreen extends ScreenBase {
 
         contentT.add(new Label("Thanks for playing!", valueLS)).padTop(32 * s).row();
         contentT.add(backBtt).width(G.style.buttWidth).padTop(48 * s);
+
+        // On narrow screens, like phones, the sides' padding shrinks so the box leaves a
+        // margin to the window's sides
+        float padX = MathUtils.clamp((MAX_FILL * G.width - contentT.getPrefWidth()) / 2f, 0f, 96f * s);
+        contentT.padLeft(padX).padRight(padX);
 
         stage.addActor(containerT);
 
