@@ -4,6 +4,14 @@
         black: { hex: 000000ff }
         orange800: { hex: 523800 }
         white50: { hex: ffffff80 }
+        brown: { hex: ab002cff }
+        purple: { hex: 432d63ff }
+    }
+    TintedDrawable: {
+        iconPauseBrown: { name: "game/icon_pause", color: brown }
+        iconLeftPurple: { name: "game/icon_left", color: purple }
+        iconRightPurple: { name: "game/icon_right", color: purple }
+        iconHomePurple: { name: "game/icon_home", color: purple }
     }
     TextButtonStyle: {
         bttYellow: {
@@ -30,6 +38,28 @@
             up: "game/b_gray_up"
             down: "game/b_gray_down"
             font: dimbo_gray
+        }
+    }
+    ImageButtonStyle: {
+        bttPause: {
+            up: "game/b_yellow_up"
+            down: "game/b_yellow_down"
+            imageUp: iconPauseBrown
+        }
+        bttLeft: {
+            up: "game/b_blue_up"
+            down: "game/b_blue_down"
+            imageUp: iconLeftPurple
+        }
+        bttRight: {
+            up: "game/b_blue_up"
+            down: "game/b_blue_down"
+            imageUp: iconRightPurple
+        }
+        bttHome: {
+            up: "game/b_blue_up"
+            down: "game/b_blue_down"
+            imageUp: iconHomePurple
         }
     }
     SliderStyle: {

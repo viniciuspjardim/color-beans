@@ -11,6 +11,8 @@ public class Style {
     public float padBig;
     public float padVBig;
     public float buttWidth;
+    /** Side of the square icon buttons */
+    public float iconButtSize;
     public float ribbonWidth;
     public float ribbonHeight;
     public float ribbonOverhang;
@@ -40,6 +42,7 @@ public class Style {
         padVBig = 32;
 
         buttWidth = 240;
+        iconButtSize = 96;
 
         ribbonWidth = 360;
         ribbonHeight = 212;
@@ -59,6 +62,7 @@ public class Style {
         padVBig = padVBig * scale;
 
         buttWidth = buttWidth * scale;
+        iconButtSize = iconButtSize * scale;
         ribbonWidth = ribbonWidth * scale;
         ribbonHeight = ribbonHeight * scale;
         ribbonOverhang = ribbonOverhang * scale;

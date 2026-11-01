@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -32,6 +33,8 @@ public class PlayScreen extends ScreenBase {
     public static final int ACT_CREDITS = 11;
     /** Seconds the camera takes to slide in at the start */
     private static final float INTRO_TIME = 1.75f;
+    /** Seconds the camera takes to slide to another map */
+    private static final float SLIDE_TIME = 0.3f;
 
     public final MapManager manager;
     /** Camera for the maps, in world units where a bean is 1 x 1. See {@link MapRender} */
@@ -39,9 +42,17 @@ public class PlayScreen extends ScreenBase {
     private ExtendViewport worldViewport;
     /** Camera position after the intro. See {@link #layout(int, int)} */
     private float camX, camY;
+    /** Camera x before the intro offset, and where the slide to another map started */
+    private float shownX, slideFromX;
+    private float slideTime = SLIDE_TIME;
+    /** The player's map: the one with the touch input, or else the first */
+    private MapRender home;
     /** Map the camera shows in portrait, with the others as minis in its panel */
     private MapRender focus;
     private final Array<MapRender> minis = new Array<>();
+    /** Buttons at the bottom: pause on the left, the maps navigation on the right */
+    private Table barT;
+    private Table navT;
     private Table containerT;
     private boolean menuVisible;
     private EventListener tapInput;
@@ -55,6 +66,11 @@ public class PlayScreen extends ScreenBase {
     @Override
     public void show() {
         super.show();
+
+        // The stage goes first so it takes the touches on its buttons, which then don't
+        // move or rotate the beans
+        G.game.input.removeProcessor(stage);
+        G.game.input.addProcessor(0, stage);
 
         // Special key event
         specialKeyDown = (Event e) -> {
@@ -121,7 +137,28 @@ public class PlayScreen extends ScreenBase {
         contentT.row();
         contentT.add(menuButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
+        // The bar's padding and the navigation's visibility are set in layout
+        float bttS = G.style.iconButtSize;
+
+        navT = new Table(G.game.skin);
+        navT.add(iconButton("bttLeft", () -> navigate(-1))).size(bttS);
+        navT.add(iconButton("bttHome", () -> slideTo(home))).size(bttS).padLeft(G.style.padSmall);
+        navT.add(iconButton("bttRight", () -> navigate(1))).size(bttS).padLeft(G.style.padSmall);
+
+        barT = new Table(G.game.skin);
+        barT.setFillParent(true);
+        barT.bottom();
+        // Like the back key: pauses with the menu, or resumes
+        barT.add(iconButton("bttPause", () -> {
+            menuVisible = true;
+            manager.togglePaused();
+        })).size(bttS).expandX().left();
+        barT.add(navT);
+
+        // The bar first, so the menu is drawn over it
+        stage.addActor(barT);
         stage.addActor(containerT);
+        barT.setDebug(G.game.dbg.uiTable);
         containerT.setDebug(G.game.dbg.uiTable);
 
         manager.init();
@@ -135,19 +172,51 @@ public class PlayScreen extends ScreenBase {
 
             if (touchInput == null && r.m.input instanceof TouchInput) {
                 touchInput = (TouchInput) r.m.input;
-                focus = r;
+                home = r;
             }
         }
 
-        if (focus == null)
-            focus = manager.render.first();
+        if (home == null)
+            home = manager.render.first();
+
+        focus = home;
+    }
+
+    private ImageButton iconButton(String style, Runnable action) {
+        ImageButton butt = new ImageButton(G.game.skin, style);
+        butt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action.run();
+            }
+        });
+        return butt;
+    }
+
+    /** Slides the camera to the map step places from {@link #focus}. Past the ends it does nothing */
+    private void navigate(int step) {
+        int i = manager.render.indexOf(focus, true) + step;
+
+        if (i >= 0 && i < manager.render.size)
+            slideTo(manager.render.get(i));
+    }
+
+    private void slideTo(MapRender r) {
+        if (r == focus)
+            return;
+
+        focus = r;
+        slideFromX = shownX;
+        slideTime = 0f;
+        layout(G.width, G.height);
     }
 
     /**
      * Places the maps side by side and fits them in the camera. In portrait the
      * camera only shows {@link #focus}, filling the width and sticking to the top to
-     * leave the space below for the thumbs. The other maps stay off screen and show
-     * as minis in its panel
+     * leave the space below for the thumbs and the buttons. The other maps stay off
+     * screen and show as minis in its panel, and the buttons can move the camera to
+     * them
      */
     private void layout(int width, int height) {
         boolean portrait = height > width;
@@ -166,6 +235,7 @@ public class PlayScreen extends ScreenBase {
         }
 
         focus.stackMinis(minis);
+        navT.setVisible(minis.size > 0);
         float worldW;
 
         if (portrait) {
@@ -181,10 +251,23 @@ public class PlayScreen extends ScreenBase {
         Graphics g = Gdx.graphics;
         int left = g.getSafeInsetLeft();
         int bottom = g.getSafeInsetBottom();
+        int right = g.getSafeInsetRight();
+        float pad = G.style.padMedium;
+
+        barT.pad(0f, left + pad, bottom + pad, right + pad);
+
+        // The maps leave room for the buttons under them. In landscape only the room
+        // they don't fill, so they keep their size
+        int viewW = width - left - right;
+        int viewH = height - bottom - g.getSafeInsetTop();
+        int barH = MathUtils.ceil(G.style.iconButtSize + 2f * pad);
+
+        if (!portrait)
+            barH = MathUtils.clamp(MathUtils.floor(viewH - viewW * MapRender.VIEW_H / worldW), 0, barH);
 
         worldViewport.setMinWorldWidth(worldW);
-        worldViewport.update(width - left - g.getSafeInsetRight(), height - bottom - g.getSafeInsetTop(), false);
-        worldViewport.setScreenPosition(worldViewport.getScreenX() + left, worldViewport.getScreenY() + bottom);
+        worldViewport.update(viewW, viewH - barH, false);
+        worldViewport.setScreenPosition(worldViewport.getScreenX() + left, worldViewport.getScreenY() + bottom + barH);
 
         camY = portrait ? MapRender.VIEW_TOP - worldViewport.getWorldHeight() / 2f : Map.N_ROW / 2f;
     }
@@ -205,9 +288,13 @@ public class PlayScreen extends ScreenBase {
         G.game.bgBeans.render();
         G.game.batch.end();
 
+        // The camera slides to the map the navigation buttons picked
+        slideTime += delta;
+        shownX = MathUtils.lerp(slideFromX, camX, Interpolation.pow2Out.apply(Math.min(slideTime / SLIDE_TIME, 1f)));
+
         // Intro: the camera slides in from the right while zooming in
         float intro = Interpolation.pow2.apply(Math.min(time / INTRO_TIME, 1f));
-        worldCam.position.set(camX + (1f - intro) * worldViewport.getWorldWidth() / 6f, camY, 0f);
+        worldCam.position.set(shownX + (1f - intro) * worldViewport.getWorldWidth() / 6f, camY, 0f);
         worldCam.zoom = MathUtils.lerp(1.2f, 1f, intro);
 
         // Draw the maps
@@ -290,6 +377,8 @@ public class PlayScreen extends ScreenBase {
     public void resize(int width, int height) {
         super.resize(width, height);
         layout(width, height);
+        // No slide when the screen turns
+        slideTime = SLIDE_TIME;
     }
 
     @Override

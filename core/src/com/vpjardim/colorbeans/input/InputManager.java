@@ -154,6 +154,11 @@ public class InputManager {
         multiplex.addProcessor(input);
     }
 
+    /** Adds the processor at the index. The first processor to handle an event stops it there */
+    public void addProcessor(int index, InputProcessor input) {
+        multiplex.addProcessor(index, input);
+    }
+
     public void removeProcessor(InputProcessor input) {
         multiplex.removeProcessor(input);
     }
