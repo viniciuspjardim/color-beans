@@ -39,7 +39,7 @@ public class PlayScreen extends ScreenBase {
     private ExtendViewport worldViewport;
     /** Camera position after the intro. See {@link #layout(int, int)} */
     private float camX, camY;
-    /** Map that fills the screen in portrait, with the others as minis in its panel */
+    /** Map the camera shows in portrait, with the others as minis in its panel */
     private MapRender focus;
     private final Array<MapRender> minis = new Array<>();
     private Table containerT;
@@ -144,36 +144,36 @@ public class PlayScreen extends ScreenBase {
     }
 
     /**
-     * Places the maps for the screen size. Wider than tall, they're side by side.
-     * Otherwise {@link #focus} fills the width with the other maps as minis in its
-     * panel, and sticks to the top to leave the space below for the thumbs
+     * Places the maps side by side and fits them in the camera. In portrait the
+     * camera only shows {@link #focus}, filling the width and sticking to the top to
+     * leave the space below for the thumbs. The other maps stay off screen and show
+     * as minis in its panel
      */
     private void layout(int width, int height) {
         boolean portrait = height > width;
+        // In portrait each map has its own right wall, so the half the camera shows
+        // isn't the next map's panel
+        float slotW = portrait ? MapRender.SLOT_W + 1f : MapRender.SLOT_W;
+        minis.clear();
+
+        for (int i = 0; i < manager.render.size; i++) {
+            MapRender r = manager.render.get(i);
+            r.x = MapRender.PANEL_W + slotW * i;
+            r.mini = false;
+
+            if (portrait && r != focus)
+                minis.add(r);
+        }
+
+        focus.stackMinis(minis);
         float worldW;
 
         if (portrait) {
-            minis.clear();
-
-            for (MapRender r : manager.render) {
-                if (r != focus)
-                    minis.add(r);
-            }
-
-            focus.mini = false;
-            focus.x = MapRender.PANEL_W;
-            focus.y = 0f;
-            focus.stackMinis(minis);
             worldW = MapRender.SLOT_W + MapRender.RIGHT_WALL_W;
+            camX = focus.x - MapRender.PANEL_W + worldW / 2f;
         } else {
-            for (int i = 0; i < manager.render.size; i++) {
-                MapRender r = manager.render.get(i);
-                r.mini = false;
-                r.x = MapRender.PANEL_W + MapRender.SLOT_W * i;
-                r.y = 0f;
-            }
-
             worldW = MapRender.SLOT_W * manager.render.size + MapRender.RIGHT_WALL_W;
+            camX = worldW / 2f;
         }
 
         // The viewport fits the maps in the screen minus its unsafe edges (notch, home
@@ -186,7 +186,6 @@ public class PlayScreen extends ScreenBase {
         worldViewport.update(width - left - g.getSafeInsetRight(), height - bottom - g.getSafeInsetTop(), false);
         worldViewport.setScreenPosition(worldViewport.getScreenX() + left, worldViewport.getScreenY() + bottom);
 
-        camX = worldW / 2f;
         camY = portrait ? MapRender.VIEW_TOP - worldViewport.getWorldHeight() / 2f : Map.N_ROW / 2f;
     }
 
@@ -217,13 +216,11 @@ public class PlayScreen extends ScreenBase {
         G.game.batch.begin();
 
         for (MapRender r : manager.render) {
-            if (!r.mini)
-                r.renderBg();
+            r.renderBg();
         }
 
         for (MapRender r : manager.render) {
-            if (!r.mini)
-                r.render();
+            r.render();
         }
 
         G.game.batch.end();

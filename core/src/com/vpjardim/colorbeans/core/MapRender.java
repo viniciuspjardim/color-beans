@@ -59,18 +59,22 @@ public class MapRender {
     public static final float VIEW_TOP = Map.N_ROW + 0.5f;
     /** Text height (the font's em size) */
     public static final float TEXT_SIZE = 0.44f;
-    /** Smaller text that fits the side panel */
-    private static final float PANEL_TEXT_SIZE = 0.3f;
+    /** Smaller text for the side panel's labels */
+    private static final float LABEL_SIZE = 0.3f;
     /** Gap between the text and the walls */
     private static final float PAD = 0.15f;
     /** Top of the first stat in the panel, under the next beans */
     private static final float STATS_TOP = Map.N_ROW - 3.25f;
     /** Height of each stat in the panel: a label with its value under it */
     private static final float STAT_H = 1.2f;
-    /** Top of the panel space under the stats, where the mini maps go */
-    private static final float MINIS_TOP = STATS_TOP - 3f * STAT_H;
-    /** Gap around the mini maps */
-    private static final float MINI_PAD = 0.07f;
+    /**
+     * Top of the first mini map slot: a brick edge under the stats. Each slot is 2
+     * bricks tall, and there's room for 4 above the floor (the most players is 4)
+     */
+    private static final float MINIS_TOP = Map.N_ROW - 7f;
+    private static final float MINI_SLOT_H = 2f;
+    /** Side of a mini map's square: 7 of them fill the panel, minus a margin */
+    private static final float MINI_CELL = (PANEL_W - 0.14f) / Map.N_COL;
     /** Incoming trash beans that fit the visible half of the ceiling */
     private static final int TRASH_ICONS = Map.N_COL * 2;
 
@@ -87,14 +91,12 @@ public class MapRender {
     private static final Color MINI_BG = Color.valueOf("121220");
 
     public Map m;
-    /** Field's left edge */
+    /** Field's left edge. Its bottom edge is always y = 0 */
     public float x;
-    /** Field's bottom edge. Always 0 unless it's a {@link #mini} map */
-    public float y;
-    /** Draws as a mini map of flat squares. See {@link #renderMini(ShapeRenderer)} */
+    /** Also draws the map as a mini map in another map's panel. See {@link #stackMinis(Array)} */
     public boolean mini;
-    /** Side of a mini map's square */
-    public float cell;
+    /** Mini map's bottom left corner */
+    public float miniX, miniY;
     /** Viewport the map is drawn with: used to find which block a debug tap hits */
     public Viewport viewport;
 
@@ -187,24 +189,18 @@ public class MapRender {
     }
 
     /**
-     * Makes the given maps minis and stacks them in this map's panel, under the
-     * stats. They shrink if they don't fit
+     * Stacks the given maps as minis in this map's panel, under the stats, each
+     * centered in its slot
      */
     public void stackMinis(Array<MapRender> minis) {
-        if (minis.isEmpty())
-            return;
+        float w = MINI_CELL * Map.N_COL;
+        float h = MINI_CELL * Map.N_ROW;
 
-        float gap = MINI_PAD * 3f;
-        float fitH = (MINIS_TOP - MINI_PAD - gap * (minis.size - 1)) / minis.size;
-        float side = Math.min((PANEL_W - 2f * MINI_PAD) / Map.N_COL, fitH / Map.N_ROW);
-        float top = MINIS_TOP;
-
-        for (MapRender r : minis) {
+        for (int i = 0; i < minis.size; i++) {
+            MapRender r = minis.get(i);
             r.mini = true;
-            r.cell = side;
-            r.x = x - PANEL_W + (PANEL_W - side * Map.N_COL) / 2f;
-            r.y = top - side * Map.N_ROW;
-            top = r.y - gap;
+            r.miniX = x - PANEL_W + (PANEL_W - w) / 2f;
+            r.miniY = MINIS_TOP - MINI_SLOT_H * i - (MINI_SLOT_H + h) / 2f;
         }
     }
 
@@ -328,7 +324,7 @@ public class MapRender {
         font.draw(batch, m.name, x, top, Map.N_COL - PAD, Align.right, false);
         font.draw(batch, m.scoreStr, x + PAD, top);
 
-        setTextSize(PANEL_TEXT_SIZE);
+        setTextSize(LABEL_SIZE);
         labelFont.draw(batch, "Next", x - PANEL_W, top - labelFont.getCapHeight(), PANEL_W, Align.center,
                 false);
 
@@ -338,14 +334,14 @@ public class MapRender {
     }
 
     /**
-     * Draws the map at {@link #x}, {@link #y} as flat squares of {@link #cell}
-     * side, with no walls or text. Dimmed after the map loses
+     * Draws the map at {@link #miniX}, {@link #miniY} as flat squares, with no
+     * walls or text. Dimmed after the map loses
      */
     public void renderMini(ShapeRenderer sr) {
         boolean lost = m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE);
 
         sr.setColor(MINI_BG);
-        sr.rect(x, y, cell * Map.N_COL, cell * Map.N_ROW);
+        sr.rect(miniX, miniY, MINI_CELL * Map.N_COL, MINI_CELL * Map.N_ROW);
 
         for (int col = 0; col < Map.N_COL; col++) {
             for (int row = Map.OUT_ROW; row < Map.OUT_ROW + Map.N_ROW; row++) {
@@ -367,10 +363,11 @@ public class MapRender {
             return;
 
         float dim = lost ? 0.4f : 1f;
-        float gap = cell * 0.1f;
+        float gap = MINI_CELL * 0.1f;
+        float side = MINI_CELL - gap;
 
         sr.setColor(squareColor.set(SQUARE_COLORS[color]).mul(dim, dim, dim, 1f));
-        sr.rect(x + col * cell + gap / 2f, y + fieldY * cell + gap / 2f, cell - gap, cell - gap);
+        sr.rect(miniX + col * MINI_CELL + gap / 2f, miniY + fieldY * MINI_CELL + gap / 2f, side, side);
     }
 
     /** Sets {@link #pair1} and {@link #pair2} to where the player beans are */
@@ -389,12 +386,22 @@ public class MapRender {
         BitmapFont font = G.game.data.mapFont;
         BitmapFont labelFont = G.game.data.mapLabelFont;
 
-        // Big numbers are shortened to fit the panel: 123456 -> 123k
-        String valueStr = value < 100000 ? Integer.toString(value) : value / 1000 + "k";
+        // Big numbers are shortened to fit the panel: 12345 -> 12k
+        String valueStr;
 
+        if (value < 10000)
+            valueStr = Integer.toString(value);
+        else if (value < 1000000)
+            valueStr = value / 1000 + "k";
+        else
+            valueStr = value / 1000000 + "M";
+
+        setTextSize(LABEL_SIZE);
         labelFont.draw(G.game.batch, label, x - PANEL_W, y, PANEL_W, Align.center, false);
-        font.draw(G.game.batch, valueStr, x - PANEL_W, y - labelFont.getCapHeight() - PAD, PANEL_W,
-                Align.center, false);
+        float valueY = y - labelFont.getCapHeight() - PAD;
+
+        setTextSize(TEXT_SIZE);
+        font.draw(G.game.batch, valueStr, x - PANEL_W, valueY, PANEL_W, Align.center, false);
     }
 
     /** Sets the map fonts' height in world units (their em size) */
