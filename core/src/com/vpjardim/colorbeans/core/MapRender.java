@@ -53,9 +53,12 @@ public class MapRender {
     public static final int SLOT_W = PANEL_W + Map.N_COL;
     /** Visible part of the rightmost map's right wall: half, like the ceiling and floor */
     public static final float RIGHT_WALL_W = 0.5f;
-    /** Height the camera shows: the field plus half the ceiling and half the floor */
+    /**
+     * Height that fits between the notch and the buttons: the field plus half the
+     * ceiling and half the floor. The other halves show where the screen has room
+     */
     public static final float VIEW_H = Map.N_ROW + 1f;
-    /** Top of the area the camera shows */
+    /** Top of the ceiling's half that shows the incoming trash */
     public static final float VIEW_TOP = Map.N_ROW + 0.5f;
     /** Text height (the font's em size) */
     public static final float TEXT_SIZE = 0.44f;

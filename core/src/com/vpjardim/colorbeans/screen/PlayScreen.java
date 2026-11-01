@@ -267,9 +267,25 @@ public class PlayScreen extends ScreenBase {
 
         worldViewport.setMinWorldWidth(worldW);
         worldViewport.update(viewW, viewH - barH, false);
-        worldViewport.setScreenPosition(worldViewport.getScreenX() + left, worldViewport.getScreenY() + bottom + barH);
 
-        camY = portrait ? MapRender.VIEW_TOP - worldViewport.getWorldHeight() / 2f : Map.N_ROW / 2f;
+        // That sizes the maps to the area between the notch and the buttons. The field
+        // stays in it, but the ceiling and the floor can show past it, under the notch
+        // and the buttons, so the viewport takes the screen's whole height
+        float unit = worldViewport.getScreenWidth() / worldViewport.getWorldWidth();
+        float screenH = height / unit;
+        float insetTop = g.getSafeInsetTop() / unit;
+        worldViewport.setWorldHeight(screenH);
+        worldViewport.setScreenBounds(worldViewport.getScreenX() + left, 0, worldViewport.getScreenWidth(), height);
+
+        if (portrait) {
+            // At the top, with the whole ceiling when it fits. The half with the incoming
+            // trash stays out of the notch
+            camY = Math.max(MapRender.VIEW_TOP + insetTop, Map.N_ROW + 1f) - screenH / 2f;
+        } else {
+            // Centered in the area
+            float areaMid = ((bottom + barH) / unit + screenH - insetTop) / 2f;
+            camY = Map.N_ROW / 2f + screenH / 2f - areaMid;
+        }
     }
 
     @Override
