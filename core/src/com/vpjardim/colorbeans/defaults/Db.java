@@ -168,6 +168,18 @@ public class Db {
 
         Profile p;
 
+        // A TV's remote comes first, so it plays the first map. Its center button
+        // presses in the menus and rotates in game, and its back button pauses
+        if (G.tv) {
+            p = new Profile();
+            kbProfs.add(p);
+            p.up = Keys.UP;
+            p.right = Keys.RIGHT;
+            p.down = Keys.DOWN;
+            p.left = Keys.LEFT;
+            p.button3 = Keys.CENTER;
+        }
+
         p = new Profile();
         kbProfs.add(p);
         p.up = Keys.W;

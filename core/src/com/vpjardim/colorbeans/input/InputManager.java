@@ -78,7 +78,8 @@ public class InputManager {
             inputs.add(input);
         }
 
-        if (hardwareKeyboard) {
+        // A TV's remote sends key events, like a keyboard's arrows and enter
+        if (hardwareKeyboard || G.tv) {
             // One keyboard can control one or more maps, depending on the number of
             // profiles the keyboard has
             for (int i = 0; i < G.game.data.kbProfs.size; i++) {

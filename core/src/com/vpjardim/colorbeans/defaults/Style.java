@@ -1,6 +1,7 @@
 package com.vpjardim.colorbeans.defaults;
 
 import com.badlogic.gdx.Gdx;
+import com.vpjardim.colorbeans.G;
 
 public class Style {
     /** Screens with a short side under this many dp are phones. Android's tablet breakpoint */
@@ -45,7 +46,8 @@ public class Style {
         float scale = scaleFor(width, height);
         float dp = dpSize();
 
-        if (dp > 0f && Math.min(width, height) / dp < PHONE_MAX_DP)
+        // A TV can be as few dp as a phone, but it's far from the player
+        if (!G.tv && dp > 0f && Math.min(width, height) / dp < PHONE_MAX_DP)
             scale = Math.max(scale, PHONE_MIN_DP * dp);
 
         return scale;

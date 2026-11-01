@@ -123,16 +123,21 @@ public class Profile {
     }
 
     public static String keyboardKeyNames(Profile p) {
-        String keyNames = Input.Keys.toString(p.up) + ", " +
-                Input.Keys.toString(p.right) + ", " +
-                Input.Keys.toString(p.down) + ", " +
-                Input.Keys.toString(p.left) + ", " +
-                Input.Keys.toString(p.start) + ", " +
-                Input.Keys.toString(p.button1) + ", " +
-                Input.Keys.toString(p.button2) + ", " +
-                Input.Keys.toString(p.button3) + ", " +
-                Input.Keys.toString(p.button4);
+        String keyNames = keyName(p.up) + ", " +
+                keyName(p.right) + ", " +
+                keyName(p.down) + ", " +
+                keyName(p.left) + ", " +
+                keyName(p.start) + ", " +
+                keyName(p.button1) + ", " +
+                keyName(p.button2) + ", " +
+                keyName(p.button3) + ", " +
+                keyName(p.button4);
 
         return keyNames.replace("Numpad ", "");
+    }
+
+    /** The key's name, or a dash for a key left out, like the ones a TV's remote lacks */
+    private static String keyName(int key) {
+        return key == UNDEFINED ? "-" : Input.Keys.toString(key);
     }
 }
