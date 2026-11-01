@@ -63,10 +63,6 @@
             font: roboto
             fontColor: orange800
         }
-        labelGTitle: {
-            background: "game/ribbon_red"
-            font: dimbo_gtitle
-        }
         labelWhite50: {
             font: roboto
             fontColor: white50

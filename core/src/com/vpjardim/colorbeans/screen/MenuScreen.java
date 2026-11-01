@@ -2,14 +2,15 @@ package com.vpjardim.colorbeans.screen;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vpjardim.colorbeans.G;
+import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
 
@@ -19,9 +20,11 @@ public class MenuScreen extends ScreenBase {
     public static final int ACT_SCORE = 12;
     public static final int ACT_CONFIG = 13;
 
-    private Table table;
-    private Label label;
-    private TextureAtlas.AtlasRegion gameTitle;
+    /** Part of the window the menu may take at most */
+    private static final float MAX_FILL = 0.9f;
+
+    private Stack menu;
+    private ScreenViewport menuViewport;
 
     @Override
     public void show() {
@@ -43,10 +46,12 @@ public class MenuScreen extends ScreenBase {
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         Table outerT = new Table(G.game.skin);
-        table = new Table(G.game.skin);
+        Table panelT = new Table(G.game.skin);
+        Table ribbonT = new Table(G.game.skin);
 
         outerT.setFillParent(true);
-        table.setBackground("bgYellow");
+        panelT.setBackground("bgYellow");
+        ribbonT.setBackground("game/ribbon_red");
 
         TextButton playButt, trainingButt, scoreButt, optionsButt, exitButt;
 
@@ -95,66 +100,76 @@ public class MenuScreen extends ScreenBase {
             }
         });
 
-        Label.LabelStyle labelStyle = G.game.skin.get("labelGTitle", Label.LabelStyle.class);
-
         float bttW = G.style.buttWidth;
         float padS = G.style.padSmall;
 
-        table.defaults().width(bttW).pad(padS);
+        panelT.defaults().width(bttW).pad(padS);
 
-        outerT.add();
-        outerT.add(table);
-        outerT.add();
-
-        table.add().width(G.style.ribbonWidth).height(G.style.ribbonHeight * 0.85f);
-        table.row();
-        table.add(playButt);
-        table.row();
-        table.add(trainingButt);
-        table.row();
-        table.add(scoreButt);
-        table.row();
-        table.add(optionsButt);
-        table.row();
+        // Room for the ribbon, which is drawn over the top of the panel
+        panelT.add().width(G.style.ribbonWidth).height(G.style.ribbonHeight * 0.85f);
+        panelT.row();
+        panelT.add(playButt);
+        panelT.row();
+        panelT.add(trainingButt);
+        panelT.row();
+        panelT.add(scoreButt);
+        panelT.row();
+        panelT.add(optionsButt);
+        panelT.row();
 
         if (canExit) {
-            table.add(exitButt);
+            panelT.add(exitButt);
         }
 
-        table.getMaxWidth();
+        // The ribbon's padding centers the title on its front face
+        ribbonT.add(new Image(G.game.skin, "game/title"));
 
-        label = new Label(" ", labelStyle);
-        label.setAlignment(Align.center);
-        gameTitle = G.game.atlas.findRegion("game/title");
+        // The ribbon is wider than the panel and hangs over both sides of it
+        Table panelLayer = new Table();
+        panelLayer.add(panelT).padLeft(G.style.ribbonOverhang).padRight(G.style.ribbonOverhang);
 
+        Table ribbonLayer = new Table();
+        ribbonLayer.top();
+        ribbonLayer.add(ribbonT).growX().height(G.style.ribbonHeight).padTop(G.style.padVBig);
+
+        menu = new Stack(panelLayer, ribbonLayer);
+        outerT.add(menu);
+
+        // The background beans stay on the pixel camera, so the menu gets its own viewport
+        // that resize() can zoom
+        menuViewport = new ScreenViewport();
+        stage.setViewport(menuViewport);
         stage.addActor(outerT);
-        table.setDebug(G.game.dbg.uiTable);
+        outerT.setDebug(G.game.dbg.uiTable, true);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
 
+        G.game.batch.setProjectionMatrix(cam.combined);
         G.game.batch.begin();
         G.game.bgBeans.render();
         G.game.batch.end();
 
         stage.act(delta);
         stage.draw();
+    }
 
-        label.setSize(table.getWidth() + G.style.ribbonSide * 2 - G.style.menuBgPad * 2, G.style.ribbonHeight);
-        label.setPosition(table.getX() + G.style.menuBgPad - G.style.ribbonSide,
-                G.height - label.getHeight() - table.getY() - table.getHeight() * 0.04f);
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
 
-        G.game.batch.begin();
-        label.draw(G.game.batch, 1f);
+        if (width <= 0 || height <= 0)
+            return;
 
-        final float titleX = table.getX() + table.getWidth() / 2f - gameTitle.originalWidth / 2f;
-        final float titleY = label.getY() + 0.64f * label.getHeight() - gameTitle.originalHeight / 2f;
+        // Fonts and images were sized for the window at startup. Zoom so the menu keeps its
+        // size relative to the window, and zoom out more when it would still not fit
+        float zoom = Style.scaleFor(width, height) / G.scale;
+        float fit = MAX_FILL * Math.min(width / menu.getPrefWidth(), height / menu.getPrefHeight());
 
-        G.game.batch.draw(gameTitle, titleX, titleY, gameTitle.originalWidth,
-                gameTitle.originalHeight);
-        G.game.batch.end();
+        menuViewport.setUnitsPerPixel(1f / Math.min(zoom, fit));
+        menuViewport.update(width, height, true);
     }
 
     @Override
