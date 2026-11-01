@@ -243,10 +243,9 @@ public class Db {
         mapFont = G.game.assets.get("map_dimbo.ttf", BitmapFont.class);
         mapLabelFont = G.game.assets.get("map_roboto.ttf", BitmapFont.class);
 
-        // The maps are drawn in world units, where a bean is 1 x 1. Without these the
-        // text would be beans tall and snap to whole beans
+        // The maps are drawn in world units, where a bean is 1 x 1, and MapRender scales
+        // these fonts to it. Without this the text would snap to whole beans
         for (BitmapFont font : new BitmapFont[] { mapFont, mapLabelFont }) {
-            font.getData().setScale(MapRender.TEXT_SIZE / G.style.fontSizeBig);
             font.setUseIntegerPositions(false);
         }
 

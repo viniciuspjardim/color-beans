@@ -1,17 +1,21 @@
 package com.vpjardim.colorbeans.screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
-import com.vpjardim.colorbeans.animation.CamAccessor;
 import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.MapManager;
@@ -23,20 +27,23 @@ import com.vpjardim.colorbeans.events.EventHandler;
 import com.vpjardim.colorbeans.events.EventListener;
 import com.vpjardim.colorbeans.input.TouchInput;
 
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
-
 public class PlayScreen extends ScreenBase {
     public static final int ACT_MENU = 10;
     public static final int ACT_CREDITS = 11;
+    /** Seconds the camera takes to slide in at the start */
+    private static final float INTRO_TIME = 1.75f;
 
     public final MapManager manager;
     /** Camera for the maps, in world units where a bean is 1 x 1. See {@link MapRender} */
     private OrthographicCamera worldCam;
     private ExtendViewport worldViewport;
+    /** Camera position after the intro. See {@link #layout(int, int)} */
+    private float camX, camY;
+    /** Map that fills the screen in portrait, with the others as minis in its panel */
+    private MapRender focus;
+    private final Array<MapRender> minis = new Array<>();
     private Table containerT;
     private boolean menuVisible;
-    private TweenManager transition;
     private EventListener tapInput;
     private TouchInput touchInput;
 
@@ -119,48 +126,74 @@ public class PlayScreen extends ScreenBase {
 
         manager.init();
 
-        // Maps side by side. The viewport always fits them all and shows more of the
-        // background on screens with a different aspect ratio
-        int maps = manager.render.size;
+        // The maps are laid out on resize, which comes right after show
         worldCam = new OrthographicCamera();
-        worldViewport = new ExtendViewport(MapRender.SLOT_W * maps + 1f, MapRender.VIEW_H, worldCam);
-        // Sets the visible world size, used by the intro below
-        worldViewport.update(G.width, G.height, false);
-
-        for (int i = 0; i < maps; i++) {
-            MapRender r = manager.render.get(i);
-            r.x = MapRender.PANEL_W + MapRender.SLOT_W * i;
-            r.viewport = worldViewport;
-        }
-
-        // Intro: the camera slides in from the right while zooming in, ending centered
-        // on the maps
-        float centerX = worldViewport.getMinWorldWidth() / 2f;
-        float centerY = Map.N_ROW / 2f;
-
-        transition = new TweenManager();
-        Tween.registerAccessor(OrthographicCamera.class, new CamAccessor());
-
-        Tween.set(worldCam, CamAccessor.POSITION)
-                .target(centerX + worldViewport.getWorldWidth() / 6f, centerY).start(transition);
-        Tween.to(worldCam, CamAccessor.POSITION, 1.75f).target(centerX, centerY).start(transition);
-
-        Tween.set(worldCam, CamAccessor.ZOOM).target(1.2f).start(transition);
-        Tween.to(worldCam, CamAccessor.ZOOM, 1.75f).target(1f).start(transition);
+        worldViewport = new ExtendViewport(MapRender.SLOT_W, MapRender.VIEW_H, worldCam);
 
         for (MapRender r : manager.render) {
-            if (r.m.input instanceof TouchInput) {
+            r.viewport = worldViewport;
+
+            if (touchInput == null && r.m.input instanceof TouchInput) {
                 touchInput = (TouchInput) r.m.input;
-                break;
+                focus = r;
             }
         }
+
+        if (focus == null)
+            focus = manager.render.first();
+    }
+
+    /**
+     * Places the maps for the screen size. Wider than tall, they're side by side.
+     * Otherwise {@link #focus} fills the width with the other maps as minis in its
+     * panel, and sticks to the top to leave the space below for the thumbs
+     */
+    private void layout(int width, int height) {
+        boolean portrait = height > width;
+        float worldW;
+
+        if (portrait) {
+            minis.clear();
+
+            for (MapRender r : manager.render) {
+                if (r != focus)
+                    minis.add(r);
+            }
+
+            focus.mini = false;
+            focus.x = MapRender.PANEL_W;
+            focus.y = 0f;
+            focus.stackMinis(minis);
+            worldW = MapRender.SLOT_W + MapRender.RIGHT_WALL_W;
+        } else {
+            for (int i = 0; i < manager.render.size; i++) {
+                MapRender r = manager.render.get(i);
+                r.mini = false;
+                r.x = MapRender.PANEL_W + MapRender.SLOT_W * i;
+                r.y = 0f;
+            }
+
+            worldW = MapRender.SLOT_W * manager.render.size + MapRender.RIGHT_WALL_W;
+        }
+
+        // The viewport fits the maps in the screen minus its unsafe edges (notch, home
+        // indicator) and shows more of the background on other aspect ratios
+        Graphics g = Gdx.graphics;
+        int left = g.getSafeInsetLeft();
+        int bottom = g.getSafeInsetBottom();
+
+        worldViewport.setMinWorldWidth(worldW);
+        worldViewport.update(width - left - g.getSafeInsetRight(), height - bottom - g.getSafeInsetTop(), false);
+        worldViewport.setScreenPosition(worldViewport.getScreenX() + left, worldViewport.getScreenY() + bottom);
+
+        camX = worldW / 2f;
+        camY = portrait ? MapRender.VIEW_TOP - worldViewport.getWorldHeight() / 2f : Map.N_ROW / 2f;
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
 
-        transition.update(delta);
         manager.winLost();
 
         for (MapRender r : manager.render) {
@@ -173,20 +206,37 @@ public class PlayScreen extends ScreenBase {
         G.game.bgBeans.render();
         G.game.batch.end();
 
+        // Intro: the camera slides in from the right while zooming in
+        float intro = Interpolation.pow2.apply(Math.min(time / INTRO_TIME, 1f));
+        worldCam.position.set(camX + (1f - intro) * worldViewport.getWorldWidth() / 6f, camY, 0f);
+        worldCam.zoom = MathUtils.lerp(1.2f, 1f, intro);
+
         // Draw the maps
         worldViewport.apply();
         G.game.batch.setProjectionMatrix(worldCam.combined);
         G.game.batch.begin();
 
         for (MapRender r : manager.render) {
-            r.renderBg();
+            if (!r.mini)
+                r.renderBg();
         }
 
         for (MapRender r : manager.render) {
-            r.render();
+            if (!r.mini)
+                r.render();
         }
 
         G.game.batch.end();
+
+        G.game.sr.setProjectionMatrix(worldCam.combined);
+        G.game.sr.begin(ShapeRenderer.ShapeType.Filled);
+
+        for (MapRender r : manager.render) {
+            if (r.mini)
+                r.renderMini(G.game.sr);
+        }
+
+        G.game.sr.end();
 
         // Back to pixels for the menu and the touch input
         viewport.apply();
@@ -242,9 +292,7 @@ public class PlayScreen extends ScreenBase {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-
-        // Don't center the camera: its position is set by the intro tween
-        worldViewport.update(width, height, false);
+        layout(width, height);
     }
 
     @Override
