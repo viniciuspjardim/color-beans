@@ -63,10 +63,11 @@ public class MapRender {
     private static final float LABEL_SIZE = 0.3f;
     /** Gap between the text and the walls */
     private static final float PAD = 0.15f;
-    /** Top of the first stat in the panel, under the next beans */
-    private static final float STATS_TOP = Map.N_ROW - 3.25f;
-    /** Height of each stat in the panel: a label with its value under it */
-    private static final float STAT_H = 1.2f;
+    /**
+     * Bottom of the panel brick of the first stat, under the next beans. Each stat
+     * takes the brick under the previous one
+     */
+    private static final float STATS_Y = Map.N_ROW - 4f;
     /**
      * Top of the first mini map slot: a brick edge under the stats. Each slot is 2
      * bricks tall, and there's room for 4 above the floor (the most players is 4)
@@ -311,7 +312,7 @@ public class MapRender {
 
             if (icons < trash) {
                 batch.draw(trashBrick, x + icons * s, Map.N_ROW, 2f * s, s);
-                setTextSize(TEXT_SIZE);
+                setTextSize(font, TEXT_SIZE);
                 font.draw(batch, "+" + (trash - icons), x + icons * s, Map.N_ROW + (s + font.getCapHeight()) / 2f,
                         2f * s, Align.center, false);
             }
@@ -320,17 +321,19 @@ public class MapRender {
         // ==== Draw texts =====
         float top = Map.N_ROW - PAD;
 
-        setTextSize(TEXT_SIZE);
+        setTextSize(font, TEXT_SIZE);
         font.draw(batch, m.name, x, top, Map.N_COL - PAD, Align.right, false);
         font.draw(batch, m.scoreStr, x + PAD, top);
 
-        setTextSize(LABEL_SIZE);
-        labelFont.draw(batch, "Next", x - PANEL_W, top - labelFont.getCapHeight(), PANEL_W, Align.center,
-                false);
+        // Text is drawn down from the top of its capitals. "Next" sits at the bottom of
+        // its brick, over the beans it labels. The stats are centered in theirs
+        setTextSize(labelFont, LABEL_SIZE);
+        labelFont.draw(batch, "Next", x - PANEL_W, Map.N_ROW - 1f + PAD + labelFont.getCapHeight(), PANEL_W,
+                Align.center, false);
 
-        drawStat("Wins", m.winsCount, STATS_TOP);
-        drawStat("Acc", m.scoreSum, STATS_TOP - STAT_H);
-        drawStat("Time", (int) m.matchTimer, STATS_TOP - 2f * STAT_H);
+        drawStat("Wins", m.winsCount, STATS_Y);
+        drawStat("Acc", m.scoreSum, STATS_Y - 1f);
+        drawStat("Time", (int) m.matchTimer, STATS_Y - 2f);
     }
 
     /**
@@ -381,7 +384,10 @@ public class MapRender {
                 pair1.y + (r * MathUtils.sin(ang) + r * MathUtils.cos(ang)));
     }
 
-    /** Draws a panel label with its value under it. y is the label's top */
+    /**
+     * Draws a panel label with its value under it, centered together in the brick
+     * with bottom at y
+     */
     private void drawStat(String label, int value, float y) {
         BitmapFont font = G.game.data.mapFont;
         BitmapFont labelFont = G.game.data.mapLabelFont;
@@ -396,19 +402,18 @@ public class MapRender {
         else
             valueStr = value / 1000000 + "M";
 
-        setTextSize(LABEL_SIZE);
-        labelFont.draw(G.game.batch, label, x - PANEL_W, y, PANEL_W, Align.center, false);
-        float valueY = y - labelFont.getCapHeight() - PAD;
+        setTextSize(labelFont, LABEL_SIZE);
+        setTextSize(font, TEXT_SIZE);
+        float labelH = labelFont.getCapHeight();
+        float top = y + (1f + labelH + PAD + font.getCapHeight()) / 2f;
 
-        setTextSize(TEXT_SIZE);
-        font.draw(G.game.batch, valueStr, x - PANEL_W, valueY, PANEL_W, Align.center, false);
+        labelFont.draw(G.game.batch, label, x - PANEL_W, top, PANEL_W, Align.center, false);
+        font.draw(G.game.batch, valueStr, x - PANEL_W, top - labelH - PAD, PANEL_W, Align.center, false);
     }
 
-    /** Sets the map fonts' height in world units (their em size) */
-    private static void setTextSize(float size) {
-        float scale = size / G.style.fontSizeBig;
-        G.game.data.mapFont.getData().setScale(scale);
-        G.game.data.mapLabelFont.getData().setScale(scale);
+    /** Sets a map font's height in world units (its em size) */
+    private static void setTextSize(BitmapFont font, float size) {
+        font.getData().setScale(size / G.style.fontSizeBig);
     }
 
     /** Light brick of the walls, ceiling (y = N_ROW) or floor (y = -1) */
