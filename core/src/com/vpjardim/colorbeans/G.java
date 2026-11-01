@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.vpjardim.colorbeans.animation.BgBeans;
 import com.vpjardim.colorbeans.core.Audio;
 import com.vpjardim.colorbeans.core.Dbg;
@@ -15,6 +16,7 @@ import com.vpjardim.colorbeans.core.ScoreTable;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.input.InputManager;
+import com.vpjardim.colorbeans.input.TvKeyboard;
 import com.vpjardim.colorbeans.screen.ScreenManager;
 
 import aurelienribon.tweenengine.Tween;
@@ -90,6 +92,9 @@ public class G extends Game {
         Gdx.input.setCatchKey(Keys.BACK, true);
         Gdx.input.setCatchKey(Keys.ESCAPE, true);
         Gdx.input.setCatchKey(Keys.HOME, true);
+
+        if (tv)
+            TextField.DEFAULT_ONSCREEN_KEYBOARD = new TvKeyboard();
 
         Tween.setCombinedAttributesLimit(5);
 

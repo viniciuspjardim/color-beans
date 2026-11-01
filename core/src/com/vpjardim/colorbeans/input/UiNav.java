@@ -329,8 +329,9 @@ public class UiNav {
                         : slider.getMaxValue());
             }
         } else if (focused instanceof TextField) {
-            stage.setKeyboardFocus(focused);
-            Gdx.input.setOnscreenKeyboardVisible(true);
+            TextField field = (TextField) focused;
+            stage.setKeyboardFocus(field);
+            field.getOnscreenKeyboard().show(field);
         } else if (!(focused instanceof ScrollPane)) {
             click(focused);
         }
@@ -344,8 +345,9 @@ public class UiNav {
     }
 
     private void stopTyping() {
+        TextField field = (TextField) stage.getKeyboardFocus();
         stage.setKeyboardFocus(null);
-        Gdx.input.setOnscreenKeyboardVisible(false);
+        field.getOnscreenKeyboard().close();
     }
 
     /** Touches the actor's center, so its click listeners run like on a tap */
