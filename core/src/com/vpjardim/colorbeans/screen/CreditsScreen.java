@@ -99,6 +99,11 @@ public class CreditsScreen extends ScreenBase {
 
         containerT.setDebug(G.game.dbg.uiTable);
         contentT.setDebug(G.game.dbg.uiTable);
+
+        // The focus starts on back, so a press doesn't open the browser by surprise
+        nav.row(repositoryL).row(backBtt);
+        nav.focus(backBtt);
+        nav.back = () -> action = ScreenBase.ACT_NEXT;
     }
 
     @Override

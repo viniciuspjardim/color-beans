@@ -62,6 +62,7 @@ public class PlayScreen extends ScreenBase {
     private Table barT;
     private Table navT;
     private Table containerT;
+    private TextButton resumeButt;
     private boolean menuVisible;
     private EventListener tapInput;
     private TouchInput touchInput;
@@ -122,7 +123,7 @@ public class PlayScreen extends ScreenBase {
         G.game.audio.configMusic(Audio.MUSIC1, true, true);
         G.game.audio.playMusic();
 
-        TextButton resumeButt, menuButt;
+        TextButton menuButt;
 
         resumeButt = new TextButton("Resume",
                 G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
@@ -149,6 +150,11 @@ public class PlayScreen extends ScreenBase {
         contentT.add(resumeButt).width(bttW).pad(padM);
         contentT.row();
         contentT.add(menuButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
+
+        // Start is left to pause and resume, through the maps
+        nav.row(resumeButt).row(menuButt);
+        nav.startConfirms = false;
+        nav.back = () -> manager.setPaused(false);
 
         // The bar's padding and the navigation's visibility are set in layout
         float bttS = G.style.iconButtSize;
@@ -303,6 +309,14 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void render(float delta) {
+        // The menu's navigation works while it shows, and starts on resume each time
+        boolean menuShown = manager.isPaused() && menuVisible;
+
+        if (menuShown && nav.paused)
+            nav.focus(resumeButt);
+
+        nav.paused = !menuShown;
+
         super.render(delta);
 
         manager.winLost();

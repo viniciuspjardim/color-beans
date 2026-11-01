@@ -117,8 +117,11 @@ public class MenuScreen extends ScreenBase {
         panelT.add(optionsButt);
         panelT.row();
 
+        nav.row(playButt).row(trainingButt).row(scoreButt).row(optionsButt);
+
         if (canExit) {
             panelT.add(exitButt);
+            nav.row(exitButt);
         }
 
         // The ribbon's padding centers the title on its front face

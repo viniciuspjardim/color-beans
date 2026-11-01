@@ -44,6 +44,10 @@ public class KeyboardInput implements InputBase, InputProcessor {
     @Override
     public void setProfile(Profile profile) {
         p = profile;
+        // A key held down with the old profile would never come up
+        keyMap = 0;
+        keyMapOld = 0;
+        event = 0;
     }
 
     @Override
@@ -107,106 +111,61 @@ public class KeyboardInput implements InputBase, InputProcessor {
     public boolean keyDown(int keycode) {
         Dbg.dbg(Dbg.tag(this), "[" + id + "] keyDown -> keycode = " + keycode);
 
+        // The keys' state is kept without a target too, so the menus can read it
+        int key = p.keyOf(keycode);
+
+        if (key != Profile.UNDEFINED)
+            keyEvent(key, InputBase.DOWN);
+
         if (target == null)
             return false;
 
         target.keyDown(keycode);
 
+        if (key == InputBase.START_KEY)
+            target.btStartDown();
+        else if (key == InputBase.BUTTON1_KEY)
+            target.bt1Down();
+        else if (key == InputBase.BUTTON2_KEY)
+            target.bt2Down();
+        else if (key == InputBase.BUTTON3_KEY)
+            target.bt3Down();
+        else if (key == InputBase.BUTTON4_KEY)
+            target.bt4Down();
+
         // Return true when the key down event is handled. False if it's not so other
         // keyboard input (with another key profile) can handle it
-
-        if (keycode == p.up) {
-            keyEvent(InputBase.UP_KEY, InputBase.DOWN);
-            // target.btUpDown();
-            return true;
-        } else if (keycode == p.right) {
-            keyEvent(InputBase.RIGHT_KEY, InputBase.DOWN);
-            // target.btRightDown();
-            return true;
-        } else if (keycode == p.down) {
-            keyEvent(InputBase.DOWN_KEY, InputBase.DOWN);
-            // target.btDownDown();
-            return true;
-        } else if (keycode == p.left) {
-            keyEvent(InputBase.LEFT_KEY, InputBase.DOWN);
-            // target.btLeftDown();
-            return true;
-        } else if (keycode == p.start) {
-            keyEvent(InputBase.START_KEY, InputBase.DOWN);
-            target.btStartDown();
-            return true;
-        } else if (keycode == p.button1) {
-            keyEvent(InputBase.BUTTON1_KEY, InputBase.DOWN);
-            target.bt1Down();
-            return true;
-        } else if (keycode == p.button2) {
-            keyEvent(InputBase.BUTTON2_KEY, InputBase.DOWN);
-            target.bt2Down();
-            return true;
-        } else if (keycode == p.button3) {
-            keyEvent(InputBase.BUTTON3_KEY, InputBase.DOWN);
-            target.bt3Down();
-            return true;
-        } else if (keycode == p.button4) {
-            keyEvent(InputBase.BUTTON4_KEY, InputBase.DOWN);
-            target.bt4Down();
-            return true;
-        }
-
-        return false;
+        return key != Profile.UNDEFINED;
     }
 
     @Override
     public boolean keyUp(int keycode) {
         Dbg.dbg(Dbg.tag(this), "[" + id + "] keyUp   -> keycode = " + keycode);
 
+        int key = p.keyOf(keycode);
+
+        if (key != Profile.UNDEFINED)
+            keyEvent(key, InputBase.UP);
+
         if (target == null)
             return false;
 
         target.keyUp(keycode);
 
-        // Return true when the key down event is handled. False if it's not so other
-        // keyboard input (with another key profile) can handle it
-
-        if (keycode == p.up) {
-            keyEvent(InputBase.UP_KEY, InputBase.UP);
-            // target.btUpUp();
-            return true;
-        } else if (keycode == p.right) {
-            keyEvent(InputBase.RIGHT_KEY, InputBase.UP);
-            // target.btRightUp();
-            return true;
-        } else if (keycode == p.down) {
-            keyEvent(InputBase.DOWN_KEY, InputBase.UP);
-            // target.btDownUp();
-            return true;
-        } else if (keycode == p.left) {
-            keyEvent(InputBase.LEFT_KEY, InputBase.UP);
-            // target.btLeftUp();
-            return true;
-        } else if (keycode == p.start) {
-            keyEvent(InputBase.START_KEY, InputBase.UP);
+        if (key == InputBase.START_KEY)
             target.btStartUp();
-            return true;
-        } else if (keycode == p.button1) {
-            keyEvent(InputBase.BUTTON1_KEY, InputBase.UP);
+        else if (key == InputBase.BUTTON1_KEY)
             target.bt1Up();
-            return true;
-        } else if (keycode == p.button2) {
-            keyEvent(InputBase.BUTTON2_KEY, InputBase.UP);
+        else if (key == InputBase.BUTTON2_KEY)
             target.bt2Up();
-            return true;
-        } else if (keycode == p.button3) {
-            keyEvent(InputBase.BUTTON3_KEY, InputBase.UP);
+        else if (key == InputBase.BUTTON3_KEY)
             target.bt3Up();
-            return true;
-        } else if (keycode == p.button4) {
-            keyEvent(InputBase.BUTTON4_KEY, InputBase.UP);
+        else if (key == InputBase.BUTTON4_KEY)
             target.bt4Up();
-            return true;
-        }
 
-        return false;
+        // Return true when the key up event is handled. False if it's not so other
+        // keyboard input (with another key profile) can handle it
+        return key != Profile.UNDEFINED;
     }
 
     @Override

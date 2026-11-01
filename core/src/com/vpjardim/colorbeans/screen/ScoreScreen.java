@@ -193,6 +193,10 @@ public class ScoreScreen extends ScreenBase {
 
         stage.addActor(outerT);
         titleT.setDebug(G.game.dbg.uiTable);
+
+        // The hidden tab's scroll is skipped
+        nav.row(campaignButt, trainingButt).row(campaignScroll, trainingScroll).row(backBtt);
+        nav.back = () -> action = ScreenBase.ACT_NEXT;
     }
 
     @Override

@@ -85,6 +85,31 @@ public class Profile {
         return key == up || key == right || key == down || key == left || key == start ||
                 key == button1 || key == button2 || key == button3 || key == button4;
     }
+
+    /** Internal code of the given key, like {@link InputBase#UP_KEY}, or UNDEFINED if it's not in the profile */
+    public int keyOf(int key) {
+        if (key == UNDEFINED)
+            return UNDEFINED;
+        if (key == up)
+            return InputBase.UP_KEY;
+        if (key == right)
+            return InputBase.RIGHT_KEY;
+        if (key == down)
+            return InputBase.DOWN_KEY;
+        if (key == left)
+            return InputBase.LEFT_KEY;
+        if (key == start)
+            return InputBase.START_KEY;
+        if (key == button1)
+            return InputBase.BUTTON1_KEY;
+        if (key == button2)
+            return InputBase.BUTTON2_KEY;
+        if (key == button3)
+            return InputBase.BUTTON3_KEY;
+        if (key == button4)
+            return InputBase.BUTTON4_KEY;
+        return UNDEFINED;
+    }
     public void log() {
         Dbg.inf("Profile", "up -> " + this.up);
         Dbg.inf("Profile", "right -> " + this.right);
