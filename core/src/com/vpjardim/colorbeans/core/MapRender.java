@@ -93,6 +93,8 @@ public class MapRender {
             Color.valueOf("9a9a9a"), // Trash
     };
     private static final Color MINI_BG = Color.valueOf("121220");
+    /** Darker wall bricks: purple, steel blue and dark green */
+    private static final int[] DARK_WALLS = { 6, 8, 9 };
 
     public Map m;
     /** Field's left edge. Its bottom edge is always y = 0 */
@@ -142,18 +144,16 @@ public class MapRender {
             }
         }
 
-        // The ceiling and the panel bricks with text always have the same color
-        AtlasRegion ceilingBrick = atlas.findRegion("beans/brick", 8);
-        AtlasRegion textBrick = atlas.findRegion("beans/brick", 9);
-
+        // The ceiling and the panel bricks with text get only the darker colors, so
+        // the text and the incoming trash stand out
         for (int col = -PANEL_W; col <= Map.N_COL; col++) {
-            wallBricks[col + PANEL_W][Map.N_ROW + 1] = ceilingBrick;
+            wallBricks[col + PANEL_W][Map.N_ROW + 1] = darkWall(atlas);
         }
 
         float[] textYs = { Map.N_ROW - 1f, STATS_Y, STATS_Y - 1f, STATS_Y - 2f };
 
         for (float y : textYs) {
-            wallBricks[0][(int) y + 1] = textBrick;
+            wallBricks[0][(int) y + 1] = darkWall(atlas);
         }
 
         nextBrick = atlas.findRegion("beans/brick", 8);
@@ -441,6 +441,11 @@ public class MapRender {
     /** Sets a map font's height in world units (its em size) */
     private static void setTextSize(BitmapFont font, float size) {
         font.getData().setScale(size / G.style.fontSizeBig);
+    }
+
+    /** Random dark purple, steel blue or dark green wall brick */
+    private static AtlasRegion darkWall(TextureAtlas atlas) {
+        return atlas.findRegion("beans/brick", DARK_WALLS[MathUtils.random(DARK_WALLS.length - 1)]);
     }
 
     /** Light brick of the walls, ceiling (y = N_ROW) or floor (y = -1) */
