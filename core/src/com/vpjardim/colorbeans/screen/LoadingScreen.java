@@ -135,6 +135,30 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.shadowOffsetY = -1;
         G.game.assets.load("dimbo_gray.ttf", BitmapFont.class, param);
 
+        // In-game text fonts. The other fonts are shared with the skin, but these get
+        // scaled to world units (see Db), so they need linear filtering too
+        param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        param.fontFileName = "font/dimbo.ttf";
+        param.fontParameters.size = G.style.fontSizeBig;
+        param.fontParameters.color = Color.WHITE;
+        param.fontParameters.borderColor = Color.BLACK;
+        param.fontParameters.borderWidth = 1;
+        param.fontParameters.minFilter = Texture.TextureFilter.Linear;
+        param.fontParameters.magFilter = Texture.TextureFilter.Linear;
+        G.game.assets.load("map_dimbo.ttf", BitmapFont.class, param);
+
+        param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        param.fontFileName = "font/roboto.ttf";
+        param.fontParameters.size = G.style.fontSizeBig;
+        param.fontParameters.shadowColor = new Color(0x00000040);
+        param.fontParameters.shadowOffsetX = 0;
+        param.fontParameters.shadowOffsetY = 1;
+        param.fontParameters.borderColor = new Color(0x000000ff);
+        param.fontParameters.borderWidth = 1;
+        param.fontParameters.minFilter = Texture.TextureFilter.Linear;
+        param.fontParameters.magFilter = Texture.TextureFilter.Linear;
+        G.game.assets.load("map_roboto.ttf", BitmapFont.class, param);
+
         G.game.data = Db.load();
         G.game.input = new InputManager();
         G.game.batch = new SpriteBatch();

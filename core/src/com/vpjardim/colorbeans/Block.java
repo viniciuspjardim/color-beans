@@ -82,7 +82,7 @@ public class Block {
 
     /**
      * Shift in the y axis relative to the block's position in the Map. Negative is
-     * up, positive is down. The unit is the block side length
+     * down, positive is up. The unit is the block side length
      */
     public float py;
 
