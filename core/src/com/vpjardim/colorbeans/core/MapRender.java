@@ -100,11 +100,11 @@ public class MapRender {
     private static final Color LOSE_COLOR = Color.valueOf("ff6b6b");
     private static final Color DRAW_COLOR = Color.valueOf("9ad0ff");
     /** Middle of the title */
-    private static final float TITLE_Y = Map.N_ROW - 4f;
+    private static final float TITLE_Y = Map.N_ROW - 3.3f;
     private static final float TITLE_SIZE = 2.2f;
     private static final float TITLE_POP_TIME = 0.45f;
     /** Top of the first stat line, and the step to the next */
-    private static final float STATS_TOP = Map.N_ROW - 6.2f;
+    private static final float STATS_TOP = Map.N_ROW - 5.3f;
     private static final float STATS_LINE_H = 0.9f;
     private static final float RESULT_LABEL_SIZE = 0.4f;
     private static final float RESULT_VALUE_SIZE = 0.55f;
@@ -113,6 +113,11 @@ public class MapRender {
     private static final float STATS_STEP = 0.15f;
     /** Seconds the score takes to count up */
     private static final float COUNT_TIME = 0.8f;
+    /**
+     * Top of the results' buttons panel (see PlayScreen), under the stats. Its size
+     * follows the UI scale, not the map's, so it hangs down from here
+     */
+    public static final float RESULTS_MENU_TOP = STATS_TOP - 3 * STATS_LINE_H - 0.9f;
     /** Darker wall bricks: purple, steel blue and dark green */
     private static final int[] DARK_WALLS = { 6, 8, 9 };
 
@@ -429,6 +434,10 @@ public class MapRender {
                     false);
             titleFont.setColor(Color.WHITE);
         }
+
+        // Only the players get stats, unless the AI plays alone
+        if (m.ai != null && manager.playersPlayed())
+            return;
 
         // Score counts up from 0
         float count = Interpolation.pow2Out.apply(MathUtils.clamp((time - STATS_DELAY) / COUNT_TIME, 0f, 1f));

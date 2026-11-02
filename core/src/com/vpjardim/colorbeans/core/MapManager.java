@@ -96,14 +96,19 @@ public abstract class MapManager {
         return "Play again";
     }
 
-    /** Whether a player won the match, or else, with no players, the AI */
-    public boolean playersWon() {
-        boolean playersPlayed = false;
-
+    /** Whether a map is a player's, not the AI's */
+    public boolean playersPlayed() {
         for (Map m : maps) {
             if (m.ai == null)
-                playersPlayed = true;
+                return true;
         }
+
+        return false;
+    }
+
+    /** Whether a player won the match, or else, with no players, the AI */
+    public boolean playersWon() {
+        boolean playersPlayed = playersPlayed();
 
         for (Map m : winners) {
             if (m.ai == null || !playersPlayed)

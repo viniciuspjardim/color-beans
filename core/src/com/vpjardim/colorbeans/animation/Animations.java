@@ -73,8 +73,9 @@ public class Animations {
                 } else {
                     animating = true;
 
+                    // White bordered. Trash has no such tile, so it squeezes instead
                     if (celebrateTime >= popTime - POP_FLASH_TIME)
-                        b.tile = 2; // White bordered
+                        b.tile = b.isTrash() ? 4 : 2;
                 }
             }
         }
