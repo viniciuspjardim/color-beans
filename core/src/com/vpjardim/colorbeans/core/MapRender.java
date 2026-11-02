@@ -97,12 +97,16 @@ public class MapRender {
     private static final Color MINI_BG = Color.valueOf("121220");
 
     // ===== Match results, see renderResults =====
-    private static final Color WIN_COLOR = Color.valueOf("ffd23f");
-    private static final Color LOSE_COLOR = Color.valueOf("ff6b6b");
-    private static final Color DRAW_COLOR = Color.valueOf("9ad0ff");
     /** Middle of the title */
     private static final float TITLE_Y = Map.N_ROW - 3.3f;
-    private static final float TITLE_SIZE = 2.2f;
+    /**
+     * Height of the title's capital letters, and the same in the title images,
+     * which are drawn in to_pack/results/*.svg
+     */
+    private static final float TITLE_CAP_H = 1.7f;
+    private static final float TITLE_CAP_PX = 170f;
+    /** Tallest a title can be, with its outline and shadow */
+    private static final float TITLE_MAX_H = 2.7f;
     private static final float TITLE_POP_TIME = 0.45f;
     /** Top of the first stat line, and the step to the next */
     private static final float STATS_TOP = Map.N_ROW - 5.3f;
@@ -114,8 +118,6 @@ public class MapRender {
     private static final float STATS_STEP = 0.15f;
     /** Seconds the score takes to count up */
     private static final float COUNT_TIME = 0.8f;
-    /** Half the title's height, about */
-    private static final float TITLE_HALF_H = 0.8f;
     /** Gap between the results' panel edges and what's in it, and the field's walls */
     private static final float PANEL_PAD = 0.45f;
     private static final float PANEL_MARGIN = 0.3f;
@@ -155,6 +157,10 @@ public class MapRender {
     private final AtlasRegion shadowCorner;
     private final AtlasRegion shadowTop;
     private final AtlasRegion shadowLeft;
+    private final AtlasRegion winTitle;
+    private final AtlasRegion loseTitle;
+    private final AtlasRegion gameOverTitle;
+    private final AtlasRegion drawTitle;
 
     /** Player beans' positions relative to the field. See {@link #pairPosition()} */
     private final Vector2 pair1 = new Vector2();
@@ -196,6 +202,10 @@ public class MapRender {
         shadowCorner = atlas.findRegion("beans/bshadow", 1);
         shadowTop = atlas.findRegion("beans/bshadow", 2);
         shadowLeft = atlas.findRegion("beans/bshadow", 3);
+        winTitle = atlas.findRegion("results/win");
+        loseTitle = atlas.findRegion("results/lose");
+        gameOverTitle = atlas.findRegion("results/game_over");
+        drawTitle = atlas.findRegion("results/draw");
 
         if (!G.game.dbg.on)
             return;
@@ -412,29 +422,29 @@ public class MapRender {
         SpriteBatch batch = G.game.batch;
         MapManager manager = m.manager;
 
-        String title;
-        Color color;
+        AtlasRegion title;
 
-        if (m.gameWin) {
-            title = "WIN!";
-            color = WIN_COLOR;
-        } else if (manager.maps.size == 1) {
-            title = "GAME OVER";
-            color = LOSE_COLOR;
-        } else if (manager.winners.size == 0) {
-            title = "DRAW";
-            color = DRAW_COLOR;
-        } else {
-            title = "LOSE";
-            color = LOSE_COLOR;
-        }
+        if (m.gameWin)
+            title = winTitle;
+        else if (manager.maps.size == 1)
+            title = gameOverTitle;
+        else if (manager.winners.size == 0)
+            title = drawTitle;
+        else
+            title = loseTitle;
+
+        // Same letter size for all, unless it's too tall, like the 2 lines of game over
+        float titleScale = Math.min(TITLE_CAP_H / TITLE_CAP_PX, TITLE_MAX_H / title.getRegionHeight());
+        float titleW = title.getRegionWidth() * titleScale;
+        float titleH = title.getRegionHeight() * titleScale;
 
         // ===== The pause menu's panel behind it all, fading in =====
         float bottom = resultsMenuH > 0f
                 ? resultsMenuTop() - resultsMenuH - PANEL_PAD
                 : statsBottom() - PANEL_PAD;
 
-        float top = TITLE_Y + TITLE_HALF_H + PANEL_PAD;
+        // The title's outline and shadow pad it already
+        float top = TITLE_Y + titleH / 2f + PANEL_PAD / 2f;
         float panelX = x + PANEL_MARGIN;
         float panelW = Map.N_COL - 2f * PANEL_MARGIN;
         // Its corners are sized like the pause menu's, which is in UI units
@@ -448,18 +458,10 @@ public class MapRender {
         // The title pops in, then the winner's keeps pulsing
         float pop = Interpolation.swingOut.apply(Math.min(time / TITLE_POP_TIME, 1f));
         float pulse = m.gameWin ? 1f + 0.05f * MathUtils.sin(time * 5f) : 1f;
-        float titleSize = (title.length() > 5 ? TITLE_SIZE * 0.6f : TITLE_SIZE) * pop * pulse;
+        float midX = x + Map.N_COL / 2f;
 
-        // Unlike the other map fonts, this one is made at twice fontSizeVBig. A font's scale
-        // can't be 0, which the pop starts at
-        if (titleSize > 0.01f) {
-            BitmapFont titleFont = G.game.data.mapTitleFont;
-            titleFont.getData().setScale(titleSize / (G.style.fontSizeVBig * 2f));
-            titleFont.setColor(color);
-            titleFont.draw(batch, title, x, TITLE_Y + titleFont.getCapHeight() / 2f, Map.N_COL, Align.center,
-                    false);
-            titleFont.setColor(Color.WHITE);
-        }
+        batch.draw(title, midX - titleW / 2f, TITLE_Y - titleH / 2f, titleW / 2f, titleH / 2f, titleW, titleH,
+                pop * pulse, pop * pulse, 0f);
 
         // Score counts up from 0
         float count = Interpolation.pow2Out.apply(MathUtils.clamp((time - STATS_DELAY) / COUNT_TIME, 0f, 1f));

@@ -31,8 +31,6 @@ public class Db {
     public transient BitmapFont mapFont;
     /** In-game labels font, in world units. See {@link MapRender} */
     public transient BitmapFont mapLabelFont;
-    /** Big titles over the maps, like the match results */
-    public transient BitmapFont mapTitleFont;
     public transient BitmapFont font3;
 
     // Initialized inside the constructor ->
@@ -256,11 +254,10 @@ public class Db {
     public void initAfterLoading() {
         mapFont = G.game.assets.get("map_dimbo.ttf", BitmapFont.class);
         mapLabelFont = G.game.assets.get("map_roboto.ttf", BitmapFont.class);
-        mapTitleFont = G.game.assets.get("map_title.ttf", BitmapFont.class);
 
         // The maps are drawn in world units, where a bean is 1 x 1, and MapRender scales
         // these fonts to it. Without this the text would snap to whole beans
-        for (BitmapFont font : new BitmapFont[] { mapFont, mapLabelFont, mapTitleFont }) {
+        for (BitmapFont font : new BitmapFont[] { mapFont, mapLabelFont }) {
             font.setUseIntegerPositions(false);
         }
 

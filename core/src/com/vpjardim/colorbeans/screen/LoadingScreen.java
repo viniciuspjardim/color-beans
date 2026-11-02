@@ -165,18 +165,6 @@ public class LoadingScreen extends ScreenBase {
         param.fontParameters.magFilter = Texture.TextureFilter.Linear;
         G.game.assets.load("map_roboto.ttf", BitmapFont.class, param);
 
-        // Big titles over the maps, like the match results. Bigger than the other in-game
-        // text so it doesn't blur when scaled up
-        param = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        param.fontFileName = "font/dimbo.ttf";
-        param.fontParameters.size = G.style.fontSizeVBig * 2;
-        param.fontParameters.color = Color.WHITE;
-        param.fontParameters.borderColor = Color.BLACK;
-        param.fontParameters.borderWidth = 3;
-        param.fontParameters.minFilter = Texture.TextureFilter.Linear;
-        param.fontParameters.magFilter = Texture.TextureFilter.Linear;
-        G.game.assets.load("map_title.ttf", BitmapFont.class, param);
-
         G.game.data = Db.load();
         G.game.input = new InputManager();
         G.game.batch = new SpriteBatch();
