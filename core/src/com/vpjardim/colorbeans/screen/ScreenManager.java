@@ -105,6 +105,11 @@ public class ScreenManager {
                     G.game.setScreen(new MenuScreen());
                 else if (currScreen.action == PlayScreen.ACT_CREDITS)
                     G.game.setScreen(new CreditsScreen());
+                else if (currScreen.action == PlayScreen.ACT_NEW_GAME) {
+                    // The same game mode, now without its save
+                    boolean campaign = ((PlayScreen) currScreen).manager instanceof Campaign;
+                    G.game.setScreen(new PlayScreen(campaign ? new Campaign() : new Training()));
+                }
             } else if (currScreen instanceof CreditsScreen)
                 G.game.setScreen(new MenuScreen());
         }

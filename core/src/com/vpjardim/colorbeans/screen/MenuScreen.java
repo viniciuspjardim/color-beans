@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.vpjardim.colorbeans.G;
-import com.vpjardim.colorbeans.core.Store;
 import com.vpjardim.colorbeans.defaults.Style;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
@@ -26,13 +25,6 @@ public class MenuScreen extends ScreenBase {
 
     private Stack menu;
     private ScreenViewport menuViewport;
-    private Table panelT;
-    /** The menu's buttons, and the ones asking to continue a game mode's saved match */
-    private TextButton[] mainButts, choiceButts;
-    private boolean choosing;
-    /** The action of the game mode in the choice, and the key of its save */
-    private int choiceAct;
-    private String choiceKey;
 
     @Override
     public void show() {
@@ -46,9 +38,7 @@ public class MenuScreen extends ScreenBase {
         specialKeyDown = (Event e) -> {
             int key = (Integer) e.getAttribute();
 
-            if (choosing && G.isBackKey(key)) {
-                showMain();
-            } else if (canExit && G.isBackKey(key)) {
+            if (canExit && G.isBackKey(key)) {
                 Gdx.app.exit();
             }
         };
@@ -56,7 +46,7 @@ public class MenuScreen extends ScreenBase {
         EventHandler.get().addListener("SpecialButtons.keyDown", specialKeyDown);
 
         Table outerT = new Table(G.game.skin);
-        panelT = new Table(G.game.skin);
+        Table panelT = new Table(G.game.skin);
         Table ribbonT = new Table(G.game.skin);
 
         outerT.setFillParent(true);
@@ -64,14 +54,13 @@ public class MenuScreen extends ScreenBase {
         ribbonT.setBackground("game/ribbon_red");
 
         TextButton playButt, trainingButt, scoreButt, optionsButt, exitButt;
-        TextButton continueButt, restartButt, backButt;
 
         playButt = new TextButton("Play!",
                 G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
         playButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                play(ACT_PLAY, Store.CAMPAIGN);
+                action = ACT_PLAY;
             }
         });
 
@@ -80,7 +69,7 @@ public class MenuScreen extends ScreenBase {
         trainingButt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                play(ACT_TRAINING, Store.TRAINING);
+                action = ACT_TRAINING;
             }
         });
 
@@ -111,45 +100,29 @@ public class MenuScreen extends ScreenBase {
             }
         });
 
-        continueButt = new TextButton("Continue",
-                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
-        continueButt.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                action = choiceAct;
-            }
-        });
-
-        // The game mode starts a new match when it has no save
-        restartButt = new TextButton("Restart",
-                G.game.skin.get("bttBlue", TextButton.TextButtonStyle.class));
-        restartButt.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Store.remove(choiceKey);
-                action = choiceAct;
-            }
-        });
-
-        backButt = new TextButton("Back",
-                G.game.skin.get("bttGray", TextButton.TextButtonStyle.class));
-        backButt.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                showMain();
-            }
-        });
-
         float bttW = G.style.buttWidth;
         float padS = G.style.padSmall;
 
         panelT.defaults().width(bttW).pad(padS);
 
-        mainButts = canExit
-                ? new TextButton[] { playButt, trainingButt, scoreButt, optionsButt, exitButt }
-                : new TextButton[] { playButt, trainingButt, scoreButt, optionsButt };
-        choiceButts = new TextButton[] { continueButt, restartButt, backButt };
-        showButtons(mainButts);
+        // Room for the ribbon, which is drawn over the top of the panel
+        panelT.add().width(G.style.ribbonWidth).height(G.style.ribbonHeight * 0.85f);
+        panelT.row();
+        panelT.add(playButt);
+        panelT.row();
+        panelT.add(trainingButt);
+        panelT.row();
+        panelT.add(scoreButt);
+        panelT.row();
+        panelT.add(optionsButt);
+        panelT.row();
+
+        nav.row(playButt).row(trainingButt).row(scoreButt).row(optionsButt);
+
+        if (canExit) {
+            panelT.add(exitButt);
+            nav.row(exitButt);
+        }
 
         // The ribbon's padding centers the title on its front face
         ribbonT.add(new Image(G.game.skin, "game/title"));
@@ -171,42 +144,6 @@ public class MenuScreen extends ScreenBase {
         stage.setViewport(menuViewport);
         stage.addActor(outerT);
         outerT.setDebug(G.game.dbg.uiTable, true);
-    }
-
-    /** Starts the game mode, or asks whether to continue its saved match */
-    private void play(int act, String saveKey) {
-        if (!Store.has(saveKey)) {
-            action = act;
-            return;
-        }
-
-        choiceAct = act;
-        choiceKey = saveKey;
-        showButtons(choiceButts);
-        nav.focus(choiceButts[0]);
-    }
-
-    /** Back from the choice, on the game mode's button */
-    private void showMain() {
-        showButtons(mainButts);
-        nav.focus(mainButts[choiceAct == ACT_PLAY ? 0 : 1]);
-    }
-
-    /** Fills the panel with the buttons, one in each row */
-    private void showButtons(TextButton[] butts) {
-        choosing = butts == choiceButts;
-        panelT.clearChildren();
-        nav.clear();
-        nav.back = choosing ? this::showMain : null;
-
-        // Room for the ribbon, which is drawn over the top of the panel
-        panelT.add().width(G.style.ribbonWidth).height(G.style.ribbonHeight * 0.85f);
-
-        for (TextButton butt : butts) {
-            panelT.row();
-            panelT.add(butt);
-            nav.row(butt);
-        }
     }
 
     @Override

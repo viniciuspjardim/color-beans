@@ -25,10 +25,6 @@ public class Store {
         return Gdx.app.getPreferences(NAME);
     }
 
-    public static boolean has(String key) {
-        return prefs().contains(key);
-    }
-
     public static void save(String key, Object value) {
         try {
             Json json = new Json();

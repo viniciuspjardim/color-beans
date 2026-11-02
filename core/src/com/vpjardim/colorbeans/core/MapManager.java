@@ -39,7 +39,7 @@ public abstract class MapManager {
      * screen saves it, see {@link #save()}
      */
     public boolean saveRequested;
-    /** Whether {@link #init()} continued a saved match in its middle */
+    /** Whether {@link #init()} continued a saved match */
     public boolean restored;
     private boolean paused = false;
 
@@ -75,7 +75,7 @@ public abstract class MapManager {
             maps.get(i).restore(save.maps.get(i), save.ended);
         }
 
-        restored = !save.ended;
+        restored = true;
     }
 
     /** Whether the game mode has something to continue. Else the save is removed */

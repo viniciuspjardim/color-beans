@@ -24,6 +24,7 @@ import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.MapManager;
 import com.vpjardim.colorbeans.core.MapRender;
 import com.vpjardim.colorbeans.core.ScoreTable;
+import com.vpjardim.colorbeans.core.Store;
 import com.vpjardim.colorbeans.defaults.Db;
 import com.vpjardim.colorbeans.events.Event;
 import com.vpjardim.colorbeans.events.EventHandler;
@@ -33,6 +34,8 @@ import com.vpjardim.colorbeans.input.TouchInput;
 public class PlayScreen extends ScreenBase {
     public static final int ACT_MENU = 10;
     public static final int ACT_CREDITS = 11;
+    /** Drops the saved match for a new one, see {@link #choosing} */
+    public static final int ACT_NEW_GAME = 12;
     /** Seconds the camera takes to slide in at the start */
     private static final float INTRO_TIME = 1.75f;
     /** Seconds the camera takes to slide to another map */
@@ -73,7 +76,9 @@ public class PlayScreen extends ScreenBase {
     private Table barT;
     private Table navT;
     private Table containerT;
-    private TextButton resumeButt;
+    /** The panel asking to continue the saved match or start a new one */
+    private Table choiceT;
+    private TextButton resumeButt, continueButt;
     private ImageButton pauseButt;
     /** Buttons under the match results */
     private Table resultsT;
@@ -82,6 +87,8 @@ public class PlayScreen extends ScreenBase {
     /** Set once the camera slid to the player's map for the results, until the next match */
     private boolean resultsSlid;
     private boolean menuVisible;
+    /** While the saved match waits for the player to continue it or start a new one */
+    private boolean choosing;
     private EventListener tapInput;
     private TouchInput touchInput;
 
@@ -111,8 +118,8 @@ public class PlayScreen extends ScreenBase {
             if (G.isBackKey(key)) {
                 Dbg.dbg("BackKey", "SpecialButtons.keyDown: " + key);
 
-                // On the results, back leaves like their menu button
-                if (resultsShown) {
+                // On the results and on the saved match's choice, back leaves to the menu
+                if (resultsShown || choosing) {
                     action = ACT_MENU;
                     return;
                 }
@@ -124,6 +131,10 @@ public class PlayScreen extends ScreenBase {
 
         // Tap event
         tapInput = (Event e) -> {
+            // The choice stays until the player makes it
+            if (choosing)
+                return;
+
             if (G.game.dbg.on) {
                 menuVisible = false;
             } else if (manager.isPaused()) {
@@ -164,6 +175,31 @@ public class PlayScreen extends ScreenBase {
 
         containerT.add(menuPanel(resumeButt, menuButt));
 
+        continueButt = new TextButton("Continue",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        continueButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                choosing = false;
+                manager.setPaused(false);
+                menuVisible = true;
+            }
+        });
+
+        TextButton newGameButt = new TextButton("New game",
+                G.game.skin.get("bttBlue", TextButton.TextButtonStyle.class));
+        newGameButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Store.remove(manager.saveKey());
+                action = ACT_NEW_GAME;
+            }
+        });
+
+        choiceT = new Table(G.game.skin);
+        choiceT.setFillParent(true);
+        choiceT.add(menuPanel(continueButt, newGameButt));
+
         // The results' buttons, on the player's map. See placeResults
         nextMatchButt = new TextButton("",
                 G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
@@ -188,9 +224,15 @@ public class PlayScreen extends ScreenBase {
         resultsT.setVisible(false);
 
         // Start is left to pause and resume, through the maps
-        nav.row(resumeButt).row(menuButt).row(nextMatchButt).row(resultsMenuButt);
+        nav.row(continueButt).row(newGameButt).row(resumeButt).row(menuButt)
+                .row(nextMatchButt).row(resultsMenuButt);
         nav.startConfirms = false;
-        nav.back = () -> manager.setPaused(false);
+        nav.back = () -> {
+            if (choosing)
+                action = ACT_MENU;
+            else
+                manager.setPaused(false);
+        };
 
         // The bar's padding and the navigation's visibility are set in layout
         float bttS = G.style.iconButtSize;
@@ -215,15 +257,23 @@ public class PlayScreen extends ScreenBase {
         stage.addActor(barT);
         stage.addActor(resultsT);
         stage.addActor(containerT);
+        stage.addActor(choiceT);
         barT.setDebug(G.game.dbg.uiTable);
         resultsT.setDebug(G.game.dbg.uiTable);
         containerT.setDebug(G.game.dbg.uiTable);
+        choiceT.setDebug(G.game.dbg.uiTable);
 
         manager.init();
 
-        // A match continued in its middle waits for the player, on the menu
-        if (manager.restored)
+        // A saved match shows paused, asking to continue it or start a new one
+        choosing = manager.restored;
+        choiceT.setVisible(choosing);
+        containerT.setVisible(false);
+
+        if (choosing) {
             manager.setPaused(true);
+            nav.focus(continueButt);
+        }
 
         // The maps are laid out on resize, which comes right after show
         worldCam = new OrthographicCamera();
@@ -403,9 +453,13 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void render(float delta) {
+        // Resuming the saved match, like with start or the pause button, continues it
+        if (choosing && !manager.isPaused())
+            choosing = false;
+
         // The menu's navigation works while it shows, and starts on resume each time.
         // The same for the results' buttons, starting on the next match
-        boolean menuShown = manager.isPaused() && menuVisible;
+        boolean menuShown = manager.isPaused() && (menuVisible || choosing);
         boolean results = !menuShown && manager.phase == MapManager.PHASE_RESULTS &&
                 manager.phaseTime >= RESULTS_BUTTONS_DELAY;
 
@@ -413,7 +467,7 @@ public class PlayScreen extends ScreenBase {
             nextMatchButt.setText(manager.nextMatchLabel());
             nav.focus(nextMatchButt);
         } else if (menuShown && nav.paused) {
-            nav.focus(resumeButt);
+            nav.focus(choosing ? continueButt : resumeButt);
         }
 
         resultsShown = results;
@@ -489,7 +543,8 @@ public class PlayScreen extends ScreenBase {
         stage.act(delta);
         stage.draw();
 
-        containerT.setVisible(manager.isPaused() && menuVisible);
+        containerT.setVisible(manager.isPaused() && menuVisible && !choosing);
+        choiceT.setVisible(choosing);
 
         // If it has a TouchInput draw the box and the arrow of the input, in pixels
         if (touchInput != null && touchInput.draw) {
@@ -549,12 +604,17 @@ public class PlayScreen extends ScreenBase {
     public void pause() {
         menuVisible = true;
         manager.setPaused(true);
-        manager.save();
+
+        // During the choice the save is unchanged, or it was dropped for a new game
+        if (!choosing)
+            manager.save();
     }
 
     @Override
     public void hide() {
-        manager.save();
+        if (!choosing)
+            manager.save();
+
         ScoreTable.save(G.game.score);
         Db.save(G.game.data);
         G.game.assets.get("audio/music1.ogg", Music.class).stop();

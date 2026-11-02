@@ -119,6 +119,17 @@ public class Campaign extends MapManager {
         }
 
         restore(save);
+
+        // One saved on the results continues on the stage after it was cleared, but its
+        // maps kept the speed and the AI's name of the stage that ended
+        if (save != null && save.ended) {
+            for (Map m : maps) {
+                m.setCfg(mapCfgs.get(stageIndex));
+            }
+
+            aiMap.name = aiMapNames.get(stageIndex);
+        }
+
         G.game.input.linkAll();
     }
 
