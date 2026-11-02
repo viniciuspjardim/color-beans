@@ -76,9 +76,12 @@ public class PlayScreen extends ScreenBase {
     private Table barT;
     private Table navT;
     private Table containerT;
-    /** The panel asking to continue the saved match or start a new one */
+    /**
+     * The buttons asking to continue the saved match or start a new one. On its results
+     * they take the place of their buttons, else they're on a panel like the pause menu
+     */
     private Table choiceT;
-    private TextButton resumeButt, continueButt;
+    private TextButton resumeButt, continueButt, newGameButt;
     private ImageButton pauseButt;
     /** Buttons under the match results */
     private Table resultsT;
@@ -186,7 +189,7 @@ public class PlayScreen extends ScreenBase {
             }
         });
 
-        TextButton newGameButt = new TextButton("New game",
+        newGameButt = new TextButton("New game",
                 G.game.skin.get("bttBlue", TextButton.TextButtonStyle.class));
         newGameButt.addListener(new ClickListener() {
             @Override
@@ -195,10 +198,6 @@ public class PlayScreen extends ScreenBase {
                 action = ACT_NEW_GAME;
             }
         });
-
-        choiceT = new Table(G.game.skin);
-        choiceT.setFillParent(true);
-        choiceT.add(menuPanel(continueButt, newGameButt));
 
         // The results' buttons, on the player's map. See placeResults
         nextMatchButt = new TextButton("",
@@ -257,16 +256,25 @@ public class PlayScreen extends ScreenBase {
         stage.addActor(barT);
         stage.addActor(resultsT);
         stage.addActor(containerT);
-        stage.addActor(choiceT);
         barT.setDebug(G.game.dbg.uiTable);
         resultsT.setDebug(G.game.dbg.uiTable);
         containerT.setDebug(G.game.dbg.uiTable);
-        choiceT.setDebug(G.game.dbg.uiTable);
 
         manager.init();
 
         // A saved match shows paused, asking to continue it or start a new one
         choosing = manager.restored;
+
+        if (manager.phase == MapManager.PHASE_RESULTS) {
+            choiceT = buttons(continueButt, newGameButt, G.style.padSmall);
+        } else {
+            choiceT = new Table(G.game.skin);
+            choiceT.setFillParent(true);
+            choiceT.add(menuPanel(continueButt, newGameButt));
+        }
+
+        stage.addActor(choiceT);
+        choiceT.setDebug(G.game.dbg.uiTable);
         choiceT.setVisible(choosing);
         containerT.setVisible(false);
 
@@ -317,23 +325,24 @@ public class PlayScreen extends ScreenBase {
     }
 
     /**
-     * Puts the results' buttons on the player's field, centered under its stats, and
-     * tells the maps how much room they take. Only there, even with a second player in
-     * the co-op. They shrink if they don't fit above the floor
+     * Puts the results' buttons, or the choice in their place, on the player's field,
+     * centered under its stats, and tells the maps how much room they take. Only there,
+     * even with a second player in the co-op. They shrink if they don't fit above the
+     * floor
      */
-    private void placeResults() {
+    private void placeResults(Table buttons) {
         MapRender r = home;
 
         // World units in a pixel, over stage units in a pixel
         MapRender.uiToWorld = worldViewport.getWorldWidth() / worldViewport.getScreenWidth() / uiUnit;
 
         float top = r.resultsMenuTop();
-        float w = resultsT.getWidth() * MapRender.uiToWorld;
-        float h = resultsT.getHeight() * MapRender.uiToWorld;
+        float w = buttons.getWidth() * MapRender.uiToWorld;
+        float h = buttons.getHeight() * MapRender.uiToWorld;
         float scale = Math.min(1f, Math.min((top - RESULTS_FLOOR_GAP) / h, RESULTS_MAX_W / w));
 
-        resultsT.setTransform(scale < 1f);
-        resultsT.setScale(scale);
+        buttons.setTransform(scale < 1f);
+        buttons.setScale(scale);
 
         for (MapRender other : manager.render) {
             other.resultsMenuH = other == r ? h * scale : 0f;
@@ -342,7 +351,7 @@ public class PlayScreen extends ScreenBase {
         worldViewport.project(tmp.set(r.x + Map.N_COL / 2f, top));
         tmp.y = Gdx.graphics.getHeight() - tmp.y;
         stage.screenToStageCoordinates(tmp);
-        resultsT.setPosition(tmp.x - resultsT.getWidth() * scale / 2f, tmp.y - resultsT.getHeight() * scale);
+        buttons.setPosition(tmp.x - buttons.getWidth() * scale / 2f, tmp.y - buttons.getHeight() * scale);
     }
 
     private ImageButton iconButton(String style, Runnable action) {
@@ -515,7 +524,7 @@ public class PlayScreen extends ScreenBase {
 
         // Before the maps, which make room for the buttons in their results
         if (manager.phase == MapManager.PHASE_RESULTS)
-            placeResults();
+            placeResults(choosing ? choiceT : resultsT);
         G.game.batch.setProjectionMatrix(worldCam.combined);
         G.game.batch.begin();
 

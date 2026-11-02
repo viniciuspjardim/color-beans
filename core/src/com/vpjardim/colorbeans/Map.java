@@ -294,6 +294,7 @@ public class Map implements TargetBase {
                 map.anim.playRotation();
 
                 if (map.blockChanged) {
+                    map.manager.played = true;
                     map.state.changeState(MState.GRAVITY_FALL);
                 }
             }
@@ -787,7 +788,8 @@ public class Map implements TargetBase {
 
     /**
      * Writes the map to the save. The blocks are saved where they land, and the ones
-     * being deleted as empty. When the match ended only the totals are kept. See
+     * being deleted as empty. When the match ended the field is saved empty, like the
+     * results show it, while the winner's beans may still be popping. See
      * {@link #restore}
      */
     public void save(MatchSave.MapSave s, boolean ended) {
@@ -798,14 +800,12 @@ public class Map implements TargetBase {
         s.lostCount = lostCount;
         s.scoreSum = scoreSum;
 
-        if (ended)
-            return;
-
         boolean deleting = false;
         s.state = getState().name();
         s.colors = new int[N_COL * (OUT_ROW + N_ROW)];
 
-        for (int i = 0; i < b.length; i++) {
+        // Ended, the colors stay empty
+        for (int i = 0; i < b.length && !ended; i++) {
             for (int j = 0; j < b[i].length; j++) {
                 if (b[i][j].toDelete > 0f && !b[i][j].isEmpty())
                     deleting = true;
@@ -840,15 +840,12 @@ public class Map implements TargetBase {
      * over at the top. A map deleting or falling blocks goes on from GRAVITY_FALL, and
      * one losing goes to DONE. See {@link #save}
      */
-    public void restore(MatchSave.MapSave s, boolean ended) {
+    public void restore(MatchSave.MapSave s) {
         name = s.name;
         setCfg(s.cfg);
         winsCount = s.winsCount;
         lostCount = s.lostCount;
         scoreSum = s.scoreSum;
-
-        if (ended)
-            return;
 
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {

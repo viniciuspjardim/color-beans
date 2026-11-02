@@ -23,6 +23,8 @@ public abstract class MapManager {
 
     /** Fraction of the music's volume while the match end shows */
     private static final float DUCKED_MUSIC = 0.3f;
+    /** Seconds into the results a saved match continues on them, past their animations */
+    private static final float RESTORED_RESULTS_TIME = 5f;
 
     public Cfg.Game gameCfg;
     public Array<Map> maps;
@@ -41,6 +43,11 @@ public abstract class MapManager {
     public boolean saveRequested;
     /** Whether {@link #init()} continued a saved match */
     public boolean restored;
+    /**
+     * Whether beans landed on a map in this match, even if they were cleared since.
+     * Until then there's nothing new to save
+     */
+    public boolean played;
     private boolean paused = false;
 
     /** Creates the maps. When the game mode has a {@link MatchSave}, it continues it */
@@ -72,10 +79,22 @@ public abstract class MapManager {
             return;
 
         for (int i = 0; i < maps.size; i++) {
-            maps.get(i).restore(save.maps.get(i), save.ended);
+            maps.get(i).restore(save.maps.get(i));
         }
 
         restored = true;
+        played = true;
+
+        if (save.ended) {
+            setPhase(PHASE_RESULTS);
+            phaseTime = RESTORED_RESULTS_TIME;
+            G.game.audio.setMusicVolume(DUCKED_MUSIC);
+
+            for (Map m : maps) {
+                if (m.gameWin)
+                    winners.add(m);
+            }
+        }
     }
 
     /** Whether the game mode has something to continue. Else the save is removed */
@@ -88,8 +107,8 @@ public abstract class MapManager {
     }
 
     /**
-     * Saves the match to continue it later. While the match ends, saves the next one
-     * instead. See {@link MatchSave}
+     * Saves the match to continue it later, once {@link #played}. Before that the store
+     * keeps what it had, like the results of the last match. See {@link MatchSave}
      */
     public void save() {
         saveRequested = false;
@@ -101,6 +120,9 @@ public abstract class MapManager {
             Store.remove(saveKey());
             return;
         }
+
+        if (!played)
+            return;
 
         MatchSave save = new MatchSave();
         save.ended = phase != PHASE_PLAYING;
@@ -264,8 +286,10 @@ public abstract class MapManager {
 
     /** Starts the next match, after the results */
     public void nextMatch() {
-        if (phase == PHASE_RESULTS)
+        if (phase == PHASE_RESULTS) {
+            played = false;
             restart();
+        }
     }
 
     private void restart() {

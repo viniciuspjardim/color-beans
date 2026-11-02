@@ -29,6 +29,7 @@ public class Campaign extends MapManager {
             // The stages it started with, even if the options changed
             startStage = save.startStage;
             stageIndex = save.stageIndex;
+            stageCleared = save.stageCleared;
             mapCfgs = save.mapCfgs;
             aiCfgs = save.aiCfgs;
             aiMapNames = save.aiMapNames;
@@ -119,17 +120,6 @@ public class Campaign extends MapManager {
         }
 
         restore(save);
-
-        // One saved on the results continues on the stage after it was cleared, but its
-        // maps kept the speed and the AI's name of the stage that ended
-        if (save != null && save.ended) {
-            for (Map m : maps) {
-                m.setCfg(mapCfgs.get(stageIndex));
-            }
-
-            aiMap.name = aiMapNames.get(stageIndex);
-        }
-
         G.game.input.linkAll();
     }
 
@@ -158,6 +148,7 @@ public class Campaign extends MapManager {
     protected void save(MatchSave save) {
         save.startStage = startStage;
         save.stageIndex = stageIndex;
+        save.stageCleared = stageCleared;
         save.mapCfgs = mapCfgs;
         save.aiCfgs = aiCfgs;
         save.aiMapNames = aiMapNames;

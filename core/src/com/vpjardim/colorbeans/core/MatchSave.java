@@ -10,13 +10,14 @@ import com.vpjardim.colorbeans.Map;
  */
 public class MatchSave {
     /**
-     * Whether the match had ended. Then the next match starts, keeping the players'
-     * totals, like after the results' button
+     * Whether the match had ended. Then it continues on its results, with the fields
+     * empty like they are by then
      */
     public boolean ended;
     /** The campaign's stage it started on, see {@link Campaign} for the others */
     public int startStage;
     public int stageIndex;
+    public boolean stageCleared;
     public Array<Cfg.Map> mapCfgs;
     public Array<Cfg.Ai> aiCfgs;
     public Array<String> aiMapNames;
@@ -59,8 +60,8 @@ public class MatchSave {
             if (m == null || m.cfg == null || m.cfg.moveTime == null)
                 return false;
 
-            if (!ended && (!isState(m.state) || m.colors == null
-                    || m.colors.length != Map.N_COL * (Map.OUT_ROW + Map.N_ROW)))
+            if (!isState(m.state) || m.colors == null
+                    || m.colors.length != Map.N_COL * (Map.OUT_ROW + Map.N_ROW))
                 return false;
         }
 
