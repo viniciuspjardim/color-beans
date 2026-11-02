@@ -4,6 +4,8 @@ public class Cfg {
     public static class Game {
         public static final int LOST_RESTART_PAUSED = 1;
         public static final int LOST_AUTO_RESTART = 2;
+        /** Celebrates the winner, shows each map's results and waits for the player */
+        public static final int LOST_SHOW_RESULTS = 3;
 
         public int nPlayers;
         public boolean finishOnWin;

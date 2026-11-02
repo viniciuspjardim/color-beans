@@ -36,6 +36,11 @@ public class PlayScreen extends ScreenBase {
     private static final float INTRO_TIME = 1.75f;
     /** Seconds the camera takes to slide to another map */
     private static final float SLIDE_TIME = 0.3f;
+    /**
+     * Seconds into the results before their buttons show, so a key still being
+     * mashed from the match doesn't skip them
+     */
+    private static final float RESULTS_BUTTONS_DELAY = 1.2f;
 
     public final MapManager manager;
     /** Camera for the maps, in world units where a bean is 1 x 1. See {@link MapRender} */
@@ -63,6 +68,11 @@ public class PlayScreen extends ScreenBase {
     private Table navT;
     private Table containerT;
     private TextButton resumeButt;
+    private ImageButton pauseButt;
+    /** Buttons under the match results */
+    private Table resultsT;
+    private TextButton nextMatchButt;
+    private boolean resultsShown;
     private boolean menuVisible;
     private EventListener tapInput;
     private TouchInput touchInput;
@@ -92,6 +102,13 @@ public class PlayScreen extends ScreenBase {
 
             if (G.isBackKey(key)) {
                 Dbg.dbg("BackKey", "SpecialButtons.keyDown: " + key);
+
+                // On the results, back leaves like their menu button
+                if (resultsShown) {
+                    action = ACT_MENU;
+                    return;
+                }
+
                 menuVisible = true;
                 manager.togglePaused();
             }
@@ -151,8 +168,35 @@ public class PlayScreen extends ScreenBase {
         contentT.row();
         contentT.add(menuButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
 
+        // The results' buttons, at the bottom over the maps
+        nextMatchButt = new TextButton("",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        nextMatchButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                manager.nextMatch();
+            }
+        });
+
+        TextButton resultsMenuButt = new TextButton("Menu",
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
+        resultsMenuButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action = ACT_MENU;
+            }
+        });
+
+        resultsT = new Table(G.game.skin);
+        resultsT.setFillParent(true);
+        resultsT.bottom();
+        resultsT.add(nextMatchButt).width(bttW).pad(padM);
+        resultsT.row();
+        resultsT.add(resultsMenuButt).width(bttW).pad(padM);
+        resultsT.setVisible(false);
+
         // Start is left to pause and resume, through the maps
-        nav.row(resumeButt).row(menuButt);
+        nav.row(resumeButt).row(menuButt).row(nextMatchButt).row(resultsMenuButt);
         nav.startConfirms = false;
         nav.back = () -> manager.setPaused(false);
 
@@ -168,16 +212,19 @@ public class PlayScreen extends ScreenBase {
         barT.setFillParent(true);
         barT.bottom();
         // Like the back key: pauses with the menu, or resumes
-        barT.add(iconButton("bttPause", () -> {
+        pauseButt = iconButton("bttPause", () -> {
             menuVisible = true;
             manager.togglePaused();
-        })).size(bttS).expandX().left();
+        });
+        barT.add(pauseButt).size(bttS).expandX().left();
         barT.add(navT);
 
-        // The bar first, so the menu is drawn over it
+        // The bar first, so the menus are drawn over it
         stage.addActor(barT);
+        stage.addActor(resultsT);
         stage.addActor(containerT);
         barT.setDebug(G.game.dbg.uiTable);
+        resultsT.setDebug(G.game.dbg.uiTable);
         containerT.setDebug(G.game.dbg.uiTable);
 
         manager.init();
@@ -274,6 +321,8 @@ public class PlayScreen extends ScreenBase {
         float pad = G.style.padMedium;
 
         barT.pad(0f, left * uiUnit + pad, bottom * uiUnit + pad, right * uiUnit + pad);
+        // The results' buttons go over the bar
+        resultsT.padBottom(bottom * uiUnit + G.style.iconButtSize + pad);
 
         // The maps leave room for the buttons under them. In landscape only the room
         // they don't fill, so they keep their size
@@ -309,13 +358,23 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void render(float delta) {
-        // The menu's navigation works while it shows, and starts on resume each time
+        // The menu's navigation works while it shows, and starts on resume each time.
+        // The same for the results' buttons, starting on the next match
         boolean menuShown = manager.isPaused() && menuVisible;
+        boolean results = !menuShown && manager.phase == MapManager.PHASE_RESULTS &&
+                manager.phaseTime >= RESULTS_BUTTONS_DELAY;
 
-        if (menuShown && nav.paused)
+        if (results && !resultsShown) {
+            nextMatchButt.setText(manager.nextMatchLabel());
+            nav.focus(nextMatchButt);
+        } else if (menuShown && nav.paused) {
             nav.focus(resumeButt);
+        }
 
-        nav.paused = !menuShown;
+        resultsShown = results;
+        nav.paused = !menuShown && !resultsShown;
+        resultsT.setVisible(resultsShown);
+        pauseButt.setVisible(manager.phase == MapManager.PHASE_PLAYING);
 
         super.render(delta);
 

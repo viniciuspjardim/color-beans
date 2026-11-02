@@ -371,6 +371,16 @@ public class Map implements TargetBase {
                     map.lostCount++;
                     Dbg.inf(Dbg.tagO(map), "game lost\n");
                 }
+
+                // The lost map's beans fell off the field and would show under it while
+                // the results show
+                if (!map.gameWin) {
+                    for (int i = 0; i < map.b.length; i++) {
+                        for (int j = 0; j < map.b[i].length; j++) {
+                            map.b[i][j].recycle();
+                        }
+                    }
+                }
             }
 
             @Override
@@ -388,8 +398,9 @@ public class Map implements TargetBase {
         }
     }
 
+    /** Whether the map is out of the match: in OVER or DONE state, and not because it won */
     public static boolean lost(Map m) {
-        return m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE);
+        return !m.gameWin && (m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE));
     }
 
     /** Map width (number of block columns): 7 default */
@@ -495,6 +506,12 @@ public class Map implements TargetBase {
     public int scoredBlocks;
 
     public int chainPowerCount;
+
+    /** Longest chain in the current match */
+    public int maxChain;
+
+    /** Trash blocks thrown to the opponents in the current match */
+    public int trashSent;
 
     /**
      * Each index represents a color, colors set as true will be counted to color
@@ -703,6 +720,8 @@ public class Map implements TargetBase {
         score = 0;
         scoreStr = "0";
         scoredBlocks = 0;
+        maxChain = 0;
+        trashSent = 0;
 
         // chainPowerCount;
         // colorBonusArr;
@@ -1065,8 +1084,10 @@ public class Map implements TargetBase {
         else if (ab > 0)
             scoreStr = "+ " + a;
 
-        if (ab > 0)
+        if (ab > 0) {
+            maxChain = Math.max(maxChain, chainPowerCount);
             playScoreSound();
+        }
     }
 
     private void playScoreSound() {
@@ -1128,8 +1149,9 @@ public class Map implements TargetBase {
         Map opp = manager.getOpponent(index);
 
         if (opp != null) {
-            float trashBlocks = ((blocksDeleted * 10f) * (blocksDeleted - 3f)) / 70f;
-            opp.trashBlocksToAdd += Math.round(trashBlocks);
+            int trashBlocks = Math.round(((blocksDeleted * 10f) * (blocksDeleted - 3f)) / 70f);
+            opp.trashBlocksToAdd += trashBlocks;
+            trashSent += trashBlocks;
         }
 
         blocksDeleted = 0;
@@ -1216,11 +1238,13 @@ public class Map implements TargetBase {
     }
 
     public void update() {
-        if (!manager.isPaused()) {
+        // The clock stops when the match ends for this map
+        if (!manager.isPaused() && !isInState(MState.OVER) && !isInState(MState.DONE)) {
             matchTimer += G.delta;
             speedTimer += G.delta;
         }
         state.update();
+        anim.sparks.update();
         timing();
         if (ai != null)
             ai.update();

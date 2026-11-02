@@ -30,7 +30,17 @@ public class Audio {
         playingMusic.stop();
     }
 
+    /** Sets the music to a fraction of its configured volume, like to lower it under a jingle */
+    public void setMusicVolume(float fraction) {
+        playingMusic.setVolume(G.game.data.musicVolume * fraction);
+    }
+
     public void playEffect(String effect) {
         G.game.assets.get(effect, Sound.class).play(G.game.data.effectsVolume);
+    }
+
+    /** Plays the effect faster and higher (pitch above 1) or slower and lower (below 1) */
+    public void playEffect(String effect, float pitch) {
+        G.game.assets.get(effect, Sound.class).play(G.game.data.effectsVolume, pitch, 0f);
     }
 }
