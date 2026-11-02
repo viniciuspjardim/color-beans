@@ -528,6 +528,7 @@ public class ConfigScreen extends ScreenBase {
         // Activate debug options if coop slider is switched 4 times
         // Note: the number 8 is because the event on the coopS is firing twice each time.
         G.game.dbg.tapsCount = DBG_ACTIVATED;
+        Dbg.save(G.game.dbg);
 
         Slider fpsS = new Slider(0f, 1f, 1f, false, G.game.skin, "checkBox");
         fpsS.setValue(G.game.dbg.fps ? 1f : 0f);
@@ -535,6 +536,7 @@ public class ConfigScreen extends ScreenBase {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.fps = fpsS.getValue() == 1f;
+                Dbg.save(G.game.dbg);
             }
         });
 
@@ -544,6 +546,7 @@ public class ConfigScreen extends ScreenBase {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.on = debugS.getValue() == 1f;
+                Dbg.save(G.game.dbg);
             }
         });
 
@@ -553,6 +556,7 @@ public class ConfigScreen extends ScreenBase {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.uiTable = uiS.getValue() == 1f;
+                Dbg.save(G.game.dbg);
             }
         });
 
@@ -562,6 +566,7 @@ public class ConfigScreen extends ScreenBase {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.overlay = overlayS.getValue() == 1f;
+                Dbg.save(G.game.dbg);
             }
         });
 
@@ -573,6 +578,7 @@ public class ConfigScreen extends ScreenBase {
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.setLogLevel((int) logLevelS.getValue());
                 logLevelL.setText(G.game.dbg.logLevel);
+                Dbg.save(G.game.dbg);
             }
         });
 
@@ -584,6 +590,7 @@ public class ConfigScreen extends ScreenBase {
             public void changed(ChangeEvent event, Actor actor) {
                 G.game.dbg.delta = deltaS.getValue();
                 deltaL.setText(formatDelta(deltaS.getValue()));
+                Dbg.save(G.game.dbg);
             }
         });
 
@@ -596,6 +603,27 @@ public class ConfigScreen extends ScreenBase {
             public void clicked(InputEvent event, float x, float y) {
                 String result = G.game.dbg.parseCommand(commandTF.getText());
                 commandL.setText(result);
+                Dbg.save(G.game.dbg);
+            }
+        });
+
+        // Turns the debug options off, and they stay in the menu. The sliders call their
+        // listeners, which save it
+        TextButton resetBT = new TextButton("Reset Debug",
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
+        resetBT.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                G.game.dbg.reset();
+                fpsS.setValue(G.game.dbg.fps ? 1f : 0f);
+                debugS.setValue(G.game.dbg.on ? 1f : 0f);
+                uiS.setValue(G.game.dbg.uiTable ? 1f : 0f);
+                overlayS.setValue(G.game.dbg.overlay ? 1f : 0f);
+                logLevelS.setValue((float) G.game.dbg.logLevel);
+                deltaS.setValue(G.game.dbg.delta);
+                commandTF.setText("");
+                commandL.setText("Empty");
+                Dbg.save(G.game.dbg);
             }
         });
 
@@ -628,10 +656,11 @@ public class ConfigScreen extends ScreenBase {
         otherT.add(new Label("Command (key=v1,v2,v3,v4):", labelStyle)).padTop(16 * s).padLeft(PAD_X * s).align(Align.left);
         otherT.add(commandL).padTop(16 * s).padRight(PAD_X * s).align(Align.right).row();
         otherT.add(commandTF).expandX().fillX().pad(4 * s, PAD_X * s, 0, 0);
-        otherT.add(commandBT).pad(4 * s, 8 * s, 0, 0);
+        otherT.add(commandBT).pad(4 * s, 8 * s, 0, 0).row();
+        otherT.add(resetBT).width(G.style.buttWidth).pad(24 * s, PAD_X * s, 0, PAD_X * s).align(Align.center).colspan(2).row();
 
         otherRows.add(new Actor[] { fpsS }, new Actor[] { debugS }, new Actor[] { uiS }, new Actor[] { overlayS });
-        otherRows.add(new Actor[] { logLevelS }, new Actor[] { deltaS }, new Actor[] { commandTF, commandBT });
+        otherRows.add(new Actor[] { logLevelS }, new Actor[] { deltaS }, new Actor[] { commandTF, commandBT }, new Actor[] { resetBT });
         nav.anchor(fpsS, fpsL).anchor(debugS, debugL).anchor(uiS, uiL).anchor(overlayS, overlayL);
         buildNav();
     }

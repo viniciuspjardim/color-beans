@@ -7,6 +7,8 @@ import com.vpjardim.colorbeans.Map;
 import com.vpjardim.colorbeans.ai.ai1.Ai1;
 
 public class Campaign extends MapManager {
+    /** The stage the campaign started on, and the index of the current one from it */
+    public int startStage;
     public int stageIndex;
     public Array<Cfg.Map> mapCfgs;
     public Array<Cfg.Ai> aiCfgs;
@@ -21,23 +23,34 @@ public class Campaign extends MapManager {
         opps = new Array<>();
         render = new Array<>();
 
-        stageIndex = 0;
-        mapCfgs = new Array<>(12);
-        aiCfgs = new Array<>(12);
-        aiMapNames = new Array<>(12);
+        MatchSave save = loadSave();
 
-        int start = G.game.data.campaignCurrentStage;
-        int end = 11;
+        if (save != null) {
+            // The stages it started with, even if the options changed
+            startStage = save.startStage;
+            stageIndex = save.stageIndex;
+            mapCfgs = save.mapCfgs;
+            aiCfgs = save.aiCfgs;
+            aiMapNames = save.aiMapNames;
+        } else {
+            startStage = G.game.data.campaignCurrentStage;
+            stageIndex = 0;
+            mapCfgs = new Array<>(12);
+            aiCfgs = new Array<>(12);
+            aiMapNames = new Array<>(12);
 
-        if (G.game.dbg.on) {
-            end = G.game.dbg.campEnd;
-        }
+            int end = 11;
 
-        // Create all stages
-        for (int i = start; i <= end; i++) {
-            mapCfgs.add(G.game.data.createMapConfig(i));
-            aiCfgs.add(G.game.data.createAiConfig(i));
-            aiMapNames.add(G.game.data.stageNames[i]);
+            if (G.game.dbg.on) {
+                end = G.game.dbg.campEnd;
+            }
+
+            // Create all stages
+            for (int i = startStage; i <= end; i++) {
+                mapCfgs.add(G.game.data.createMapConfig(i));
+                aiCfgs.add(G.game.data.createAiConfig(i));
+                aiMapNames.add(G.game.data.stageNames[i]);
+            }
         }
 
         G.game.input.targetsClear();
@@ -78,7 +91,9 @@ public class Campaign extends MapManager {
             aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
         }
 
-        if (G.game.data.coopCampaign) {
+        boolean coop = save != null ? save.maps.size == 3 : G.game.data.coopCampaign;
+
+        if (coop) {
             Map player2Map = new Map(this);
             player2Map.index = 2;
             maps.add(player2Map);
@@ -87,7 +102,11 @@ public class Campaign extends MapManager {
             render.add(r);
 
             player2Map.setCfg(mapCfgs.get(stageIndex));
-            player2Map.name = G.game.data.players.get(1).name;
+
+            // A saved match has its names
+            if (save == null)
+                player2Map.name = G.game.data.players.get(1).name;
+
             G.game.input.addTarget(player2Map);
 
             if (G.game.dbg.mapShapes != null)
@@ -99,7 +118,38 @@ public class Campaign extends MapManager {
             aiMap.debugShape(G.game.dbg.mapShapes[1]);
         }
 
+        restore(save);
         G.game.input.linkAll();
+    }
+
+    @Override
+    public String saveKey() {
+        return Store.CAMPAIGN;
+    }
+
+    @Override
+    protected boolean isValid(MatchSave save) {
+        return super.isValid(save) && save.mapCfgs != null && save.aiCfgs != null
+                && save.aiMapNames != null && save.stageIndex >= 0
+                && save.stageIndex < save.mapCfgs.size
+                && save.aiCfgs.size == save.mapCfgs.size
+                && save.aiMapNames.size == save.mapCfgs.size
+                && (save.maps.size == 2 || save.maps.size == 3);
+    }
+
+    /** After the last stage there's nothing to continue */
+    @Override
+    protected boolean canSave() {
+        return super.canSave() && !campaignFinished();
+    }
+
+    @Override
+    protected void save(MatchSave save) {
+        save.startStage = startStage;
+        save.stageIndex = stageIndex;
+        save.mapCfgs = mapCfgs;
+        save.aiCfgs = aiCfgs;
+        save.aiMapNames = aiMapNames;
     }
 
     @Override
@@ -114,8 +164,8 @@ public class Campaign extends MapManager {
      * {@link #prepareNextMatch()}, after the results
      */
     public void playersWin() {
-        G.game.data.campaignCurrentStage++;
         stageIndex++;
+        G.game.data.campaignCurrentStage = startStage + stageIndex;
         stageCleared = true;
 
         // After the last stage the campaign starts over

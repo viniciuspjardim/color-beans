@@ -14,6 +14,13 @@
     <entry-point class='com.vpjardim.colorbeans.client.HtmlLauncher' />
     <set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE' />
     <set-configuration-property name="gdx.assetpath" value="../assets" />
+    <!-- The classes Store saves as JSON, which needs their reflection -->
+    <extend-configuration-property name="gdx.reflect.include" value="com.vpjardim.colorbeans.defaults.Db" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.vpjardim.colorbeans.core.Cfg" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.vpjardim.colorbeans.core.Dbg" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.vpjardim.colorbeans.core.MatchSave" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.vpjardim.colorbeans.core.ScoreTable" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.vpjardim.colorbeans.input.Profile" />
     <set-property name="user.agent" value="gecko1_8, safari" />
     <collapse-property name="user.agent" values="*" />
 </module>

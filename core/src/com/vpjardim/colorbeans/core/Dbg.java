@@ -97,6 +97,27 @@ public class Dbg {
         Gdx.app.setLogLevel(logLevel);
     }
 
+    /** Turns everything off like {@link #off()}, but the debug options stay in the menu */
+    public void reset() {
+        int taps = tapsCount;
+        off();
+        tapsCount = taps;
+    }
+
+    public static void save(Dbg dbg) {
+        Store.save(Store.DBG, dbg);
+    }
+
+    public static Dbg load() {
+        Dbg dbg = Store.load(Store.DBG, Dbg.class);
+
+        if (dbg == null)
+            return new Dbg();
+
+        Gdx.app.setLogLevel(dbg.logLevel);
+        return dbg;
+    }
+
     public String parseCommand(String command) {
         try {
             KV kv = KV.parseCommand(command);

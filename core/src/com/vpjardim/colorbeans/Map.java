@@ -13,6 +13,7 @@ import com.vpjardim.colorbeans.animation.Animations;
 import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.MapManager;
+import com.vpjardim.colorbeans.core.MatchSave;
 import com.vpjardim.colorbeans.input.InputBase;
 import com.vpjardim.colorbeans.input.TargetBase;
 
@@ -265,6 +266,9 @@ public class Map implements TargetBase {
 
                 map.trashBlocksTurn = true;
                 map.throwTrashBlocks();
+
+                // The blocks settled and new player blocks came: a good point to save
+                map.manager.saveRequested = true;
 
                 // processing input
                 map.inputUpdate();
@@ -779,6 +783,131 @@ public class Map implements TargetBase {
         vPlayMoveWait = speedArr[1];
         vPlayMoveWait2 = speedArr[1];
         vPlayMoveTimer = speedArr[1];
+    }
+
+    /**
+     * Writes the map to the save. The blocks are saved where they land, and the ones
+     * being deleted as empty. When the match ended only the totals are kept. See
+     * {@link #restore}
+     */
+    public void save(MatchSave.MapSave s, boolean ended) {
+        s.name = name;
+        s.cfg = new Cfg.Map();
+        s.cfg.moveTime = speedArr;
+        s.winsCount = winsCount;
+        s.lostCount = lostCount;
+        s.scoreSum = scoreSum;
+
+        if (ended)
+            return;
+
+        boolean deleting = false;
+        s.state = getState().name();
+        s.colors = new int[N_COL * (OUT_ROW + N_ROW)];
+
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b[i].length; j++) {
+                if (b[i][j].toDelete > 0f && !b[i][j].isEmpty())
+                    deleting = true;
+                else
+                    s.colors[i * b[i].length + j] = b[i][j].color;
+            }
+        }
+
+        s.b1 = pb.b1.color;
+        s.b2 = pb.b2.color;
+        s.nextB1 = pb.nextB1;
+        s.nextB2 = pb.nextB2;
+        // The blocks above the deleted ones must fall
+        s.blockChanged = blockChanged || deleting;
+        s.trashBlocksTurn = trashBlocksTurn;
+        s.gameWin = gameWin;
+        s.lost = lost;
+        s.blocksDeleted = blocksDeleted;
+        s.scoredBlocks = scoredBlocks;
+        s.chainPowerCount = chainPowerCount;
+        s.trashBlocksToAdd = trashBlocksToAdd;
+        s.score = score;
+        s.maxChain = maxChain;
+        s.trashSent = trashSent;
+        s.matchTimer = matchTimer;
+        s.speedTimer = speedTimer;
+        s.speedIndex = speedIndex;
+    }
+
+    /**
+     * Continues the map from the save, on a new map. The falling player blocks start
+     * over at the top. A map deleting or falling blocks goes on from GRAVITY_FALL, and
+     * one losing goes to DONE. See {@link #save}
+     */
+    public void restore(MatchSave.MapSave s, boolean ended) {
+        name = s.name;
+        setCfg(s.cfg);
+        winsCount = s.winsCount;
+        lostCount = s.lostCount;
+        scoreSum = s.scoreSum;
+
+        if (ended)
+            return;
+
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b[i].length; j++) {
+                int color = s.colors[i * b[i].length + j];
+
+                if (color == Block.EMPTY)
+                    b[i][j].setEmpty();
+                else
+                    b[i][j].setColor(color);
+            }
+        }
+
+        mapLinks();
+
+        // init() takes the next colors for the falling blocks
+        pb.nextB1 = s.b1;
+        pb.nextB2 = s.b2;
+        pb.init();
+        pb.nextB1 = s.nextB1;
+        pb.nextB2 = s.nextB2;
+
+        blockChanged = s.blockChanged;
+        trashBlocksTurn = s.trashBlocksTurn;
+        gameWin = s.gameWin;
+        lost = s.lost;
+        blocksDeleted = s.blocksDeleted;
+        scoredBlocks = s.scoredBlocks;
+        chainPowerCount = s.chainPowerCount;
+        trashBlocksToAdd = s.trashBlocksToAdd;
+        score = s.score;
+        scoreStr = Integer.toString(score);
+        maxChain = s.maxChain;
+        trashSent = s.trashSent;
+        matchTimer = s.matchTimer;
+        speedTimer = s.speedTimer;
+        speedIndex = s.speedIndex;
+
+        // The speed timing() had reached
+        if (speedIndex >= 2 && speedIndex <= speedArr.length) {
+            vPlayMoveWait = speedArr[speedIndex - 1];
+            vPlayMoveWait2 = vPlayMoveWait;
+            vPlayMoveTimer = vPlayMoveWait;
+        }
+
+        switch (MState.valueOf(s.state)) {
+            case PLAYER_FALL:
+                state.changeState(MState.PLAYER_FALL);
+                break;
+            case OVER:
+                // DONE counts the loss and clears the blocks
+                state.changeState(MState.DONE);
+                break;
+            case DONE:
+                // It already counted the win or the loss
+                state.setInitialState(MState.DONE);
+                break;
+            default:
+                state.changeState(MState.GRAVITY_FALL);
+        }
     }
 
     public boolean isEmpty(int col, int row) {

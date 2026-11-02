@@ -1,9 +1,6 @@
 package com.vpjardim.colorbeans.core;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Sort;
 
 import java.util.Comparator;
@@ -64,34 +61,16 @@ public class ScoreTable {
 
         // Sort before save
         table.sort();
-
-        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
-
-        if (isLocAvailable) {
-            Json json = new Json();
-
-            String jsonTxt = json.prettyPrint(table.rows.toArray());
-
-            FileHandle file = Gdx.files.local("state/scores.json");
-            file.writeString(jsonTxt, false);
-        }
-
+        Store.save(Store.SCORES, table.rows.toArray(Row[]::new));
         table.saved = true;
     }
 
     public static ScoreTable load() {
         ScoreTable score = new ScoreTable();
-        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
+        Row[] rows = Store.load(Store.SCORES, Row[].class);
 
-        if (!isLocAvailable) return score;
-
-        FileHandle file = Gdx.files.local("state/scores.json");
-
-        if (file.exists()) {
-            String jsonTxt = file.readString();
-            Json json = new Json();
-            score.rows.addAll(json.fromJson(Row[].class, jsonTxt));
-        }
+        if (rows != null)
+            score.rows.addAll(rows);
 
         return score;
     }

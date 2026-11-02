@@ -34,9 +34,86 @@ public abstract class MapManager {
     public float phaseTime;
     /** Maps that won the match that ended */
     public final Array<Map> winners = new Array<>();
+    /**
+     * Set when the match is worth saving, like when new player blocks come. The play
+     * screen saves it, see {@link #save()}
+     */
+    public boolean saveRequested;
+    /** Whether {@link #init()} continued a saved match in its middle */
+    public boolean restored;
     private boolean paused = false;
 
+    /** Creates the maps. When the game mode has a {@link MatchSave}, it continues it */
     public abstract void init();
+
+    /** The game mode's key of its {@link MatchSave} in the {@link Store} */
+    public abstract String saveKey();
+
+    /** The saved match, or null when there's none or it can't be continued */
+    protected MatchSave loadSave() {
+        MatchSave save = Store.load(saveKey(), MatchSave.class);
+
+        if (save != null && !isValid(save)) {
+            Store.remove(saveKey());
+            return null;
+        }
+
+        return save;
+    }
+
+    /** Whether the save fits the game mode */
+    protected boolean isValid(MatchSave save) {
+        return save.isValid();
+    }
+
+    /** Continues the saved match on the maps {@link #init()} created for it */
+    protected void restore(MatchSave save) {
+        if (save == null)
+            return;
+
+        for (int i = 0; i < maps.size; i++) {
+            maps.get(i).restore(save.maps.get(i), save.ended);
+        }
+
+        restored = !save.ended;
+    }
+
+    /** Whether the game mode has something to continue. Else the save is removed */
+    protected boolean canSave() {
+        return gameStatus == GAME_CONTINUE;
+    }
+
+    /** Adds the game mode's data to the save */
+    protected void save(MatchSave save) {
+    }
+
+    /**
+     * Saves the match to continue it later. While the match ends, saves the next one
+     * instead. See {@link MatchSave}
+     */
+    public void save() {
+        saveRequested = false;
+
+        if (maps == null)
+            return;
+
+        if (!canSave()) {
+            Store.remove(saveKey());
+            return;
+        }
+
+        MatchSave save = new MatchSave();
+        save.ended = phase != PHASE_PLAYING;
+
+        for (Map m : maps) {
+            MatchSave.MapSave s = new MatchSave.MapSave();
+            m.save(s, save.ended);
+            save.maps.add(s);
+        }
+
+        save(save);
+        Store.save(saveKey(), save);
+    }
 
     public Map getOpponent(int excludeIndex) {
         if (maps.size <= 1)
@@ -165,6 +242,8 @@ public abstract class MapManager {
 
         if (winners.size > 0)
             mapWin(winners.first().index);
+
+        saveRequested = true;
 
         if (gameCfg.lostAct != Cfg.Game.LOST_SHOW_RESULTS) {
             restart();

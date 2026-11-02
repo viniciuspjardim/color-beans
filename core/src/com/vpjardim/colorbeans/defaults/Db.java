@@ -3,17 +3,15 @@ package com.vpjardim.colorbeans.defaults;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.IntMap;
-import com.badlogic.gdx.utils.Json;
 import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.core.Cfg;
 import com.vpjardim.colorbeans.core.Dbg;
 import com.vpjardim.colorbeans.core.MapRender;
+import com.vpjardim.colorbeans.core.Store;
 import com.vpjardim.colorbeans.input.Profile;
 
 /**
@@ -21,7 +19,7 @@ import com.vpjardim.colorbeans.input.Profile;
  * <p>
  * The transient fields are default values, they can't be edited in the options
  * screen or in the config file. The non transient fields are the user
- * preferences and are going to be persisted in a JSON file.
+ * preferences and are going to be persisted, see {@link Store}.
  */
 public class Db {
     // Initialized after loading screen finished loading
@@ -115,7 +113,7 @@ public class Db {
 
     // Non 'final transient' fields ->
 
-    public final Array<Cfg.Player> players = new Array<>();
+    public Array<Cfg.Player> players = new Array<>();
 
     public boolean coopCampaign = false;
     public int difficulty = 2; // 0 to 4
@@ -128,14 +126,14 @@ public class Db {
      * The keyboard profiles are used to enable 2 or more players play in the same
      * keyboard
      */
-    public final Array<Profile> kbProfs = new Array<>();
+    public Array<Profile> kbProfs = new Array<>();
 
     /**
      * The controller profiles are used to enable 2 or more players in controllers
      * with different keys configuration. For example, controllers of different
      * manufactures
      */
-    public final Array<Profile> ctrlProfs = new Array<>();
+    public Array<Profile> ctrlProfs = new Array<>();
 
     /** Init constants (default values) */
     public Db() {
@@ -340,41 +338,13 @@ public class Db {
     }
 
     public static void save(Db data) {
-        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
-
-        if (!isLocAvailable)
-            return;
-
-        try {
-            Json json = new Json();
-            json.setUsePrototypes(false);
-
-            String jsonTxt = json.prettyPrint(data);
-            FileHandle file = Gdx.files.local("state/cfg.json");
-            file.writeString(jsonTxt, false);
-        } catch (GdxRuntimeException e) {
-            e.printStackTrace();
-        }
+        Store.save(Store.CFG, data);
     }
 
     public static Db load() {
-        Db data;
-        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
+        Db data = Store.load(Store.CFG, Db.class);
 
-        if (!isLocAvailable) {
-            data = new Db();
-            data.initPreferences();
-
-            return data;
-        }
-
-        FileHandle file = Gdx.files.local("state/cfg.json");
-
-        if (file.exists()) {
-            String jsonTxt = file.readString();
-            Json json = new Json();
-            data = json.fromJson(Db.class, jsonTxt);
-        } else {
+        if (data == null) {
             data = new Db();
             data.initPreferences();
         }

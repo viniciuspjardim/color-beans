@@ -17,13 +17,15 @@ There is no test suite. Check a change by building it and running the game.
 
 The browser build compiles `core/src` (`G.gwt.xml`) to JavaScript, so `core` can only use the JRE subset GWT emulates. That rules out reflection, `String.format`, `java.io` files, threads and most of `java.util.concurrent`. Use libGDX equivalents instead (`Gdx.files`, `Json`, `Array`, `ObjectMap`). Platform-specific code goes in the launcher modules. After touching `core`, run `./gradlew html:gwtCompile`; desktop builds won't catch these errors.
 
+`Store` saves the config, scores, debug options and each game mode's match as JSON in libGDX `Preferences`: `~/.prefs/com.vpjardim.colorbeans` on desktop, `localStorage` in the browser. GWT's reflection needs each saved class listed under `gdx.reflect.include` in `html/src/com/vpjardim/colorbeans/GdxDefinition.gwt.xml`, and it can't set `final` fields.
+
 Before upgrading libGDX, read `html/src/com/vpjardim/colorbeans/FreetypeFix.gwt.xml`: web FreeType comes from a third-party library that must match libGDX's version, and that file patches it.
 
 ## Assets
 
 - Audio: iOS can't play `.ogg`. After changing `assets/audio/`, run `./gradlew tools:convertAudioForIOS` and commit the `.m4a` copies it writes to `ios/assets/audio/`.
 - Sprites: edit sources in `to_pack/`, then run `tools`' `PackTextures` from the repo root. It writes to `packed/`; copy `pack.atlas` and `pack*.png` from there into `assets/img/`.
-- `to_pack/`, `packed/` and `state/` are gitignored. `state/` holds runtime saves (`cfg.json`, `scores.json`), relative to the working directory: `assets/state/` under `desktop:run`, the repo root's `state/` under the IDE run configs.
+- `to_pack/` and `packed/` are gitignored.
 
 ## Code orientation
 

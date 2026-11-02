@@ -221,6 +221,10 @@ public class PlayScreen extends ScreenBase {
 
         manager.init();
 
+        // A match continued in its middle waits for the player, on the menu
+        if (manager.restored)
+            manager.setPaused(true);
+
         // The maps are laid out on resize, which comes right after show
         worldCam = new OrthographicCamera();
         worldViewport = new ExtendViewport(MapRender.SLOT_W, MapRender.VIEW_H, worldCam);
@@ -421,6 +425,9 @@ public class PlayScreen extends ScreenBase {
 
         manager.winLost();
 
+        if (manager.saveRequested)
+            manager.save();
+
         for (MapRender r : manager.render) {
             r.m.update();
         }
@@ -542,10 +549,12 @@ public class PlayScreen extends ScreenBase {
     public void pause() {
         menuVisible = true;
         manager.setPaused(true);
+        manager.save();
     }
 
     @Override
     public void hide() {
+        manager.save();
         ScoreTable.save(G.game.score);
         Db.save(G.game.data);
         G.game.assets.get("audio/music1.ogg", Music.class).stop();

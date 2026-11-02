@@ -15,17 +15,23 @@ public class Training extends MapManager {
 
         G.game.input.targetsClear();
 
+        MatchSave save = loadSave();
+        // A saved match keeps its players
+        int nMaps = save != null ? save.maps.size : G.game.data.players.size;
         Cfg.Map mapT = G.game.data.createMapConfig(G.game.data.trainingSpeed);
 
         if (G.game.dbg.aiTraining != null) {
             gameCfg = G.game.data.loopGame;
         }
 
-        for (int i = 0; i < G.game.data.players.size; i++) {
+        for (int i = 0; i < nMaps; i++) {
             Map m = new Map(this);
             m.index = i;
             m.setCfg(mapT);
-            m.name = G.game.data.players.get(i).name;
+
+            if (save == null)
+                m.name = G.game.data.players.get(i).name;
+
             maps.add(m);
             G.game.input.addTarget(m);
 
@@ -43,7 +49,19 @@ public class Training extends MapManager {
                 m.debugShape(G.game.dbg.mapShapes[i]);
         }
 
+        restore(save);
         G.game.input.linkAll();
+    }
+
+    @Override
+    public String saveKey() {
+        return Store.TRAINING;
+    }
+
+    /** The debug options have a map for each of the 4 players at most */
+    @Override
+    protected boolean isValid(MatchSave save) {
+        return super.isValid(save) && save.maps.size <= 4;
     }
 
     @Override

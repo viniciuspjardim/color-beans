@@ -104,7 +104,7 @@ public class G extends Game {
 
         bgBeans = new BgBeans();
 
-        dbg = new Dbg();
+        dbg = Dbg.load();
 
         // dbg.uiTable = true;
         // dbg.mapShapes = new int[] { 3, 12, 3, 0 };
@@ -126,6 +126,24 @@ public class G extends Game {
     @Override
     public void render() {
         screens.render();
+    }
+
+    /**
+     * Saves everything, since the app may be closed or killed from here: on desktop it
+     * comes before the exit, on phones when the app goes to the background and in the
+     * browser when the tab is hidden. The play screen saves its match first
+     */
+    @Override
+    public void pause() {
+        super.pause();
+
+        if (data != null)
+            Db.save(data);
+
+        if (score != null)
+            ScoreTable.save(score);
+
+        Dbg.save(dbg);
     }
 
     @Override
