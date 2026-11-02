@@ -79,6 +79,8 @@ public class PlayScreen extends ScreenBase {
     private Table resultsT;
     private TextButton nextMatchButt;
     private boolean resultsShown;
+    /** Set once the camera slid to the player's map for the results, until the next match */
+    private boolean resultsSlid;
     private boolean menuVisible;
     private EventListener tapInput;
     private TouchInput touchInput;
@@ -262,11 +264,11 @@ public class PlayScreen extends ScreenBase {
 
     /**
      * Puts the results' buttons on the player's field, centered under its stats, and
-     * tells the maps how much room they take. In portrait on the map the camera
-     * shows. They shrink if they don't fit above the floor
+     * tells the maps how much room they take. Only there, even with a second player in
+     * the co-op. They shrink if they don't fit above the floor
      */
     private void placeResults() {
-        MapRender r = G.height > G.width ? focus : home;
+        MapRender r = home;
 
         // World units in a pixel, over stage units in a pixel
         MapRender.uiToWorld = worldViewport.getWorldWidth() / worldViewport.getScreenWidth() / uiUnit;
@@ -428,6 +430,15 @@ public class PlayScreen extends ScreenBase {
         G.game.batch.begin();
         G.game.bgBeans.render();
         G.game.batch.end();
+
+        // In portrait the camera goes back to the player's map for the results, which has
+        // their buttons
+        if (manager.phase != MapManager.PHASE_RESULTS) {
+            resultsSlid = false;
+        } else if (!resultsSlid) {
+            resultsSlid = true;
+            slideTo(home);
+        }
 
         // The camera slides to the map the navigation buttons picked
         slideTime += delta;

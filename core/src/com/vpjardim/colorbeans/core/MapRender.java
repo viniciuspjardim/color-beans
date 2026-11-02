@@ -400,7 +400,7 @@ public class MapRender {
         drawStat("Acc", m.scoreSum, STATS_Y - 1f);
         drawStat("Time", (int) m.matchTimer, STATS_Y - 2f);
 
-        if (m.manager.phase == MapManager.PHASE_RESULTS)
+        if (m.manager.phase == MapManager.PHASE_RESULTS && resultsShown())
             renderResults(m.manager.phaseTime);
     }
 
@@ -430,15 +430,9 @@ public class MapRender {
         }
 
         // ===== The pause menu's panel behind it all, fading in =====
-        boolean statsShown = statsShown();
-        float bottom;
-
-        if (resultsMenuH > 0f)
-            bottom = resultsMenuTop() - resultsMenuH - PANEL_PAD;
-        else if (statsShown)
-            bottom = statsBottom() - PANEL_PAD;
-        else
-            bottom = TITLE_Y - TITLE_HALF_H - PANEL_PAD;
+        float bottom = resultsMenuH > 0f
+                ? resultsMenuTop() - resultsMenuH - PANEL_PAD
+                : statsBottom() - PANEL_PAD;
 
         float top = TITLE_Y + TITLE_HALF_H + PANEL_PAD;
         float panelX = x + PANEL_MARGIN;
@@ -467,9 +461,6 @@ public class MapRender {
             titleFont.setColor(Color.WHITE);
         }
 
-        if (!statsShown)
-            return;
-
         // Score counts up from 0
         float count = Interpolation.pow2Out.apply(MathUtils.clamp((time - STATS_DELAY) / COUNT_TIME, 0f, 1f));
         int line = 0;
@@ -484,8 +475,8 @@ public class MapRender {
         drawResult("Time", seconds / 60 + ":" + (seconds % 60 < 10 ? "0" : "") + seconds % 60, line, time);
     }
 
-    /** Only the players get stats, unless the AI plays alone */
-    private boolean statsShown() {
+    /** Only the players get results, unless the AI plays alone */
+    private boolean resultsShown() {
         return m.ai == null || !m.manager.playersPlayed();
     }
 
@@ -498,9 +489,9 @@ public class MapRender {
         return STATS_TOP - (statLines() - 1) * STATS_LINE_H - STATS_LINE_H / 2f;
     }
 
-    /** Top of the results' buttons (see PlayScreen): under the stats, or the title without them */
+    /** Top of the results' buttons (see PlayScreen), under the stats */
     public float resultsMenuTop() {
-        return statsShown() ? statsBottom() - 0.2f : TITLE_Y - TITLE_HALF_H - 0.2f;
+        return statsBottom() - 0.2f;
     }
 
     /** Draws a line of the results, fading in after the ones above it */
