@@ -348,7 +348,7 @@ game/title
   index: -1
 
 pack2.png
-size: 1024, 1024
+size: 1024, 512
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
 repeat: none
@@ -357,13 +357,6 @@ results/draw
   xy: 2, 245
   size: 525, 241
   orig: 525, 241
-  offset: 0, 0
-  index: -1
-results/game_over
-  rotate: false
-  xy: 2, 488
-  size: 517, 453
-  orig: 517, 453
   offset: 0, 0
   index: -1
 results/lose
@@ -375,7 +368,7 @@ results/lose
   index: -1
 results/win
   rotate: false
-  xy: 521, 700
+  xy: 529, 245
   size: 410, 241
   orig: 410, 241
   offset: 0, 0

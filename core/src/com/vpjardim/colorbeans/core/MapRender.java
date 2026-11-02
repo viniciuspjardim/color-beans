@@ -105,8 +105,6 @@ public class MapRender {
      */
     private static final float TITLE_CAP_H = 1.7f;
     private static final float TITLE_CAP_PX = 170f;
-    /** Tallest a title can be, with its outline and shadow */
-    private static final float TITLE_MAX_H = 2.7f;
     private static final float TITLE_POP_TIME = 0.45f;
     /** Top of the first stat line, and the step to the next */
     private static final float STATS_TOP = Map.N_ROW - 5.3f;
@@ -159,7 +157,6 @@ public class MapRender {
     private final AtlasRegion shadowLeft;
     private final AtlasRegion winTitle;
     private final AtlasRegion loseTitle;
-    private final AtlasRegion gameOverTitle;
     private final AtlasRegion drawTitle;
 
     /** Player beans' positions relative to the field. See {@link #pairPosition()} */
@@ -204,7 +201,6 @@ public class MapRender {
         shadowLeft = atlas.findRegion("beans/bshadow", 3);
         winTitle = atlas.findRegion("results/win");
         loseTitle = atlas.findRegion("results/lose");
-        gameOverTitle = atlas.findRegion("results/game_over");
         drawTitle = atlas.findRegion("results/draw");
 
         if (!G.game.dbg.on)
@@ -426,15 +422,12 @@ public class MapRender {
 
         if (m.gameWin)
             title = winTitle;
-        else if (manager.maps.size == 1)
-            title = gameOverTitle;
-        else if (manager.winners.size == 0)
+        else if (manager.maps.size > 1 && manager.winners.size == 0)
             title = drawTitle;
         else
             title = loseTitle;
 
-        // Same letter size for all, unless it's too tall, like the 2 lines of game over
-        float titleScale = Math.min(TITLE_CAP_H / TITLE_CAP_PX, TITLE_MAX_H / title.getRegionHeight());
+        float titleScale = TITLE_CAP_H / TITLE_CAP_PX;
         float titleW = title.getRegionWidth() * titleScale;
         float titleH = title.getRegionHeight() * titleScale;
 
@@ -443,8 +436,8 @@ public class MapRender {
                 ? resultsMenuTop() - resultsMenuH - PANEL_PAD
                 : statsBottom() - PANEL_PAD;
 
-        // The title's outline and shadow pad it already
-        float top = TITLE_Y + titleH / 2f + PANEL_PAD / 2f;
+        // Room over the title like under the buttons, which have their table's padding too
+        float top = TITLE_Y + titleH / 2f + PANEL_PAD + G.style.padMedium * uiToWorld;
         float panelX = x + PANEL_MARGIN;
         float panelW = Map.N_COL - 2f * PANEL_MARGIN;
         // Its corners are sized like the pause menu's, which is in UI units
