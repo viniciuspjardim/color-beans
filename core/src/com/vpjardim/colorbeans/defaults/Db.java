@@ -146,7 +146,7 @@ public class Db {
 
         campGame.nPlayers = 2;
         campGame.finishOnWin = true;
-        campGame.lostAct = Cfg.Game.LOST_AUTO_RESTART;
+        campGame.lostAct = Cfg.Game.LOST_SHOW_RESULTS;
 
         loopGame.nPlayers = 2;
         loopGame.finishOnWin = false;
@@ -154,7 +154,7 @@ public class Db {
 
         trainingGame.nPlayers = 1;
         trainingGame.finishOnWin = false;
-        trainingGame.lostAct = Cfg.Game.LOST_RESTART_PAUSED;
+        trainingGame.lostAct = Cfg.Game.LOST_SHOW_RESULTS;
     }
 
     /**

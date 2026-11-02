@@ -11,7 +11,8 @@ public class Campaign extends MapManager {
     public Array<Cfg.Map> mapCfgs;
     public Array<Cfg.Ai> aiCfgs;
     public Array<String> aiMapNames;
-    public final Array<Map> winnerMaps = new Array<>();
+    /** Set when the players win a stage, until the maps change to the next one */
+    private boolean stageCleared;
 
     @Override
     public void init() {
@@ -108,14 +109,17 @@ public class Campaign extends MapManager {
         }
     }
 
+    /**
+     * Saves the progress and the scores. The maps change to the next stage in
+     * {@link #prepareNextMatch()}, after the results
+     */
     public void playersWin() {
         G.game.data.campaignCurrentStage++;
         stageIndex++;
+        stageCleared = true;
 
-        // After the last map the game is zeroed
+        // After the last stage the campaign starts over
         if (stageIndex >= mapCfgs.size) {
-            gameStatus = GAME_ZEROED;
-            stageIndex = 0;
             G.game.data.campaignCurrentStage = 0;
         }
 
@@ -129,87 +133,68 @@ public class Campaign extends MapManager {
             G.game.score.addRow(ScoreTable.GMODE_CAMPAIGN, p2.name, true, p2.score, p2.scoreSum,
                     p2.matchTimer);
         }
-
-        // Config maps to the next stage
-        if (gameStatus != GAME_ZEROED) {
-            p1.setCfg(mapCfgs.get(stageIndex));
-
-            if (p2 != null) {
-                p2.setCfg(mapCfgs.get(stageIndex));
-            }
-
-            Map aiMap = maps.get(1);
-            aiMap.setCfg(mapCfgs.get(stageIndex));
-            aiMap.name = aiMapNames.get(stageIndex);
-
-            if (!G.game.dbg.aiDisableMap1)
-                aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
-        }
     }
 
-    public void winLost() {
-        int mapsAnimating = 0;
+    /** Whether the stage that ended was the last one */
+    public boolean campaignFinished() {
+        return stageCleared && stageIndex >= mapCfgs.size;
+    }
 
+    @Override
+    protected void prepareNextMatch() {
+        if (!stageCleared)
+            return;
+
+        stageCleared = false;
+
+        // After the last stage the game is zeroed
+        if (stageIndex >= mapCfgs.size) {
+            gameStatus = GAME_ZEROED;
+            stageIndex = 0;
+            return;
+        }
+
+        // Config maps to the next stage
+        Map p1 = maps.get(0);
+        Map p2 = maps.size == 3 ? maps.get(2) : null;
+
+        p1.setCfg(mapCfgs.get(stageIndex));
+
+        if (p2 != null) {
+            p2.setCfg(mapCfgs.get(stageIndex));
+        }
+
+        Map aiMap = maps.get(1);
+        aiMap.setCfg(mapCfgs.get(stageIndex));
+        aiMap.name = aiMapNames.get(stageIndex);
+
+        if (!G.game.dbg.aiDisableMap1)
+            aiMap.ai.init(aiMap, aiCfgs.get(stageIndex));
+    }
+
+    @Override
+    public String nextMatchLabel() {
+        if (campaignFinished())
+            return "Continue";
+
+        return stageCleared ? "Next stage" : "Retry";
+    }
+
+    /** The players win when the AI loses, and the AI when all the players lose */
+    @Override
+    protected void findWinners() {
         Map p1 = maps.get(0);
         Map aiMap = maps.get(1);
         Map p2 = maps.size == 3 ? maps.get(2) : null;
 
-        for (Map m : maps) {
-            // Maps not in DONE state: playing or animating (win or lost animations)
-            if (!m.isInState(Map.MState.DONE) && !m.gameWin) {
-                mapsAnimating++;
-            }
-        }
-
-        // Ai Lost
         if (Map.lost(aiMap)) {
-            if (!Map.lost(p1)) {
+            if (!Map.lost(p1))
                 p1.gameWin = true;
-                winnerMaps.add(p1);
-            }
 
-            if (p2 != null && !Map.lost(p2)) {
+            if (p2 != null && !Map.lost(p2))
                 p2.gameWin = true;
-                winnerMaps.add(p2);
-            }
-            // Players lost
         } else if (Map.lost(p1) && (p2 == null || Map.lost(p2))) {
             aiMap.gameWin = true;
-            winnerMaps.add(aiMap);
-        }
-
-        // Dbg.dbg("WinLost ===>", "winners size: " + winnerMaps.size + "; mapsAnimating: " + mapsAnimating);
-
-        // Wait until animation is over to call mapWin
-        if (winnerMaps.size > 0 && mapsAnimating == 0) {
-            mapWin(winnerMaps.get(0).index);
-        }
-
-        // Maps animations ended
-        if (mapsAnimating == 0) {
-            winnerMaps.clear();
-
-            boolean autoRestart = gameCfg.lostAct == Cfg.Game.LOST_AUTO_RESTART ||
-                    gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
-
-            boolean paused = gameCfg.lostAct == Cfg.Game.LOST_RESTART_PAUSED;
-
-            // If auto restart is on and animations finished: restart the game
-            if (autoRestart) {
-                for (Map m : maps) {
-                    m.recycle(true); // TODO: remove and test. It's done in MState
-                    m.state.changeState(Map.MState.GRAVITY_FALL);
-
-                    setPaused(paused);
-                }
-
-                if (G.game.dbg.mapShapes != null) {
-                    for (int i = 0; i < maps.size; i++) {
-                        Map m = maps.get(i);
-                        m.debugShape(G.game.dbg.mapShapes[i]);
-                    }
-                }
-            }
         }
     }
 

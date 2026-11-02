@@ -348,6 +348,33 @@ game/title
   index: -1
 
 pack2.png
+size: 1024, 512
+format: RGBA8888
+filter: MipMapLinearNearest, Linear
+repeat: none
+results/draw
+  rotate: false
+  xy: 2, 245
+  size: 525, 241
+  orig: 525, 241
+  offset: 0, 0
+  index: -1
+results/lose
+  rotate: false
+  xy: 2, 2
+  size: 453, 241
+  orig: 453, 241
+  offset: 0, 0
+  index: -1
+results/win
+  rotate: false
+  xy: 529, 245
+  size: 410, 241
+  orig: 410, 241
+  offset: 0, 0
+  index: -1
+
+pack3.png
 size: 1024, 1024
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
@@ -717,7 +744,7 @@ beans/green
   offset: 0, 0
   index: 1110
 
-pack3.png
+pack4.png
 size: 1024, 1024
 format: RGBA8888
 filter: MipMapLinearNearest, Linear
@@ -1066,7 +1093,7 @@ beans/yellow
   offset: 0, 0
   index: 11
 
-pack4.png
+pack5.png
 size: 1024, 512
 format: RGBA8888
 filter: MipMapLinearNearest, Linear

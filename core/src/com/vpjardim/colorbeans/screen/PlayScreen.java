@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -36,6 +37,15 @@ public class PlayScreen extends ScreenBase {
     private static final float INTRO_TIME = 1.75f;
     /** Seconds the camera takes to slide to another map */
     private static final float SLIDE_TIME = 0.3f;
+    /**
+     * Seconds into the results before their buttons show, so a key still being
+     * mashed from the match doesn't skip them
+     */
+    private static final float RESULTS_BUTTONS_DELAY = 1.2f;
+    /** Least room under the results' buttons, down to the floor, in world units */
+    private static final float RESULTS_FLOOR_GAP = 0.8f;
+    /** Widest the results' buttons can be, in world units, inside their panel */
+    private static final float RESULTS_MAX_W = Map.N_COL - 1.4f;
 
     public final MapManager manager;
     /** Camera for the maps, in world units where a bean is 1 x 1. See {@link MapRender} */
@@ -58,11 +68,19 @@ public class PlayScreen extends ScreenBase {
     /** Map the camera shows in portrait, with the others as minis in its panel */
     private MapRender focus;
     private final Array<MapRender> minis = new Array<>();
+    private final Vector2 tmp = new Vector2();
     /** Buttons at the bottom: pause on the left, the maps navigation on the right */
     private Table barT;
     private Table navT;
     private Table containerT;
     private TextButton resumeButt;
+    private ImageButton pauseButt;
+    /** Buttons under the match results */
+    private Table resultsT;
+    private TextButton nextMatchButt;
+    private boolean resultsShown;
+    /** Set once the camera slid to the player's map for the results, until the next match */
+    private boolean resultsSlid;
     private boolean menuVisible;
     private EventListener tapInput;
     private TouchInput touchInput;
@@ -92,6 +110,13 @@ public class PlayScreen extends ScreenBase {
 
             if (G.isBackKey(key)) {
                 Dbg.dbg("BackKey", "SpecialButtons.keyDown: " + key);
+
+                // On the results, back leaves like their menu button
+                if (resultsShown) {
+                    action = ACT_MENU;
+                    return;
+                }
+
                 menuVisible = true;
                 manager.togglePaused();
             }
@@ -111,13 +136,6 @@ public class PlayScreen extends ScreenBase {
 
         containerT = new Table(G.game.skin);
         containerT.setFillParent(true);
-
-        Table contentT = new Table(G.game.skin);
-        contentT.background("bgBlack");
-        contentT.pad(54f * uiUnit, 48f * uiUnit, 54f * uiUnit, 48f * uiUnit);
-        contentT.setBackground("bgBlack");
-
-        containerT.add(contentT);
         menuVisible = true;
 
         G.game.audio.configMusic(Audio.MUSIC1, true, true);
@@ -144,15 +162,33 @@ public class PlayScreen extends ScreenBase {
             }
         });
 
-        float bttW = G.style.buttWidth;
-        float padM = G.style.padMedium;
+        containerT.add(menuPanel(resumeButt, menuButt));
 
-        contentT.add(resumeButt).width(bttW).pad(padM);
-        contentT.row();
-        contentT.add(menuButt).width(bttW).pad(G.style.padVBig, padM, padM, padM);
+        // The results' buttons, on the player's map. See placeResults
+        nextMatchButt = new TextButton("",
+                G.game.skin.get("bttGreen", TextButton.TextButtonStyle.class));
+        nextMatchButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                manager.nextMatch();
+            }
+        });
+
+        TextButton resultsMenuButt = new TextButton("Menu",
+                G.game.skin.get("bttRed", TextButton.TextButtonStyle.class));
+        resultsMenuButt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                action = ACT_MENU;
+            }
+        });
+
+        // The map draws the panel behind them, with the results. See MapRender
+        resultsT = buttons(nextMatchButt, resultsMenuButt, G.style.padSmall);
+        resultsT.setVisible(false);
 
         // Start is left to pause and resume, through the maps
-        nav.row(resumeButt).row(menuButt);
+        nav.row(resumeButt).row(menuButt).row(nextMatchButt).row(resultsMenuButt);
         nav.startConfirms = false;
         nav.back = () -> manager.setPaused(false);
 
@@ -168,16 +204,19 @@ public class PlayScreen extends ScreenBase {
         barT.setFillParent(true);
         barT.bottom();
         // Like the back key: pauses with the menu, or resumes
-        barT.add(iconButton("bttPause", () -> {
+        pauseButt = iconButton("bttPause", () -> {
             menuVisible = true;
             manager.togglePaused();
-        })).size(bttS).expandX().left();
+        });
+        barT.add(pauseButt).size(bttS).expandX().left();
         barT.add(navT);
 
-        // The bar first, so the menu is drawn over it
+        // The bar first, so the menus are drawn over it
         stage.addActor(barT);
+        stage.addActor(resultsT);
         stage.addActor(containerT);
         barT.setDebug(G.game.dbg.uiTable);
+        resultsT.setDebug(G.game.dbg.uiTable);
         containerT.setDebug(G.game.dbg.uiTable);
 
         manager.init();
@@ -199,6 +238,57 @@ public class PlayScreen extends ScreenBase {
             home = manager.render.first();
 
         focus = home;
+    }
+
+    /** A button over the other, with the gap added between them */
+    private Table buttons(TextButton top, TextButton bottom, float gap) {
+        float bttW = G.style.buttWidth;
+        float padM = G.style.padMedium;
+
+        Table table = new Table(G.game.skin);
+        table.add(top).width(bttW).pad(padM);
+        table.row();
+        table.add(bottom).width(bttW).pad(gap, padM, padM, padM);
+        table.pack();
+        return table;
+    }
+
+    /** The pause menu's dark panel, with a button over the other */
+    private Table menuPanel(TextButton top, TextButton bottom) {
+        Table panel = buttons(top, bottom, G.style.padVBig);
+        panel.setBackground("bgBlack");
+        panel.pad(54f * uiUnit, 48f * uiUnit, 54f * uiUnit, 48f * uiUnit);
+        panel.pack();
+        return panel;
+    }
+
+    /**
+     * Puts the results' buttons on the player's field, centered under its stats, and
+     * tells the maps how much room they take. Only there, even with a second player in
+     * the co-op. They shrink if they don't fit above the floor
+     */
+    private void placeResults() {
+        MapRender r = home;
+
+        // World units in a pixel, over stage units in a pixel
+        MapRender.uiToWorld = worldViewport.getWorldWidth() / worldViewport.getScreenWidth() / uiUnit;
+
+        float top = r.resultsMenuTop();
+        float w = resultsT.getWidth() * MapRender.uiToWorld;
+        float h = resultsT.getHeight() * MapRender.uiToWorld;
+        float scale = Math.min(1f, Math.min((top - RESULTS_FLOOR_GAP) / h, RESULTS_MAX_W / w));
+
+        resultsT.setTransform(scale < 1f);
+        resultsT.setScale(scale);
+
+        for (MapRender other : manager.render) {
+            other.resultsMenuH = other == r ? h * scale : 0f;
+        }
+
+        worldViewport.project(tmp.set(r.x + Map.N_COL / 2f, top));
+        tmp.y = Gdx.graphics.getHeight() - tmp.y;
+        stage.screenToStageCoordinates(tmp);
+        resultsT.setPosition(tmp.x - resultsT.getWidth() * scale / 2f, tmp.y - resultsT.getHeight() * scale);
     }
 
     private ImageButton iconButton(String style, Runnable action) {
@@ -309,13 +399,23 @@ public class PlayScreen extends ScreenBase {
 
     @Override
     public void render(float delta) {
-        // The menu's navigation works while it shows, and starts on resume each time
+        // The menu's navigation works while it shows, and starts on resume each time.
+        // The same for the results' buttons, starting on the next match
         boolean menuShown = manager.isPaused() && menuVisible;
+        boolean results = !menuShown && manager.phase == MapManager.PHASE_RESULTS &&
+                manager.phaseTime >= RESULTS_BUTTONS_DELAY;
 
-        if (menuShown && nav.paused)
+        if (results && !resultsShown) {
+            nextMatchButt.setText(manager.nextMatchLabel());
+            nav.focus(nextMatchButt);
+        } else if (menuShown && nav.paused) {
             nav.focus(resumeButt);
+        }
 
-        nav.paused = !menuShown;
+        resultsShown = results;
+        nav.paused = !menuShown && !resultsShown;
+        resultsT.setVisible(resultsShown);
+        pauseButt.setVisible(manager.phase == MapManager.PHASE_PLAYING);
 
         super.render(delta);
 
@@ -331,6 +431,15 @@ public class PlayScreen extends ScreenBase {
         G.game.bgBeans.render();
         G.game.batch.end();
 
+        // In portrait the camera goes back to the player's map for the results, which has
+        // their buttons
+        if (manager.phase != MapManager.PHASE_RESULTS) {
+            resultsSlid = false;
+        } else if (!resultsSlid) {
+            resultsSlid = true;
+            slideTo(home);
+        }
+
         // The camera slides to the map the navigation buttons picked
         slideTime += delta;
         shownX = MathUtils.lerp(slideFromX, camX, Interpolation.pow2Out.apply(Math.min(slideTime / SLIDE_TIME, 1f)));
@@ -342,6 +451,10 @@ public class PlayScreen extends ScreenBase {
 
         // Draw the maps
         worldViewport.apply();
+
+        // Before the maps, which make room for the buttons in their results
+        if (manager.phase == MapManager.PHASE_RESULTS)
+            placeResults();
         G.game.batch.setProjectionMatrix(worldCam.combined);
         G.game.batch.begin();
 

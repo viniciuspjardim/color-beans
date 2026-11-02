@@ -5,10 +5,97 @@ import com.vpjardim.colorbeans.G;
 import com.vpjardim.colorbeans.Map;
 
 public class Animations {
+    /** Seconds between the rows popping in the win celebration, from the floor up */
+    private static final float POP_ROW_TIME = 0.07f;
+    /** Seconds a bean flashes white before it pops */
+    private static final float POP_FLASH_TIME = 0.12f;
+    /** Extra seconds for each column away from the middle, so the rows pop in a curve */
+    private static final float POP_COL_TIME = 0.02f;
+
     public transient Map m;
+    public final Sparks sparks = new Sparks();
+
+    private float celebrateTime;
+    /** Highest field row with a bean when the celebration started */
+    private int celebrateTop;
+    /** Rows that popped so far, each with a pop sound */
+    private int poppedRows;
 
     public Animations(Map map) {
         m = map;
+    }
+
+    /** Starts {@link #celebrate()} over */
+    public void startCelebration() {
+        celebrateTime = 0f;
+        poppedRows = 0;
+        celebrateTop = 0;
+
+        for (int col = 0; col < Map.N_COL; col++) {
+            for (int row = Map.OUT_ROW; row < Map.OUT_ROW + Map.N_ROW; row++) {
+                if (!m.b[col][row].isEmpty())
+                    celebrateTop = Math.max(celebrateTop, fieldY(row));
+            }
+        }
+    }
+
+    /**
+     * Win celebration: the beans flash and pop in sparks, row by row from the floor
+     * up, each row with a higher pop sound if popSound
+     *
+     * @return true if it's animating - animation not finished yet
+     */
+    public boolean celebrate(boolean popSound) {
+        boolean animating = false;
+        celebrateTime += G.delta;
+
+        for (int col = 0; col < Map.N_COL; col++) {
+            float colTime = Math.abs(col - Map.N_COL / 2) * POP_COL_TIME;
+
+            for (int row = 0; row < Map.OUT_ROW + Map.N_ROW; row++) {
+                Block b = m.b[col][row];
+
+                if (b.isEmpty())
+                    continue;
+
+                // Beans in the hidden rows just go
+                if (row < Map.OUT_ROW) {
+                    b.setEmpty();
+                    continue;
+                }
+
+                int y = fieldY(row);
+                float popTime = POP_FLASH_TIME + y * POP_ROW_TIME + colTime;
+
+                if (celebrateTime >= popTime) {
+                    sparks.burst(col + 0.5f, y + b.py + 0.5f, b.color);
+                    b.setEmpty();
+                } else {
+                    animating = true;
+
+                    // White bordered. Trash has no such tile, so it squeezes instead
+                    if (celebrateTime >= popTime - POP_FLASH_TIME)
+                        b.tile = b.isTrash() ? 4 : 2;
+                }
+            }
+        }
+
+        // One pop for each row, rising in pitch up to the top row
+        int rows = Math.min((int) ((celebrateTime - POP_FLASH_TIME) / POP_ROW_TIME) + 1, celebrateTop + 1);
+
+        if (celebrateTime >= POP_FLASH_TIME && rows > poppedRows) {
+            poppedRows = rows;
+
+            if (popSound)
+                G.game.audio.playEffect("audio/pop.ogg", 0.8f + 1.2f * (rows - 1) / Map.N_ROW);
+        }
+
+        return animating;
+    }
+
+    /** Field y of a {@link Map#b} row: the floor row is 0 */
+    private static int fieldY(int row) {
+        return Map.OUT_ROW + Map.N_ROW - 1 - row;
     }
 
     /** @return true if it's animating - animation not finished yet */

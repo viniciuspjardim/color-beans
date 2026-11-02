@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
@@ -93,6 +95,39 @@ public class MapRender {
             Color.valueOf("9a9a9a"), // Trash
     };
     private static final Color MINI_BG = Color.valueOf("121220");
+
+    // ===== Match results, see renderResults =====
+    /** Middle of the title */
+    private static final float TITLE_Y = Map.N_ROW - 3.3f;
+    /**
+     * Height of the title's capital letters, and the same in the title images,
+     * which are drawn in to_pack/results/*.svg
+     */
+    private static final float TITLE_CAP_H = 1.7f;
+    private static final float TITLE_CAP_PX = 170f;
+    private static final float TITLE_POP_TIME = 0.45f;
+    /** Top of the first stat line, and the step to the next */
+    private static final float STATS_TOP = Map.N_ROW - 5.3f;
+    private static final float STATS_LINE_H = 0.9f;
+    private static final float RESULT_LABEL_SIZE = 0.4f;
+    private static final float RESULT_VALUE_SIZE = 0.55f;
+    /** Seconds before the first stat shows, and between the next ones */
+    private static final float STATS_DELAY = 0.35f;
+    private static final float STATS_STEP = 0.15f;
+    /** Seconds the score takes to count up */
+    private static final float COUNT_TIME = 0.8f;
+    /** Gap between the results' panel edges and what's in it, and the field's walls */
+    private static final float PANEL_PAD = 0.45f;
+    private static final float PANEL_MARGIN = 0.3f;
+    private static final float PANEL_FADE_TIME = 0.2f;
+
+    /** World units in a UI (stage) unit. The play screen keeps it current */
+    public static float uiToWorld = 0.02f;
+    /**
+     * Height of the results' buttons on this map, in world units, which the panel
+     * makes room for. 0 on the maps without them. Set by the play screen
+     */
+    public float resultsMenuH;
     /** Darker wall bricks: purple, steel blue and dark green */
     private static final int[] DARK_WALLS = { 6, 8, 9 };
 
@@ -120,6 +155,9 @@ public class MapRender {
     private final AtlasRegion shadowCorner;
     private final AtlasRegion shadowTop;
     private final AtlasRegion shadowLeft;
+    private final AtlasRegion winTitle;
+    private final AtlasRegion loseTitle;
+    private final AtlasRegion drawTitle;
 
     /** Player beans' positions relative to the field. See {@link #pairPosition()} */
     private final Vector2 pair1 = new Vector2();
@@ -161,6 +199,9 @@ public class MapRender {
         shadowCorner = atlas.findRegion("beans/bshadow", 1);
         shadowTop = atlas.findRegion("beans/bshadow", 2);
         shadowLeft = atlas.findRegion("beans/bshadow", 3);
+        winTitle = atlas.findRegion("results/win");
+        loseTitle = atlas.findRegion("results/lose");
+        drawTitle = atlas.findRegion("results/draw");
 
         if (!G.game.dbg.on)
             return;
@@ -291,16 +332,19 @@ public class MapRender {
 
         // ===== Draw player blocks =====
         // Beans still above the ceiling are skipped. The ceiling, drawn later, covers
-        // the ones partly behind it
+        // the ones partly behind it. None after the match ends
         pairPosition();
+        boolean pairShown = !m.isInState(Map.MState.DONE);
 
-        if (pair1.y <= Map.N_ROW) {
+        if (pairShown && pair1.y <= Map.N_ROW) {
             batch.draw(beans.get(m.pb.b1.getRegionKey()), x + pair1.x, pair1.y, 1f, 1f);
         }
 
-        if (pair2.y <= Map.N_ROW) {
+        if (pairShown && pair2.y <= Map.N_ROW) {
             batch.draw(beans.get(m.pb.b2.getRegionKey()), x + pair2.x, pair2.y, 1f, 1f);
         }
+
+        m.anim.sparks.render(batch, x);
 
         // ==== Draw map ceil and flor that shakes with the beans ====
         for (int col = -PANEL_W; col <= Map.N_COL; col++) {
@@ -361,6 +405,114 @@ public class MapRender {
         drawStat("Wins", m.winsCount, STATS_Y);
         drawStat("Acc", m.scoreSum, STATS_Y - 1f);
         drawStat("Time", (int) m.matchTimer, STATS_Y - 2f);
+
+        if (m.manager.phase == MapManager.PHASE_RESULTS && resultsShown())
+            renderResults(m.manager.phaseTime);
+    }
+
+    /**
+     * Draws the match result over the field, emptied by then: a title that pops in,
+     * then the stats one by one, with the score counting up
+     */
+    private void renderResults(float time) {
+        SpriteBatch batch = G.game.batch;
+        MapManager manager = m.manager;
+
+        AtlasRegion title;
+
+        if (m.gameWin)
+            title = winTitle;
+        else if (manager.maps.size > 1 && manager.winners.size == 0)
+            title = drawTitle;
+        else
+            title = loseTitle;
+
+        float titleScale = TITLE_CAP_H / TITLE_CAP_PX;
+        float titleW = title.getRegionWidth() * titleScale;
+        float titleH = title.getRegionHeight() * titleScale;
+
+        // ===== The pause menu's panel behind it all, fading in =====
+        float bottom = resultsMenuH > 0f
+                ? resultsMenuTop() - resultsMenuH - PANEL_PAD
+                : statsBottom() - PANEL_PAD;
+
+        // Room over the title like under the buttons, which have their table's padding too
+        float top = TITLE_Y + titleH / 2f + PANEL_PAD + G.style.padMedium * uiToWorld;
+        float panelX = x + PANEL_MARGIN;
+        float panelW = Map.N_COL - 2f * PANEL_MARGIN;
+        // Its corners are sized like the pause menu's, which is in UI units
+        float s = uiToWorld;
+
+        batch.setColor(1f, 1f, 1f, Math.min(time / PANEL_FADE_TIME, 1f));
+        G.game.skin.get("bgBlack", NinePatch.class).draw(batch, panelX, bottom, 0f, 0f, panelW / s,
+                (top - bottom) / s, s, s, 0f);
+        batch.setColor(Color.WHITE);
+
+        // The title pops in, then the winner's keeps pulsing
+        float pop = Interpolation.swingOut.apply(Math.min(time / TITLE_POP_TIME, 1f));
+        float pulse = m.gameWin ? 1f + 0.05f * MathUtils.sin(time * 5f) : 1f;
+        float midX = x + Map.N_COL / 2f;
+
+        batch.draw(title, midX - titleW / 2f, TITLE_Y - titleH / 2f, titleW / 2f, titleH / 2f, titleW, titleH,
+                pop * pulse, pop * pulse, 0f);
+
+        // Score counts up from 0
+        float count = Interpolation.pow2Out.apply(MathUtils.clamp((time - STATS_DELAY) / COUNT_TIME, 0f, 1f));
+        int line = 0;
+
+        drawResult("Score", Integer.toString((int) (m.score * count)), line++, time);
+        drawResult("Max chain", Integer.toString(m.maxChain), line++, time);
+
+        if (manager.maps.size > 1)
+            drawResult("Trash sent", Integer.toString(m.trashSent), line++, time);
+
+        int seconds = (int) m.matchTimer;
+        drawResult("Time", seconds / 60 + ":" + (seconds % 60 < 10 ? "0" : "") + seconds % 60, line, time);
+    }
+
+    /** Only the players get results, unless the AI plays alone */
+    private boolean resultsShown() {
+        return m.ai == null || !m.manager.playersPlayed();
+    }
+
+    private int statLines() {
+        return m.manager.maps.size > 1 ? 4 : 3;
+    }
+
+    /** Bottom of the last stat line */
+    private float statsBottom() {
+        return STATS_TOP - (statLines() - 1) * STATS_LINE_H - STATS_LINE_H / 2f;
+    }
+
+    /** Top of the results' buttons (see PlayScreen), under the stats */
+    public float resultsMenuTop() {
+        return statsBottom() - 0.2f;
+    }
+
+    /** Draws a line of the results, fading in after the ones above it */
+    private void drawResult(String label, String value, int line, float time) {
+        float alpha = MathUtils.clamp((time - STATS_DELAY - line * STATS_STEP) / STATS_STEP, 0f, 1f);
+
+        if (alpha == 0f)
+            return;
+
+        BitmapFont font = G.game.data.mapFont;
+        BitmapFont labelFont = G.game.data.mapLabelFont;
+        float top = STATS_TOP - line * STATS_LINE_H;
+        float pad = 0.6f;
+
+        setTextSize(labelFont, RESULT_LABEL_SIZE);
+        setTextSize(font, RESULT_VALUE_SIZE);
+        labelFont.setColor(1f, 1f, 1f, alpha);
+        font.setColor(1f, 1f, 1f, alpha);
+
+        // Both centered on the line's middle
+        float mid = top - font.getCapHeight() / 2f;
+        labelFont.draw(G.game.batch, label, x + pad, mid + labelFont.getCapHeight() / 2f);
+        font.draw(G.game.batch, value, x + pad, top, Map.N_COL - 2f * pad, Align.right, false);
+
+        labelFont.setColor(Color.WHITE);
+        font.setColor(Color.WHITE);
     }
 
     /**
@@ -368,7 +520,7 @@ public class MapRender {
      * walls or text. Dimmed after the map loses
      */
     public void renderMini(ShapeRenderer sr) {
-        boolean lost = m.isInState(Map.MState.OVER) || m.isInState(Map.MState.DONE);
+        boolean lost = Map.lost(m);
 
         sr.setColor(MINI_BG);
         sr.rect(miniX, miniY, MINI_CELL * Map.N_COL, MINI_CELL * Map.N_ROW);
@@ -381,6 +533,9 @@ public class MapRender {
                     square(sr, block.color, col, rowY(row) + block.py, lost);
             }
         }
+
+        if (m.isInState(Map.MState.DONE))
+            return;
 
         pairPosition();
         square(sr, m.pb.b1.color, pair1.x, pair1.y, lost);
