@@ -184,7 +184,7 @@ public class PlayScreen extends ScreenBase {
         });
 
         // The map draws the panel behind them, with the results. See MapRender
-        resultsT = buttons(nextMatchButt, resultsMenuButt);
+        resultsT = buttons(nextMatchButt, resultsMenuButt, G.style.padSmall);
         resultsT.setVisible(false);
 
         // Start is left to pause and resume, through the maps
@@ -240,22 +240,22 @@ public class PlayScreen extends ScreenBase {
         focus = home;
     }
 
-    /** A button over the other */
-    private Table buttons(TextButton top, TextButton bottom) {
+    /** A button over the other, with the gap added between them */
+    private Table buttons(TextButton top, TextButton bottom, float gap) {
         float bttW = G.style.buttWidth;
         float padM = G.style.padMedium;
 
         Table table = new Table(G.game.skin);
         table.add(top).width(bttW).pad(padM);
         table.row();
-        table.add(bottom).width(bttW).pad(G.style.padVBig, padM, padM, padM);
+        table.add(bottom).width(bttW).pad(gap, padM, padM, padM);
         table.pack();
         return table;
     }
 
     /** The pause menu's dark panel, with a button over the other */
     private Table menuPanel(TextButton top, TextButton bottom) {
-        Table panel = buttons(top, bottom);
+        Table panel = buttons(top, bottom, G.style.padVBig);
         panel.setBackground("bgBlack");
         panel.pad(54f * uiUnit, 48f * uiUnit, 54f * uiUnit, 48f * uiUnit);
         panel.pack();
