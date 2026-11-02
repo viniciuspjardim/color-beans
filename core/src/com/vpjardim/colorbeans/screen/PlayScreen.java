@@ -42,6 +42,10 @@ public class PlayScreen extends ScreenBase {
      * mashed from the match doesn't skip them
      */
     private static final float RESULTS_BUTTONS_DELAY = 1.2f;
+    /** Least room under the results' buttons, down to the floor, in world units */
+    private static final float RESULTS_FLOOR_GAP = 0.8f;
+    /** Widest the results' buttons can be, in world units, inside their panel */
+    private static final float RESULTS_MAX_W = Map.N_COL - 1.4f;
 
     public final MapManager manager;
     /** Camera for the maps, in world units where a bean is 1 x 1. See {@link MapRender} */
@@ -177,7 +181,8 @@ public class PlayScreen extends ScreenBase {
             }
         });
 
-        resultsT = menuPanel(nextMatchButt, resultsMenuButt);
+        // The map draws the panel behind them, with the results. See MapRender
+        resultsT = buttons(nextMatchButt, resultsMenuButt);
         resultsT.setVisible(false);
 
         // Start is left to pause and resume, through the maps
@@ -233,32 +238,55 @@ public class PlayScreen extends ScreenBase {
         focus = home;
     }
 
-    /** The pause menu's dark panel, with a button over the other */
-    private Table menuPanel(TextButton top, TextButton bottom) {
+    /** A button over the other */
+    private Table buttons(TextButton top, TextButton bottom) {
         float bttW = G.style.buttWidth;
         float padM = G.style.padMedium;
 
-        Table panel = new Table(G.game.skin);
+        Table table = new Table(G.game.skin);
+        table.add(top).width(bttW).pad(padM);
+        table.row();
+        table.add(bottom).width(bttW).pad(G.style.padVBig, padM, padM, padM);
+        table.pack();
+        return table;
+    }
+
+    /** The pause menu's dark panel, with a button over the other */
+    private Table menuPanel(TextButton top, TextButton bottom) {
+        Table panel = buttons(top, bottom);
         panel.setBackground("bgBlack");
         panel.pad(54f * uiUnit, 48f * uiUnit, 54f * uiUnit, 48f * uiUnit);
-        panel.add(top).width(bttW).pad(padM);
-        panel.row();
-        panel.add(bottom).width(bttW).pad(G.style.padVBig, padM, padM, padM);
         panel.pack();
         return panel;
     }
 
     /**
-     * Puts the results' panel on the player's field, centered under its stats. In
-     * portrait on the map the camera shows
+     * Puts the results' buttons on the player's field, centered under its stats, and
+     * tells the maps how much room they take. In portrait on the map the camera
+     * shows. They shrink if they don't fit above the floor
      */
     private void placeResults() {
         MapRender r = G.height > G.width ? focus : home;
 
-        worldViewport.project(tmp.set(r.x + Map.N_COL / 2f, MapRender.RESULTS_MENU_TOP));
+        // World units in a pixel, over stage units in a pixel
+        MapRender.uiToWorld = worldViewport.getWorldWidth() / worldViewport.getScreenWidth() / uiUnit;
+
+        float top = r.resultsMenuTop();
+        float w = resultsT.getWidth() * MapRender.uiToWorld;
+        float h = resultsT.getHeight() * MapRender.uiToWorld;
+        float scale = Math.min(1f, Math.min((top - RESULTS_FLOOR_GAP) / h, RESULTS_MAX_W / w));
+
+        resultsT.setTransform(scale < 1f);
+        resultsT.setScale(scale);
+
+        for (MapRender other : manager.render) {
+            other.resultsMenuH = other == r ? h * scale : 0f;
+        }
+
+        worldViewport.project(tmp.set(r.x + Map.N_COL / 2f, top));
         tmp.y = Gdx.graphics.getHeight() - tmp.y;
         stage.screenToStageCoordinates(tmp);
-        resultsT.setPosition(tmp.x - resultsT.getWidth() / 2f, tmp.y - resultsT.getHeight());
+        resultsT.setPosition(tmp.x - resultsT.getWidth() * scale / 2f, tmp.y - resultsT.getHeight() * scale);
     }
 
     private ImageButton iconButton(String style, Runnable action) {
@@ -412,6 +440,10 @@ public class PlayScreen extends ScreenBase {
 
         // Draw the maps
         worldViewport.apply();
+
+        // Before the maps, which make room for the buttons in their results
+        if (manager.phase == MapManager.PHASE_RESULTS)
+            placeResults();
         G.game.batch.setProjectionMatrix(worldCam.combined);
         G.game.batch.begin();
 
@@ -434,9 +466,6 @@ public class PlayScreen extends ScreenBase {
         }
 
         G.game.sr.end();
-
-        if (resultsShown)
-            placeResults();
 
         uiViewport.apply();
         stage.act(delta);

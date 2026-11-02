@@ -41,11 +41,11 @@ public class Animations {
 
     /**
      * Win celebration: the beans flash and pop in sparks, row by row from the floor
-     * up, each row with a higher pop sound
+     * up, each row with a higher pop sound if popSound
      *
      * @return true if it's animating - animation not finished yet
      */
-    public boolean celebrate() {
+    public boolean celebrate(boolean popSound) {
         boolean animating = false;
         celebrateTime += G.delta;
 
@@ -85,7 +85,9 @@ public class Animations {
 
         if (celebrateTime >= POP_FLASH_TIME && rows > poppedRows) {
             poppedRows = rows;
-            G.game.audio.playEffect("audio/pop.ogg", 0.8f + 1.2f * (rows - 1) / Map.N_ROW);
+
+            if (popSound)
+                G.game.audio.playEffect("audio/pop.ogg", 0.8f + 1.2f * (rows - 1) / Map.N_ROW);
         }
 
         return animating;

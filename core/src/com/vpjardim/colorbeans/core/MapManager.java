@@ -139,9 +139,11 @@ public abstract class MapManager {
             endMatch();
         } else if (phase == PHASE_CELEBRATING) {
             boolean animating = false;
+            // When the AI beats the players, it celebrates quietly after their losing sting
+            boolean popSound = playersWon();
 
             for (Map m : winners) {
-                animating = animating | m.anim.celebrate();
+                animating = animating | m.anim.celebrate(popSound);
             }
 
             if (!animating) {

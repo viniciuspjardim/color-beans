@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -113,11 +114,20 @@ public class MapRender {
     private static final float STATS_STEP = 0.15f;
     /** Seconds the score takes to count up */
     private static final float COUNT_TIME = 0.8f;
+    /** Half the title's height, about */
+    private static final float TITLE_HALF_H = 0.8f;
+    /** Gap between the results' panel edges and what's in it, and the field's walls */
+    private static final float PANEL_PAD = 0.45f;
+    private static final float PANEL_MARGIN = 0.3f;
+    private static final float PANEL_FADE_TIME = 0.2f;
+
+    /** World units in a UI (stage) unit. The play screen keeps it current */
+    public static float uiToWorld = 0.02f;
     /**
-     * Top of the results' buttons panel (see PlayScreen), under the stats. Its size
-     * follows the UI scale, not the map's, so it hangs down from here
+     * Height of the results' buttons on this map, in world units, which the panel
+     * makes room for. 0 on the maps without them. Set by the play screen
      */
-    public static final float RESULTS_MENU_TOP = STATS_TOP - 3 * STATS_LINE_H - 0.9f;
+    public float resultsMenuH;
     /** Darker wall bricks: purple, steel blue and dark green */
     private static final int[] DARK_WALLS = { 6, 8, 9 };
 
@@ -419,6 +429,28 @@ public class MapRender {
             color = LOSE_COLOR;
         }
 
+        // ===== The pause menu's panel behind it all, fading in =====
+        boolean statsShown = statsShown();
+        float bottom;
+
+        if (resultsMenuH > 0f)
+            bottom = resultsMenuTop() - resultsMenuH - PANEL_PAD;
+        else if (statsShown)
+            bottom = statsBottom() - PANEL_PAD;
+        else
+            bottom = TITLE_Y - TITLE_HALF_H - PANEL_PAD;
+
+        float top = TITLE_Y + TITLE_HALF_H + PANEL_PAD;
+        float panelX = x + PANEL_MARGIN;
+        float panelW = Map.N_COL - 2f * PANEL_MARGIN;
+        // Its corners are sized like the pause menu's, which is in UI units
+        float s = uiToWorld;
+
+        batch.setColor(1f, 1f, 1f, Math.min(time / PANEL_FADE_TIME, 1f));
+        G.game.skin.get("bgBlack", NinePatch.class).draw(batch, panelX, bottom, 0f, 0f, panelW / s,
+                (top - bottom) / s, s, s, 0f);
+        batch.setColor(Color.WHITE);
+
         // The title pops in, then the winner's keeps pulsing
         float pop = Interpolation.swingOut.apply(Math.min(time / TITLE_POP_TIME, 1f));
         float pulse = m.gameWin ? 1f + 0.05f * MathUtils.sin(time * 5f) : 1f;
@@ -435,8 +467,7 @@ public class MapRender {
             titleFont.setColor(Color.WHITE);
         }
 
-        // Only the players get stats, unless the AI plays alone
-        if (m.ai != null && manager.playersPlayed())
+        if (!statsShown)
             return;
 
         // Score counts up from 0
@@ -451,6 +482,25 @@ public class MapRender {
 
         int seconds = (int) m.matchTimer;
         drawResult("Time", seconds / 60 + ":" + (seconds % 60 < 10 ? "0" : "") + seconds % 60, line, time);
+    }
+
+    /** Only the players get stats, unless the AI plays alone */
+    private boolean statsShown() {
+        return m.ai == null || !m.manager.playersPlayed();
+    }
+
+    private int statLines() {
+        return m.manager.maps.size > 1 ? 4 : 3;
+    }
+
+    /** Bottom of the last stat line */
+    private float statsBottom() {
+        return STATS_TOP - (statLines() - 1) * STATS_LINE_H - STATS_LINE_H / 2f;
+    }
+
+    /** Top of the results' buttons (see PlayScreen): under the stats, or the title without them */
+    public float resultsMenuTop() {
+        return statsShown() ? statsBottom() - 0.2f : TITLE_Y - TITLE_HALF_H - 0.2f;
     }
 
     /** Draws a line of the results, fading in after the ones above it */
